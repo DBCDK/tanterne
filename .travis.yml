@@ -11,12 +11,11 @@ branches:
 env:
   - TEST_SUITE=lint
   - TEST_SUITE=test
+  - TEST_SUITE=test:integration
 services:
   - elasticsearch
 before_install:
   - curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.2.deb && sudo dpkg -i --force-confnew elasticsearch-5.1.2.deb && sudo service elasticsearch restart
-before_script:
-  - sleep 10
 script: npm run $TEST_SUITE
 addons:
   sauce_connect: true
