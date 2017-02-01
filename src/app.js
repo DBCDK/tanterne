@@ -13,6 +13,7 @@ const {errorMiddleware} = require('./middleware/error.middleware');
 const {SetVersionHeader} = require('./middleware/headers.middleware');
 const {LoggerMiddleware} = require('./middleware/logger.middleware');
 const indexRouter = require('./routes/index.routes').router;
+const {APIRouter} = require('./routes/api.routes');
 
 // Utils
 const Logger = require('dbc-node-logger');
@@ -42,6 +43,7 @@ app.startServer = function startServer() {
 
   // Setup routes
   app.use(indexRouter.routes());
+  app.use(APIRouter.routes());
 
   // Setup error middleware
   app.use(errorMiddleware);
