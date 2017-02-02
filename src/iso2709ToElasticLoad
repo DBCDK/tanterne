@@ -4,7 +4,7 @@
  *
  * Convert an iso2709 file with marc-records to a Elastic Search bulk loadable file
  *
- * Each marc tag and subfield, creates a ES field, like
+ * Each marc tag and subfield, creates a Elastic Search field, like
  *
  * Marc record:
  *   123 00 *a data in a *b data in b
@@ -18,8 +18,14 @@
  *
  * Empty subfields and subfields containing a single , or . are ignored.
  *
- * Records are dumped from the libv3 system with:
+ * Records are dumped from the libv3 system like:
  *   setenv NLS_LANG AMERICAN_DENMARK.WE8ISO8859P1 ; dump_v3 <user>/<password>@<some.db>.dbc.dk | marcunicode > dk5_total.iso2709
+ *
+ * And converted like:
+ *   iso2709ToElasticLoad -i dk5_total.iso2709 -o elastic_bulk_load.json
+ *
+ * And loadet into Elastic Search like:
+ *   curl -s -XPOST 'http://localhost:9200/_bulk' --data-binary '@elastic_bulk_load.json'
  *
  */
 var fs = require('fs');
