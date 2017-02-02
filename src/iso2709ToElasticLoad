@@ -86,8 +86,8 @@ function dumpRecord(id, record) {
     });
     indexRec.index._id = id;
     writeRecord(JSON.stringify(indexRec));
-    writeRecord(JSON.stringify(dataRec, null, '  '));
-    // writeRecord(JSON.stringify(dataRec));
+    // writeRecord(JSON.stringify(dataRec, null, '  '));
+    writeRecord(JSON.stringify(dataRec));
   }
 }
 
