@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * @file
  *
@@ -55,8 +56,8 @@ process.exit(0);
  */
 function getOptions() {
   const ops = stdio.getopt({
-    'input': {key: 'i', args: 1, description: 'Input file'},
-    'output': {key: 'o', args: 1, description: 'Output file'}
+    input: {key: 'i', args: 1, description: 'Input file'},
+    output: {key: 'o', args: 1, description: 'Output file'}
   });
   if (!ops.input || !ops.output) {
     ops.printHelp();
@@ -67,12 +68,12 @@ function getOptions() {
 
 /**
  * Split one record into tag-lines and write converted record
- * @param {number} recno
+ * @param {number} id
  * @param {string} record
  */
-function dumpRecord(recno, record) {
+function dumpRecord(id, record) {
   if (record) {
-    let start = parseInt(record.substr(12, 5));
+    let start = parseInt(record.substr(12, 5), 10);
     const tags = record.substr(start).split(RS);
     let tagPos = 24;
     let dataRec = {};
@@ -83,10 +84,10 @@ function dumpRecord(recno, record) {
         tagPos += 12;
       }
     });
-    indexRec.index._id = recno;
+    indexRec.index._id = id;
     writeRecord(JSON.stringify(indexRec));
     writeRecord(JSON.stringify(dataRec, null, '  '));
-    //writeRecord(JSON.stringify(dataRec));
+    // writeRecord(JSON.stringify(dataRec));
   }
 }
 
@@ -102,7 +103,7 @@ function parseTag(dataRec, tag, value) {
   subField.forEach(function (subf) {
     if (subf) {
       let subVal = subf.substr(1).trim();
-      if (subVal && subVal != '.' && subVal != ',') {
+      if (subVal && subVal !== '.' && subVal !== ',') {
         savePush(dataRec, tag + subf.substr(0, 1), subVal);
         tagValue.push(subVal);
       }
