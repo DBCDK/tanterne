@@ -1,0 +1,141 @@
+#!/usr/bin/env node
+/**
+ * @file
+ *
+ * Convert an iso2709 file with marc-records to a Elastic Search bulk loadable file
+ *
+ * Each marc tag and subfield, creates a Elastic Search field, like
+ *
+ * Marc record:
+ *   123 00 *a data in a *b data in b
+ *   123 00 *a more in a
+ * will create ES record:
+ *   123a ["data in a", "more in a"]
+ *   123b ["data in b"]
+ *   123 ["data in a data in b", "more in a"]
+ *
+ * All ES fields are arrays
+ *
+ * Empty subfields and subfields containing a single , or . are ignored.
+ *
+ * Records are dumped from the libv3 system like:
+ *   setenv NLS_LANG AMERICAN_DENMARK.WE8ISO8859P1 ; dump_v3 <user>/<password>@<some.db>.dbc.dk | marcunicode > dk5_total.iso2709
+ *
+ * And converted like:
+ *   iso2709ToElasticLoad -i dk5_total.iso2709 -o elastic_bulk_load.json
+ *
+ * And loadet into Elastic Search like:
+ *   curl -s -XPOST 'http://localhost:9200/_bulk' --data-binary '@elastic_bulk_load.json'
+ *
+ */
+var fs = require('fs');
+var stdio = require('stdio');
+
+const GS = String.fromCharCode(0x1D);  // record separator
+const RS = String.fromCharCode(0x1E);  // field separator
+const US = String.fromCharCode(0x1F);  // subfield separator
+
+const indexRec = {index: {_index: 'dk5', _type: 'dk5', _id: 0}};
+const option = getOptions();
+
+const records = fs.readFileSync(option.input, 'utf8').split(GS);
+const progress = stdio.progressBar(records.length, 1);
+
+const outfile = fs.openSync(option.output, 'w');
+
+let recno = 0;
+records.forEach(function (record) {
+  dumpRecord(++recno, record.trim());
+  progress.tick();
+});
+
+fs.closeSync(outfile);
+console.log('\nLoad ES like:\n curl -s -XPOST \'http://localhost:9200/_bulk\' --data-binary \'@' + option.output + '\'\n');
+process.exit(0);
+
+/* ------------------------------------------------------------------------------------------------------------------------------ */
+
+/**
+ * Handles options and produce Usage:
+ *
+ * @returns {*}
+ */
+function getOptions() {
+  const ops = stdio.getopt({
+    input: {key: 'i', args: 1, description: 'Input file'},
+    output: {key: 'o', args: 1, description: 'Output file'}
+  });
+  if (!ops.input || !ops.output) {
+    ops.printHelp();
+    process.exit(1);
+  }
+  return ops;
+}
+
+/**
+ * Split one record into tag-lines and write converted record
+ * @param {number} id
+ * @param {string} record
+ */
+function dumpRecord(id, record) {
+  if (record) {
+    let start = parseInt(record.substr(12, 5), 10);
+    const tags = record.substr(start).split(RS);
+    let tagPos = 24;
+    let dataRec = {};
+    tags.forEach(function (tagValue) {
+      if (tagValue) {
+        let tag = record.substr(tagPos, 3);
+        parseTag(dataRec, tag, tagValue.substr(3));
+        tagPos += 12;
+      }
+    });
+    indexRec.index._id = id;
+    writeRecord(JSON.stringify(indexRec));
+    // writeRecord(JSON.stringify(dataRec, null, '  '));
+    writeRecord(JSON.stringify(dataRec));
+  }
+}
+
+/**
+ * Handles one tag-line, split into subfield
+ * @param {object} dataRec
+ * @param {string} tag
+ * @param {string} value
+ */
+function parseTag(dataRec, tag, value) {
+  let subField = value.split(US);
+  let tagValue = [];
+  subField.forEach(function (subf) {
+    if (subf) {
+      let subVal = subf.substr(1).trim();
+      if (subVal && subVal !== '.' && subVal !== ',') {
+        savePush(dataRec, tag + subf.substr(0, 1), subVal);
+        tagValue.push(subVal);
+      }
+    }
+  });
+  savePush(dataRec, tag, tagValue.join(' '));
+}
+
+/**
+ * Write one line to out file
+ * @param {string} str
+ */
+function writeRecord(str) {
+  fs.writeSync(outfile, str + '\n', null, 'utf8');
+}
+
+/**
+ * Ensures creation of array element for a given field
+ *
+ * @param {object} buf
+ * @param {string} field
+ * @param {string} value
+ */
+function savePush(buf, field, value) {
+  if (!buf[field]) {
+    buf[field] = [];
+  }
+  buf[field].push(value);
+}
