@@ -52,6 +52,7 @@
     "preact-compat": "3.13.1",
     "preact-enroute": "1.2.3",
     "request": "^2.79.0",
+    "stdio": "^0.2.7",
     "superagent": "^3.4.1"
   },
   "devDependencies": {
