@@ -47,13 +47,12 @@
     "koa-body": "^2.0.0",
     "koa-convert": "^1.2.0",
     "koa-router": "^7.0.0",
-    "koa-session2": "^1.0.8",
     "koa-static": "^2.0.0",
-    "preact": "^7.1.0",
-    "preact-compat": "3.9.4",
-    "preact-enroute": "^1.2.3",
+    "preact": "7.2.0",
+    "preact-compat": "3.13.1",
+    "preact-enroute": "1.2.3",
     "request": "^2.79.0",
-    "superagent": "^3.3.2"
+    "superagent": "^3.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
