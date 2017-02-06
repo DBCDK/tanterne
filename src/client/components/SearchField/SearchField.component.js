@@ -18,6 +18,7 @@ export class SearchFieldComponent extends Component {
     }
 
     this.onTextEntered = this.onTextEntered.bind(this);
+    this.queryWasSubmitted = this.queryWasSubmitted.bind(this);
   }
 
   onTextEntered(evt) {
@@ -27,12 +28,17 @@ export class SearchFieldComponent extends Component {
     });
   }
 
+  queryWasSubmitted(evt) {
+    evt.preventDefault();
+    this.context.navigate(`#!${this.state.query}`);
+  }
+
   render() {
     return (
-      <div className="search-field--container">
+      <form className="search-field--container" onSubmit={this.queryWasSubmitted}>
         <input type="text" onChange={this.onTextEntered} />
         <Link to={this.state.query}>Søg!</Link>
-      </div>
+      </form>
     );
   }
 }

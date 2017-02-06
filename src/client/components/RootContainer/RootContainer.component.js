@@ -17,7 +17,7 @@ import Link from '../Link';
 function getHash(hash) {
   if (typeof hash === 'string' && hash.length > 0) {
     if (hash.substring(0, 2) === '#!') {
-      return hash.substring(2);
+      return hash.substring(2).length === 0 ? '/' : hash.substring(2);
     }
 
     return hash;
