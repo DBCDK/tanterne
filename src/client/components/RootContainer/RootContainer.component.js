@@ -55,7 +55,7 @@ export class RootContainerComponent extends Component {
         this.setState({
           location: getHash(path)
         });
-      },
+      }
     };
   }
 

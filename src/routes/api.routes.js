@@ -34,7 +34,7 @@ async function hierarchyHandler(ctx) {
 
 async function searchHandler(ctx) {
   ctx.set('Content-Type', 'application/json');
-  let {q, limit, offset, sort, spell} = ctx.query;
+  let {q, limit, offset, sort, spell} = ctx.query; // eslint-disable-line no-unused-vars
   const validSorts = ['relevance', 'dk5'];
   let errors = 0;
   if (!q) {

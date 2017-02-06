@@ -15,7 +15,7 @@ export class SearchFieldComponent extends Component {
 
     this.state = {
       query: ''
-    }
+    };
 
     this.onTextEntered = this.onTextEntered.bind(this);
     this.queryWasSubmitted = this.queryWasSubmitted.bind(this);

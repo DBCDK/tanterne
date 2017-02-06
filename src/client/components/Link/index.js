@@ -3,7 +3,7 @@
  * Link component for react enroute
  */
 
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 export default function Link({to, children}, {navigate}) {
   function click(e) {
@@ -17,4 +17,10 @@ export default function Link({to, children}, {navigate}) {
     </a>
   );
 }
+
+Link.displayName = 'Link';
+Link.propTypes = {
+  to: PropTypes.string,
+  children: PropTypes.any
+};
 

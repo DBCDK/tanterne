@@ -19,11 +19,11 @@ export class SearchResultsContainerComponent extends Component {
   }
 
   componentDidMount() {
-    this.searchWasTriggered(this.props)
+    this.searchWasTriggered(this.props);
   }
 
   componentDidUpdate() {
-    this.searchWasTriggered(this.props)
+    this.searchWasTriggered(this.props);
   }
 
   searchWasTriggered(props) {
@@ -42,9 +42,6 @@ export class SearchResultsContainerComponent extends Component {
         .get(searchUrl)
         .set('Accept', 'application/json')
         .end((err, res) => {
-          console.log(res)
-
-          const searchResults = this.state.searchResults;
           const bd = JSON.parse(res.text);
           searchResults[searchUrl] = bd.response || [];
 
