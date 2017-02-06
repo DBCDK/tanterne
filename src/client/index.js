@@ -18,3 +18,5 @@ const rootContainer = document.getElementById('content');
 
 // Render the elements into the DOM.
 ReactDOM.render(<RootContainerComponent />, rootContainer);
+
+require('preact/devtools');

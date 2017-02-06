@@ -33,6 +33,7 @@
   "homepage": "https://github.com/DBCDK/tanterne#readme",
   "dependencies": {
     "autoprefixer": "^6.6.1",
+    "babel-loader": "^6.2.10",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
     "babel-plugin-transform-class-properties": "^6.19.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
@@ -40,20 +41,19 @@
     "babel-polyfill": "^6.20.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
-    "babel-loader": "^6.2.10",
     "babel-register": "^6.18.0",
     "dbc-node-logger": "^2.0.0",
     "koa": "^2.0.0",
     "koa-body": "^2.0.0",
     "koa-convert": "^1.2.0",
     "koa-router": "^7.0.0",
-    "koa-session2": "^1.0.8",
     "koa-static": "^2.0.0",
-    "preact": "^7.1.0",
-    "preact-compat": "3.9.4",
+    "preact": "7.2.0",
+    "preact-compat": "3.13.1",
+    "preact-enroute": "1.2.3",
     "request": "^2.79.0",
     "stdio": "^0.2.7",
-    "superagent": "^3.3.2"
+    "superagent": "^3.4.1"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
@@ -74,7 +74,7 @@
     "wdio-junit-reporter": "^0.2.0",
     "wdio-mocha-framework": "^0.5.8",
     "wdio-sauce-service": "^0.3.1",
-    "wdio-selenium-standalone-service": "0.0.7",
+    "wdio-selenium-standalone-service": "0.0.8",
     "webdriverio": "^4.6.1",
     "webpack": "^1.14.0"
   }
