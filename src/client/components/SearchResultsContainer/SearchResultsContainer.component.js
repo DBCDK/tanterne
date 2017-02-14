@@ -71,13 +71,13 @@ export class SearchResultsContainerComponent extends Component {
     );
   }
 
-  renderCategoryTiles(categories) {
+  renderCategoryTiles(categories, searchField) {
     const tiles = Object.keys(categories)
       .map(categoryIndex => this.renderCategoryTile(categoryIndex, categories[categoryIndex]));
 
     return (
       <div className='category-tiles--container'>
-        <SearchFieldComponent />
+        {searchField}
 
         <div className='category-tiles--title'>
           <h2>Eller vælg her</h2>
@@ -91,6 +91,15 @@ export class SearchResultsContainerComponent extends Component {
   }
 
   render() {
+    const params = this.props.params || {};
+    const searchField = (
+      <SearchFieldComponent
+        search={this.props.search}
+        suggest={this.props.suggest}
+        params={params}
+      />
+    );
+
     const results = (this.state.searchResults[this.state.query] || []).map(entry => {
       return (
         <div key={entry.dk5.index}>
@@ -101,13 +110,15 @@ export class SearchResultsContainerComponent extends Component {
       );
     });
 
-    if (this.props.params && !this.props.params.q) {
-      return this.renderCategoryTiles(this.props.search.categories);
+    if (!params.q) {
+      return this.renderCategoryTiles(this.props.search.categories, searchField);
     }
 
     if (results.length < 1) {
       return (
         <div>
+          {searchField}
+
           Searching!
         </div>
       );
@@ -115,8 +126,7 @@ export class SearchResultsContainerComponent extends Component {
 
     return (
       <div>
-        <SearchFieldComponent />
-
+        {searchField}
         {results}
       </div>
     );
@@ -126,5 +136,6 @@ export class SearchResultsContainerComponent extends Component {
 SearchResultsContainerComponent.displayName = 'SearchResults';
 SearchResultsContainerComponent.propTypes = {
   params: PropTypes.object,
-  search: PropTypes.object
+  search: PropTypes.object,
+  suggest: PropTypes.object
 };
