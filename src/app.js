@@ -37,6 +37,7 @@ app.startServer = function startServer() {
   app.proxy = true;
 
   // Setup middlewares
+  app.use(convert(serve('./static')));
   app.use(convert(serve('./public')));
   app.use(SetVersionHeader);
   app.use(LoggerMiddleware);

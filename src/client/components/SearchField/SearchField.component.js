@@ -36,8 +36,16 @@ export class SearchFieldComponent extends Component {
   render() {
     return (
       <form className="search-field--container" onSubmit={this.queryWasSubmitted}>
-        <input type="text" onChange={this.onTextEntered} />
-        <Link to={this.state.query}>Søg!</Link>
+        <div className="search-field--title">
+          <h2>Hvor står bøgerne om...?</h2>
+        </div>
+
+        <input type="text" onChange={this.onTextEntered} className="search-field" placeholder="Skriv emne" />
+        <Link to={this.state.query}>
+          <span className="search-field--button">
+            <img src="/icon-search.svg" /> SØG
+          </span>
+        </Link>
       </form>
     );
   }

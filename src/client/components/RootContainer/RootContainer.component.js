@@ -8,10 +8,9 @@ import React, {Component} from 'react';
 import {Router, Route} from 'react-enroute';
 
 // Components
-import {SearchFieldComponent} from '../SearchField/SearchField.component';
 import {HierarchyContainerComponent} from '../HierarchyContainer/HierarchyContainer.component';
 import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchResultsContainer.component';
-import Link from '../Link';
+import {TopBarComponent} from '../TopBar/TopBar.component';
 
 // Helper function
 function getHash(hash) {
@@ -29,7 +28,60 @@ function getHash(hash) {
 // Global state object
 const state = {
   location: getHash(window.location.hash),
-  search: {},
+  search: {
+    categories: {
+      '00 - 07': {
+        label: 'Bogvæsen. Biblioteker. Museer. Medier. Leksika og blandede værker',
+        href: '',
+        backgroundImage: '/categories/bogvaesen.jpg'
+      },
+      '10 - 19': {
+        label: 'Filosofi. Psykologi. Videnskab og forskning. Kommunikation og IT',
+        href: '',
+        backgroundImage: '/categories/filosofi.jpg'
+      },
+      '20 - 29': {
+        label: 'Religion',
+        href: '',
+        backgroundImage: '/categories/religion.jpg'
+      },
+      '30 - 39': {
+        label: 'Samfundsfag. Pædagogik. Forsorg. Folkekultur',
+        href: '',
+        backgroundImage: '/categories/samfundsfag.jpg'
+      },
+      '40 - 49': {
+        label: 'Geografi og rejser. Lokalhistorie.',
+        href: '',
+        backgroundImage: '/categories/geografi.jpg'
+      },
+      '50 - 59': {
+        label: 'Naturvidenskab. Matematik. Antropologi og etnografi.',
+        href: '',
+        backgroundImage: '/categories/naturvidenskab.jpg'
+      },
+      '60 - 69': {
+        label: 'Teknik. Sygdom og sundhed. Erhverv. Hus og hjem.',
+        href: '',
+        backgroundImage: '/categories/teknik.jpg'
+      },
+      '70 - 79': {
+        label: 'Kultur. Kunstarter. Sport',
+        href: '',
+        backgroundImage: '/categories/kultur.jpg'
+      },
+      '80 - 89': {
+        label: 'Litteratur. Sprog',
+        href: '',
+        backgroundImage: '/categories/litteratur.jpg'
+      },
+      '90 - 99': {
+        label: 'Historie. Biografier og erindringer',
+        href: '',
+        backgroundImage: '/categories/historie.jpg'
+      }
+    }
+  },
   hierarchy: {},
   suggest: {}
 };
@@ -62,14 +114,10 @@ export class RootContainerComponent extends Component {
   render() {
     return (
       <div>
-        <Link to="/">
-          <h1>Tanterne</h1>
-        </Link>
-
-        <SearchFieldComponent />
+        <TopBarComponent />
 
         <Router {...this.state}>
-          <Route path="/" component={HierarchyContainerComponent} />
+          <Route path="/" component={SearchResultsContainerComponent} />
           <Route path="/hierarchy/:id" component={HierarchyContainerComponent} />
           <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent} />
         </Router>
