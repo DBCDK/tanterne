@@ -16,13 +16,13 @@ export class SuggestionsComponent extends Component {
     suggestions = suggestions.map((suggestion, idx) => {
       let className = 'suggestions--suggestion';
       if (idx === this.props.selectedSuggestion) {
-        className = className + ' active--suggestion';
+        className += ' active--suggestion';
       }
 
       return (
         <a href={suggestion.href} className={className}>{suggestion.label}</a>
       );
-    })
+    });
 
     return (
       <div className='suggestions--container'>

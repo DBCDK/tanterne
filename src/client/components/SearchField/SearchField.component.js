@@ -23,7 +23,7 @@ function deferExecution(func, timeout) {
 }
 
 export class SearchFieldComponent extends Component {
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
@@ -125,7 +125,6 @@ export class SearchFieldComponent extends Component {
         return this.selectNextSuggestion();
       }
       default: {
-        console.log(evt.key);
         return null;
       }
     }
