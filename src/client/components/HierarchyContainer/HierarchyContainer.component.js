@@ -5,6 +5,46 @@
 
 import React, {Component} from 'react';
 
+/**
+ * Level in the hierarchy
+ *
+ * @constructor
+ */
+function HierarchyLevel() {
+
+}
+
+/**
+ * The currently selected hierarchy element
+ *
+ * @constructor
+ */
+function HierarchyElement() {
+
+
+}
+
+/**
+ * Description of Hierarchy element
+ *
+ * @constructor
+ */
+function HierarchyElementDescription() {
+
+
+}
+
+/**
+ * Topics in Hierarchy element
+ *
+ * @constructor
+ */
+function HierarchyElementTopics() {
+
+
+}
+
+
 export class HierarchyContainerComponent extends Component {
   render() {
     return (
