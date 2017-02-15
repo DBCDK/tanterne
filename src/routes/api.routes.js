@@ -3,6 +3,8 @@
  * Define the API
  */
 
+import {elasticPing, elasticSearch, elasticSuggest} from '../components/ElasticSearch/ElasticSearch.client';
+
 // Libraries
 const Router = require('koa-router');
 
@@ -11,6 +13,7 @@ const APIRouter = new Router();
 
 // Define handler functions
 async function suggestHandler(ctx) {
+  let {q} = ctx.query; // eslint-disable-line no-unused-vars
   const response = {
     status: 200,
     query: {endpoint: 'suggest'},
@@ -19,7 +22,8 @@ async function suggestHandler(ctx) {
       {label: 'Japansk litteraturhistorie', href: ''},
       {label: 'Japansk skønlitteratur', href: ''},
       {label: 'Japansk sprog', href: ''}
-    ]
+    ],
+    suggest: elasticSuggest(q)
   };
 
   ctx.set('Content-Type', 'application/json');
@@ -86,7 +90,17 @@ async function searchHandler(ctx) {
         q: q
       },
       correction: {},
-      response: []
+      response: [{
+        title: '65.2 Regnskabsføring i alm.',
+        dk5: {index: '65.2', title: 'Regnskabsføring i alm.'},
+        items: []
+      }, {
+        title: '65.126 Forbrugerbekyttelse i alm.',
+        dk5: {index: '65.126', title: 'Forbrugerbekyttelse i alm.'},
+        items: []
+      }],
+      elasticStatus: elasticPing(),
+      result: elasticSearch(q, limit, offset)
     };
 
     if (spell && spell !== 'none') {
