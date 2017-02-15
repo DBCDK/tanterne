@@ -1,0 +1,46 @@
+.search-field--container {
+  a {
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-size: 16pt;
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .search-field--title {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  .search-field--button {
+    background-color: #1254F2;
+    border-radius: 5px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 165px;
+    height: 40px;
+    vertical-align: middle;
+
+    img {
+      height: 92%;
+    }
+  }
+
+  .search-field {
+    height: 40px;
+    background-color: transparent;
+    border: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15pt;
+    border-bottom: 3px solid #000000;
+    margin: 0 10px 10px 20px;
+    display: inline-flex;
+    width: 600px;
+
+    &:focus {
+      outline: none;
+      border-bottom-color: #1254F2;
+    }
+  }
+}
+

@@ -17,7 +17,12 @@ async function suggestHandler(ctx) {
   const response = {
     status: 200,
     query: {endpoint: 'suggest'},
-    response: {},
+    response: [
+      {label: 'Japan', href: ''},
+      {label: 'Japansk litteraturhistorie', href: ''},
+      {label: 'Japansk skønlitteratur', href: ''},
+      {label: 'Japansk sprog', href: ''}
+    ],
     suggest: elasticSuggest(q)
   };
 
@@ -80,7 +85,11 @@ async function searchHandler(ctx) {
   if (errors === 0) {
     const response = {
       status: 200,
-      query: {endpoint: 'search'},
+      query: {
+        endpoint: 'search',
+        q: q
+      },
+      correction: {},
       response: [{
         title: '65.2 Regnskabsføring i alm.',
         dk5: {index: '65.2', title: 'Regnskabsføring i alm.'},
@@ -93,6 +102,22 @@ async function searchHandler(ctx) {
       elasticStatus: elasticPing(),
       result: elasticSearch(q, limit, offset)
     };
+
+    if (spell && spell !== 'none') {
+      // Get the closest spelling
+      q = 'Japan';
+      response.correction.q = q;
+    }
+
+    response.response = [{
+      title: '65.2 Regnskabsføring i alm.',
+      dk5: {index: '65.2', title: 'Regnskabsføring i alm.'},
+      items: []
+    }, {
+      title: '65.126 Forbrugerbekyttelse i alm.',
+      dk5: {index: '65.126', title: 'Forbrugerbekyttelse i alm.'},
+      items: []
+    }];
 
     ctx.body = JSON.stringify(response);
   }

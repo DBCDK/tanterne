@@ -45,3 +45,4 @@ env.env
 public
 .eslintcache
 reports
+yarn.lock

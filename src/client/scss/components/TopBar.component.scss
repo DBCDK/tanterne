@@ -1,0 +1,27 @@
+.top-bar--container, .top-bar--logo {
+  height: 40px;
+}
+
+.top-bar--container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .top-bar--logo {
+    margin: 0 10px;
+  }
+
+  .top-bar--question {
+    height: 35px;
+    text-align: right;
+    margin-left: auto;
+    float: right;
+  }
+
+  .top-bar--caption {
+    color: #106ff5;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 24pt;
+  }
+}

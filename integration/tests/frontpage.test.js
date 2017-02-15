@@ -9,7 +9,7 @@ describe('Testing frontpage', () => {
 
   it('Should render frontpage', () => {
     const text = browser.getText('body');
-    const expected = 'Tanterne';
+    const expected = 'Find en bog';
     assert.include(text, expected);
   });
 });

@@ -1,0 +1,21 @@
+.suggestions--container {
+  width: 620px;
+  box-shadow: 2px 2px 3px #525252;
+  margin-top: -10px;
+
+  .suggestions--suggestion {
+    color: #525252;
+    display: block;
+    text-align: left;
+    font-size: 18pt;
+    padding: 3px 20px;
+    cursor: pointer;
+  }
+
+  .suggestions--suggestion:hover, .active--suggestion {
+    background-color: #1254F2;
+    color: #fff;
+    z-index: 3;
+  }
+}
+

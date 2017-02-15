@@ -1,4 +1,18 @@
-body {
-  background-color: aquamarine;
+// Import fonts
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
+
+// Import component styles
+@import 'components/TopBar.component';
+@import 'components/SearchResultsContainer.component';
+@import 'components/SearchField.component';
+@import 'components/Suggestions.component';
+
+// Set layout
+.main {
+  max-width: 1024px;
+  margin: 0 auto;
 }
 
+.content {
+  margin: 20px;
+}

@@ -15,7 +15,7 @@ export function elasticPing() {
       esStatus = 'elasticsearch cluster is down!';
     }
     else {
-      esStatus =  'All is well';
+      esStatus = 'All is well';
     }
   });
   return esStatus;
@@ -38,10 +38,10 @@ export function elasticSearch(query, limit, offset) {
 export function elasticSuggest(term) {
   elasticClient.suggest({
     body: {
-      suggester:{
-        text:term,
-        completion:{
-          field:"suggest_words"
+      suggester: {
+        text: term,
+        completion: {
+          field: 'suggest_words'
         }
       }
     }
