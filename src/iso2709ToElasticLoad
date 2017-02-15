@@ -25,7 +25,9 @@
  *   iso2709ToElasticLoad -i dk5_total.iso2709 -o elastic_bulk_load.json
  *
  * And loadet into Elastic Search like:
- *   curl -s -XPOST 'http://localhost:9200/_bulk' --data-binary '@elastic_bulk_load.json'
+ *   curl -XDELETE localhost:9200/dk5
+ *   curl -XPUT localhost:9200/dk5 -d '{"mappings":{"dk5":{"properties":{"suggest_words":{"type":"completion"}}}}}'
+ *   curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
  *
  */
 var fs = require('fs');
@@ -50,7 +52,10 @@ records.forEach(function (record) {
 });
 
 fs.closeSync(outfile);
-console.log('\nLoad ES like:\n curl -s -XPOST \'http://localhost:9200/_bulk\' --data-binary \'@' + option.output + '\'\n');
+console.log('\nStart Elastic Search and load data like:\n' +
+  '  curl -XDELETE localhost:9200/dk5\n' +
+  '  curl -XPUT localhost:9200/dk5 -d \'{"mappings":{"dk5":{"properties":{"suggest_words":{"type":"completion"}}}}}\'\n' +
+  '  curl -XPOST localhost:9200/_bulk --data-binary \'@' + option.output + '\'\n');
 process.exit(0);
 
 /* ------------------------------------------------------------------------------------------------------------------------------ */
@@ -82,18 +87,42 @@ function dumpRecord(id, record) {
     let start = parseInt(record.substr(12, 5), 10);
     const tags = record.substr(start).split(RS);
     let tagPos = 24;
-    let dataRec = {};
+    let words = [];
+    let tag;
+    let dataRec = {'suggest_words': {input: []}};
     tags.forEach(function (tagValue) {
       if (tagValue) {
-        let tag = record.substr(tagPos, 3);
+        tag = record.substr(tagPos, 3);
         parseTag(dataRec, tag, tagValue.substr(3));
         tagPos += 12;
+        collectWords(words, tag, dataRec[tag][dataRec[tag].length - 1]);
       }
     });
     indexRec.index._id = id;
     writeRecord(JSON.stringify(indexRec));
+    dataRec.suggest_words.input = words.filter(function(item, pos) {
+      return words.indexOf(item) == pos;
+    });
+    //dataRec.suggest_words = {input: ['a30', 'a40']};
     // writeRecord(JSON.stringify(dataRec, null, '  '));
     writeRecord(JSON.stringify(dataRec));
+  }
+}
+
+/**
+ * Split string and collect words longer than 2 characters
+ *
+ * @param words
+ * @param tag
+ * @param wordStr
+ */
+function collectWords(words, tag, wordStr) {
+  if (tag.length === 3) {
+    wordStr.split(/[\s,]+/).forEach(function (word) {
+      if (word.length > 2) {
+        words.push(word);
+      }
+    });
   }
 }
 

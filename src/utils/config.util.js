@@ -13,6 +13,10 @@ const CONFIG = {
   log: {
     level: process.env.LOG_LEVEL,
     pretty: process.env.PRETTY_LOG === '1'
+  },
+  elastic: {
+    host: process.env.ELASTIC_HOST,
+    log: process.env.ELASTIC_LOG ? process.env.ELASTIC_LOG.split(/[\s,]+/) : ['error', 'warning']
   }
 };
 

@@ -3,6 +3,8 @@
  * Define the API
  */
 
+import {elasticPing, elasticSearch, elasticSuggest} from '../components/ElasticSearch/ElasticSearch.client';
+
 // Libraries
 const Router = require('koa-router');
 
@@ -11,10 +13,12 @@ const APIRouter = new Router();
 
 // Define handler functions
 async function suggestHandler(ctx) {
+  let {q} = ctx.query; // eslint-disable-line no-unused-vars
   const response = {
     status: 200,
     query: {endpoint: 'suggest'},
-    response: {}
+    response: {},
+    suggest: elasticSuggest(q)
   };
 
   ctx.set('Content-Type', 'application/json');
@@ -85,7 +89,9 @@ async function searchHandler(ctx) {
         title: '65.126 Forbrugerbekyttelse i alm.',
         dk5: {index: '65.126', title: 'Forbrugerbekyttelse i alm.'},
         items: []
-      }]
+      }],
+      elasticStatus: elasticPing(),
+      result: elasticSearch(q, limit, offset)
     };
 
     ctx.body = JSON.stringify(response);
