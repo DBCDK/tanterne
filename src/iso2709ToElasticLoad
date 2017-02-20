@@ -26,7 +26,7 @@
  *
  * And loadet into Elastic Search like:
  *   curl -XDELETE localhost:9200/dk5
- *   curl -XPUT localhost:9200/dk5 -d '{"mappings":{"dk5":{"properties":{"suggest_words":{"type":"completion"}}}}}'
+ *   curl -XDELETE localhost:9200/word
  *   curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
  *
  */
@@ -45,16 +45,18 @@ const progress = stdio.progressBar(records.length, 1);
 
 const outfile = fs.openSync(option.output, 'w');
 
+let words = {};
 let recno = 0;
 records.forEach(function (record) {
-  dumpRecord(++recno, record.trim());
+  dumpRecord(++recno, record.trim(), words);
   progress.tick();
 });
+
+dump_suggestion_words(words);
 
 fs.closeSync(outfile);
 console.log('\nStart Elastic Search and load data like:\n' +
   '  curl -XDELETE localhost:9200/dk5\n' +
-  '  curl -XPUT localhost:9200/dk5 -d \'{"mappings":{"dk5":{"properties":{"suggest_words":{"type":"completion"}}}}}\'\n' +
   '  curl -XPOST localhost:9200/_bulk --data-binary \'@' + option.output + '\'\n');
 process.exit(0);
 
@@ -78,18 +80,32 @@ function getOptions() {
 }
 
 /**
- * Split one record into tag-lines and write converted record
- * @param {number} id
- * @param {string} record
+ * Dump words into doc 0
+ *
+ * @param words
  */
-function dumpRecord(id, record) {
+function dump_suggestion_words(words) {
+  console.log('Dump', Object.keys(words).length, 'words for suggestion');
+  indexRec.index._id = 0;
+  indexRec.index._index = 'word';
+  writeRecord(JSON.stringify(indexRec));
+  writeRecord(JSON.stringify({'words': Object.keys(words)}));
+}
+
+/**
+ * Split one record into tag-lines and write converted record
+ *
+ * @param id
+ * @param record
+ * @param words
+ */
+function dumpRecord(id, record, words) {
   if (record) {
     let start = parseInt(record.substr(12, 5), 10);
     const tags = record.substr(start).split(RS);
     let tagPos = 24;
-    let words = [];
     let tag;
-    let dataRec = {'suggest_words': {input: []}};
+    let dataRec = {};
     tags.forEach(function (tagValue) {
       if (tagValue) {
         tag = record.substr(tagPos, 3);
@@ -100,11 +116,6 @@ function dumpRecord(id, record) {
     });
     indexRec.index._id = id;
     writeRecord(JSON.stringify(indexRec));
-    dataRec.suggest_words.input = words.filter(function(item, pos) {
-      return words.indexOf(item) == pos;
-    });
-    //dataRec.suggest_words = {input: ['a30', 'a40']};
-    // writeRecord(JSON.stringify(dataRec, null, '  '));
     writeRecord(JSON.stringify(dataRec));
   }
 }
@@ -119,8 +130,10 @@ function dumpRecord(id, record) {
 function collectWords(words, tag, wordStr) {
   if (tag.length === 3) {
     wordStr.split(/[\s,]+/).forEach(function (word) {
-      if (word.length > 2) {
-        words.push(word);
+      word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"]+/g, '');
+      let num = word.replace(/[\.:-]/g, '');
+      if (num.length > 2 && parseInt(num) != num) {
+        words[word.toLowerCase()] = true;
       }
     });
   }
