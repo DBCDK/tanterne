@@ -24,7 +24,7 @@ export default class ElasticClient {
     await this.elasticClient.ping({
       // ping usually has a 3000ms timeout
       requestTimeout: 1000
-    }).then(function (body) {
+    }).then(function (body) {             // eslint-disable-line no-unused-vars
       esStatus = 'All is well';
     }, function (error) {
       if (error) {
@@ -46,7 +46,7 @@ export default class ElasticClient {
       .then(function (body) {
         esHits = body.hits;
       }, function (error) {
-        console.trace(error.message);
+        console.trace(error.message);          // eslint-disable-line no-console
       });
     return esHits;
   }
@@ -72,7 +72,7 @@ export default class ElasticClient {
         result.push({match: match, distance: Levenshtein.get(term, match)});
       });
       result = result.sort(function (a, b) {
-        return (parseInt(a.distance) - parseInt(b.distance));
+        return (parseInt(a.distance, 10) - parseInt(b.distance, 10));
       });
     }
     return result;
