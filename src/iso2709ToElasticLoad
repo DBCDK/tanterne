@@ -121,7 +121,10 @@ function dumpRecord(id, record, words) {
 }
 
 /**
- * Split string and collect words longer than 2 characters
+ * Collect words for completion functionality.
+ * So far, words are collected from all fields
+ *
+ * Split string, remove unwanted characters, ignore numbers and words shorter than 3 characters
  *
  * @param words
  * @param tag
