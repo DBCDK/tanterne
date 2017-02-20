@@ -44,11 +44,11 @@ export default class ElasticClient {
   async elasticSearch(pars) {
     let esHits = {};
     await this.elasticClient.search(this.setAndMap(pars))
-    .then(function (body) {
-      esHits = body.hits;
-    }, function (error) {
-      console.trace(error.message);
-    });
+      .then(function (body) {
+        esHits = body.hits;
+      }, function (error) {
+        console.trace(error.message);
+      });
     return esHits;
   }
 
