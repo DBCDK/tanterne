@@ -20,16 +20,15 @@ export default class ElasticClient {
    * @returns {*}
    */
   async elasticPing() {
-    let esStatus = 'elasticsearch strange error';
-    this.elasticClient.ping({
+    let esStatus;
+    await this.elasticClient.ping({
       // ping usually has a 3000ms timeout
       requestTimeout: 1000
+    }).then(function (body) {
+      esStatus = 'All is well';
     }, function (error) {
       if (error) {
         esStatus = 'elasticsearch cluster is down!';
-      }
-      else {
-        esStatus = 'All is well';
       }
     });
     return esStatus;
