@@ -23,6 +23,8 @@
  *
  * And converted like:
  *   iso2709ToElasticLoad -i dk5_total.iso2709 -o elastic_bulk_load.json
+ * Filter only one dk5 group like
+ *   iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json
  *
  * And loadet into Elastic Search like:
  *   curl -XDELETE localhost:9200/dk5
@@ -44,6 +46,7 @@ const records = fs.readFileSync(option.input, 'utf8').split(GS);
 const progress = stdio.progressBar(records.length, 1);
 
 const outfile = fs.openSync(option.output, 'w');
+const filter = option.filter;
 
 let words = {};
 let recno = 0;
@@ -70,7 +73,8 @@ process.exit(0);
 function getOptions() {
   const ops = stdio.getopt({
     input: {key: 'i', args: 1, description: 'Input file'},
-    output: {key: 'o', args: 1, description: 'Output file'}
+    output: {key: 'o', args: 1, description: 'Output file'},
+    filter: {key: 'f', args: 1, description: 'filter dk5 group'}
   });
   if (!ops.input || !ops.output) {
     ops.printHelp();
@@ -115,8 +119,11 @@ function dumpRecord(id, record, words) {
       }
     });
     indexRec.index._id = id;
-    writeRecord(JSON.stringify(indexRec));
-    writeRecord(JSON.stringify(dataRec));
+    let dk5 = Array.isArray(dataRec['652m']) ? dataRec['652m'][0] : '';
+    if (!filter || (dk5 && (filter === dk5.substr(0, filter.length)))) {
+      writeRecord(JSON.stringify(indexRec));
+      writeRecord(JSON.stringify(dataRec));
+    }
   }
 }
 
