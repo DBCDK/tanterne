@@ -3,6 +3,8 @@ import Levenshtein from 'fast-levenshtein';
 import ElasticSearch from 'elasticsearch';
 import Autocomplete from 'autocomplete';
 
+const Logger = require('dbc-node-logger');
+
 export default class ElasticClient {
 
   /**
@@ -24,11 +26,12 @@ export default class ElasticClient {
     await this.elasticClient.ping({
       // ping usually has a 3000ms timeout
       requestTimeout: 1000
-    }).then(function (body) {             // eslint-disable-line no-unused-vars
-      esStatus = 'All is well';
+    }).then(function (body) {
+      esStatus = body;
     }, function (error) {
       if (error) {
-        esStatus = 'elasticsearch cluster is down!';
+        Logger.log.error('ElasticSearch cluster is down. Msg: ' + error.message);
+        esStatus = false;
       }
     });
     return esStatus;
@@ -46,7 +49,7 @@ export default class ElasticClient {
       .then(function (body) {
         esHits = body.hits;
       }, function (error) {
-        console.trace(error.message);          // eslint-disable-line no-console
+        Logger.log.error('ElasticSearch search error. Msg: ' + error.message);
       });
     return esHits;
   }
