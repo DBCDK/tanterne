@@ -2,6 +2,7 @@ import {CONFIG} from '../../utils/config.util';
 import Levenshtein from 'fast-levenshtein';
 import ElasticSearch from 'elasticsearch';
 import Autocomplete from 'autocomplete';
+import {getHits, setAndMap} from './ElasticSearch.util';
 
 const Logger = require('dbc-node-logger');
 
@@ -13,8 +14,20 @@ export default class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
     this.autocomplete = Autocomplete.connectAutocomplete();
-    this.defaultParameters = {query: '', limit: 10, offset: 0, fields: '6*,b*', index: 'dk5'};
+    this.defaultParameters = {query: '', limit: 40, offset: 0, fields: '008t,6*,b*', index: 'register'};
     this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index'};
+    this.topGroups = {
+      0: {q: '00-07', name: ''},
+      1: {q: '10-19', name: ''},
+      2: {q: '20-29', name: ''},
+      3: {q: '30-39', name: ''},
+      4: {q: '40-49', name: ''},
+      5: {q: '50-59', name: ''},
+      6: {q: '60-69', name: ''},
+      7: {q: '70-79', name: ''},
+      8: {q: '80-89', name: ''},
+      9: {q: '90-99', name: ''}
+    };
   }
 
   /**
@@ -22,7 +35,7 @@ export default class ElasticClient {
    * @returns {*}
    */
   async elasticPing() {
-    let esStatus;
+    let esStatus = false;
     await this.elasticClient.ping({
       // ping usually has a 3000ms timeout
       requestTimeout: 1000
@@ -31,7 +44,6 @@ export default class ElasticClient {
     }, function (error) {
       if (error) {
         Logger.log.error('ElasticSearch cluster is down. Msg: ' + error.message);
-        esStatus = false;
       }
     });
     return esStatus;
@@ -42,16 +54,8 @@ export default class ElasticClient {
    * @param pars
    * @returns {*}
    */
-
   async elasticSearch(pars) {
-    let esHits = {};
-    await this.elasticClient.search(this.setAndMap(pars))
-      .then(function (body) {
-        esHits = body.hits;
-      }, function (error) {
-        Logger.log.error('ElasticSearch search error. Msg: ' + error.message);
-      });
-    return esHits;
+    return await this.rawElasticSearch(pars);
   }
 
   /**
@@ -62,12 +66,10 @@ export default class ElasticClient {
    */
   async elasticSuggest(term) {
     if (!this.autocomplete.trie.prefixes) {
-      let wordRec = await this.elasticSearch({query: '_id:0', fields: 'words', index: 'word'});
-      if (wordRec && Array.isArray(wordRec.hits) && wordRec.hits[0]._source) {
-        this.autocomplete.initialize(function (onReady) {
-          onReady(wordRec.hits[0]._source.words);
-        });
-      }
+      let wordRec = await this.rawElasticSearch({query: '_id:0', fields: 'words', index: 'word'});
+      this.autocomplete.initialize(function (onReady) {
+        onReady(getHits(wordRec, 0, 'words'));
+      });
     }
     let result = [];
     if (this.autocomplete.trie.prefixes) {
@@ -82,18 +84,39 @@ export default class ElasticClient {
   }
 
   /**
+   * Build hierarchy. Lazy load top groups
+   *
+   * @param q
+   * @returns {*}
+   */
+  async elasticHierarchy(q) {
+    if (!this.topGroups[0].name) {
+      for (let i = 0; i <= 9; i++) {
+        let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].q, index: 'systematic'});
+        this.topGroups[i].name = getHits(topRes, 0, '652u')[0];
+      }
+    }
+    let qRes = await this.rawElasticSearch({query: q.split(/[ ]+/).join(' AND ')});
+    let aspekt = {subject: getHits(qRes, 0, '630a'), dk5: getHits(qRes, 0, 'b52m'), text: getHits(qRes, 0, 'b52y')};
+    console.log(aspekt);
+    return qRes;
+  }
+
+  /**
+   * Call Elastic Search and return raw result
    *
    * @param pars
    * @returns {{}}
    */
-  setAndMap(pars) {
-    let ret = {};
-    let defaultPars = this.defaultParameters;
-    let parMap = this.esParMap;
-    Object.keys(defaultPars).forEach(function (key) {
-      ret[parMap[key]] = pars[key] ? pars[key] : defaultPars[key];
-    });
-    return ret;
+  async rawElasticSearch(pars) {
+    let esHits = {};
+    await this.elasticClient.search(setAndMap(pars, this.defaultParameters, this.esParMap))
+      .then(function (body) {
+        esHits = body.hits;
+      }, function (error) {
+        Logger.log.error('ElasticSearch search error. Msg: ' + error.message);
+      });
+    return esHits;
   }
 
 }

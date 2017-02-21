@@ -26,10 +26,10 @@
  * Filter only one dk5 group like
  *   iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json
  *
- * And loadet into Elastic Search like:
- *   curl -XDELETE localhost:9200/dk5
- *   curl -XDELETE localhost:9200/word
+ * And load into Elastic Search like:
+ *   curl -XDELETE localhost:9200/*
  *   curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
+ const bibKatMap = {xk: 'systematic', xe: 'register', xt: 'thesaurus'}
  *
  */
 var fs = require('fs');
@@ -48,6 +48,7 @@ const progress = stdio.progressBar(records.length, 1);
 const outfile = fs.openSync(option.output, 'w');
 const filter = option.filter;
 
+let errors = [];
 let words = {};
 let recno = 0;
 records.forEach(function (record) {
@@ -55,11 +56,14 @@ records.forEach(function (record) {
   progress.tick();
 });
 
+errors.forEach(function(error){
+  console.log(error);
+});
 dump_suggestion_words(words);
 
 fs.closeSync(outfile);
 console.log('\nStart Elastic Search and load data like:\n' +
-  '  curl -XDELETE localhost:9200/dk5\n' +
+  '  curl -XDELETE localhost:9200/*\n' +
   '  curl -XPOST localhost:9200/_bulk --data-binary \'@' + option.output + '\'\n');
 process.exit(0);
 
@@ -104,6 +108,7 @@ function dump_suggestion_words(words) {
  * @param words
  */
 function dumpRecord(id, record, words) {
+  const bibKatMap = {xk: 'systematic', xe: 'register', xt: 'thesaurus'};
   if (record) {
     let start = parseInt(record.substr(12, 5), 10);
     const tags = record.substr(start).split(RS);
@@ -118,8 +123,14 @@ function dumpRecord(id, record, words) {
         collectWords(words, tag, dataRec[tag][dataRec[tag].length - 1]);
       }
     });
-    indexRec.index._id = id;
     let dk5 = Array.isArray(dataRec['652m']) ? dataRec['652m'][0] : '';
+    let bibKat = dataRec['008t'][0];
+    let index = bibKatMap[bibKat] ? bibKatMap[bibKat] : 'nada';
+    if (index === 'nada') {
+      errors.push('Error: unknown bibliographic category (008 *t) "' + bibKat + '" rec id: ' + id);
+    }
+    indexRec.index._id = id;
+    indexRec.index._index = index;
     if (!filter || (dk5 && (filter === dk5.substr(0, filter.length)))) {
       writeRecord(JSON.stringify(indexRec));
       writeRecord(JSON.stringify(dataRec));
