@@ -13,6 +13,11 @@ const APIRouter = new Router();
 
 const ElasticClient = new ElasticClass();
 
+// Small helper function for generating relative urls.
+function generateHierarchyUrl(dk5) {
+  return `/hierarchy/${dk5}`;
+}
+
 // Define handler functions
 async function suggestHandler(ctx) {
   let {q} = ctx.query; // eslint-disable-line no-unused-vars
@@ -20,10 +25,11 @@ async function suggestHandler(ctx) {
     status: 200,
     query: {endpoint: 'suggest'},
     response: [
-      {label: 'Japan', href: ''},
-      {label: 'Japansk litteraturhistorie', href: ''},
-      {label: 'Japansk skønlitteratur', href: ''},
-      {label: 'Japansk sprog', href: ''}
+      {label: 'Japan', href: generateHierarchyUrl(48.29)},
+      {label: 'Japans Historie', href: generateHierarchyUrl(98.29)},
+      {label: 'Japansk litteraturhistorie', href: generateHierarchyUrl(81.969)},
+      {label: 'Japansk skønlitteratur', href: generateHierarchyUrl(88.869)},
+      {label: 'Japansk sprog', href: generateHierarchyUrl(89.969)}
     ],
     suggest: await ElasticClient.elasticSuggest(q)
   };

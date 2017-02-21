@@ -11,6 +11,7 @@ import request from 'superagent';
 import Link from '../Link';
 import {SuggestionsComponent} from '../Suggestions/Suggestions.component';
 
+// Helper function to prevent dispatching requests while a user is typing.
 function deferExecution(func, timeout) {
   let timer = null;
   return function () {
@@ -26,6 +27,7 @@ export class SearchFieldComponent extends Component {
   constructor() {
     super();
 
+    // Load the initial state
     this.state = {
       queryUrl: '',
       query: '',
@@ -34,8 +36,10 @@ export class SearchFieldComponent extends Component {
       selectedSuggestion: -1
     };
 
+    // Bind context where required
     this.onTextEntered = this.onTextEntered.bind(this);
     this.queryWasSubmitted = this.queryWasSubmitted.bind(this);
+    this.onSearchFocus = this.onSearchFocus.bind(this);
     this.onSearchBlurred = this.onSearchBlurred.bind(this);
     this.onSearchKeyUp = this.onSearchKeyUp.bind(this);
     this.selectPreviousSuggestion = this.selectPreviousSuggestion.bind(this);
@@ -44,6 +48,7 @@ export class SearchFieldComponent extends Component {
   }
 
   componentDidMount() {
+    // If the page is loaded with a query, we want write that query into our textfield.
     if (this.props.params.q) {
       this.onTextEntered({
         target: {
@@ -54,6 +59,8 @@ export class SearchFieldComponent extends Component {
     }
   }
 
+  // This function requests the suggestions if it can't find them.
+  // This function is deferred, so it only executes if a timeinterval has lapsed.
   getSuggestions(query) {
     const suggestions = this.state.suggestions;
     suggestions[query] = query;
@@ -71,6 +78,7 @@ export class SearchFieldComponent extends Component {
       });
   }
 
+  // Updates the state of the component and calls getSuggestions
   onTextEntered(evt) {
     const query = evt.target.value;
     const queryUrl = `/search/${encodeURIComponent(query)}/10/0/relevance/dictionary`;
@@ -87,41 +95,71 @@ export class SearchFieldComponent extends Component {
     }
   }
 
+  // Called when the user presses enter or clicks the search button.
   queryWasSubmitted(evt) {
     evt.preventDefault();
     const s = this.state;
-    if (s.selectedSuggestion >= 0 && s.suggestions[s.query] && s.suggestions[s.query][s.selectedSuggestion]) {
-      return this.context.navigate(s.suggestions[s.query][s.selectedSuggestion].href);
+    let link = `#!${this.state.queryUrl}`;
+    if (s.selectedSuggestion >= 0 && s.suggestions[s.query] && s.suggestions[s.query][s.selectedSuggestion] && s.suggestActive) {
+      link = s.suggestions[s.query][s.selectedSuggestion].href;
     }
 
-    return this.context.navigate(`#!${this.state.queryUrl}`);
+    this.setState({
+      suggestActive: false
+    });
+
+    return this.context.navigate(link);
   }
 
+  // Let's the user use arrow keys to select a suggestion.
   selectPreviousSuggestion() {
+    const suggestLength = (this.state.suggestions[this.state.query] || []).length;
+    let newSelection = this.state.selectedSuggestion - 1;
+    if (newSelection < 0) {
+      newSelection = suggestLength - 1;
+    }
+
     this.setState({
-      selectedSuggestion: this.state.selectedSuggestion - 1
+      selectedSuggestion: newSelection
     });
   }
 
+  // Let's the user use arrow keys to select a suggestion.
   selectNextSuggestion() {
+    const suggestLength = (this.state.suggestions[this.state.query] || []).length;
+    let newSelection = this.state.selectedSuggestion + 1;
+    if (newSelection >= suggestLength) {
+      newSelection = 0;
+    }
+
     this.setState({
-      selectedSuggestion: this.state.selectedSuggestion + 1
+      selectedSuggestion: newSelection
     });
   }
 
-  onSearchBlurred() {
-    this.setState({suggestActive: false});
+  // Triggered when user clicks on search field
+  onSearchFocus() {
+    this.setState({suggestActive: true});
   }
 
+  // When a user clicks away from the search field we want to hide the suggestions.
+  onSearchBlurred() {
+    // Wait 100 ms in case the user clicked one of the suggestions
+    setTimeout(() => this.setState({suggestActive: false}), 100);
+  }
+
+  // Listens to keys from searchfield
   onSearchKeyUp(evt) {
     switch (evt.key) {
       case 'Escape': {
         return this.onSearchBlurred();
       }
       case 'ArrowUp': {
+        evt.preventDefault();
         return this.selectPreviousSuggestion();
       }
       case 'ArrowDown': {
+        evt.preventDefault();
         return this.selectNextSuggestion();
       }
       default: {
@@ -143,7 +181,8 @@ export class SearchFieldComponent extends Component {
               type="text"
               onChange={this.onTextEntered}
               onBlur={this.onSearchBlurred}
-              onKeyUp={this.onSearchKeyUp}
+              onFocus={this.onSearchFocus}
+              onKeyDown={this.onSearchKeyUp}
               className="search-field"
               placeholder="Skriv emne"
               value={this.state.query}
@@ -169,13 +208,11 @@ export class SearchFieldComponent extends Component {
 }
 
 SearchFieldComponent.displayName = 'Search';
-
 SearchFieldComponent.propTypes = {
   search: PropTypes.object,
   suggest: PropTypes.object,
   params: PropTypes.object
 };
-
 SearchFieldComponent.defaultProps = {
   search: {},
   suggest: {},
