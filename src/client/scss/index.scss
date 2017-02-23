@@ -1,5 +1,22 @@
 // Import fonts
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700');
+
+/* Config */
+@import "config/config";
+
+/* Includes */
+@import 'includes/buttons';
+@import 'includes/flex';
+@import 'includes/form-group';
+@import 'includes/gutter';
+@import 'includes/spacer';
+@import 'includes/spinner';
+
+/* Globals */
+@import 'globals/resets';
+@import 'globals/typography';
+@import 'globals/forms';
+@import 'globals/globals';
 
 // Import component styles
 @import 'components/Hierarchy';

@@ -91,8 +91,10 @@ function HierarchyLevel({hierarchy}) {
   const {dk5, name, contains, data, isSelected} = hierarchy;
   return (
     <div className={`hierarchy-level ${isSelected && 'selected' || ''}`}>
-      <span className="name">{name}</span>
-      <span className="dk5">({dk5})</span>
+      <h2>
+        <span className="name">{name}</span>
+        <span className="dk5">{dk5}</span>
+      </h2>
       {contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.dk5}} />) }
       {data && <HierarchyElement {...data} />}
     </div>
@@ -102,7 +104,8 @@ function HierarchyLevel({hierarchy}) {
 export function HierarchyContainerComponent() {
   const hierarchy = hierarchyMock;
   return (
-    <div>
+    <div className="hierarchy container">
+      <h1>Geografi og rejser. Lokalhistorie <span className="dk5 blue">40-49</span></h1>
       {hierarchy.map(el => <HierarchyLevel {...{hierarchy: el, key: el.dk5}} />)}
     </div>
   );

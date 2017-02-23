@@ -1,8 +1,36 @@
-.hierarchy-level {
-  padding-left: 3rem;
+.hierarchy {
+  padding: 1rem;
 }
 
-.hierarchy-el {
-  background-color: blue;
-  color: white;
+.hierarchy-level {
+  margin: 2rem 0;
+  padding-left: 3rem;
+  .selected {
+    padding: 2rem;
+    background-color: $blue;
+    color: white;
+    .dk5 {
+      background-color: white;
+      padding: 0.3rem;
+    }
+  }
+  .dk5 {
+    color: $blue;
+    display: inline-block;
+    margin-left: 1rem;
+  }
+}
+
+.hierarchy-topics {
+  padding-left: 0;
+  li {
+    @extend .h3;
+    margin-bottom: 1rem;
+    list-style-type: none;
+    &:before {
+      display: inline-block;
+      content: "-";
+      padding: 0 1rem 0 3rem;
+    }
+  }
 }
