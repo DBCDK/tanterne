@@ -4,6 +4,7 @@
  */
 
 import React, {Component} from 'react';
+import State from '../../state/state';
 
 /**
  * Topics in Hierarchy element
@@ -101,15 +102,15 @@ function HierarchyLevel({hierarchy}) {
   )
 }
 
-export function HierarchyContainerComponent() {
-  const hierarchy = hierarchyMock;
+export function HierarchyContainerComponent({hierarchy = hierarchyMock, actions}) {
   return (
     <div className="hierarchy container">
       <h1>Geografi og rejser. Lokalhistorie <span className="dk5 blue">40-49</span></h1>
       {hierarchy.map(el => <HierarchyLevel {...{hierarchy: el, key: el.dk5}} />)}
     </div>
   );
-
 }
 
 HierarchyContainerComponent.diplayName = 'Hierarchy';
+
+export default state(HierarchyContainerComponent, 'hierachy');
