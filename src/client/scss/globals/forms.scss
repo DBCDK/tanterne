@@ -1,0 +1,15 @@
+input.underline {
+  transition: border 200ms;
+  color: $text-color;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid $text-color;
+  padding: 0;
+  width: 100%;
+  &:focus {
+    outline: none;
+    border-bottom-color: $blue;
+  }
+}
