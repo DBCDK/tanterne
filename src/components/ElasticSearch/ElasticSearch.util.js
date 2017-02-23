@@ -11,7 +11,7 @@
  * @returns {*}
  */
 export function getEsField(esRes, pos, fld) {
-  if (esRes && Array.isArray(esRes.hits) && esRes.hits[pos] && esRes.hits[pos]._source &&  Array.isArray(esRes.hits[pos]._source[fld])) {
+  if (esRes && Array.isArray(esRes.hits) && esRes.hits[pos] && esRes.hits[pos]._source && Array.isArray(esRes.hits[pos]._source[fld])) {
     return esRes.hits[pos]._source[fld];
   }
   return [];

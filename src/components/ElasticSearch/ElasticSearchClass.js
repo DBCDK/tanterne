@@ -1,3 +1,11 @@
+/**
+ * @file
+ *
+ * Interface for Elastic Search
+ *
+ * Call loadTabsFromElasticSearch() after class instantiation, to load tables. Otherwise they'll lazy load
+ *
+ */
 import {CONFIG} from '../../utils/config.util';
 import Levenshtein from 'fast-levenshtein';
 import ElasticSearch from 'elasticsearch';
@@ -9,13 +17,16 @@ const Logger = require('dbc-node-logger');
 export default class ElasticClient {
 
   /**
-   * setup ES and autocomplete. Autocomplete is lazy-loaded
+   * setup ES and autocomplete object.
    */
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
-    this.autocomplete = Autocomplete.connectAutocomplete();
-    this.defaultParameters = {query: '', limit: 40, offset: 0, fields: '008t,6*,b*,parent', index: 'register', sort: ''};
+
+    this.defaultParameters = {query: '', limit: 40, offset: 0, fields: '6*,b*', index: 'register', sort: ''};
     this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
+
+    /* loadTabsFromElasticSearch() loads the following */
+    this.autocomplete = Autocomplete.connectAutocomplete();
     this.topGroups = {
       0: {q: '00-07', name: ''},
       1: {q: '10-19', name: ''},
@@ -105,7 +116,7 @@ export default class ElasticClient {
    */
   async elasticHierarchy(q) {
     await this.loadTabsFromElasticSearch();
-    let qRes = await this.rawElasticSearch({query: q.split(/[ ]+/).join(' AND '), index:'register'});
+    let qRes = await this.rawElasticSearch({query: q.split(/[ ]+/).join(' AND '), index: 'register'});
     let subject = getEsField(qRes, 0, '630a');
     let dk5 = getEsField(qRes, 0, '652m');
     let text = getEsField(qRes, 0, '630a');
@@ -123,9 +134,17 @@ export default class ElasticClient {
    */
   async loadTabsFromElasticSearch() {
     if (Object.keys(this.dk5Tab).length === 0) {
-      const syst = await this.rawElasticSearch({query: '652j:*', limit: 9999, fields: '652m, 652j, parent', index: 'systematic'});
+      const syst = await this.rawElasticSearch({
+        query: '652j:*',
+        limit: 9999,
+        fields: '652*, parent',
+        index: 'systematic'
+      });
       for (let n = 0; n < syst.hits.length; n++) {
-        this.dk5Tab[getEsField(syst, n, '652m')[0]] = {title: getEsField(syst, n, 'parent')[0], index: getEsField(syst, n, '652j')[0]};
+        this.dk5Tab[getEsField(syst, n, '652m')[0]] = {
+          title: getEsField(syst, n, 'parent')[0],
+          index: getEsField(syst, n, '652j')[0]
+        };
       }
     }
     if (!this.autocomplete.trie.prefixes) {
