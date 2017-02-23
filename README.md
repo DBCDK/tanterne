@@ -24,6 +24,7 @@ Filter only one dk5 group like
 
 ###Load Elastic Search
 * curl -XDELETE localhost:9200/*
+* curl -XPUT localhost:9200/systematic -d '{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}'
 * curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
  
 ##Development

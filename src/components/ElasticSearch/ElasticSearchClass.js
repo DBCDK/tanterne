@@ -2,7 +2,7 @@ import {CONFIG} from '../../utils/config.util';
 import Levenshtein from 'fast-levenshtein';
 import ElasticSearch from 'elasticsearch';
 import Autocomplete from 'autocomplete';
-import {getHits, setAndMap} from './ElasticSearch.util';
+import {getEsField, setAndMap} from './ElasticSearch.util';
 
 const Logger = require('dbc-node-logger');
 
@@ -14,8 +14,8 @@ export default class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
     this.autocomplete = Autocomplete.connectAutocomplete();
-    this.defaultParameters = {query: '', limit: 40, offset: 0, fields: '008t,6*,b*', index: 'register'};
-    this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index'};
+    this.defaultParameters = {query: '', limit: 40, offset: 0, fields: '008t,6*,b*,parent', index: 'register', sort: ''};
+    this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
     this.topGroups = {
       0: {q: '00-07', name: ''},
       1: {q: '10-19', name: ''},
@@ -28,6 +28,7 @@ export default class ElasticClient {
       8: {q: '80-89', name: ''},
       9: {q: '90-99', name: ''}
     };
+    this.dk5Tab = {};
   }
 
   /**
@@ -55,7 +56,25 @@ export default class ElasticClient {
    * @returns {*}
    */
   async elasticSearch(pars) {
-    return await this.rawElasticSearch(pars);
+    await this.loadTabsFromElasticSearch();
+    const res = [];
+    let qRes = await this.rawElasticSearch(pars);
+    for (let n = 0; n < qRes.hits.length; n++) {
+      const entryTitle = getEsField(qRes, n, '630a');
+      let dk5 = getEsField(qRes, n, 'b52m');
+      let subTitle = getEsField(qRes, n, 'b52y');
+      if (dk5.length === 0) {
+        dk5 = getEsField(qRes, n, '652m');
+        subTitle = getEsField(qRes, n, '630a');
+      }
+      const items = [];
+      for (let i = 0; i < dk5.length; i++) {
+        items.push({index: dk5[i], title: subTitle[i], parent: this.dk5Tab[dk5[i]]});
+      }
+      console.log('subj', entryTitle, 'it', items);
+      res.push({title: entryTitle, items: items});
+    }
+    return res;
   }
 
   /**
@@ -65,12 +84,7 @@ export default class ElasticClient {
    * @returns {*}
    */
   async elasticSuggest(term) {
-    if (!this.autocomplete.trie.prefixes) {
-      let wordRec = await this.rawElasticSearch({query: '_id:0', fields: 'words', index: 'word'});
-      this.autocomplete.initialize(function (onReady) {
-        onReady(getHits(wordRec, 0, 'words'));
-      });
-    }
+    await this.loadTabsFromElasticSearch();
     let result = [];
     if (this.autocomplete.trie.prefixes) {
       this.autocomplete.search(term).forEach(function (match) {
@@ -90,16 +104,42 @@ export default class ElasticClient {
    * @returns {*}
    */
   async elasticHierarchy(q) {
+    await this.loadTabsFromElasticSearch();
+    let qRes = await this.rawElasticSearch({query: q.split(/[ ]+/).join(' AND '), index:'register'});
+    let subject = getEsField(qRes, 0, '630a');
+    let dk5 = getEsField(qRes, 0, '652m');
+    let text = getEsField(qRes, 0, '630a');
+    if (dk5.length === 0) {
+      dk5 = getEsField(qRes, 0, 'b52m');
+      text = getEsField(qRes, 0, 'b52y');
+    }
+    let aspekt = {subject: subject, dk5: dk5, text: text};
+    console.log(aspekt);
+    return qRes;
+  }
+
+  /**
+   * load systematic into dk5Tab, words for completion suggester and top group names
+   */
+  async loadTabsFromElasticSearch() {
+    if (Object.keys(this.dk5Tab).length === 0) {
+      const syst = await this.rawElasticSearch({query: '652j:*', limit: 9999, fields: '652m, 652j, parent', index: 'systematic'});
+      for (let n = 0; n < syst.hits.length; n++) {
+        this.dk5Tab[getEsField(syst, n, '652m')[0]] = {title: getEsField(syst, n, 'parent')[0], index: getEsField(syst, n, '652j')[0]};
+      }
+    }
+    if (!this.autocomplete.trie.prefixes) {
+      let wordRec = await this.rawElasticSearch({query: '_id:0', fields: 'words', index: 'word'});
+      this.autocomplete.initialize(function (onReady) {
+        onReady(getEsField(wordRec, 0, 'words'));
+      });
+    }
     if (!this.topGroups[0].name) {
       for (let i = 0; i <= 9; i++) {
         let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].q, index: 'systematic'});
-        this.topGroups[i].name = getHits(topRes, 0, '652u')[0];
+        this.topGroups[i].name = getEsField(topRes, 0, '652u')[0];
       }
     }
-    let qRes = await this.rawElasticSearch({query: q.split(/[ ]+/).join(' AND ')});
-    let aspekt = {subject: getHits(qRes, 0, '630a'), dk5: getHits(qRes, 0, 'b52m'), text: getHits(qRes, 0, 'b52y')};
-    console.log(aspekt);
-    return qRes;
   }
 
   /**
