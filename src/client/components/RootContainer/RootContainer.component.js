@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import {Router, Route} from 'react-enroute';
 
 // Components
-import {HierarchyContainerComponent} from '../HierarchyContainer/HierarchyContainer.component';
+import HierarchyContainerComponent from '../HierarchyContainer/HierarchyContainer.component';
 import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchResultsContainer.component';
 import {TopBarComponent} from '../TopBar/TopBar.component';
 

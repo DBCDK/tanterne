@@ -4,7 +4,7 @@
  */
 
 import React, {Component} from 'react';
-import State from '../../state/state';
+import {wrapper} from '../../state/state';
 
 /**
  * Topics in Hierarchy element
@@ -44,45 +44,6 @@ function HierarchyElementDescription() {
 
 }
 
-const hierarchyMock = [{
-  name: 'Andre verdensdele',
-  dk5: '48',
-  contains: [
-    {
-      name: 'Asien',
-      dk5: '48.1',
-      contains: [
-        {
-          name: 'Sydasien',
-          dk5: '48.23',
-          contains: [
-            {
-              name: 'Indien',
-              dk5: '48.231',
-              isSelected: true,
-              data: {
-                description: 'This is a description',
-                topics: ['Andemanerne', 'Bengalen', 'Ganges', 'Goa', 'Kashmir', 'Laccadiverne']
-              }
-            },
-            {
-              name: 'Bangladesh',
-              dk5: '48.233'
-            },
-            {
-              name: 'Bhutan',
-              dk5: '48.235'
-            },
-            {
-              name: 'Maldiverne',
-              dk5: '48.238'
-            },
-          ]
-        }
-      ]
-    }]
-}];
-
 /**
  * Level in the hierarchy
  *
@@ -102,9 +63,9 @@ function HierarchyLevel({hierarchy}) {
   )
 }
 
-export function HierarchyContainerComponent({hierarchy = hierarchyMock, actions}) {
+export function HierarchyContainerComponent({hierarchy = [], actions}) {
   return (
-    <div className="hierarchy container">
+    <div className="hierarchy container" onClick={actions.getHierarchy}>
       <h1>Geografi og rejser. Lokalhistorie <span className="dk5 blue">40-49</span></h1>
       {hierarchy.map(el => <HierarchyLevel {...{hierarchy: el, key: el.dk5}} />)}
     </div>
@@ -113,4 +74,4 @@ export function HierarchyContainerComponent({hierarchy = hierarchyMock, actions}
 
 HierarchyContainerComponent.diplayName = 'Hierarchy';
 
-export default state(HierarchyContainerComponent, 'hierachy');
+export default wrapper(HierarchyContainerComponent, ['hierarchy']);
