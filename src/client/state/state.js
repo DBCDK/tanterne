@@ -1,4 +1,6 @@
 import React from 'react';
+import StateWrapper from './stateWrapper.component';
+
 class State {
 
   constructor () {
@@ -75,34 +77,8 @@ class State {
   }
 }
 
-const state = new State();
-
-export default state;
-
-export class StateWrapper extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = state.getState(props.listenTo);
-  }
-
-  componentDidMount() {
-    this.listener = state.listenTo(this.props.listenTo, (newState) => {
-      this.setState(newState);
-    });
-  }
-
-  componentWillUnmount() {
-
-  }
-
-  render() {
-    const {Component} = this.props;
-    console.log(Component);
-    return <Component {...this.state} actions={state} />;
-  }
-}
+const globalState = new State();
 
 export function wrapper(Component, listenTo) {
-  return () => <StateWrapper Component={Component} listenTo={listenTo} />
+  return () => <StateWrapper Component={Component} listenTo={listenTo} globalState={globalState} />
 }
