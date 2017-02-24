@@ -19,7 +19,7 @@ setenv NLS_LANG AMERICAN_DENMARK.WE8ISO8859P1 ; dump_v3 <user>/<password>@<some.
 ###Convert
 * iso2709ToElasticLoad -i dk5_total.iso2709 -o elastic_bulk_load.json
 
-Filter only one dk5 group like
+Filter only one dk5 group like (for test purposes)
 * iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json
 
 ###Load Elastic Search
