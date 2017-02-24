@@ -132,8 +132,8 @@ export default class ElasticClient {
       text = getEsField(qRes, 0, 'b52y');
     }
     let aspekt = {subject: subject, dk5: dk5, text: text};
-    console.log(aspekt);
-    return qRes;
+    // console.log(aspekt);
+    return aspekt;
   }
 
   /**
