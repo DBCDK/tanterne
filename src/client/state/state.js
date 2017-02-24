@@ -77,6 +77,8 @@ class State {
   }
 }
 
+setTimeout(() => globalState.getHierarchy(), 200);
+
 const globalState = new State();
 
 export function wrapper(Component, listenTo) {

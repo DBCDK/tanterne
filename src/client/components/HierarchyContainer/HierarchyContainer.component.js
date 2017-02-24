@@ -5,6 +5,9 @@
 
 import React, {Component} from 'react';
 import {wrapper} from '../../state/state';
+import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.component';
+import {Layout} from '../General/layout.component';
+
 
 /**
  * Topics in Hierarchy element
@@ -19,6 +22,27 @@ function HierarchyElementTopics({topics}) {
   );
 }
 
+
+/**
+ * Description of Hierarchy element
+ *
+ * @constructor
+ */
+function HierarchyElementDescription({description}) {
+  return (
+    <div className="hierarchy-description">
+      <ToggleContainer>
+        <Layout className="pa2 abs pos-top pos-right">
+          <ToggleButton showText="Se beskrivelse" hideText="Skjul beskrivelse"/>
+        </Layout>
+        <ToggleContent>
+          {description}
+        </ToggleContent>
+      </ToggleContainer>
+    </div>
+  );
+}
+
 /**
  * The currently selected hierarchy element
  *
@@ -28,21 +52,13 @@ function HierarchyElement({topics, description}) {
 
   return (
     <div class="hierarchy-el">
-      <div className="description">{description}</div>
+      <HierarchyElementDescription description={description}/>
       <HierarchyElementTopics topics={topics}/>
     </div>
   );
 
 }
 
-/**
- * Description of Hierarchy element
- *
- * @constructor
- */
-function HierarchyElementDescription() {
-
-}
 
 /**
  * Level in the hierarchy
@@ -52,7 +68,7 @@ function HierarchyElementDescription() {
 function HierarchyLevel({hierarchy}) {
   const {dk5, name, contains, data, isSelected} = hierarchy;
   return (
-    <div className={`hierarchy-level ${isSelected && 'selected' || ''}`}>
+    <div className={`hierarchy-level rel ${isSelected && 'selected' || ''}`}>
       <h2>
         <span className="name">{name}</span>
         <span className="dk5">{dk5}</span>
@@ -63,9 +79,17 @@ function HierarchyLevel({hierarchy}) {
   )
 }
 
-export function HierarchyContainerComponent({hierarchy = [], actions}) {
+/**
+ * Hierarchy container component.
+ *
+ * @param hierarchy
+ * @param globalState
+ * @returns {XML}
+ * @constructor
+ */
+function HierarchyContainerComponent({hierarchy = [], globalState}) {
   return (
-    <div className="hierarchy container" onClick={actions.getHierarchy}>
+    <div className="hierarchy container">
       <h1>Geografi og rejser. Lokalhistorie <span className="dk5 blue">40-49</span></h1>
       {hierarchy.map(el => <HierarchyLevel {...{hierarchy: el, key: el.dk5}} />)}
     </div>

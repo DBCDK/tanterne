@@ -1,6 +1,6 @@
 import React from 'react';
 
-export class StateWrapper extends React.Component {
+export default class StateWrapper extends React.Component {
 
   constructor(props) {
     super(props);
