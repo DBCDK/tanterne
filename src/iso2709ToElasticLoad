@@ -26,10 +26,7 @@
  * Filter only one dk5 group like
  *   iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json
  *
- * And loadet into Elastic Search like:
- *   curl -XDELETE localhost:9200/dk5
- *   curl -XDELETE localhost:9200/word
- *   curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
+ * See below for how to load Elastic Search.
  *
  */
 var fs = require('fs');
@@ -48,18 +45,28 @@ const progress = stdio.progressBar(records.length, 1);
 const outfile = fs.openSync(option.output, 'w');
 const filter = option.filter;
 
-let words = {};
-let recno = 0;
+const dk5Buf = [];
+const errors = [];
+const words = {};
+
 records.forEach(function (record) {
-  dumpRecord(++recno, record.trim(), words);
+  parseIso2709Record(record.trim(), words);
   progress.tick();
 });
 
-dump_suggestion_words(words);
+errors.forEach(function (error) {
+  console.log(error);
+});
+
+const dk5Tab = createDk5Tab();
+
+dumpRecords();
+dumpSuggestionWords(words);
 
 fs.closeSync(outfile);
 console.log('\nStart Elastic Search and load data like:\n' +
-  '  curl -XDELETE localhost:9200/dk5\n' +
+  '  curl -XDELETE localhost:9200/*\n' +
+  '  curl -XPUT localhost:9200/systematic -d \'{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}\'\n' +
   '  curl -XPOST localhost:9200/_bulk --data-binary \'@' + option.output + '\'\n');
 process.exit(0);
 
@@ -84,11 +91,56 @@ function getOptions() {
 }
 
 /**
+ * Create index of dk5 names
+ *
+ * @returns {{}}
+ */
+function createDk5Tab() {
+  const tab = {};
+  dk5Buf.forEach(function (dk5) {
+    let bibKat = dk5['008t'][0];
+    if (bibKat === 'xk') {   // only for systematic
+      let number = Array.isArray(dk5['652m']) ? dk5['652m'][0] : '';
+      let text = Array.isArray(dk5['652u']) ? dk5['652u'][0] : '';
+      if (number && text) {
+        tab[number] = text;
+      }
+    }
+  });
+  return tab;
+}
+
+/**
+ * Enrich with parent name and dump record in correct index
+ */
+function dumpRecords() {
+  const bibKatMap = {xk: 'systematic', xe: 'register', xt: 'thesaurus'};
+  let recno = 1;
+  dk5Buf.forEach(function (dk5) {
+    let bibKat = dk5['008t'][0];
+    let number = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
+    if (bibKat === 'xk' && dk5Tab[number]) {
+      dk5['parent'] = [dk5Tab[number]];
+    }
+    let index = bibKatMap[bibKat] ? bibKatMap[bibKat] : 'nada';
+    if (index === 'nada') {
+      errors.push('Error: unknown bibliographic category (008 *t) "' + bibKat + '" rec id: ' + recno);
+    }
+    indexRec.index._id = recno++;
+    indexRec.index._index = index;
+    if (!filter || (number && (filter === number.substr(0, filter.length)))) {
+      writeRecord(JSON.stringify(indexRec));
+      writeRecord(JSON.stringify(dk5));
+    }
+  });
+}
+
+/**
  * Dump words into doc 0
  *
  * @param words
  */
-function dump_suggestion_words(words) {
+function dumpSuggestionWords(words) {
   console.log('Dump', Object.keys(words).length, 'words for suggestion');
   indexRec.index._id = 0;
   indexRec.index._index = 'word';
@@ -99,11 +151,10 @@ function dump_suggestion_words(words) {
 /**
  * Split one record into tag-lines and write converted record
  *
- * @param id
  * @param record
  * @param words
  */
-function dumpRecord(id, record, words) {
+function parseIso2709Record(record, words) {
   if (record) {
     let start = parseInt(record.substr(12, 5), 10);
     const tags = record.substr(start).split(RS);
@@ -118,12 +169,7 @@ function dumpRecord(id, record, words) {
         collectWords(words, tag, dataRec[tag][dataRec[tag].length - 1]);
       }
     });
-    indexRec.index._id = id;
-    let dk5 = Array.isArray(dataRec['652m']) ? dataRec['652m'][0] : '';
-    if (!filter || (dk5 && (filter === dk5.substr(0, filter.length)))) {
-      writeRecord(JSON.stringify(indexRec));
-      writeRecord(JSON.stringify(dataRec));
-    }
+    dk5Buf.push(dataRec);
   }
 }
 
