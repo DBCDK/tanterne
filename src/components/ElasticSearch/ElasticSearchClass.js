@@ -22,7 +22,7 @@ export default class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultParameters = {query: '', limit: 40, offset: 0, fields: '6*,b*', index: 'register', sort: ''};
+    this.defaultParameters = {query: '', limit: 40, offset: 0, fields: '001a,6*,b*', index: 'register', sort: ''};
     this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
 
     /* loadTabsFromElasticSearch() loads the following */
@@ -71,19 +71,26 @@ export default class ElasticClient {
     const res = [];
     let qRes = await this.rawElasticSearch(pars);
     for (let n = 0; n < qRes.hits.length; n++) {
-      const entryTitle = getEsField(qRes, n, '630a');
+      let entryTitle = '';
+      ['630a', '633a', '640a', '600a', '610a'].forEach(function (tag) {
+        if (entryTitle.length === 0) {
+          entryTitle = getEsField(qRes, n, tag)[0];
+        }
+      });
       let dk5 = getEsField(qRes, n, 'b52m');
-      let subTitle = getEsField(qRes, n, 'b52y');
+      let id = getEsField(qRes, n, '001a')[0];
       if (dk5.length === 0) {
-        dk5 = getEsField(qRes, n, '652m');
-        subTitle = getEsField(qRes, n, '630a');
+        dk5 = getEsField(qRes, n, '652m')[0];
+        res.push({title: entryTitle, id: id, index: dk5, parent: this.dk5Tab[dk5]});
       }
-      const items = [];
-      for (let i = 0; i < dk5.length; i++) {
-        items.push({index: dk5[i], title: subTitle[i], parent: this.dk5Tab[dk5[i]]});
+      else {
+        let subTitle = getEsField(qRes, n, 'b52y');
+        const items = [];
+        for (let i = 0; i < dk5.length; i++) {
+          items.push({index: dk5[i], title: subTitle[i], parent: this.dk5Tab[dk5[i]]});
+        }
+        res.push({title: entryTitle, id: id, items: items});
       }
-      console.log('subj', entryTitle, 'it', items);
-      res.push({title: entryTitle, items: items});
     }
     return res;
   }
@@ -142,8 +149,8 @@ export default class ElasticClient {
       });
       for (let n = 0; n < syst.hits.length; n++) {
         this.dk5Tab[getEsField(syst, n, '652m')[0]] = {
-          title: getEsField(syst, n, 'parent')[0],
-          index: getEsField(syst, n, '652j')[0]
+          index: getEsField(syst, n, '652j')[0],
+          title: getEsField(syst, n, 'parent')[0]
         };
       }
     }
