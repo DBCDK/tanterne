@@ -39,10 +39,12 @@ async function suggestHandler(ctx) {
 }
 
 async function hierarchyHandler(ctx) {
+  let {q} = ctx.query;
   const response = {
     status: 200,
     query: {endpoint: 'hierarchy'},
-    response: {}
+    response: {},
+    result: await ElasticClient.elasticHierarchy(q)
   };
 
   ctx.set('Content-Type', 'application/json');
