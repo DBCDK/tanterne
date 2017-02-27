@@ -70,7 +70,7 @@ export default class ElasticClient {
   async elasticSearch(pars) {
     await this.loadTabsFromElasticSearch();
     const res = [];
-    pars.query =  pars.query.split(/[ ]+/).join(' AND ');   // force AND operator between words
+    pars.query = pars.query.split(/[ ]+/).join(' AND ');   // force AND operator between words
     const esRes = await this.rawElasticSearch(pars);
     for (let n = 0; n < esRes.hits.length; n++) {
       res.push(esUtil.parseRegisterRecord(esRes, n, this.dk5Syst));
@@ -120,7 +120,7 @@ export default class ElasticClient {
           if (idx === q) {
             item = Object.assign(item, {items: regRecords}, {children: children});
           }
-          parents.push(item)
+          parents.push(item);
         }
       });
       parents = parents.sort(function (a, b) {
@@ -130,7 +130,7 @@ export default class ElasticClient {
       // collect the hierarchy from parent and to the top
       let lastChild = this.dk5Syst[parent.index].index;
       hierarchy = {selected: q, items: parents};
-      while (parent = this.dk5Syst[parent.parentIndex]) {
+      while (parent = this.dk5Syst[parent.parentIndex]) {         // eslint-disable-line no-cond-assign
         hierarchy = Object.assign({index: parent.index, title: parent.title}, {children: [hierarchy]});
         lastChild = parent.index;
       }

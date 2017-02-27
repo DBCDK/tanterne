@@ -80,12 +80,11 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   if (aspectDk5.length === 0) {
     return {title: entryTitle, id: id, index: dk5, parent: dk5Tab[dk5]};
   }
-  else {
-    const aspectTitle = getEsField(esRes, pos, 'b52y');
-    const items = [];
-    for (let i = 0; i < aspectDk5.length; i++) {
-      items.push({index: aspectDk5[i], title: aspectTitle[i], parent: dk5Tab[aspectDk5[i]]});
-    }
-    return {title: entryTitle, id: id, index: dk5, parent: Object.assign({}, dk5Tab[dk5]), items: items};
+
+  const aspectTitle = getEsField(esRes, pos, 'b52y');
+  const items = [];
+  for (let i = 0; i < aspectDk5.length; i++) {
+    items.push({index: aspectDk5[i], title: aspectTitle[i], parent: dk5Tab[aspectDk5[i]]});
   }
+  return {title: entryTitle, id: id, index: dk5, parent: Object.assign({}, dk5Tab[dk5]), items: items};
 }
