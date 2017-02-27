@@ -18,14 +18,14 @@ async function suggestHandler(ctx) {
   let {q} = ctx.query; // eslint-disable-line no-unused-vars
   const response = {
     status: 200,
-    query: {endpoint: 'suggest'},
+    parameters: {endpoint: 'suggest', query: q},
+    result: await ElasticClient.elasticSuggest(q),
     response: [
       {label: 'Japan', href: ''},
       {label: 'Japansk litteraturhistorie', href: ''},
       {label: 'Japansk skønlitteratur', href: ''},
       {label: 'Japansk sprog', href: ''}
-    ],
-    suggest: await ElasticClient.elasticSuggest(q)
+    ]
   };
 
   ctx.set('Content-Type', 'application/json');
@@ -36,7 +36,7 @@ async function hierarchyHandler(ctx) {
   let {q} = ctx.query;
   const response = {
     status: 200,
-    query: {endpoint: 'hierarchy'},
+    parameters: {endpoint: 'hierarchy', query: q},
     response: {},
     result: await ElasticClient.elasticHierarchy(q)
   };
@@ -89,20 +89,8 @@ async function searchHandler(ctx) {
   if (errors === 0) {
     const response = {
       status: 200,
-      query: {
-        endpoint: 'search',
-        q: q
-      },
+      parameters: {endpoint: 'search', query: q, limit: limit, offset: offset},
       correction: {},
-      response: [{
-        title: '65.2 Regnskabsføring i alm.',
-        dk5: {index: '65.2', title: 'Regnskabsføring i alm.'},
-        items: []
-      }, {
-        title: '65.126 Forbrugerbekyttelse i alm.',
-        dk5: {index: '65.126', title: 'Forbrugerbekyttelse i alm.'},
-        items: []
-      }],
       elasticStatus: await ElasticClient.elasticPing(),
       result: await ElasticClient.elasticSearch({query: q, limit: limit, offset: offset})
     };

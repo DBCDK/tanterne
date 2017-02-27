@@ -10,7 +10,7 @@ import {CONFIG} from '../../utils/config.util';
 import Levenshtein from 'fast-levenshtein';
 import ElasticSearch from 'elasticsearch';
 import Autocomplete from 'autocomplete';
-import {getEsField, setAndMap} from './ElasticSearch.util';
+import * as esUtil from './ElasticSearch.util';
 
 const Logger = require('dbc-node-logger');
 
@@ -22,24 +22,25 @@ export default class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultParameters = {query: '', limit: 40, offset: 0, fields: '001a,6*,b*', index: 'register', sort: ''};
+    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,b*', index: 'register', sort: ''};
     this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
 
     /* loadTabsFromElasticSearch() loads the following */
+    this.vocabulary = {};
     this.autocomplete = Autocomplete.connectAutocomplete();
     this.topGroups = {
-      0: {q: '00-07', name: ''},
-      1: {q: '10-19', name: ''},
-      2: {q: '20-29', name: ''},
-      3: {q: '30-39', name: ''},
-      4: {q: '40-49', name: ''},
-      5: {q: '50-59', name: ''},
-      6: {q: '60-69', name: ''},
-      7: {q: '70-79', name: ''},
-      8: {q: '80-89', name: ''},
-      9: {q: '90-99', name: ''}
+      0: {index: '00-07', title: ''},
+      1: {index: '10-19', title: ''},
+      2: {index: '20-29', title: ''},
+      3: {index: '30-39', title: ''},
+      4: {index: '40-49', title: ''},
+      5: {index: '50-59', title: ''},
+      6: {index: '60-69', title: ''},
+      7: {index: '70-79', title: ''},
+      8: {index: '80-89', title: ''},
+      9: {index: '90-99', title: ''}
     };
-    this.dk5Tab = {};
+    this.dk5Syst = {};
   }
 
   /**
@@ -69,30 +70,73 @@ export default class ElasticClient {
   async elasticSearch(pars) {
     await this.loadTabsFromElasticSearch();
     const res = [];
-    let qRes = await this.rawElasticSearch(pars);
-    for (let n = 0; n < qRes.hits.length; n++) {
-      let entryTitle = '';
-      ['630a', '633a', '640a', '600a', '610a'].forEach(function (tag) {
-        if (entryTitle.length === 0) {
-          entryTitle = getEsField(qRes, n, tag)[0];
-        }
-      });
-      let dk5 = getEsField(qRes, n, 'b52m');
-      let id = getEsField(qRes, n, '001a')[0];
-      if (dk5.length === 0) {
-        dk5 = getEsField(qRes, n, '652m')[0];
-        res.push({title: entryTitle, id: id, index: dk5, parent: this.dk5Tab[dk5]});
-      }
-      else {
-        let subTitle = getEsField(qRes, n, 'b52y');
-        const items = [];
-        for (let i = 0; i < dk5.length; i++) {
-          items.push({index: dk5[i], title: subTitle[i], parent: this.dk5Tab[dk5[i]]});
-        }
-        res.push({title: entryTitle, id: id, items: items});
-      }
+    pars.query =  pars.query.split(/[ ]+/).join(' AND ');   // force AND operator between words
+    const esRes = await this.rawElasticSearch(pars);
+    for (let n = 0; n < esRes.hits.length; n++) {
+      res.push(esUtil.parseRegisterRecord(esRes, n, this.dk5Syst));
     }
     return res;
+  }
+
+  /**
+   * Build hierarchy.
+   *
+   * @param q
+   * @returns {*}
+   */
+  async elasticHierarchy(q) {
+    await this.loadTabsFromElasticSearch();
+    let hierarchy = {};
+    let esRes = await this.rawElasticSearch({query: '652m:"' + q + '"', index: 'register'});
+    if (esRes.total) {
+      // collect register records refered to
+      let regRecords = [];
+      for (let n = 0; n < esRes.hits.length; n++) {
+        const syst = esUtil.parseRegisterRecord(esRes, n, this.dk5Syst);
+        regRecords.push({index: syst.index, title: syst.title});
+      }
+      regRecords = regRecords.sort(function (a, b) {
+        return (a.title > b.title ? 1 : -1);
+      });
+
+      // collect systematic for children
+      const dk5Syst = this.dk5Syst;
+      let children = [];
+      Object.keys(dk5Syst).forEach(function (idx) {
+        if (dk5Syst[idx].parentIndex === q) {
+          children.push({index: dk5Syst[idx].index, title: dk5Syst[idx].title});
+        }
+      });
+      children = children.sort(function (a, b) {
+        return (a.title > b.title ? 1 : -1);
+      });
+
+      // collect systematic for parents
+      let parent = this.dk5Syst[q];
+      let parents = [];
+      Object.keys(dk5Syst).forEach(function (idx) {
+        if (dk5Syst[idx].parentIndex === parent.parentIndex) {
+          let item = {index: dk5Syst[idx].index, title: dk5Syst[idx].title};
+          if (idx === q) {
+            item = Object.assign(item, {items: regRecords}, {children: children});
+          }
+          parents.push(item)
+        }
+      });
+      parents = parents.sort(function (a, b) {
+        return (a.title > b.title ? 1 : -1);
+      });
+
+      // collect the hierarchy from parent and to the top
+      let lastChild = this.dk5Syst[parent.index].index;
+      hierarchy = {selected: q, items: parents};
+      while (parent = this.dk5Syst[parent.parentIndex]) {
+        hierarchy = Object.assign({index: parent.index, title: parent.title}, {children: [hierarchy]});
+        lastChild = parent.index;
+      }
+      hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)], {children: [hierarchy]});
+    }
+    return hierarchy;
   }
 
   /**
@@ -103,67 +147,58 @@ export default class ElasticClient {
    */
   async elasticSuggest(term) {
     await this.loadTabsFromElasticSearch();
-    let result = [];
+    let result = {prefix: [], spell: []};
     if (this.autocomplete.trie.prefixes) {
+      let prefix = [];
       this.autocomplete.search(term).forEach(function (match) {
-        result.push({match: match, distance: Levenshtein.get(term, match)});
+        prefix.push({match: match, distance: Levenshtein.get(term, match)});
       });
-      result = result.sort(function (a, b) {
-        return (parseInt(a.distance, 10) - parseInt(b.distance, 10));
+      result.prefix = esUtil.sortDistanceAndSlice(prefix, 10);
+    }
+    if (this.vocabulary.length > 0) {
+      let spell = [];
+      this.vocabulary.forEach(function (match) {
+        spell.push({match: match, distance: Levenshtein.get(term, match)});
       });
+      result.spell = esUtil.sortDistanceAndSlice(spell, 10);
     }
     return result;
   }
 
   /**
-   * Build hierarchy. Lazy load top groups
-   *
-   * @param q
-   * @returns {*}
-   */
-  async elasticHierarchy(q) {
-    await this.loadTabsFromElasticSearch();
-    let qRes = await this.rawElasticSearch({query: q.split(/[ ]+/).join(' AND '), index: 'register'});
-    let subject = getEsField(qRes, 0, '630a');
-    let dk5 = getEsField(qRes, 0, '652m');
-    let text = getEsField(qRes, 0, '630a');
-    if (dk5.length === 0) {
-      dk5 = getEsField(qRes, 0, 'b52m');
-      text = getEsField(qRes, 0, 'b52y');
-    }
-    let aspekt = {subject: subject, dk5: dk5, text: text};
-    // console.log(aspekt);
-    return aspekt;
-  }
-
-  /**
-   * load systematic into dk5Tab, words for completion suggester and top group names
+   * load systematic into dk5Syst, words for completion suggester and top group names
    */
   async loadTabsFromElasticSearch() {
-    if (Object.keys(this.dk5Tab).length === 0) {
+    if (Object.keys(this.dk5Syst).length === 0) {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
         limit: 9999,
         fields: '652*, parent',
         index: 'systematic'
       });
+      if (syst.total > 9999) {
+        Logger.log.error('More that 9999 systematic records');
+      }
       for (let n = 0; n < syst.hits.length; n++) {
-        this.dk5Tab[getEsField(syst, n, '652m')[0]] = {
-          index: getEsField(syst, n, '652j')[0],
-          title: getEsField(syst, n, 'parent')[0]
+        this.dk5Syst[esUtil.getEsField(syst, n, '652m')[0]] = {
+          index: esUtil.getEsField(syst, n, '652m')[0],
+          parentIndex: esUtil.getEsField(syst, n, '652j')[0],
+          title: esUtil.getEsField(syst, n, '652u')[0],
+          parent: esUtil.getEsField(syst, n, 'parent')[0]
         };
       }
     }
     if (!this.autocomplete.trie.prefixes) {
       let wordRec = await this.rawElasticSearch({query: '_id:0', fields: 'words', index: 'word'});
+      this.vocabulary = esUtil.getEsField(wordRec, 0, 'words');
       this.autocomplete.initialize(function (onReady) {
-        onReady(getEsField(wordRec, 0, 'words'));
+        onReady(esUtil.getEsField(wordRec, 0, 'words'));
       });
     }
-    if (!this.topGroups[0].name) {
+    if (!this.topGroups[0].title) {
       for (let i = 0; i <= 9; i++) {
-        let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].q, index: 'systematic'});
-        this.topGroups[i].name = getEsField(topRes, 0, '652u')[0];
+        let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].index, index: 'systematic'});
+        this.topGroups[i].title = esUtil.getEsField(topRes, 0, '652u')[0];
       }
     }
   }
@@ -176,7 +211,7 @@ export default class ElasticClient {
    */
   async rawElasticSearch(pars) {
     let esHits = {};
-    await this.elasticClient.search(setAndMap(pars, this.defaultParameters, this.esParMap))
+    await this.elasticClient.search(esUtil.setAndMap(pars, this.defaultParameters, this.esParMap))
       .then(function (body) {
         esHits = body.hits;
       }, function (error) {
