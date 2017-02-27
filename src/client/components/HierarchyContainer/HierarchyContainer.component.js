@@ -3,7 +3,7 @@
  * This implements this DK5 Hierarchy
  */
 
-import React, {Component} from 'react';
+import React from 'react';
 import {wrapper} from '../../state/state';
 import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.component';
 import {Layout} from '../General/layout.component';
@@ -51,7 +51,7 @@ function HierarchyElementDescription({description}) {
 function HierarchyElement({topics, description}) {
 
   return (
-    <div class="hierarchy-el">
+    <div className="hierarchy-el">
       <HierarchyElementDescription description={description}/>
       <HierarchyElementTopics topics={topics}/>
     </div>
@@ -76,7 +76,7 @@ function HierarchyLevel({hierarchy}) {
       {contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.dk5}} />) }
       {data && <HierarchyElement {...data} />}
     </div>
-  )
+  );
 }
 
 /**
@@ -87,7 +87,7 @@ function HierarchyLevel({hierarchy}) {
  * @returns {XML}
  * @constructor
  */
-function HierarchyContainerComponent({hierarchy = [], globalState}) {
+function HierarchyContainerComponent({hierarchy = []}) {
   return (
     <div className="hierarchy container">
       <h1>Geografi og rejser. Lokalhistorie <span className="dk5 blue">40-49</span></h1>

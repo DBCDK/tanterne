@@ -6,8 +6,8 @@ export class ToggleContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      show: props.show || false,
-    }
+      show: props.show || false
+    };
   }
 
   onClick = (e) => {
@@ -16,7 +16,6 @@ export class ToggleContainer extends React.Component {
   };
 
   render() {
-    console.log(this.props.children);
     return (
       <div className="toggle-wrapper">
         {this.props.children.map(child => React.cloneElement(child, {show: this.state.show, onClick: this.onClick}))}
@@ -41,5 +40,5 @@ export const ToggleContent = ({show, className = '', children}) => {
       {children}
     </div>
   );
-}
+};
 

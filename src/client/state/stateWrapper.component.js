@@ -14,7 +14,7 @@ export default class StateWrapper extends React.Component {
   }
 
   componentWillUnmount() {
-    state.removeListener(this.listener);
+    this.props.globalState.removeListener(this.listener);
   }
 
   render() {
