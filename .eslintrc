@@ -164,6 +164,7 @@
       2,
       "as-needed"
     ],
+    "react/prop-types": 0,
     "semi": [
       2,
       "always"
