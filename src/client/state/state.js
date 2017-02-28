@@ -1,5 +1,6 @@
 import React from 'react';
 import StateWrapper from './stateWrapper.component';
+import * as client from './client';
 
 class State {
 
@@ -36,55 +37,30 @@ class State {
     return state;
   }
 
-  getHierarchy = () => {
-    this.setState({
-      hierarchy: [{
-        name: 'Andre verdensdele',
-        dk5: '48',
-        contains: [
-          {
-            name: 'Asien',
-            dk5: '48.1',
-            contains: [
-              {
-                name: 'Sydasien',
-                dk5: '48.23',
-                contains: [
-                  {
-                    name: 'Indien',
-                    dk5: '48.231',
-                    isSelected: true,
-                    data: {
-                      description: 'This is a description',
-                      topics: ['Andemanerne', 'Bengalen', 'Ganges', 'Goa', 'Kashmir', 'Laccadiverne']
-                    }
-                  },
-                  {
-                    name: 'Bangladesh',
-                    dk5: '48.233'
-                  },
-                  {
-                    name: 'Bhutan',
-                    dk5: '48.235'
-                  },
-                  {
-                    name: 'Maldiverne',
-                    dk5: '48.238'
-                  }
-                ]
-              }
-            ]
-          }]
-      }]
-    });
+  getHierarchy = (index) => {
+    const currentHierarchy = this.getState(['hierarchy']);
+    client.hierarchy(index)
+      .then(hierarchy => {
+        if (hierarchy.index) {
+          this.setState({hierarchy});
+        }
+      })
+      .catch(err => {
+        currentHierarchy.error = err;
+        this.setState({hierarchy: currentHierarchy});
+      });
   }
 }
-
-setTimeout(() => globalState.getHierarchy(), 200);
 
 const globalState = new State();
 
 export function wrapper(Component, listenTo) {
-  const WrapperComponent = () => <StateWrapper Component={Component} listenTo={listenTo} globalState={globalState}/>;
+  const WrapperComponent = (props) => {
+    return (
+      <StateWrapper Component={Component} listenTo={listenTo}
+                    globalState={globalState} transfer={props}
+      />
+    );
+  };
   return WrapperComponent;
 }
