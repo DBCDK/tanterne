@@ -10,7 +10,12 @@ export function hierarchy(index) {
         }
         else {
           const result = JSON.parse(res.text).result;
-          resolve(result);
+          if (Object.keys(result).length) {
+            resolve(result);
+          }
+          else {
+            reject({});
+          }
         }
       });
   });
