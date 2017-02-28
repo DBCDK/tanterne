@@ -62,32 +62,29 @@ function HierarchyElement({topics, description= ''}) {
  *
  * @constructor
  */
-function HierarchyLevel({hierarchy}) {
+function HierarchyLevel({hierarchy, Header = 'h2', selected}) {
   const {index, title, children, items} = hierarchy;
+  const isSelected = selected === index;
 
   let contains = children;
   if (contains && contains.length && contains[0].selected) {
     contains = contains[0].items;
   }
-  let isSelected = false;
-  if (index === '48.1') {
-    isSelected = true;
-  }
 
   return (
     <div className="hierarchy-level">
       <div className={`rel ${isSelected && 'selected' || ''}`}>
-        <h2>
+        <Header>
           <span className="name">{title}</span>
           <span className="dk5">
              <Link to={`/hierarchy/${index}`}>
                {index}
              </Link>
             </span>
-        </h2>
+        </Header>
         {items && <HierarchyElement topics={items}/>}
       </div>
-      {contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index}} />)}
+      {contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index, selected}} />)}
     </div>
   );
 }
@@ -104,14 +101,17 @@ class HierarchyContainerComponent extends React.Component {
   componentDidMount() {
     this.props.globalState.getHierarchy(this.props.params.id);
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.id !== this.props.params.id) {
+      this.props.globalState.getHierarchy(nextProps.params.id);
+    }
+  }
 
   render() {
     const {hierarchy} = this.props;
-    const children = hierarchy.children || [];
     return (
       <div className="hierarchy container">
-        <h1>Geografi og rejser. Lokalhistorie <span className="dk5 blue">40-49</span></h1>
-        {children.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index}} />)}
+        <HierarchyLevel {...{hierarchy, key: hierarchy.index, Header: 'h1', selected: this.props.params.id}} />
       </div>
     );
   }
