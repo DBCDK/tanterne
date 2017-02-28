@@ -87,7 +87,7 @@ export default class ElasticClient {
   async elasticHierarchy(q) {
     await this.loadTabsFromElasticSearch();
     let hierarchy = {};
-    let esRes = await this.rawElasticSearch({query: '652m:"' + q + '"', index: 'register'});
+    let esRes = await this.rawElasticSearch({query: '652m:"' + q + '" b52m:"' + q + '"', index: 'register'});
     if (esRes.total) {
       // collect register records refered to
       let regRecords = [];
