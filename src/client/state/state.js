@@ -38,7 +38,17 @@ class State {
   }
 
   getHierarchy = (index) => {
-    client.hierarchy(index).then(hierarchy => this.setState({hierarchy}));
+    const currentHierarchy = this.getState(['hierarchy']);
+    client.hierarchy(index)
+      .then(hierarchy => {
+        if (hierarchy.index) {
+          this.setState({hierarchy});
+        }
+      })
+      .catch(err => {
+        currentHierarchy.error = err;
+        this.setState({hierarchy: currentHierarchy});
+      });
   }
 }
 
