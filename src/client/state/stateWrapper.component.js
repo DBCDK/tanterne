@@ -1,3 +1,11 @@
+/**
+ * @file
+ * Wrap a component in a statefull container.
+ *
+ * Props are updated when globalState changes.
+ * It is possible to transfer props to the wrapped component, using the transfer property.
+ */
+
 import React from 'react';
 
 export default class StateWrapper extends React.Component {
