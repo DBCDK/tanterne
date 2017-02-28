@@ -20,7 +20,7 @@ export class SuggestionsComponent extends Component {
       }
 
       return (
-        <a href={`#${suggestion.href}`} className={className}>{suggestion.label}</a>
+        <a href={suggestion.href} className={className}>{suggestion.label}</a>
       );
     });
 

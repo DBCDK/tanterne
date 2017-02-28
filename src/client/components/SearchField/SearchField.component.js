@@ -11,18 +11,6 @@ import request from 'superagent';
 import Link from '../Link';
 import {SuggestionsComponent} from '../Suggestions/Suggestions.component';
 
-// Helper function to prevent dispatching requests while a user is typing.
-function deferExecution(func, timeout) {
-  let timer = null;
-  return function () {
-    if (timer) {
-      clearTimeout(timer);
-    }
-
-    timer = setTimeout(func, timeout, ...arguments);
-  };
-}
-
 export class SearchFieldComponent extends Component {
   constructor() {
     super();
@@ -44,7 +32,7 @@ export class SearchFieldComponent extends Component {
     this.onSearchKeyUp = this.onSearchKeyUp.bind(this);
     this.selectPreviousSuggestion = this.selectPreviousSuggestion.bind(this);
     this.selectNextSuggestion = this.selectNextSuggestion.bind(this);
-    this.getSuggestions = deferExecution(this.getSuggestions.bind(this), 200);
+    this.getSuggestions = this.deferExecution(this.getSuggestions.bind(this), 200);
   }
 
   componentDidMount() {
@@ -57,6 +45,18 @@ export class SearchFieldComponent extends Component {
         noSuggest: true
       });
     }
+  }
+
+  // Helper function to prevent dispatching requests while a user is typing.
+  deferExecution(func, timeout) {
+    let timer = null;
+    return function () {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(func, timeout, ...arguments);
+    };
   }
 
   // This function requests the suggestions if it can't find them.
@@ -102,6 +102,7 @@ export class SearchFieldComponent extends Component {
     let link = `#!${this.state.queryUrl}`;
     if (s.selectedSuggestion >= 0 && s.suggestions[s.query] && s.suggestions[s.query][s.selectedSuggestion] && s.suggestActive) {
       link = s.suggestions[s.query][s.selectedSuggestion].href;
+      this.onTextEntered({target: {value: s.suggestions[s.query][s.selectedSuggestion].label}, noSuggest: true});
     }
 
     this.setState({

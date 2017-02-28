@@ -18,19 +18,25 @@ function generateHierarchyUrl(dk5) {
   return `/hierarchy/${dk5}`;
 }
 
+// Small helper function for generating search urls
+function generateSearchUrl(q) {
+  return `#!/search/${encodeURIComponent(q)}/10/0/relevance/dictionary`;
+}
+
 // Define handler functions
 async function suggestHandler(ctx) {
   let {q} = ctx.query; // eslint-disable-line no-unused-vars
   const response = {
     status: 200,
-    parameters: {endpoint: 'suggest', query: q},
-    result: await ElasticClient.elasticSuggest(q),
-    response: [
-      {label: 'Japan', href: ''},
-      {label: 'Japansk litteraturhistorie', href: ''},
-      {label: 'Japansk skønlitteratur', href: ''},
-      {label: 'Japansk sprog', href: ''}
-    ]
+    query: {endpoint: 'suggest', query: q},
+    response: (await ElasticClient.elasticSuggest(q)).prefix.map(match => {
+      const res = {
+        label: match.match || '',
+        href: generateSearchUrl(match.match || '')
+      };
+
+      return res;
+    })
   };
 
   ctx.set('Content-Type', 'application/json');

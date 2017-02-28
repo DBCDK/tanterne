@@ -215,7 +215,9 @@ export default class ElasticClient {
       .then(function (body) {
         esHits = body.hits;
       }, function (error) {
-        Logger.log.error('ElasticSearch search error. Msg: ' + error.message);
+        const errorMessage = `ElasticSearch search error. Msg: ${error.message}`;
+        Logger.log.error(errorMessage);
+        esHits.error = errorMessage;
       });
     return esHits;
   }

@@ -5,7 +5,7 @@
 
   .category-tile--container {
     box-sizing: border-box;
-    flex: 1 180px;
+    flex: 1 256px;
     height: 170px;
     min-width: 256px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -31,7 +31,8 @@
       display: block;
       font-size: 16pt;
       text-shadow: 1px 1px #000;
-      margin: 7px;
+      margin: 0.4em;
+      line-height: 1em;
     }
 
     .category-tile--index {
