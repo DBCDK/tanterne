@@ -18,8 +18,8 @@ export default class StateWrapper extends React.Component {
   }
 
   render() {
-    const {Component, globalState} = this.props;
-    return <Component {...this.state} globalState={globalState} />;
+    const {Component, globalState, transfer} = this.props;
+    return <Component {...transfer} {...this.state} globalState={globalState} />;
   }
 }
 
