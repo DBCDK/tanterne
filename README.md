@@ -23,7 +23,7 @@ Filter only one dk5 group like (for test purposes)
 * iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json
 
 ###Load Elastic Search
-* curl -XDELETE localhost:9200/*
+* curl -XDELETE localhost:9200/* or delete indexes: work, register, systematic and nada
 * curl -XPUT localhost:9200/systematic -d '{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}'
 * curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
  
