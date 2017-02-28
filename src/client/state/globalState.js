@@ -1,6 +1,4 @@
-import React from 'react';
-import StateWrapper from './stateWrapper.component';
-import * as client from './client';
+import * as api from './client';
 
 class State {
 
@@ -39,7 +37,7 @@ class State {
 
   getHierarchy = (index) => {
     const currentHierarchy = this.getState(['hierarchy']);
-    client.hierarchy(index)
+    api.hierarchy(index)
       .then(hierarchy => {
         if (hierarchy.index) {
           this.setState({hierarchy});
@@ -52,15 +50,4 @@ class State {
   }
 }
 
-const globalState = new State();
-
-export function wrapper(Component, listenTo) {
-  const WrapperComponent = (props) => {
-    return (
-      <StateWrapper Component={Component} listenTo={listenTo}
-                    globalState={globalState} transfer={props}
-      />
-    );
-  };
-  return WrapperComponent;
-}
+export default new State();

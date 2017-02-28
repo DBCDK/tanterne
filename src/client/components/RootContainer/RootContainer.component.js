@@ -6,6 +6,7 @@
 // Libraries
 import React, {Component} from 'react';
 import {Router, Route} from 'react-enroute';
+import globalState from '../../state/globalState';
 
 // Components
 import HierarchyContainerComponent from '../HierarchyContainer/HierarchyContainer.component';
@@ -83,7 +84,8 @@ const state = {
     }
   },
   hierarchy: {},
-  suggest: {}
+  suggest: {},
+  globalState: globalState
 };
 
 export class RootContainerComponent extends Component {
@@ -93,6 +95,7 @@ export class RootContainerComponent extends Component {
   }
 
   componentDidMount() {
+    globalState.listenTo(['hierarchy'], ({hierarchy}) => this.setState({hierarchy}));
     window.addEventListener('popstate', () => {
       this.setState({
         location: getHash(window.location.hash)

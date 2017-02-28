@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import {wrapper} from '../../state/state';
 import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.component';
 import {Layout} from '../General/layout.component';
 import Link from '../Link';
@@ -97,7 +96,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', selected}) {
  * @returns {XML}
  * @constructor
  */
-class HierarchyContainerComponent extends React.Component {
+export default class HierarchyContainerComponent extends React.Component {
   componentDidMount() {
     this.props.globalState.getHierarchy(this.props.params.id);
   }
@@ -108,7 +107,7 @@ class HierarchyContainerComponent extends React.Component {
   }
 
   render() {
-    const {hierarchy} = this.props;
+    const {hierarchy} = this.props.globalState.getState(['hierarchy']);
     return (
       <div className="hierarchy container">
         <HierarchyLevel {...{hierarchy, key: hierarchy.index, Header: 'h1', selected: this.props.params.id}} />
@@ -118,5 +117,3 @@ class HierarchyContainerComponent extends React.Component {
 }
 
 HierarchyContainerComponent.diplayName = 'Hierarchy';
-
-export default wrapper(HierarchyContainerComponent, ['hierarchy']);
