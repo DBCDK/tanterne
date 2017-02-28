@@ -1,0 +1,77 @@
+// position
+.abs {
+  position: absolute;
+}
+
+.rel {
+  position: relative;
+}
+
+.pos-top {
+  top: 0;
+}
+.pos-right {
+  right: 0;
+}
+.pos-btm {
+   bottom: 0;
+}
+.pos-left {
+  left: 0;
+}
+
+.pos-cover {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+// colors
+.white {
+  color: $white;
+}
+
+// Typografi
+.upper {
+  text-transform: uppercase;
+}
+
+// Margin/padding
+.pa1 {
+  padding: 1rem;
+}
+.pa2 {
+  padding: 2rem;
+}
+.pa3 {
+  padding: 3rem;
+}
+
+.border-decoration {
+  text-decoration: none;
+  border-bottom: 1px solid;
+}
+
+// display
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.transition {
+  transition: all 200ms;
+}
+
+.rotate-90 {
+  transform: rotate(90deg);
+}
+.rotate-180 {
+  transform: rotate(180deg  );
+}
+
+// Arrows
+.arrow-down-after:after {
+  display: inline-block;
+  content: "⌄";
+}

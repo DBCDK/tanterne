@@ -46,7 +46,7 @@ const outfile = fs.openSync(option.output, 'w');
 const filter = option.filter;
 
 const dk5Buf = [];
-const errors = [];
+const info = [];
 const words = {};
 
 records.forEach(function (record) {
@@ -54,16 +54,17 @@ records.forEach(function (record) {
   progress.tick();
 });
 
-errors.forEach(function (error) {
-  console.log(error);
-});
-
 const dk5Tab = createDk5Tab();
 
 dumpRecords();
 dumpSuggestionWords(words);
-
 fs.closeSync(outfile);
+
+console.log('');
+info.forEach(function (error) {
+  console.log(error);
+});
+
 console.log('\nStart Elastic Search and load data like:\n' +
   '  curl -XDELETE localhost:9200/*\n' +
   '  curl -XPUT localhost:9200/systematic -d \'{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}\'\n' +
@@ -124,7 +125,7 @@ function dumpRecords() {
     }
     let index = bibKatMap[bibKat] ? bibKatMap[bibKat] : 'nada';
     if (index === 'nada') {
-      errors.push('Error: unknown bibliographic category (008 *t) "' + bibKat + '" rec id: ' + recno);
+      info.push('Error: unknown bibliographic category (008 *t) "' + bibKat + '" id: ' + dk5['001a'][0] + '\n');
     }
     indexRec.index._id = recno++;
     indexRec.index._index = index;
@@ -133,6 +134,7 @@ function dumpRecords() {
       writeRecord(JSON.stringify(dk5));
     }
   });
+  info.push('Converted ' + recno + ' records');
 }
 
 /**
@@ -141,7 +143,7 @@ function dumpRecords() {
  * @param words
  */
 function dumpSuggestionWords(words) {
-  console.log('Dump', Object.keys(words).length, 'words for suggestion');
+  info.push('Use ' + Object.keys(words).length + ' words for suggestion');
   indexRec.index._id = 0;
   indexRec.index._index = 'word';
   writeRecord(JSON.stringify(indexRec));
