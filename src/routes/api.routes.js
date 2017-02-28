@@ -13,11 +13,6 @@ const APIRouter = new Router();
 
 const ElasticClient = new ElasticClass();
 
-// Small helper function for generating relative urls.
-function generateHierarchyUrl(dk5) {
-  return `/hierarchy/${dk5}`;
-}
-
 // Small helper function for generating search urls
 function generateSearchUrl(q) {
   return `#!/search/${encodeURIComponent(q)}/10/0/relevance/dictionary`;
