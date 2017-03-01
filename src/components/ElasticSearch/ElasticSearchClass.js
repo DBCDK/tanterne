@@ -41,6 +41,7 @@ export default class ElasticClient {
       9: {index: '90-99', title: ''}
     };
     this.dk5Syst = {};
+    this.dk5Notes = {};
   }
 
   /**
@@ -126,7 +127,7 @@ export default class ElasticClient {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
               let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
               if (idx === q) {
-                item.note = this.dk5Syst[idx].note;
+                item.note = this.dk5Notes[idx];
                 item = Object.assign(item, {items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
               }
               parents.push(item);
@@ -246,11 +247,11 @@ export default class ElasticClient {
             note += noteText[i] + (noteSyst[i] ? ' <dk>' + noteSyst[i] + '</dk>' : '');
           }
         }
+        this.dk5Notes[grp] = note;
         this.dk5Syst[grp] = {
           index: grp,
           parentIndex: parentIndex,
           title: esUtil.getFirstField(syst, n, ['652u']),
-          note: note,
           parent: parent
         };
       }
