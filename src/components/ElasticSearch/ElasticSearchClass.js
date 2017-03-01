@@ -244,7 +244,7 @@ export default class ElasticClient {
             if (note && [',', '.'].indexOf(noteText[i].substr(0, 1)) === -1) {
               note += '<br />';
             }
-            note += noteText[i] + (noteSyst[i] ? ' <dk>' + noteSyst[i] + '</dk>' : '');
+            note += noteText[i] + (noteSyst[i] ? ' <dk>' + noteSyst[i].split('-').join('</dk>-</dk5>') + '</dk>' : '');
           }
         }
         this.dk5Notes[grp] = note;
