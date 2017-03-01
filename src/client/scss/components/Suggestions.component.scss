@@ -1,7 +1,13 @@
 .suggestions--container {
-  width: 620px;
+  position: relative;
   box-shadow: 2px 2px 3px #525252;
-  margin-top: -10px;
+  z-index: 3;
+
+  .suggestions--floater {
+    position: absolute;
+    top: -10px;
+    width: 620px;
+  }
 
   .suggestions--suggestion {
     color: #525252;
@@ -10,6 +16,9 @@
     font-size: 18pt;
     padding: 3px 20px;
     cursor: pointer;
+    background-color: #ffffff;
+    z-index: 10;
+    line-height: 1.2em;
   }
 
   .suggestions--suggestion:hover, .active--suggestion {

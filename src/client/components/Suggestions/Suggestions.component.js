@@ -26,7 +26,9 @@ export class SuggestionsComponent extends Component {
 
     return (
       <div className='suggestions--container'>
-        {suggestions}
+        <div className='suggestions--floater'>
+          {suggestions}
+        </div>
       </div>
     );
   }
