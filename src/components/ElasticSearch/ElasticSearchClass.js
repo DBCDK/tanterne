@@ -22,7 +22,7 @@ export default class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,b*', index: 'register', sort: ''};
+    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,a*,b*', index: 'register', sort: ''};
     this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
 
     /* loadTabsFromElasticSearch() loads the following */
@@ -126,6 +126,7 @@ export default class ElasticClient {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
               let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
               if (idx === q) {
+                item.note = this.dk5Syst[idx].note;
                 item = Object.assign(item, {items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
               }
               parents.push(item);
@@ -204,7 +205,7 @@ export default class ElasticClient {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
         limit: 9999,
-        fields: '652*, parent',
+        fields: '652*, a40a, parent',
         index: 'systematic'
       });
       if (syst.total > 9999) {
@@ -238,6 +239,7 @@ export default class ElasticClient {
           index: grp,
           parentIndex: parentIndex,
           title: esUtil.getFirstField(syst, n, ['652u']),
+          note: esUtil.getFirstField(syst, n, ['a40a']),
           parent: parent
         };
       }
