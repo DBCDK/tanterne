@@ -87,60 +87,82 @@ export default class ElasticClient {
   async elasticHierarchy(q) {
     await this.loadTabsFromElasticSearch();
     let hierarchy = {};
-    let esRes = await this.rawElasticSearch({query: '652m:"' + q + '" b52m:"' + q + '"', index: 'register'});
+    let top = {};
+    Object.keys(this.topGroups).forEach((idx) => {
+      if (this.topGroups[idx].index === q) {
+        top = this.topGroups[idx];
+      }
+    });
+    const query = [];
+    ['652m', 'b52m'].forEach((reg) => {
+      query.push(reg + '"' + q + '"');
+    });
+    let esRes = await this.rawElasticSearch({query: query.join(' '), index: 'register'});
     if (esRes.total) {
+      // collect systematic for children
+      let children = [];
+      Object.keys(this.dk5Syst).forEach((idx) => {
+        if (this.dk5Syst[idx].parentIndex === q) {
+          children.push({index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title});
+        }
+      });
+
       // collect register records refered to
       let regRecords = [];
-      for (let n = 0; n < esRes.hits.length; n++) {
-        const syst = esUtil.parseRegisterRecord(esRes, n, this.dk5Syst);
-        regRecords.push({index: syst.index, title: syst.title});
-      }
-      regRecords = regRecords.sort(function (a, b) {
-        return (a.title > b.title ? 1 : -1);
-      });
-
-      // collect systematic for children
-      const dk5Syst = this.dk5Syst;
-      let children = [];
-      Object.keys(dk5Syst).forEach(function (idx) {
-        if (dk5Syst[idx].parentIndex === q) {
-          children.push({index: dk5Syst[idx].index, title: dk5Syst[idx].title});
-        }
-      });
-      children = children.sort(function (a, b) {
-        return (a.title > b.title ? 1 : -1);
-      });
-
-      // collect systematic for parents
-      let parent = this.dk5Syst[q];
       let parents = [];
-      Object.keys(dk5Syst).forEach(function (idx) {
-        if (dk5Syst[idx].parentIndex === parent.parentIndex) {
-          let item = {index: dk5Syst[idx].index, title: dk5Syst[idx].title};
-          if (idx === q) {
-            item = Object.assign(item, {items: regRecords}, {children: children});
+      let parent = {};
+      if (!top.title) {
+        for (let n = 0; n < esRes.hits.length; n++) {
+          const syst = esUtil.parseRegisterRecord(esRes, n, this.dk5Syst);
+          if (syst.index) {
+            regRecords.push({index: syst.index, title: syst.title});
           }
-          parents.push(item);
         }
-      });
-      parents = parents.sort(function (a, b) {
-        return (a.title > b.title ? 1 : -1);
-      });
 
-      // collect the hierarchy from parent and to the top
-      let lastChild = this.dk5Syst[parent.index].index;
-      hierarchy = {selected: q, items: parents};
-      while (parent = this.dk5Syst[parent.parentIndex]) {         // eslint-disable-line no-cond-assign
-        hierarchy = Object.assign({index: parent.index, title: parent.title}, {children: [hierarchy]});
-        lastChild = parent.index;
+        // collect systematic for parents
+        if (this.dk5Syst[q]) {
+          parent = this.dk5Syst[q];
+          Object.keys(this.dk5Syst).forEach((idx) => {
+            if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
+              let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
+              if (idx === q) {
+                item = Object.assign(item, {items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
+              }
+              parents.push(item);
+            }
+          });
+        }
       }
-      hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)], {children: [hierarchy]});
+
+      let lastChild = q.substr(0, 1);
+      if (top.title) {
+        const items = Object.keys(this.topGroups).map((idx) => {
+          const grp = {index: this.topGroups[idx].index, title: this.topGroups[idx].title};
+          if (grp.index === q) {
+            grp.children = esUtil.titleSort(children);
+          }
+          return grp;
+        });
+        hierarchy = {index: top.index, title: top.title, selected: q, items: esUtil.titleSort(items)};
+      }
+      else {
+        // collect the hierarchy from parent and to the top
+        hierarchy = {selected: q, items: esUtil.titleSort(parents)};
+        if (parent.index) {
+          lastChild = this.dk5Syst[parent.index].index;
+          while (parent = this.dk5Syst[parent.parentIndex]) {         // eslint-disable-line no-cond-assign
+            hierarchy = Object.assign({index: parent.index, title: parent.title}, {children: [hierarchy]});
+            lastChild = parent.index;
+          }
+        }
+        hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)], {children: [hierarchy]});
+      }
     }
     return hierarchy;
   }
 
   /**
-   * doc 0 has all words for suggestions
+   * return completion (if any) and spellcheck
    *
    * @param term
    * @returns {*}
@@ -166,9 +188,18 @@ export default class ElasticClient {
   }
 
   /**
-   * load systematic into dk5Syst, words for completion suggester and top group names
+   * load top group titles, systematic into dk5 hierarchy and words for completion suggester
    */
   async loadTabsFromElasticSearch() {
+    // enrich top groups with titles
+    if (!this.topGroups[0].title) {
+      for (let i = 0; i <= 9; i++) {
+        let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].index, index: 'systematic'});
+        this.topGroups[i].title = esUtil.getEsField(topRes, 0, '652u')[0];
+      }
+    }
+
+    // create systematic hierarchy
     if (Object.keys(this.dk5Syst).length === 0) {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
@@ -179,27 +210,46 @@ export default class ElasticClient {
       if (syst.total > 9999) {
         Logger.log.error('More that 9999 systematic records');
       }
+      const linkTranslate = {
+        0: '00-07',
+        '09.9999': '10-19',
+        19.9999: '20-29',
+        29.9999: '30-39',
+        39.9999: '40-49',
+        49.9999: '50-59',
+        59.9999: '60-69',
+        69.9999: '70-79',
+        79.9999: '80-89',
+        89.9999: '90-99'
+      };
       for (let n = 0; n < syst.hits.length; n++) {
-        this.dk5Syst[esUtil.getEsField(syst, n, '652m')[0]] = {
-          index: esUtil.getEsField(syst, n, '652m')[0],
-          parentIndex: esUtil.getEsField(syst, n, '652j')[0],
-          title: esUtil.getEsField(syst, n, '652u')[0],
-          parent: esUtil.getEsField(syst, n, 'parent')[0]
+        let parentIndex = esUtil.getFirstField(syst, n, ['652j']);
+        let parent = esUtil.getFirstField(syst, n, ['parent']);
+        if (linkTranslate[parentIndex]) {
+          parentIndex = linkTranslate[parentIndex];
+          Object.keys(this.topGroups).forEach((idx) => {
+            if (this.topGroups[idx].index === parentIndex) {
+              parent = this.topGroups[idx].title;
+            }
+          });
+        }
+        const grp = esUtil.getFirstField(syst, n, ['652m']);
+        this.dk5Syst[grp] = {
+          index: grp,
+          parentIndex: parentIndex,
+          title: esUtil.getFirstField(syst, n, ['652u']),
+          parent: parent
         };
       }
     }
+
+    // load words into autocomplete trie. Doc id: 0 has all the words
     if (!this.autocomplete.trie.prefixes) {
       let wordRec = await this.rawElasticSearch({query: '_id:0', fields: 'words', index: 'word'});
       this.vocabulary = esUtil.getEsField(wordRec, 0, 'words');
-      this.autocomplete.initialize(function (onReady) {
-        onReady(esUtil.getEsField(wordRec, 0, 'words'));
+      this.autocomplete.initialize((onReady) => {
+        onReady(this.vocabulary);
       });
-    }
-    if (!this.topGroups[0].title) {
-      for (let i = 0; i <= 9; i++) {
-        let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].index, index: 'systematic'});
-        this.topGroups[i].title = esUtil.getEsField(topRes, 0, '652u')[0];
-      }
     }
   }
 
