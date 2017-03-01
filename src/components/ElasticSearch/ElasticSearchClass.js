@@ -126,6 +126,7 @@ export default class ElasticClient {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
               let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
               if (idx === q) {
+                item.note = this.dk5Syst[idx].note;
                 item = Object.assign(item, {items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
               }
               parents.push(item);
@@ -204,7 +205,7 @@ export default class ElasticClient {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
         limit: 9999,
-        fields: '652*, parent',
+        fields: '652*, a40*, parent',
         index: 'systematic'
       });
       if (syst.total > 9999) {
@@ -234,10 +235,22 @@ export default class ElasticClient {
           });
         }
         const grp = esUtil.getFirstField(syst, n, ['652m']);
+        const noteText = esUtil.getEsField(syst, n, 'a40a');
+        let note = '';
+        if (Array.isArray(noteText)) {
+          const noteSyst = esUtil.getEsField(syst, n, 'a40b');
+          for (let i = 0; i < noteText.length; i++) {
+            if (note && [',', '.'].indexOf(noteText[i].substr(0, 1)) === -1) {
+              note += '<br />';
+            }
+            note += noteText[i] + (noteSyst[i] ? ' <dk>' + noteSyst[i] + '</dk>' : '');
+          }
+        }
         this.dk5Syst[grp] = {
           index: grp,
           parentIndex: parentIndex,
           title: esUtil.getFirstField(syst, n, ['652u']),
+          note: note,
           parent: parent
         };
       }
