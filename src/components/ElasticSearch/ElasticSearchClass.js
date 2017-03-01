@@ -95,7 +95,7 @@ export default class ElasticClient {
     });
     const query = [];
     ['652m', 'b52m'].forEach((reg) => {
-      query.push(reg + '"' + q + '"')
+      query.push(reg + '"' + q + '"');
     });
     let esRes = await this.rawElasticSearch({query: query.join(' '), index: 'register'});
     if (esRes.total) {
@@ -121,7 +121,7 @@ export default class ElasticClient {
 
         // collect systematic for parents
         if (this.dk5Syst[q]) {
-          let parent = this.dk5Syst[q];
+          parent = this.dk5Syst[q];
           Object.keys(this.dk5Syst).forEach((idx) => {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
               let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
@@ -211,16 +211,16 @@ export default class ElasticClient {
         Logger.log.error('More that 9999 systematic records');
       }
       const linkTranslate = {
-        '0': '00-07',
+        0: '00-07',
         '09.9999': '10-19',
-        '19.9999': '20-29',
-        '29.9999': '30-39',
-        '39.9999': '40-49',
-        '49.9999': '50-59',
-        '59.9999': '60-69',
-        '69.9999': '70-79',
-        '79.9999': '80-89',
-        '89.9999': '90-99'
+        19.9999: '20-29',
+        29.9999: '30-39',
+        39.9999: '40-49',
+        49.9999: '50-59',
+        59.9999: '60-69',
+        69.9999: '70-79',
+        79.9999: '80-89',
+        89.9999: '90-99'
       };
       for (let n = 0; n < syst.hits.length; n++) {
         let parentIndex = esUtil.getFirstField(syst, n, ['652j']);
