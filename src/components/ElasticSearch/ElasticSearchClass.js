@@ -22,7 +22,7 @@ export default class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,a*,b*', index: 'register', sort: ''};
+    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,b*', index: 'register', sort: ''};
     this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
 
     /* loadTabsFromElasticSearch() loads the following */
