@@ -162,7 +162,7 @@ export default class ElasticClient {
   }
 
   /**
-   * doc 0 has all words for suggestions
+   * return completion (if any) and spellcheck
    *
    * @param term
    * @returns {*}
@@ -243,7 +243,7 @@ export default class ElasticClient {
       }
     }
 
-    // load words into autocomplete trie
+    // load words into autocomplete trie. Doc id: 0 har all the words
     if (!this.autocomplete.trie.prefixes) {
       let wordRec = await this.rawElasticSearch({query: '_id:0', fields: 'words', index: 'word'});
       this.vocabulary = esUtil.getEsField(wordRec, 0, 'words');
