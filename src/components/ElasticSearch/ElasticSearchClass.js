@@ -243,7 +243,7 @@ export default class ElasticClient {
       }
     }
 
-    // load words into autocomplete trie. Doc id: 0 har all the words
+    // load words into autocomplete trie. Doc id: 0 has all the words
     if (!this.autocomplete.trie.prefixes) {
       let wordRec = await this.rawElasticSearch({query: '_id:0', fields: 'words', index: 'word'});
       this.vocabulary = esUtil.getEsField(wordRec, 0, 'words');
