@@ -28,8 +28,9 @@ export function getEsField(esRes, pos, fld) {
 export function getFirstField(esRes, pos, fldList) {
   let field = '';
   fldList.forEach(function (tag) {
-    if (!field) {
-      field = getEsField(esRes, pos, tag)[0];
+    const fld = getEsField(esRes, pos, tag);
+    if (!field && fld[0]) {
+      field = fld[0];
     }
   });
   return field;
