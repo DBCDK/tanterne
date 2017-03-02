@@ -1,17 +1,27 @@
 .hierarchy {
   padding: 1rem;
+  a {
+    text-decoration: none;
+  }
+  .name {
+    color: $black;
+  }
 }
 
 .hierarchy-level {
   margin: 2rem 0;
-  padding-left: 3rem;
+  padding-left: 2rem;
   .selected {
     padding: 2rem;
+    margin-left: -2rem;
     background-color: $blue;
     color: white;
     .dk5 {
       background-color: white;
       padding: 0.3rem;
+    }
+    .name {
+      color: white;
     }
   }
   .dk5 {
@@ -24,7 +34,6 @@
 .hierarchy-topics {
   padding-left: 0;
   li {
-    @extend .h3;
     margin-bottom: 1rem;
     list-style-type: none;
     &:before {
@@ -33,4 +42,24 @@
       padding: 0 1rem 0 3rem;
     }
   }
+}
+
+.hierarchy-description {
+  .content a {
+    color:white;
+    text-decoration: underline;
+  }
+}
+
+.level-2 h2 {
+ font-size: 2rem;
+}
+.level-3 h2 {
+ font-size: 1.8rem;
+}
+.level-4 h2 {
+ font-size: 1.6rem;
+}
+.level-5 h2 {
+ font-size: 1.4rem;
 }

@@ -17,7 +17,7 @@ import Link from '../Link';
 function HierarchyElementTopics({topics}) {
   return (
     <ul className="hierarchy-topics">
-      {topics.map(({title}) => <li key={title} >{title}</li>) }
+      {topics.map(({title}) => <li key={title}>{title}</li>) }
     </ul>
   );
 }
@@ -28,15 +28,19 @@ function HierarchyElementTopics({topics}) {
  * @constructor
  */
 function HierarchyElementDescription({description}) {
+  const parsedText = description.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
+    return `
+     <a href="#!/hierarchy/${index}">
+      ${index}
+    </a>`;
+  });
   return (
     <div className="hierarchy-description">
       <ToggleContainer>
         <Layout className="pa2 abs pos-top pos-right">
           <ToggleButton showText="Se beskrivelse" hideText="Skjul beskrivelse"/>
         </Layout>
-        <ToggleContent>
-          {description}
-        </ToggleContent>
+        <ToggleContent className="content" __html={parsedText}/>
       </ToggleContainer>
     </div>
   );
@@ -47,11 +51,11 @@ function HierarchyElementDescription({description}) {
  *
  * @constructor
  */
-function HierarchyElement({topics, description= ''}) {
+function HierarchyElement({topics, description = ''}) {
   return (
     <div className="hierarchy-el">
-      <HierarchyElementDescription description={description}/>
-      <HierarchyElementTopics topics={topics}/>
+      {description && <HierarchyElementDescription description={description}/>}
+      {topics && <HierarchyElementTopics topics={topics}/>}
     </div>
   );
 
@@ -62,8 +66,8 @@ function HierarchyElement({topics, description= ''}) {
  *
  * @constructor
  */
-function HierarchyLevel({hierarchy, Header = 'h2', selected}) {
-  const {index, title, children, items} = hierarchy;
+function HierarchyLevel({hierarchy, Header = 'h2', level=1, selected}) {
+  const {index, title, children, items, note} = hierarchy;
   const isSelected = selected === index;
 
   let contains = children;
@@ -72,19 +76,19 @@ function HierarchyLevel({hierarchy, Header = 'h2', selected}) {
   }
 
   return (
-    <div className="hierarchy-level">
+    <div className={`hierarchy-level level-${level}`}>
       <div className={`rel ${isSelected && 'selected' || ''}`}>
         <Header>
-          <span className="name">{title}</span>
+          <Link to={`/hierarchy/${index}`}>
+            <span className="name">{title}</span>
           <span className="dk5">
-             <Link to={`/hierarchy/${index}`}>
                {index}
-             </Link>
             </span>
+          </Link>
         </Header>
-        {items && <HierarchyElement topics={items}/>}
+        {items && <HierarchyElement topics={items} description={note}/>}
+        {contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index, selected, level: level + 1}} />)}
       </div>
-      {contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index, selected}} />)}
     </div>
   );
 }
@@ -101,6 +105,7 @@ class HierarchyContainerComponent extends React.Component {
   componentDidMount() {
     this.props.globalState.getHierarchy(this.props.params.id);
   }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.params.id !== this.props.params.id) {
       this.props.globalState.getHierarchy(nextProps.params.id);
