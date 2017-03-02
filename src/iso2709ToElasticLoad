@@ -58,7 +58,7 @@ records.forEach(function (record) {
 const dk5Tab = createDk5Tab();
 
 dumpRecords();
-info.push('Skipped ' + deleted + ' deleted records');
+info.push('  skipped ' + deleted + ' deleted records');
 
 dumpSuggestionWords(words);
 fs.closeSync(outfile);
@@ -101,10 +101,10 @@ function getOptions() {
 function createDk5Tab() {
   const tab = {};
   dk5Buf.forEach(function (dk5) {
-    let bibKat = dk5['008t'][0];
-    if (bibKat === 'xk') {   // only for systematic
-      let number = Array.isArray(dk5['652m']) ? dk5['652m'][0] : '';
-      let text = Array.isArray(dk5['652u']) ? dk5['652u'][0] : '';
+    let bibKat = dk5['d09a'] ? dk5['d09a'][0].substr(0, 3) : 'NUL';
+    if (bibKat === 'DK5') {   // only for systematic
+      const number = Array.isArray(dk5['652m']) ? dk5['652m'][0] : (Array.isArray(dk5['652n']) ? dk5['652n'][0] : '');
+      const text = Array.isArray(dk5['652u']) ? dk5['652u'][0] : '';
       if (number && text) {
         tab[number] = text;
       }
@@ -118,30 +118,34 @@ function createDk5Tab() {
  */
 function dumpRecords() {
   const topGroup = ['00-07', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99'];
-  const bibKatMap = {xk: 'systematic', xe: 'register', xt: 'thesaurus'};
+  const bibKatMap = {
+    DK5: {index: 'systematic', no: 0},
+    REK: {index: 'register', no: 0},
+    NUL: {index: 'ignored', no: 0}
+  };
   let recno = 1;
   dk5Buf.forEach(function (dk5) {
     if (dk5['004r'] && dk5['004r'][0] === 'd') {
       deleted++;
     }
     else {
-      let bibKat = dk5['008t'][0];
-      let number = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
-      if (bibKat === 'xk') {
+      const d09a = dk5['d09a'] ? dk5['d09a'][0].substr(0, 3) : 'NUL';
+      const bibKat = bibKatMap[d09a] ? d09a : 'NUL';
+      const number = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
+      if (bibKat === 'DK5') {
         if (dk5Tab[number]) {
           dk5['parent'] = [dk5Tab[number]];
         }
         if (dk5['652d'] && topGroup.indexOf(dk5['652d'][0]) > -1) {
+          bibKatMap['REK'].no++;
           indexRec.index._id = recno++;
           indexRec.index._index = 'register';
           writeRecord(JSON.stringify(indexRec));
           writeRecord(JSON.stringify(dk5));
         }
       }
-      let index = bibKatMap[bibKat] ? bibKatMap[bibKat] : 'nada';
-      if (index === 'nada') {
-        info.push('Error: unknown bibliographic category (008 *t) "' + bibKat + '" id: ' + dk5['001a'][0] + '\n');
-      }
+      let index = bibKatMap[bibKat].index;
+      bibKatMap[bibKat].no++;
       indexRec.index._id = recno++;
       indexRec.index._index = index;
       if (!filter || (number && (filter === number.substr(0, filter.length)))) {
@@ -151,6 +155,9 @@ function dumpRecords() {
     }
   });
   info.push('Converted ' + recno + ' records');
+  Object.keys(bibKatMap).forEach((bibKat) => {
+    info.push('  ' + bibKatMap[bibKat].index + ' ' + bibKatMap[bibKat].no + ' records');
+  });
 }
 
 /**

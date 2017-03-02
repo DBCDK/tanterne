@@ -206,7 +206,7 @@ export default class ElasticClient {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
         limit: 9999,
-        fields: '652*, a40*, parent',
+        fields: '001a, 652*, a40*, parent',
         index: 'systematic'
       });
       if (syst.total > 9999) {
@@ -235,7 +235,7 @@ export default class ElasticClient {
             }
           });
         }
-        const grp = esUtil.getFirstField(syst, n, ['652m']);
+        const grp = esUtil.getFirstField(syst, n, ['652m', '652n', '652d']);
         const noteText = esUtil.getEsField(syst, n, 'a40a');
         let note = '';
         if (Array.isArray(noteText)) {
@@ -244,16 +244,32 @@ export default class ElasticClient {
             if (note && [',', '.'].indexOf(noteText[i].substr(0, 1)) === -1) {
               note += '<br />';
             }
-            note += noteText[i] + (noteSyst[i] ? ' <dk>' + noteSyst[i].split('-').join('</dk>-</dk5>') + '</dk>' : '');
+            note += noteText[i];
+            if (noteSyst[i]) {
+              note += noteSyst[i].indexOf('-') !== -1 ? ' ' + noteSyst[i] : ' <dk>' + noteSyst[i] + '</dk>';
+            }
           }
         }
-        this.dk5Notes[grp] = note;
-        this.dk5Syst[grp] = {
-          index: grp,
-          parentIndex: parentIndex,
-          title: esUtil.getFirstField(syst, n, ['652u']),
-          parent: parent
-        };
+        if (grp) {
+          this.dk5Notes[grp] = note;
+          this.dk5Syst[grp] = {
+            index: grp,
+            parentIndex: parentIndex,
+            title: esUtil.getFirstField(syst, n, ['652u']),
+            parent: parent
+          };
+          /*
+           const searchable = await this.rawElasticSearch({
+           query: '652m:"' + grp + '" b52m:"' + grp + '"'
+           });
+           if (!searchable.total) {
+           console.log('zero', grp);
+           }
+           */
+        }
+        else {
+          Logger.log.error('No dk5 group for ' + esUtil.getFirstField(syst, n, ['001a']));
+        }
       }
     }
 

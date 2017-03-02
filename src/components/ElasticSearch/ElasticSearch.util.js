@@ -86,12 +86,16 @@ export function titleSort(arr) {
  * @returns {*}
  */
 export function parseRegisterRecord(esRes, pos, dk5Tab) {
-  const entryTitle = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a']);
-  const dk5 = getEsField(esRes, pos, '652m')[0];
-  const id = getEsField(esRes, pos, '001a')[0];
+  const ret = {};
+  ret.title = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a']);
+  ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e']);
+  ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
+  ret.index = getEsField(esRes, pos, '652m')[0];
+  ret.id = getEsField(esRes, pos, '001a')[0];
+  ret.parent = Object.assign({}, dk5Tab[ret.index]);
   const aspectDk5 = getEsField(esRes, pos, 'b52m');
   if (aspectDk5.length === 0) {
-    return {title: entryTitle, id: id, index: dk5, parent: dk5Tab[dk5]};
+    return ret;
   }
 
   const aspectTitle = getEsField(esRes, pos, 'b52y');
@@ -99,5 +103,5 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   for (let i = 0; i < aspectDk5.length; i++) {
     items.push({index: aspectDk5[i], title: aspectTitle[i], parent: dk5Tab[aspectDk5[i]]});
   }
-  return {title: entryTitle, id: id, index: dk5, parent: Object.assign({}, dk5Tab[dk5]), items: items};
+  return Object.assign({}, ret, {items: items});
 }
