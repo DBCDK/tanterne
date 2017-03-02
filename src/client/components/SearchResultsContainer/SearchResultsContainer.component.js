@@ -94,7 +94,7 @@ export class SearchResultsContainerComponent extends Component {
     };
 
     return (
-      <a style={styles} href={category.href} className='category-tile--container'>
+      <a style={styles} href={`#!/hierarchy/${category.index}`} className='category-tile--container'>
         <div className='category-tile--gradient'>
           <div className='category-tile--text-container'>
             <span className='category-tile--label'>{category.label}</span>
@@ -105,18 +105,15 @@ export class SearchResultsContainerComponent extends Component {
     );
   }
 
-  renderCategoryTiles(categories, searchField) {
+  renderCategoryTiles(categories) {
     const tiles = Object.keys(categories)
       .map(categoryIndex => this.renderCategoryTile(categoryIndex, categories[categoryIndex]));
 
     return (
       <div className='category-tiles--container'>
-        {searchField}
-
         <div className='category-tiles--title'>
           <h2>Eller vælg her</h2>
         </div>
-
         <div className='category-tiles'>
           {tiles}
         </div>
@@ -140,25 +137,10 @@ export class SearchResultsContainerComponent extends Component {
       }
       return (<SearchResultGroup key={entry.title} {...entry} />);
     });
-
-    if (!params.q) {
-      return this.renderCategoryTiles(this.props.search.categories, searchField);
-    }
-
-    if (results.length < 1) {
-      return (
-        <div>
-          {searchField}
-
-          Searching!
-        </div>
-      );
-    }
-
     return (
       <div>
         {searchField}
-        {results}
+        {results.length && results || this.renderCategoryTiles(this.props.search.categories)}
       </div>
     );
   }

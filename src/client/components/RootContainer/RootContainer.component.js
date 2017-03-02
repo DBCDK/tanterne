@@ -32,52 +32,52 @@ const state = {
     categories: {
       '00 - 07': {
         label: 'Bogvæsen. Biblioteker. Museer. Medier. Leksika og blandede værker',
-        href: '',
+        index: '00-07',
         backgroundImage: '/categories/bogvaesen.jpg'
       },
       '10 - 19': {
         label: 'Filosofi. Psykologi. Videnskab og forskning. Kommunikation og IT',
-        href: '',
+        index: '10-19',
         backgroundImage: '/categories/filosofi.jpg'
       },
       '20 - 29': {
         label: 'Religion',
-        href: '',
+        index: '20-29',
         backgroundImage: '/categories/religion.jpg'
       },
       '30 - 39': {
         label: 'Samfundsfag. Pædagogik. Forsorg. Folkekultur',
-        href: '',
+        index: '30-39',
         backgroundImage: '/categories/samfundsfag.jpg'
       },
       '40 - 49': {
         label: 'Geografi og rejser. Lokalhistorie.',
-        href: '',
+        index: '40-49',
         backgroundImage: '/categories/geografi.jpg'
       },
       '50 - 59': {
         label: 'Naturvidenskab. Matematik. Antropologi og etnografi.',
-        href: '',
+        index: '50-59',
         backgroundImage: '/categories/naturvidenskab.jpg'
       },
       '60 - 69': {
         label: 'Teknik. Sygdom og sundhed. Erhverv. Hus og hjem.',
-        href: '',
+        index: '60-69',
         backgroundImage: '/categories/teknik.jpg'
       },
       '70 - 79': {
         label: 'Kultur. Kunstarter. Sport',
-        href: '',
+        index: '70-79',
         backgroundImage: '/categories/kultur.jpg'
       },
       '80 - 89': {
         label: 'Litteratur. Sprog',
-        href: '',
+        index: '80-89',
         backgroundImage: '/categories/litteratur.jpg'
       },
       '90 - 99': {
         label: 'Historie. Biografier og erindringer',
-        href: '',
+        index: '90-99',
         backgroundImage: '/categories/historie.jpg'
       }
     }
