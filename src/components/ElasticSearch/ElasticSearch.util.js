@@ -90,8 +90,8 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   ret.title = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a']);
   ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e']);
   ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
-  ret.index = getEsField(esRes, pos, '652m')[0];
-  ret.id = getEsField(esRes, pos, '001a')[0];
+  ret.index = getFirstField(esRes, pos, ['652m']);
+  ret.id = getFirstField(esRes, pos, ['001a']);
   ret.parent = Object.assign({}, dk5Tab[ret.index]);
   const aspectDk5 = getEsField(esRes, pos, 'b52m');
   if (aspectDk5.length === 0) {
