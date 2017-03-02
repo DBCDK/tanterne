@@ -47,7 +47,7 @@ describe('Testing parseRegisterRecord', () => {
     '652.M': {index: 'syst 652.M'},
     'b52.m.1': {index: 'syst b52.m.1'},
     'b52.m.2': {index: 'syst b52.m.2'}
-  }
+  };
   const esRes = {
     hits: [
       {_source: {'001a': ['txt 001a'], '630a': ['txt 630a'], '652m': ['652.m']}},
@@ -56,8 +56,8 @@ describe('Testing parseRegisterRecord', () => {
           '001a': ['txt 001A'],
           '630a': ['txt 630A'],
           '652m': ['652.M'],
-          'b52m': ['b52.m.1', 'b52.m.2'],
-          'b52y': ['Aspect 1', 'Aspect 2']
+          b52m: ['b52.m.1', 'b52.m.2'],
+          b52y: ['Aspect 1', 'Aspect 2']
         }
       }
     ]
@@ -66,8 +66,8 @@ describe('Testing parseRegisterRecord', () => {
     const expected = {id: 'txt 001a', index: '652.m', parent: {index: 'syst 652.m'}, title: 'txt 630a'};
     assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab));
     const items = [
-      {'index': 'b52.m.1', 'parent': {'index': 'syst b52.m.1'}, 'title': 'Aspect 1'},
-      {'index': 'b52.m.2', 'parent': {'index': 'syst b52.m.2'}, 'title': 'Aspect 2'}
+      {index: 'b52.m.1', parent: {index: 'syst b52.m.1'}, title: 'Aspect 1'},
+      {index: 'b52.m.2', parent: {index: 'syst b52.m.2'}, title: 'Aspect 2'}
     ];
     const aspect = {id: 'txt 001A', index: '652.M', parent: {index: 'syst 652.M'}, title: 'txt 630A', items: items};
     assert.deepEqual(aspect, esUtil.parseRegisterRecord(esRes, 1, dk5Tab));
