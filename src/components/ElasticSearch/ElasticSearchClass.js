@@ -240,13 +240,14 @@ export default class ElasticClient {
         let note = '';
         if (Array.isArray(noteText)) {
           const noteSyst = esUtil.getEsField(syst, n, 'a40b');
+          console.log(noteText, noteSyst);
           for (let i = 0; i < noteText.length; i++) {
-            if (note && [',', '.'].indexOf(noteText[i].substr(0, 1)) === -1) {
+            if (note && [',', '.', '(', ')'].indexOf(noteText[i].substr(0, 1)) === -1) {
               note += '<br />';
             }
             note += noteText[i];
             if (noteSyst[i]) {
-              note += noteSyst[i].indexOf('-') !== -1 ? ' ' + noteSyst[i] : ' <dk>' + noteSyst[i] + '</dk>';
+              note += noteSyst[i].indexOf('-') !== -1 ? ' ' + noteSyst[i] + ' ': ' <dk>' + noteSyst[i] + '</dk> ';
             }
           }
         }
