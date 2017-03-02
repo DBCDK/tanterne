@@ -242,7 +242,7 @@ export default class ElasticClient {
           const noteSyst = esUtil.getEsField(syst, n, 'a40b');
           console.log(noteText, noteSyst);
           for (let i = 0; i < noteText.length; i++) {
-            if (note && [',', '.', '(', ')'].indexOf(noteText[i].substr(0, 1)) === -1) {
+            if (note && !/[a-zæåø,.()]/.exec(noteText[i].substr(0,1))) {
               note += '<br />';
             }
             note += noteText[i];
