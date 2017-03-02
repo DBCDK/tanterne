@@ -11,7 +11,11 @@
 .hierarchy-level {
   margin: 2rem 0;
   padding-left: 2rem;
+  .level {
+    transition: background 500ms ease-in;
+  }
   .selected {
+    transition: background 500ms ease-out;
     padding: 2rem;
     margin-left: -2rem;
     background-color: $blue;
@@ -33,18 +37,23 @@
 
 .hierarchy-topics {
   padding-left: 0;
+  margin-bottom: 3rem;
   li {
     margin-bottom: 1rem;
     list-style-type: none;
     &:before {
       display: inline-block;
       content: "-";
-      padding: 0 1rem 0 3rem;
+      padding: 0 1rem 0 2rem;
     }
   }
 }
 
 .hierarchy-description {
+  .content {
+    line-height: 1.4;
+    margin-bottom: 3rem;
+  }
   .content a {
     color:white;
     text-decoration: underline;

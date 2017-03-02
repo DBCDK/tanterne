@@ -77,7 +77,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level=1, selected}) {
 
   return (
     <div className={`hierarchy-level level-${level}`}>
-      <div className={`rel ${isSelected && 'selected' || ''}`}>
+      <div className={`level rel ${isSelected && 'selected' || ''}`}>
         <Header>
           <Link to={`/hierarchy/${index}`}>
             <span className="name">{title}</span>
