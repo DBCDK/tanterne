@@ -5,7 +5,6 @@
 
 // Libraries
 import React, {Component} from 'react';
-import Link from '../Link';
 
 export class TopBarComponent extends Component {
   render() {
