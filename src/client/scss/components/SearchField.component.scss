@@ -13,7 +13,7 @@
   }
 
   .search-field--button {
-    background-color: #1254F2;
+    background-color: $blue;
     border-radius: 5px;
     display: inline-flex;
     justify-content: center;
@@ -36,13 +36,13 @@
     border: 0;
     font-family: 'Open Sans', sans-serif;
     font-size: 15pt;
-    border-bottom: 3px solid #000000;
+    border-bottom: 3px solid $text-color;
     display: inline-flex;
     width: 600px;
 
     &:focus {
       outline: none;
-      border-bottom-color: #1254F2;
+      border-bottom-color: $blue;
     }
   }
 
