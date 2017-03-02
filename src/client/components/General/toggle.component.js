@@ -34,11 +34,9 @@ export const ToggleButton = ({show, showText, hideText, onClick}) => {
   );
 };
 
-export const ToggleContent = ({show, className = '', children}) => {
+export const ToggleContent = ({show, className = '', __html}) => {
   return (
-    <div className={`${className} ${show && 'show' || 'hidden'}`}>
-      {children}
-    </div>
+    <div className={`${className} ${show && 'show' || 'hidden'}`} dangerouslySetInnerHTML={{__html}} />
   );
 };
 
