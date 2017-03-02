@@ -86,8 +86,8 @@ function HierarchyLevel({hierarchy, Header = 'h2', level=1, selected}) {
             </span>
           </Link>
         </Header>
-        {items && <HierarchyElement topics={items} description={note}/>}
-        {contains && contains.map(el => <HierarchyLevel {...{
+        {isSelected && items && <HierarchyElement topics={items} description={note}/>}
+        {selected && contains && contains.map(el => <HierarchyLevel {...{
           hierarchy: el,
           key: el.index,
           selected,
@@ -108,7 +108,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level=1, selected}) {
  */
 class HierarchyContainerComponent extends React.Component {
   componentDidMount() {
-    this.props.globalState.getHierarchy(this.props.params.id);
+    this.props.globalState.getHierarchy(this.props.params.id || '00-07');
   }
 
   componentWillReceiveProps(nextProps) {

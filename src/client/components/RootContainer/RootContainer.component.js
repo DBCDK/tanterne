@@ -118,7 +118,7 @@ export class RootContainerComponent extends Component {
 
         <Router {...this.state}>
           <Route path="/" component={SearchResultsContainerComponent} />
-          <Route path="/hierarchy/:id" component={HierarchyContainerComponent} />
+          <Route path="/hierarchy/:id?" component={HierarchyContainerComponent} />
           <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent} />
         </Router>
       </div>
