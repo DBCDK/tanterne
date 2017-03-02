@@ -87,7 +87,12 @@ function HierarchyLevel({hierarchy, Header = 'h2', level=1, selected}) {
           </Link>
         </Header>
         {items && <HierarchyElement topics={items} description={note}/>}
-        {contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index, selected, level: level + 1}} />)}
+        {contains && contains.map(el => <HierarchyLevel {...{
+          hierarchy: el,
+          key: el.index,
+          selected,
+          level: level + 1
+        }} />)}
       </div>
     </div>
   );
@@ -114,9 +119,16 @@ class HierarchyContainerComponent extends React.Component {
 
   render() {
     const {hierarchy} = this.props;
+
+    // If selected is a top level hierarchy split items to different levels
+    // else show hierarchy as one level
+    let elements = hierarchy.items || [hierarchy];
+
     return (
       <div className="hierarchy container">
-        <HierarchyLevel {...{hierarchy, key: hierarchy.index, Header: 'h1', selected: this.props.params.id}} />
+        {elements.map(level => (
+          <HierarchyLevel {...{hierarchy: level, key: level.index, Header: 'h1', selected: this.props.params.id}} />
+        ))}
       </div>
     );
   }
