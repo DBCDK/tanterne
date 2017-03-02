@@ -46,8 +46,9 @@ const outfile = fs.openSync(option.output, 'w');
 const filter = option.filter;
 
 const dk5Buf = [];
-const info = [];
+const info = [''];
 const words = {};
+let deleted = 0;
 
 records.forEach(function (record) {
   parseIso2709Record(record.trim(), words);
@@ -57,10 +58,11 @@ records.forEach(function (record) {
 const dk5Tab = createDk5Tab();
 
 dumpRecords();
+info.push('Skipped ' + deleted + ' deleted records');
+
 dumpSuggestionWords(words);
 fs.closeSync(outfile);
 
-console.log('');
 info.forEach(function (error) {
   console.log(error);
 });
@@ -115,23 +117,37 @@ function createDk5Tab() {
  * Enrich with parent name and dump record in correct index
  */
 function dumpRecords() {
+  const topGroup = ['00-07', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99'];
   const bibKatMap = {xk: 'systematic', xe: 'register', xt: 'thesaurus'};
   let recno = 1;
   dk5Buf.forEach(function (dk5) {
-    let bibKat = dk5['008t'][0];
-    let number = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
-    if (bibKat === 'xk' && dk5Tab[number]) {
-      dk5['parent'] = [dk5Tab[number]];
+    if (dk5['004r'] && dk5['004r'][0] === 'd') {
+      deleted++;
     }
-    let index = bibKatMap[bibKat] ? bibKatMap[bibKat] : 'nada';
-    if (index === 'nada') {
-      info.push('Error: unknown bibliographic category (008 *t) "' + bibKat + '" id: ' + dk5['001a'][0] + '\n');
-    }
-    indexRec.index._id = recno++;
-    indexRec.index._index = index;
-    if (!filter || (number && (filter === number.substr(0, filter.length)))) {
-      writeRecord(JSON.stringify(indexRec));
-      writeRecord(JSON.stringify(dk5));
+    else {
+      let bibKat = dk5['008t'][0];
+      let number = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
+      if (bibKat === 'xk') {
+        if (dk5Tab[number]) {
+          dk5['parent'] = [dk5Tab[number]];
+        }
+        if (dk5['652d'] && topGroup.indexOf(dk5['652d'][0]) > -1) {
+          indexRec.index._id = recno++;
+          indexRec.index._index = 'register';
+          writeRecord(JSON.stringify(indexRec));
+          writeRecord(JSON.stringify(dk5));
+        }
+      }
+      let index = bibKatMap[bibKat] ? bibKatMap[bibKat] : 'nada';
+      if (index === 'nada') {
+        info.push('Error: unknown bibliographic category (008 *t) "' + bibKat + '" id: ' + dk5['001a'][0] + '\n');
+      }
+      indexRec.index._id = recno++;
+      indexRec.index._index = index;
+      if (!filter || (number && (filter === number.substr(0, filter.length)))) {
+        writeRecord(JSON.stringify(indexRec));
+        writeRecord(JSON.stringify(dk5));
+      }
     }
   });
   info.push('Converted ' + recno + ' records');
@@ -143,11 +159,11 @@ function dumpRecords() {
  * @param words
  */
 function dumpSuggestionWords(words) {
-  info.push('Use ' + Object.keys(words).length + ' words for suggestion');
   indexRec.index._id = 0;
   indexRec.index._index = 'word';
   writeRecord(JSON.stringify(indexRec));
   writeRecord(JSON.stringify({'words': Object.keys(words)}));
+  info.push('Found ' + Object.keys(words).length + ' unique words for suggestion');
 }
 
 /**

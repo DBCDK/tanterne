@@ -65,6 +65,18 @@ export function sortDistanceAndSlice(buf, elements) {
 }
 
 /**
+ * sort an array on the title field
+ *
+ * @param arr
+ * @returns {*}
+ */
+export function titleSort(arr) {
+  return arr.sort(function (a, b) {
+    return (a.title > b.title ? 1 : -1);
+  });
+}
+
+/**
  * parse a register record and return a consolidated structure
  *
  * @param esRes
