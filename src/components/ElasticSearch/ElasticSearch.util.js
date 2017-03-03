@@ -114,21 +114,17 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
  * @returns {string}
  */
 export function createTaggedNote(syst, pos) {
-  const noteText = getEsField(syst, pos, 'a40a');
-  let note = '';
-  if (Array.isArray(noteText)) {
+  let note = getEsField(syst, pos, 'a40').join('<br >');
+  if (note) {
     const noteSyst = getEsField(syst, pos, 'a40b');
-    for (let i = 0; i < noteText.length; i++) {
-      if (note && !/[a-zæåø,.()]/.exec(noteText[i].substr(0, 1))) {
-        note += '<br />';
-      }
-      note = note.trim() + noteText[i];
-      if (noteSyst[i]) {
-        note += noteSyst[i].indexOf('-') !== -1 ? ' ' + noteSyst[i] + ' ' : ' <dk>' + noteSyst[i] + '</dk> ';
+    for (let i = 0; i < noteSyst.length; i++) {
+      let syst = noteSyst[i];
+      if (noteSyst.indexOf(syst) === i) {
+        note = note.replace(new RegExp(syst, 'g'), '<dk5>' + syst + '</dk5>');
       }
     }
   }
-  return note.trim();
+  return note
 }
 
 /**

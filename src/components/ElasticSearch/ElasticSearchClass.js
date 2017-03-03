@@ -206,7 +206,7 @@ export default class ElasticClient {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
         limit: 9999,
-        fields: '001a, 652*, a40*, parent',
+        fields: '001a, 652*, a40, a40*, parent',
         index: 'systematic'
       });
       if (syst.total > 9999) {
