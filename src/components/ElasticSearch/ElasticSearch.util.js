@@ -110,13 +110,13 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
  * Parse fields and build a html like note.
  *
  * @param systRec
- * @param pos
+ * @param recNo
  * @returns {string}
  */
-export function createTaggedNote(systRec, pos) {
-  let note = getEsField(systRec, pos, 'a40').join('<br >');
+export function createTaggedNote(systRec, recNo) {
+  let note = getEsField(systRec, recNo, 'a40').join('<br >');
   if (note) {
-    const noteSyst = getEsField(systRec, pos, 'a40b');
+    const noteSyst = getEsField(systRec, recNo, 'a40b');
     let notePos = 0;
     for (let i = 0; i < noteSyst.length; i++) {
       let syst = noteSyst[i];
