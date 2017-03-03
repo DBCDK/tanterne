@@ -120,7 +120,7 @@ export function createTaggedNote(systRec, pos) {
     for (let i = 0; i < noteSyst.length; i++) {
       let syst = noteSyst[i];
       if (noteSyst.indexOf(syst) === i) {
-        note = note.replace(new RegExp(syst, 'g'), '<dk5>' + syst + '</dk5>');
+        note = note.replace(new RegExp(syst, 'g'), '<dk>' + syst + '</dk>');
       }
     }
   }
