@@ -113,10 +113,10 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
  * @param pos
  * @returns {string}
  */
-export function createTaggedNote(syst, pos) {
-  let note = getEsField(syst, pos, 'a40').join('<br >');
+export function createTaggedNote(systRec, pos) {
+  let note = getEsField(systRec, pos, 'a40').join('<br >');
   if (note) {
-    const noteSyst = getEsField(syst, pos, 'a40b');
+    const noteSyst = getEsField(systRec, pos, 'a40b');
     for (let i = 0; i < noteSyst.length; i++) {
       let syst = noteSyst[i];
       if (noteSyst.indexOf(syst) === i) {
@@ -124,7 +124,7 @@ export function createTaggedNote(syst, pos) {
       }
     }
   }
-  return note
+  return note;
 }
 
 /**
