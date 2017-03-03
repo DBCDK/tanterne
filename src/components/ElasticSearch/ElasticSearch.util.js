@@ -105,3 +105,55 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   }
   return Object.assign({}, ret, {items: items});
 }
+
+/**
+ * Parse fields and build a html like note
+ *
+ * @param syst
+ * @param pos
+ * @returns {string}
+ */
+export function createTaggedNote(syst, pos) {
+  const noteText = getEsField(syst, pos, 'a40a');
+  let note = '';
+  if (Array.isArray(noteText)) {
+    const noteSyst = getEsField(syst, pos, 'a40b');
+    for (let i = 0; i < noteText.length; i++) {
+      if (note && !/[a-zæåø,.()]/.exec(noteText[i].substr(0, 1))) {
+        note += '<br />';
+      }
+      note = note.trim() + noteText[i];
+      if (noteSyst[i]) {
+        note += noteSyst[i].indexOf('-') !== -1 ? ' ' + noteSyst[i] + ' ' : ' <dk>' + noteSyst[i] + '</dk> ';
+      }
+    }
+  }
+  return note.trim();
+}
+
+/**
+ * Parse register records and extract unique words
+ *
+ * @param regRecs
+ * @param wordFields
+ * @returns {Array}
+ */
+export function parseRegisterForUniqueWords(regRecs, wordFields) {
+  let uniqueWords = {};
+  for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
+    wordFields.forEach((fld) => {
+      const wordArr = getEsField(regRecs, hitPos, fld);
+      for (let i = 0; i < wordArr.length; i++) {
+        wordArr[i].split(/[\s,]+/).forEach((word) => {
+          word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"]+/g, '');
+          let num = word.replace(/[\.:-]/g, '');
+          if (num.length > 2 && parseInt(num) != num) {
+            uniqueWords[word.toLowerCase()] = true;
+          }
+        });
+      }
+    });
+  }
+  return Object.keys(uniqueWords);
+}
+

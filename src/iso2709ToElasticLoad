@@ -47,11 +47,10 @@ const filter = option.filter;
 
 const dk5Buf = [];
 const info = [''];
-const words = {};
 let deleted = 0;
 
 records.forEach(function (record) {
-  parseIso2709Record(record.trim(), words);
+  parseIso2709Record(record.trim());
   progress.tick();
 });
 
@@ -60,7 +59,6 @@ const dk5Tab = createDk5Tab();
 dumpRecords();
 info.push('  skipped ' + deleted + ' deleted records');
 
-dumpSuggestionWords(words);
 fs.closeSync(outfile);
 
 info.forEach(function (error) {
@@ -70,7 +68,8 @@ info.forEach(function (error) {
 console.log('\nStart Elastic Search and load data like:\n' +
   '  curl -XDELETE localhost:9200/*\n' +
   '  curl -XPUT localhost:9200/systematic -d \'{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}\'\n' +
-  '  curl -XPOST localhost:9200/_bulk --data-binary \'@' + option.output + '\'\n');
+  '  curl -XPOST localhost:9200/_bulk --data-binary \'@' + option.output + '\'\n' +
+  '  curl -XPUT localhost:9200/*/_settings -d \'{"index": {"max_result_window": 50000}}\'\n');
 process.exit(0);
 
 /* ------------------------------------------------------------------------------------------------------------------------------ */
@@ -123,7 +122,7 @@ function dumpRecords() {
     REK: {index: 'register', no: 0},
     NUL: {index: 'ignored', no: 0}
   };
-  let recno = 1;
+  let recno = 0;
   dk5Buf.forEach(function (dk5) {
     if (dk5['004r'] && dk5['004r'][0] === 'd') {
       deleted++;
@@ -154,32 +153,18 @@ function dumpRecords() {
       }
     }
   });
-  info.push('Converted ' + recno + ' records');
+  info.push('Converted ' + (recno + deleted) + ' records');
   Object.keys(bibKatMap).forEach((bibKat) => {
     info.push('  ' + bibKatMap[bibKat].index + ' ' + bibKatMap[bibKat].no + ' records');
   });
 }
 
 /**
- * Dump words into doc 0
- *
- * @param words
- */
-function dumpSuggestionWords(words) {
-  indexRec.index._id = 0;
-  indexRec.index._index = 'word';
-  writeRecord(JSON.stringify(indexRec));
-  writeRecord(JSON.stringify({'words': Object.keys(words)}));
-  info.push('Found ' + Object.keys(words).length + ' unique words for suggestion');
-}
-
-/**
  * Split one record into tag-lines and write converted record
  *
  * @param record
- * @param words
  */
-function parseIso2709Record(record, words) {
+function parseIso2709Record(record) {
   if (record) {
     let start = parseInt(record.substr(12, 5), 10);
     const tags = record.substr(start).split(RS);
@@ -191,32 +176,9 @@ function parseIso2709Record(record, words) {
         tag = record.substr(tagPos, 3);
         parseTag(dataRec, tag, tagValue.substr(3));
         tagPos += 12;
-        collectWords(words, tag, dataRec[tag][dataRec[tag].length - 1]);
       }
     });
     dk5Buf.push(dataRec);
-  }
-}
-
-/**
- * Collect words for completion functionality.
- * So far, words are collected from all fields
- *
- * Split string, remove unwanted characters, ignore numbers and words shorter than 3 characters
- *
- * @param words
- * @param tag
- * @param wordStr
- */
-function collectWords(words, tag, wordStr) {
-  if (tag.length === 3) {
-    wordStr.split(/[\s,]+/).forEach(function (word) {
-      word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"]+/g, '');
-      let num = word.replace(/[\.:-]/g, '');
-      if (num.length > 2 && parseInt(num) != num) {
-        words[word.toLowerCase()] = true;
-      }
-    });
   }
 }
 

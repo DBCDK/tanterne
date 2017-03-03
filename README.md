@@ -23,9 +23,10 @@ Filter only one dk5 group like (for test purposes)
 * iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json
 
 ###Load Elastic Search
-* curl -XDELETE localhost:9200/* or delete indexes: work, register, systematic and ignored
+* curl -XDELETE localhost:9200/* or delete indexes: register, systematic and ignored
 * curl -XPUT localhost:9200/systematic -d '{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}'
 * curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
+* curl -XPUT localhost:9200/*/_settings -d '{"index": {"max_result_window": 50000}}'
  
 ##Development
 After cloning the repository, run `npm install` to install dependencies. Copy test.env to env.env and set the environment variables (see below) to you need/liking. The application is started with `npm run dev`, which include [nodemon](https://www.npmjs.com/package/nodemon) in order to restart the application, when the code is changed.
