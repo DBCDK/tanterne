@@ -107,9 +107,9 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
 }
 
 /**
- * Parse fields and build a html like note
+ * Parse fields and build a html like note.
  *
- * @param syst
+ * @param systRec
  * @param pos
  * @returns {string}
  */
