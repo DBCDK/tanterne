@@ -147,7 +147,7 @@ export function parseRegisterForUniqueWords(regRecs, wordFields) {
         wordArr[i].split(/[\s,]+/).forEach((word) => {
           word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"]+/g, '');
           let num = word.replace(/[\.:-]/g, '');
-          if (num.length > 2 && parseInt(num) != num) {
+          if (num.length > 2 && parseInt(num, 10) !== num) {
             uniqueWords[word.toLowerCase()] = true;
           }
         });
