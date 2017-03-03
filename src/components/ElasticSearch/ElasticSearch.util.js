@@ -117,10 +117,14 @@ export function createTaggedNote(systRec, pos) {
   let note = getEsField(systRec, pos, 'a40').join('<br >');
   if (note) {
     const noteSyst = getEsField(systRec, pos, 'a40b');
+    let notePos = 0;
     for (let i = 0; i < noteSyst.length; i++) {
       let syst = noteSyst[i];
-      if (noteSyst.indexOf(syst) === i) {
-        note = note.replace(new RegExp(syst, 'g'), '<dk>' + syst + '</dk>');
+      const replace = '<dk>' + syst + '</dk>';
+      const p = note.indexOf(syst, notePos);
+      if (p > -1) {
+        note = note.substr(0, p) + replace + note.substr(p + syst.length);
+        notePos = p + replace.length;
       }
     }
   }
