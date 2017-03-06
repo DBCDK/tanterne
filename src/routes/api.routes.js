@@ -3,7 +3,7 @@
  * Define the API
  */
 
-import ElasticClass from '../components/ElasticSearch/ElasticSearchClass';
+import ElasticClass from '../components/ElasticSearch';
 
 // Libraries
 const Router = require('koa-router');

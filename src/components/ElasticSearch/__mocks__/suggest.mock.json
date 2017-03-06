@@ -1,0 +1,30 @@
+{
+  "prefix": [
+    {
+      "match": "geografi",
+      "distance": 0
+    },
+    {
+      "match": "geografisk",
+      "distance": 2
+    },
+    {
+      "match": "geografiundervisning",
+      "distance": 12
+    }
+  ],
+  "spell": [
+    {
+      "match": "geografi",
+      "distance": 0
+    },
+    {
+      "match": "orografi",
+      "distance": 1
+    },
+    {
+      "match": "geografisk",
+      "distance": 2
+    }
+  ]
+}

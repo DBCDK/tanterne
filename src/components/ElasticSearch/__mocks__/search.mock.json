@@ -1,0 +1,62 @@
+[
+  {
+    "title": "Geografi",
+    "id": "61021272",
+    "index": "40",
+    "parent": {
+      "index": "40",
+      "parentIndex": "40-49",
+      "title": "Geografi og rejser i alm.",
+      "parent": "Geografi og rejser. Lokalhistorie"
+    },
+    "items": [
+      {
+        "index": "55.1",
+        "title": "Fysisk geografi i alm.",
+        "parent": {
+          "index": "55.1",
+          "parentIndex": "55",
+          "title": "Fysisk geografi i alm. Geofysik i alm. Geomorfologi i alm.",
+          "parent": "Geologi og geofysik"
+        }
+      },
+      {
+        "index": "22.08",
+        "title": "Bibelsk geografi",
+        "parent": {
+          "index": "22.08",
+          "parentIndex": "22",
+          "title": "Bibelske hjælpevidenskaber i alm.",
+          "parent": "Bibelen"
+        }
+      }
+    ]
+  },
+  {
+    "title": "Turkestan",
+    "id": "61080856",
+    "parent": {},
+    "items": [
+      {
+        "index": "48.25",
+        "title": "Geografi",
+        "parent": {
+          "index": "48.25",
+          "parentIndex": "48.1",
+          "title": "Centralasien i alm.",
+          "parent": "Asien"
+        }
+      },
+      {
+        "index": "98.25",
+        "title": "Historie",
+        "parent": {
+          "index": "98.25",
+          "parentIndex": "98.1",
+          "title": "Centralasiens historie",
+          "parent": "Asiens historie"
+        }
+      }
+    ]
+  }
+]

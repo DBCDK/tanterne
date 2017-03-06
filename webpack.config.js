@@ -8,7 +8,7 @@ const extractCss = new extractTextPlugin('../css/[name].css', {allChunks: true})
 
 module.exports = [{
   name: 'browser',
-
+  cache: true,
   entry: {
     index: './src/client/index.js'
   },
