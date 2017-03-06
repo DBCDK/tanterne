@@ -47,20 +47,22 @@ const filter = option.filter;
 
 const dk5Buf = [];
 const info = [''];
-const words = {};
 let deleted = 0;
+let obsolete = 0;
+let missing = 0;
 
 records.forEach(function (record) {
-  parseIso2709Record(record.trim(), words);
+  parseIso2709Record(record.trim());
   progress.tick();
 });
 
-const dk5Tab = createDk5Tab();
+const {dk5SystTab, dk5RegTab} = createDk5Tab();
 
 dumpRecords();
-info.push('Skipped ' + deleted + ' deleted records');
+info.push('  skipped ' + deleted + ' deleted records');
+info.push('  skipped ' + obsolete + ' closed records');
+info.push('Created ' + missing + ' register records from systematic');
 
-dumpSuggestionWords(words);
 fs.closeSync(outfile);
 
 info.forEach(function (error) {
@@ -70,7 +72,8 @@ info.forEach(function (error) {
 console.log('\nStart Elastic Search and load data like:\n' +
   '  curl -XDELETE localhost:9200/*\n' +
   '  curl -XPUT localhost:9200/systematic -d \'{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}\'\n' +
-  '  curl -XPOST localhost:9200/_bulk --data-binary \'@' + option.output + '\'\n');
+  '  curl -XPOST localhost:9200/_bulk --data-binary \'@' + option.output + '\'\n' +
+  '  curl -XPUT localhost:9200/*/_settings -d \'{"index": {"max_result_window": 50000}}\'\n');
 process.exit(0);
 
 /* ------------------------------------------------------------------------------------------------------------------------------ */
@@ -99,18 +102,28 @@ function getOptions() {
  * @returns {{}}
  */
 function createDk5Tab() {
-  const tab = {};
+  const dk5s = {};
+  const regs = {};
   dk5Buf.forEach(function (dk5) {
-    let bibKat = dk5['008t'][0];
-    if (bibKat === 'xk') {   // only for systematic
-      let number = Array.isArray(dk5['652m']) ? dk5['652m'][0] : '';
-      let text = Array.isArray(dk5['652u']) ? dk5['652u'][0] : '';
+    let bibKat = dk5['d09a'] ? dk5['d09a'][0].substr(0, 3) : 'NUL';
+    const number = Array.isArray(dk5['652m']) ? dk5['652m'][0] : (Array.isArray(dk5['652n']) ? dk5['652n'][0] : '');
+    if (bibKat === 'DK5') {   // only for systematic
+      const text = Array.isArray(dk5['652u']) ? dk5['652u'][0] : '';
       if (number && text) {
-        tab[number] = text;
+        dk5s[number] = text;
+      }
+    }
+    if (bibKat === 'REK') {   // only for register
+      regs[number] = true;
+      const aspects = dk5['b52m'];
+      if (aspects) {
+        aspects.forEach((aspect) => {
+          regs[aspect] = true;
+        });
       }
     }
   });
-  return tab;
+  return {dk5SystTab: dk5s, dk5RegTab: regs};
 }
 
 /**
@@ -118,61 +131,69 @@ function createDk5Tab() {
  */
 function dumpRecords() {
   const topGroup = ['00-07', '10-19', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90-99'];
-  const bibKatMap = {xk: 'systematic', xe: 'register', xt: 'thesaurus'};
-  let recno = 1;
+  const bibKatMap = {
+    DK5: {index: 'systematic', no: 0},
+    REK: {index: 'register', no: 0},
+    NUL: {index: 'ignored', no: 0}
+  };
+  let recno = 0;
   dk5Buf.forEach(function (dk5) {
     if (dk5['004r'] && dk5['004r'][0] === 'd') {
       deleted++;
     }
     else {
-      let bibKat = dk5['008t'][0];
-      let number = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
-      if (bibKat === 'xk') {
-        if (dk5Tab[number]) {
-          dk5['parent'] = [dk5Tab[number]];
+      if (dk5['652x'] && dk5['652x'][0] === '2') {
+        obsolete++;
+      }
+      else {
+        const d09aStem = dk5['d09a'] ? dk5['d09a'][0].substr(0, 3) : 'NUL';
+        const bibKat = bibKatMap[d09aStem] ? d09aStem : 'NUL';
+        let number = '';
+        ['652m', '652n', '652d'].forEach((subf) => {
+          if (!number && Array.isArray(dk5[subf])) {
+            number = dk5[subf][0];
+          }
+        });
+        if (bibKat === 'DK5') {
+          const parent = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
+          if (!dk5RegTab[number]) {
+            missing++;
+          }
+          if (dk5SystTab[parent]) {
+            dk5['parent'] = [dk5SystTab[parent]];
+          }
+          // create "missing" register record - not all systematic have a register record
+          if (!dk5RegTab[number] || (dk5['652d'] && topGroup.indexOf(dk5['652d'][0]) > -1)) {
+            bibKatMap['REK'].no++;
+            indexRec.index._id = recno++;
+            indexRec.index._index = 'register';
+            writeRecord(JSON.stringify(indexRec));
+            writeRecord(JSON.stringify(dk5));
+          }
         }
-        if (dk5['652d'] && topGroup.indexOf(dk5['652d'][0]) > -1) {
-          indexRec.index._id = recno++;
-          indexRec.index._index = 'register';
+        let index = bibKatMap[bibKat].index;
+        bibKatMap[bibKat].no++;
+        indexRec.index._id = recno++;
+        indexRec.index._index = index;
+        if (!filter || (number && (filter === number.substr(0, filter.length)))) {
           writeRecord(JSON.stringify(indexRec));
           writeRecord(JSON.stringify(dk5));
         }
       }
-      let index = bibKatMap[bibKat] ? bibKatMap[bibKat] : 'nada';
-      if (index === 'nada') {
-        info.push('Error: unknown bibliographic category (008 *t) "' + bibKat + '" id: ' + dk5['001a'][0] + '\n');
-      }
-      indexRec.index._id = recno++;
-      indexRec.index._index = index;
-      if (!filter || (number && (filter === number.substr(0, filter.length)))) {
-        writeRecord(JSON.stringify(indexRec));
-        writeRecord(JSON.stringify(dk5));
-      }
     }
   });
-  info.push('Converted ' + recno + ' records');
-}
-
-/**
- * Dump words into doc 0
- *
- * @param words
- */
-function dumpSuggestionWords(words) {
-  indexRec.index._id = 0;
-  indexRec.index._index = 'word';
-  writeRecord(JSON.stringify(indexRec));
-  writeRecord(JSON.stringify({'words': Object.keys(words)}));
-  info.push('Found ' + Object.keys(words).length + ' unique words for suggestion');
+  info.push('Converted ' + (recno + deleted) + ' records');
+  Object.keys(bibKatMap).forEach((bibKat) => {
+    info.push('  ' + bibKatMap[bibKat].index + ' ' + bibKatMap[bibKat].no + ' records');
+  });
 }
 
 /**
  * Split one record into tag-lines and write converted record
  *
  * @param record
- * @param words
  */
-function parseIso2709Record(record, words) {
+function parseIso2709Record(record) {
   if (record) {
     let start = parseInt(record.substr(12, 5), 10);
     const tags = record.substr(start).split(RS);
@@ -184,32 +205,9 @@ function parseIso2709Record(record, words) {
         tag = record.substr(tagPos, 3);
         parseTag(dataRec, tag, tagValue.substr(3));
         tagPos += 12;
-        collectWords(words, tag, dataRec[tag][dataRec[tag].length - 1]);
       }
     });
     dk5Buf.push(dataRec);
-  }
-}
-
-/**
- * Collect words for completion functionality.
- * So far, words are collected from all fields
- *
- * Split string, remove unwanted characters, ignore numbers and words shorter than 3 characters
- *
- * @param words
- * @param tag
- * @param wordStr
- */
-function collectWords(words, tag, wordStr) {
-  if (tag.length === 3) {
-    wordStr.split(/[\s,]+/).forEach(function (word) {
-      word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"]+/g, '');
-      let num = word.replace(/[\.:-]/g, '');
-      if (num.length > 2 && parseInt(num) != num) {
-        words[word.toLowerCase()] = true;
-      }
-    });
   }
 }
 

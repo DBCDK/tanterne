@@ -63,13 +63,28 @@ describe('Testing parseRegisterRecord', () => {
     ]
   };
   it('it should extract needed fields', () => {
-    const expected = {id: 'txt 001a', index: '652.m', parent: {index: 'syst 652.m'}, title: 'txt 630a'};
+    const expected = {
+      id: 'txt 001a',
+      index: '652.m',
+      parent: {index: 'syst 652.m'},
+      title: 'txt 630a',
+      titleDetails: '',
+      titleFull: 'txt 630a'
+    };
     assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab));
     const items = [
       {index: 'b52.m.1', parent: {index: 'syst b52.m.1'}, title: 'Aspect 1'},
       {index: 'b52.m.2', parent: {index: 'syst b52.m.2'}, title: 'Aspect 2'}
     ];
-    const aspect = {id: 'txt 001A', index: '652.M', parent: {index: 'syst 652.M'}, title: 'txt 630A', items: items};
+    const aspect = {
+      id: 'txt 001A',
+      index: '652.M',
+      parent: {index: 'syst 652.M'},
+      title: 'txt 630A',
+      titleDetails: '',
+      titleFull: 'txt 630A',
+      items: items
+    };
     assert.deepEqual(aspect, esUtil.parseRegisterRecord(esRes, 1, dk5Tab));
   });
 });

@@ -41,7 +41,8 @@ export default class ElasticClient {
       9: {index: '90-99', title: ''}
     };
     this.dk5Syst = {};
-    this.dk5Notes = {};
+    this.dk5SystematicNotes = {};
+    this.dk5RegisterNotes = {};
   }
 
   /**
@@ -73,8 +74,8 @@ export default class ElasticClient {
     const res = [];
     pars.query = pars.query.split(/[ ]+/).join(' AND ');   // force AND operator between words
     const esRes = await this.rawElasticSearch(pars);
-    for (let n = 0; n < esRes.hits.length; n++) {
-      res.push(esUtil.parseRegisterRecord(esRes, n, this.dk5Syst));
+    for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
+      res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst));
     }
     return res;
   }
@@ -113,9 +114,9 @@ export default class ElasticClient {
       let parents = [];
       let parent = {};
       if (!top.title) {
-        for (let n = 0; n < esRes.hits.length; n++) {
-          const syst = esUtil.parseRegisterRecord(esRes, n, this.dk5Syst);
-          if (syst.index) {
+        for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
+          const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
+          if (syst.index && syst.title) {
             regRecords.push({index: syst.index, title: syst.title});
           }
         }
@@ -127,7 +128,8 @@ export default class ElasticClient {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
               let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
               if (idx === q) {
-                item.note = this.dk5Notes[idx];
+                // use note from register. Notes from systematic are currently not used
+                item.note = this.dk5RegisterNotes[idx];
                 item = Object.assign(item, {items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
               }
               parents.push(item);
@@ -157,7 +159,7 @@ export default class ElasticClient {
             lastChild = parent.index;
           }
         }
-        hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)], {children: [hierarchy]});
+        hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)] || {}, {children: [hierarchy]});
       }
     }
     return hierarchy;
@@ -201,12 +203,12 @@ export default class ElasticClient {
       }
     }
 
-    // create systematic hierarchy
+    // create systematic hierarchy and notes
     if (Object.keys(this.dk5Syst).length === 0) {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
         limit: 9999,
-        fields: '652*, a40*, parent',
+        fields: '001a, 652*, a40, a40*, parent',
         index: 'systematic'
       });
       if (syst.total > 9999) {
@@ -224,9 +226,9 @@ export default class ElasticClient {
         79.9999: '80-89',
         89.9999: '90-99'
       };
-      for (let n = 0; n < syst.hits.length; n++) {
-        let parentIndex = esUtil.getFirstField(syst, n, ['652j']);
-        let parent = esUtil.getFirstField(syst, n, ['parent']);
+      for (let hitPos = 0; hitPos < syst.hits.length; hitPos++) {
+        let parentIndex = esUtil.getFirstField(syst, hitPos, ['652j']);
+        let parent = esUtil.getFirstField(syst, hitPos, ['parent']);
         if (linkTranslate[parentIndex]) {
           parentIndex = linkTranslate[parentIndex];
           Object.keys(this.topGroups).forEach((idx) => {
@@ -235,35 +237,32 @@ export default class ElasticClient {
             }
           });
         }
-        const grp = esUtil.getFirstField(syst, n, ['652m']);
-        const noteText = esUtil.getEsField(syst, n, 'a40a');
-        let note = '';
-        if (Array.isArray(noteText)) {
-          const noteSyst = esUtil.getEsField(syst, n, 'a40b');
-          for (let i = 0; i < noteText.length; i++) {
-            if (note && [',', '.'].indexOf(noteText[i].substr(0, 1)) === -1) {
-              note += '<br />';
-            }
-            note += noteText[i] + (noteSyst[i] ? ' <dk>' + noteSyst[i].split('-').join('</dk>-</dk5>') + '</dk>' : '');
-          }
+        const grp = esUtil.getFirstField(syst, hitPos, ['652m', '652n', '652d']);
+        if (grp) {
+          this.dk5SystematicNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos);
+          this.dk5Syst[grp] = {
+            index: grp,
+            parentIndex: parentIndex,
+            title: esUtil.getFirstField(syst, hitPos, ['652u']),
+            parent: parent
+          };
         }
-        this.dk5Notes[grp] = note;
-        this.dk5Syst[grp] = {
-          index: grp,
-          parentIndex: parentIndex,
-          title: esUtil.getFirstField(syst, n, ['652u']),
-          parent: parent
-        };
+        else {
+          Logger.log.error('No dk5 group for ' + esUtil.getFirstField(syst, hitPos, ['001a']));
+        }
       }
     }
 
-    // load words into autocomplete trie. Doc id: 0 has all the words
+    // load words into autocomplete trie.
     if (!this.autocomplete.trie.prefixes) {
-      let wordRec = await this.rawElasticSearch({query: '_id:0', fields: 'words', index: 'word'});
-      this.vocabulary = esUtil.getEsField(wordRec, 0, 'words');
+      const wordFields = ['630a', 'b52y'];
+      const regRecs = await this.rawElasticSearch({query: '*', fields: wordFields.join(','), limit: 50000});
+      this.vocabulary = esUtil.parseRegisterForUniqueWords(regRecs, wordFields);
       this.autocomplete.initialize((onReady) => {
         onReady(this.vocabulary);
       });
+      const regNotes = await this.rawElasticSearch({query: '651:*', fields: '651*, 652*', limit: 50000});
+      this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes);
     }
   }
 

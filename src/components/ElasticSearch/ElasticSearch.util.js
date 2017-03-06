@@ -86,12 +86,16 @@ export function titleSort(arr) {
  * @returns {*}
  */
 export function parseRegisterRecord(esRes, pos, dk5Tab) {
-  const entryTitle = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a']);
-  const dk5 = getEsField(esRes, pos, '652m')[0];
-  const id = getEsField(esRes, pos, '001a')[0];
+  const ret = {};
+  ret.title = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a']);
+  ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e']);
+  ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
+  ret.index = getFirstField(esRes, pos, ['652m']);
+  ret.id = getFirstField(esRes, pos, ['001a']);
+  ret.parent = Object.assign({}, dk5Tab[ret.index]);
   const aspectDk5 = getEsField(esRes, pos, 'b52m');
   if (aspectDk5.length === 0) {
-    return {title: entryTitle, id: id, index: dk5, parent: dk5Tab[dk5]};
+    return ret;
   }
 
   const aspectTitle = getEsField(esRes, pos, 'b52y');
@@ -99,5 +103,97 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   for (let i = 0; i < aspectDk5.length; i++) {
     items.push({index: aspectDk5[i], title: aspectTitle[i], parent: dk5Tab[aspectDk5[i]]});
   }
-  return {title: entryTitle, id: id, index: dk5, parent: Object.assign({}, dk5Tab[dk5]), items: items};
+  return Object.assign({}, ret, {items: items});
+}
+
+/**
+ * Parse fields and build a html like note.
+ *
+ * @param systRec
+ * @param hitPos
+ * @returns {string}
+ */
+export function createTaggedSystematicNote(systRec, hitPos) {
+  let note = getEsField(systRec, hitPos, 'a40').join('<br >');
+  if (note) {
+    note = parseTextAndTagSyst(note, getEsField(systRec, hitPos, 'a40b'));
+  }
+  return note;
+}
+
+/**
+ *
+ * @param regRecs
+ * @param hitPos
+ * @returns {*|string|String}
+ */
+export function createTaggedRegisterNote(regRecs, hitPos) {
+  let note = getEsField(regRecs, hitPos, '651').join('<br >');
+  if (note) {
+    note = parseTextAndTagSyst(note, getEsField(regRecs, hitPos, '651b'));
+  }
+  return note;
+}
+
+/**
+ * Parse all register records for notes
+ *
+ * @param regRecs
+ * @returns {{}}
+ */
+export function parseRegisterForNotes(regRecs) {
+  const notes = {};
+  for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
+    const index = getFirstField(regRecs, hitPos, ['652m', '652n', '652d']);
+    notes[index] = createTaggedRegisterNote(regRecs, hitPos);
+  }
+  return notes;
+}
+
+/**
+ * Parse register records and extract unique words
+ *
+ * @param regRecs
+ * @param wordFields
+ * @returns {Array}
+ */
+export function parseRegisterForUniqueWords(regRecs, wordFields) {
+  let uniqueWords = {};
+  for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
+    wordFields.forEach((fld) => {
+      const wordArr = getEsField(regRecs, hitPos, fld);
+      for (let i = 0; i < wordArr.length; i++) {
+        wordArr[i].split(/[\s,]+/).forEach((word) => {
+          word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"]+/g, '');
+          let num = word.replace(/[\.:-]/g, '');
+          if (num.length > 2 && parseInt(num, 10) !== num) {
+            uniqueWords[word.toLowerCase()] = true;
+          }
+        });
+      }
+    });
+  }
+  return Object.keys(uniqueWords);
+}
+
+/**
+ * Parse the note and put systematics in tags
+ *
+ * @param note
+ * @param noteSyst
+ * @returns {*}
+ */
+function parseTextAndTagSyst(note, noteSyst) {
+  let ret = note;
+  let notePos = 0;
+  for (let i = 0; i < noteSyst.length; i++) {
+    let syst = noteSyst[i];
+    const replace = '<dk>' + syst + '</dk>';
+    const p = ret.indexOf(syst, notePos);
+    if (p > -1) {
+      ret = ret.substr(0, p) + replace + ret.substr(p + syst.length);
+      notePos = p + replace.length;
+    }
+  }
+  return ret;
 }
