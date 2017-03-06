@@ -5,8 +5,11 @@
 .top-bar--container {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-
+  margin-bottom: 3rem;
+  a {
+    display: flex;
+    height: 40px;
+  }
   .top-bar--logo {
     margin: 0 10px;
   }
@@ -22,6 +25,7 @@
     color: #106ff5;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
-    font-size: 24pt;
+    font-size: 28px;
+    line-height: 40px;
   }
 }

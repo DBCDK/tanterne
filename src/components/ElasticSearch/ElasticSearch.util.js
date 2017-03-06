@@ -28,8 +28,9 @@ export function getEsField(esRes, pos, fld) {
 export function getFirstField(esRes, pos, fldList) {
   let field = '';
   fldList.forEach(function (tag) {
-    if (!field) {
-      field = getEsField(esRes, pos, tag)[0];
+    const fld = getEsField(esRes, pos, tag);
+    if (!field && fld[0]) {
+      field = fld[0];
     }
   });
   return field;
@@ -62,6 +63,18 @@ export function sortDistanceAndSlice(buf, elements) {
   return buf.sort(function (a, b) {
     return (parseInt(a.distance, 10) - parseInt(b.distance, 10));
   }).slice(0, elements);
+}
+
+/**
+ * sort an array on the title field
+ *
+ * @param arr
+ * @returns {*}
+ */
+export function titleSort(arr) {
+  return arr.sort(function (a, b) {
+    return (a.title > b.title ? 1 : -1);
+  });
 }
 
 /**

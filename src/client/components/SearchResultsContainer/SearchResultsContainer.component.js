@@ -9,6 +9,41 @@ import request from 'superagent';
 import {SearchFieldComponent} from '../SearchField/SearchField.component';
 import Link from '../Link';
 
+function parseSearchResult(result) {
+  return result.map(level => {
+    const {title, items, index, parent} = level;
+    const subLevel = items && items.length && parseSearchResult(items) || [];
+    return {
+      title,
+      dk5: index && {index, title} || null,
+      items: subLevel,
+      parent: parent && parent.title
+    };
+  });
+}
+
+const SearchResultSingle = ({title, dk5, parent}) => {
+  return (
+    <div className="result-element">
+      <h2>
+        {title}
+        <span className="result-element-link">, se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
+      </h2>
+    </div>
+  );
+};
+const SearchResultGroup = ({title, items}) => {
+
+  return (
+    <div className="result-group">
+      <h2><span className="name">{title}</span></h2>
+      <ul className="result-list">
+        {items.map(el => <li key={el.dk5.index}><SearchResultSingle {...el}/></li>)}
+      </ul>
+    </div>
+  );
+};
+
 export class SearchResultsContainerComponent extends Component {
   constructor(props) {
     super(props);
@@ -44,8 +79,7 @@ export class SearchResultsContainerComponent extends Component {
         .set('Accept', 'application/json')
         .end((err, res) => {
           const bd = JSON.parse(res.text);
-          searchResults[searchUrl] = bd.response || [];
-
+          searchResults[searchUrl] = parseSearchResult(bd.result || []);
           this.setState({
             searchResults: searchResults,
             query: searchUrl
@@ -60,7 +94,7 @@ export class SearchResultsContainerComponent extends Component {
     };
 
     return (
-      <a style={styles} href={category.href} className='category-tile--container'>
+      <a style={styles} href={`#!/hierarchy/${category.index}`} className='category-tile--container'>
         <div className='category-tile--gradient'>
           <div className='category-tile--text-container'>
             <span className='category-tile--label'>{category.label}</span>
@@ -71,20 +105,17 @@ export class SearchResultsContainerComponent extends Component {
     );
   }
 
-  renderCategoryTiles(categories, searchField) {
+  renderCategoryTiles(categories) {
     const tiles = Object.keys(categories)
       .map(categoryIndex => this.renderCategoryTile(categoryIndex, categories[categoryIndex]));
 
     return (
       <div className='category-tiles--container'>
-        {searchField}
-
         <div className='category-tiles--title'>
           <h2>Eller vælg her</h2>
         </div>
-
         <div className='category-tiles'>
-        {tiles}
+          {tiles}
         </div>
       </div>
     );
@@ -101,33 +132,15 @@ export class SearchResultsContainerComponent extends Component {
     );
 
     const results = (this.state.searchResults[this.state.query] || []).map(entry => {
-      return (
-        <div key={entry.dk5.index}>
-          <Link to={`/hierarchy/${entry.dk5.index}`}>
-          {entry.title}
-          </Link>
-        </div>
-      );
+      if (entry.dk5) {
+        return (<SearchResultSingle key={entry.dk5.index} {...entry} />);
+      }
+      return (<SearchResultGroup key={entry.title} {...entry} />);
     });
-
-    if (!params.q) {
-      return this.renderCategoryTiles(this.props.search.categories, searchField);
-    }
-
-    if (results.length < 1) {
-      return (
-        <div>
-          {searchField}
-
-          Searching!
-        </div>
-      );
-    }
-
     return (
       <div>
         {searchField}
-        {results}
+        {results.length && results || this.renderCategoryTiles(this.props.search.categories)}
       </div>
     );
   }

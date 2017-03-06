@@ -10,12 +10,13 @@ export class TopBarComponent extends Component {
   render() {
     return (
       <div className="top-bar--container">
-        <img className="top-bar--logo" src="/DK5logo_blue.png" />
+        <a className="unlink" href="/">
+          <img className="top-bar--logo" src="/DK5logo_blue.png"/>
         <span className="top-bar--caption">
           Find en bog med DK5
         </span>
-
-        <img className="top-bar--question" src="/question.png" />
+        </a>
+        <img className="top-bar--question" src="/question.png"/>
       </div>
     );
   }

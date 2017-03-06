@@ -36,7 +36,7 @@
     }
 
     .category-tile--index {
-      background-color: #1254F2;
+      background-color: $blue;
       padding: 2px 5px;
     }
 
@@ -51,7 +51,18 @@
   }
 }
 
-.category-tiles--title {
-  font-family: 'Open Sans', sans-serif;
+.result-list {
+  list-style-type: none;
+  li * {
+    display: inline-block;
+  }
+  li:before {
+    font-size: 2rem;
+    content: '-';
+    margin-right: 1rem;
+  }
+}
 
+.result-element-link {
+  font-weight: normal;
 }
