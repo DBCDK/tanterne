@@ -110,25 +110,44 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
  * Parse fields and build a html like note.
  *
  * @param systRec
- * @param recNo
+ * @param hitPos
  * @returns {string}
  */
-export function createTaggedNote(systRec, recNo) {
-  let note = getEsField(systRec, recNo, 'a40').join('<br >');
+export function createTaggedSystematicNote(systRec, hitPos) {
+  let note = getEsField(systRec, hitPos, 'a40').join('<br >');
   if (note) {
-    const noteSyst = getEsField(systRec, recNo, 'a40b');
-    let notePos = 0;
-    for (let i = 0; i < noteSyst.length; i++) {
-      let syst = noteSyst[i];
-      const replace = '<dk>' + syst + '</dk>';
-      const p = note.indexOf(syst, notePos);
-      if (p > -1) {
-        note = note.substr(0, p) + replace + note.substr(p + syst.length);
-        notePos = p + replace.length;
-      }
-    }
+    note = parseTextAndTagSyst(note, getEsField(systRec, hitPos, 'a40b'));
   }
   return note;
+}
+
+/**
+ *
+ * @param regRecs
+ * @param hitPos
+ * @returns {*|string|String}
+ */
+export function createTaggedRegisterNote(regRecs, hitPos) {
+  let note = getEsField(regRecs, hitPos, '651').join('<br >');
+  if (note) {
+    note = parseTextAndTagSyst(note, getEsField(regRecs, hitPos, '651b'));
+  }
+  return note;
+}
+
+/**
+ * Parse all register records for notes
+ *
+ * @param regRecs
+ * @returns {{}}
+ */
+export function parseRegisterForNotes(regRecs) {
+  const notes = {};
+  for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
+    const index = getFirstField(regRecs, hitPos, ['652m', '652n', '652d']);
+    notes[index] = createTaggedRegisterNote(regRecs, hitPos);
+  }
+  return notes;
 }
 
 /**
@@ -157,3 +176,24 @@ export function parseRegisterForUniqueWords(regRecs, wordFields) {
   return Object.keys(uniqueWords);
 }
 
+/**
+ * Parse the note and put systematics in tags
+ *
+ * @param note
+ * @param noteSyst
+ * @returns {*}
+ */
+function parseTextAndTagSyst(note, noteSyst) {
+  let ret = note;
+  let notePos = 0;
+  for (let i = 0; i < noteSyst.length; i++) {
+    let syst = noteSyst[i];
+    const replace = '<dk>' + syst + '</dk>';
+    const p = ret.indexOf(syst, notePos);
+    if (p > -1) {
+      ret = ret.substr(0, p) + replace + ret.substr(p + syst.length);
+      notePos = p + replace.length;
+    }
+  }
+  return ret;
+}

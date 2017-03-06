@@ -41,7 +41,8 @@ export default class ElasticClient {
       9: {index: '90-99', title: ''}
     };
     this.dk5Syst = {};
-    this.dk5Notes = {};
+    this.dk5SystematicNotes = {};
+    this.dk5RegisterNotes = {};
   }
 
   /**
@@ -115,7 +116,7 @@ export default class ElasticClient {
       if (!top.title) {
         for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
           const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
-          if (syst.index) {
+          if (syst.index && syst.title) {
             regRecords.push({index: syst.index, title: syst.title});
           }
         }
@@ -127,7 +128,8 @@ export default class ElasticClient {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
               let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
               if (idx === q) {
-                item.note = this.dk5Notes[idx];
+                // use note from register. Notes from systematic are currently not used
+                item.note = this.dk5RegisterNotes[idx];
                 item = Object.assign(item, {items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
               }
               parents.push(item);
@@ -237,21 +239,13 @@ export default class ElasticClient {
         }
         const grp = esUtil.getFirstField(syst, hitPos, ['652m', '652n', '652d']);
         if (grp) {
-          this.dk5Notes[grp] = esUtil.createTaggedNote(syst, hitPos);
+          this.dk5SystematicNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos);
           this.dk5Syst[grp] = {
             index: grp,
             parentIndex: parentIndex,
             title: esUtil.getFirstField(syst, hitPos, ['652u']),
             parent: parent
           };
-          /*
-           const searchable = await this.rawElasticSearch({
-           query: '652m:"' + grp + '" b52m:"' + grp + '"'
-           });
-           if (!searchable.total) {
-           console.log('zero', grp);
-           }
-           */
         }
         else {
           Logger.log.error('No dk5 group for ' + esUtil.getFirstField(syst, hitPos, ['001a']));
@@ -267,6 +261,8 @@ export default class ElasticClient {
       this.autocomplete.initialize((onReady) => {
         onReady(this.vocabulary);
       });
+      const regNotes = await this.rawElasticSearch({query: '651:*', fields: '651*, 652*', limit: 50000});
+      this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes);
     }
   }
 
