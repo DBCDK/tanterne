@@ -14,7 +14,7 @@ Install and start it
 ###Get data
 Records are dumped from the DBC libv3 system like:
 
-setenv NLS_LANG AMERICAN_DENMARK.WE8ISO8859P1 ; dump_v3 <user>/<password>@<some.db>.dbc.dk | marcunicode > dk5_total.iso2709
+NLS_LANG=AMERICAN_DENMARK.WE8ISO8859P1 ; dump_v3 oracle_user/oracle_password@my.oracle.host.dbc.dk | marcunicode > dk5_total.iso2709
 
 ###Convert
 * iso2709ToElasticLoad -i dk5_total.iso2709 -o elastic_bulk_load.json
