@@ -48,6 +48,7 @@ const filter = option.filter;
 const dk5Buf = [];
 const info = [''];
 let deleted = 0;
+let obsolete = 0;
 
 records.forEach(function (record) {
   parseIso2709Record(record.trim());
@@ -58,6 +59,7 @@ const dk5Tab = createDk5Tab();
 
 dumpRecords();
 info.push('  skipped ' + deleted + ' deleted records');
+info.push('  skipped ' + obsolete + ' closed records');
 
 fs.closeSync(outfile);
 
@@ -128,28 +130,33 @@ function dumpRecords() {
       deleted++;
     }
     else {
-      const d09a = dk5['d09a'] ? dk5['d09a'][0].substr(0, 3) : 'NUL';
-      const bibKat = bibKatMap[d09a] ? d09a : 'NUL';
-      const number = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
-      if (bibKat === 'DK5') {
-        if (dk5Tab[number]) {
-          dk5['parent'] = [dk5Tab[number]];
+      if (dk5['652x'] && dk5['652x'][0] === '2') {
+        obsolete++;
+      }
+      else {
+        const d09a = dk5['d09a'] ? dk5['d09a'][0].substr(0, 3) : 'NUL';
+        const bibKat = bibKatMap[d09a] ? d09a : 'NUL';
+        const number = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
+        if (bibKat === 'DK5') {
+          if (dk5Tab[number]) {
+            dk5['parent'] = [dk5Tab[number]];
+          }
+          if (dk5['652d'] && topGroup.indexOf(dk5['652d'][0]) > -1) {
+            bibKatMap['REK'].no++;
+            indexRec.index._id = recno++;
+            indexRec.index._index = 'register';
+            writeRecord(JSON.stringify(indexRec));
+            writeRecord(JSON.stringify(dk5));
+          }
         }
-        if (dk5['652d'] && topGroup.indexOf(dk5['652d'][0]) > -1) {
-          bibKatMap['REK'].no++;
-          indexRec.index._id = recno++;
-          indexRec.index._index = 'register';
+        let index = bibKatMap[bibKat].index;
+        bibKatMap[bibKat].no++;
+        indexRec.index._id = recno++;
+        indexRec.index._index = index;
+        if (!filter || (number && (filter === number.substr(0, filter.length)))) {
           writeRecord(JSON.stringify(indexRec));
           writeRecord(JSON.stringify(dk5));
         }
-      }
-      let index = bibKatMap[bibKat].index;
-      bibKatMap[bibKat].no++;
-      indexRec.index._id = recno++;
-      indexRec.index._index = index;
-      if (!filter || (number && (filter === number.substr(0, filter.length)))) {
-        writeRecord(JSON.stringify(indexRec));
-        writeRecord(JSON.stringify(dk5));
       }
     }
   });
