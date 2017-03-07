@@ -8,6 +8,7 @@ import React, {Component} from 'react';
 import {Router, Route} from 'react-enroute';
 
 // Components
+import {HelpContainerComponent} from '../HelpContainer/HelpContainer.component';
 import HierarchyContainerComponent from '../HierarchyContainer/HierarchyContainer.component';
 import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchResultsContainer.component';
 import {TopBarComponent} from '../TopBar/TopBar.component';
@@ -118,6 +119,7 @@ export class RootContainerComponent extends Component {
 
         <Router {...this.state}>
           <Route path="/" component={SearchResultsContainerComponent} />
+          <Route path="/help" component={HelpContainerComponent} />
           <Route path="/hierarchy/:id?" component={HierarchyContainerComponent} />
           <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent} />
         </Router>

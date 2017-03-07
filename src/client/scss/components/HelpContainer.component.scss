@@ -1,0 +1,21 @@
+.help--container {
+  margin: 3rem;
+
+  .section-head {
+    font-size: 28px;
+    line-height: 40px;
+  }
+  .section {
+    margin-top: 1rem;
+    line-height: 2rem
+  }
+  ul {
+    margin: 0;
+    padding-left: 2rem;
+  }
+  li {
+    list-style: none;
+    display: inline-block;
+    padding-right: 1.2rem;
+  }
+}
