@@ -122,9 +122,9 @@ describe('Testing notes', () => {
   it('it should create a systematic note', () => {
     const esSys = {
       hits: [
-        {_source: {a40: ['Note text 12.34'], 'a40b': ['12.34']}},
-        {_source: {a40: ['Note text 12 and 12'], 'a40b': ['12', '12']}},
-        {_source: {a40: ['Note text', 'Note text 12.34'], 'a40b': ['12.34']}}
+        {_source: {a40: ['Note text 12.34'], a40b: ['12.34']}},
+        {_source: {a40: ['Note text 12 and 12'], a40b: ['12', '12']}},
+        {_source: {a40: ['Note text', 'Note text 12.34'], a40b: ['12.34']}}
       ]
     };
     assert.equal('Note text <dk>12.34</dk>', esUtil.createTaggedSystematicNote(esSys, 0));
