@@ -21,7 +21,7 @@ export class StaticElasticClient extends ElasticClient {
   elasticHierarchy(q) {
     let res = hierarchy;
     if (q === '0') {
-      res = {}
+      res = {};
     }
 
     return Promise.resolve(res);
@@ -33,6 +33,6 @@ export class StaticElasticClient extends ElasticClient {
       res = suggestions;
     }
 
-    return Promise.resolve(suggestions);
+    return Promise.resolve(res);
   }
 }

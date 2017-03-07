@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 const chai = require('chai');
 const assert = chai.assert;
-const should = chai.should();
+chai.should();
 
 describe('Testing searchField', () => {
   beforeEach(() => {
@@ -16,13 +16,13 @@ describe('Testing searchField', () => {
 
   it('should change url when searching', () => {
     const searchValue = 'geografi';
-    const bUrl = browser.url().value
+    const bUrl = browser.url().value;
     browser.element('.search-field').setValue(searchValue);
     browser.element('.search-field--container').submitForm();
 
     const aUrl = browser.url().value;
     aUrl.should.not.equal(bUrl);
-    aUrl.should.contain(searchValue)
+    aUrl.should.contain(searchValue);
   });
 
   it('should display suggestions', () => {
