@@ -49,6 +49,7 @@ export class SearchResultsContainerComponent extends Component {
     super(props);
 
     this.state = {
+      corrections: {},
       searchResults: {},
       query: ''
     };
@@ -80,7 +81,14 @@ export class SearchResultsContainerComponent extends Component {
         .end((err, res) => {
           const bd = JSON.parse(res.text);
           searchResults[searchUrl] = parseSearchResult(bd.result || []);
+          const corrections = this.state.corrections;
+
+          if (bd.correction && bd.correction.q) {
+            corrections[searchUrl] = bd.correction;
+          }
+
           this.setState({
+            corrections,
             searchResults: searchResults,
             query: searchUrl
           });
@@ -121,6 +129,17 @@ export class SearchResultsContainerComponent extends Component {
     );
   }
 
+  renderSpellingError(correction) {
+    return (
+      <div className="spelling-error">
+        <span>
+          Din søgning gav ikke nogle resultater, vi har i stedet søgt på <span className="spelling-error--correction">{correction.q}</span>.
+          Hvis du vil prøve din søgning alligevel <Link to={correction.href}>klik her!</Link>
+        </span>
+      </div>
+    );
+  }
+
   render() {
     const params = this.props.params || {};
     const searchField = (
@@ -135,11 +154,14 @@ export class SearchResultsContainerComponent extends Component {
       if (entry.dk5) {
         return (<SearchResultSingle key={entry.dk5.index} {...entry} />);
       }
+
       return (<SearchResultGroup key={entry.title} {...entry} />);
     });
+
     return (
       <div>
         {searchField}
+        {this.state.corrections[this.state.query] && this.renderSpellingError(this.state.corrections[this.state.query])}
         {results.length && results || this.renderCategoryTiles(this.props.search.categories)}
       </div>
     );

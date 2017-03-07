@@ -14,8 +14,9 @@ const APIRouter = new Router();
 const ElasticClient = new ElasticClass();
 
 // Small helper function for generating search urls
-function generateSearchUrl(q) {
-  return `#!/search/${encodeURIComponent(q)}/10/0/relevance/dictionary`;
+function generateSearchUrl(q, force = false) {
+  const spelling = force ? 'none' : 'dictionary';
+  return `#!/search/${encodeURIComponent(q)}/10/0/relevance/${spelling}`;
 }
 
 // Define handler functions
@@ -93,29 +94,30 @@ async function searchHandler(ctx) {
   }
 
   if (errors === 0) {
+    const results = await Promise.all([
+      ElasticClient.elasticSearch({query: q, limit: limit, offset: offset}),
+      ElasticClient.elasticSuggest(q)
+    ]);
+
     const response = {
       status: 200,
       parameters: {endpoint: 'search', query: q, limit: limit, offset: offset},
       correction: {},
       elasticStatus: await ElasticClient.elasticPing(),
-      result: await ElasticClient.elasticSearch({query: q, limit: limit, offset: offset})
+      result: results[0]
     };
 
-    if (spell && spell !== 'none') {
-      // Get the closest spelling
-      q = 'Japan';
-      response.correction.q = q;
+    // No results found
+    // Look at spelling and send new search
+    if (
+      !offset && results[0] && !results[0].length &&
+      results[1] && results[1].spell.length &&
+      spell && spell !== 'none'
+    ) {
+      response.correction.q = results[1].spell[0].match;
+      response.correction.href = generateSearchUrl(q, true);
+      response.result = await ElasticClient.elasticSearch({query: results[1].spell[0].match, limit: limit, offset: offset})
     }
-
-    response.response = [{
-      title: '65.2 Regnskabsføring i alm.',
-      dk5: {index: '65.2', title: 'Regnskabsføring i alm.'},
-      items: []
-    }, {
-      title: '65.126 Forbrugerbekyttelse i alm.',
-      dk5: {index: '65.126', title: 'Forbrugerbekyttelse i alm.'},
-      items: []
-    }];
 
     ctx.body = JSON.stringify(response);
   }

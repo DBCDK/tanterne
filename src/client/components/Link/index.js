@@ -11,6 +11,10 @@ export default function Link({to, children}, {navigate}) {
     navigate(`#!${to}`);
   }
 
+  if (to.indexOf('#!') === 0) {
+    to = to.substring(2);
+  }
+
   return (
     <a href={`#!${to}`} onClick={click}>
       {children}
