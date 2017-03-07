@@ -116,7 +116,7 @@ async function searchHandler(ctx) {
     ) {
       response.correction.q = results[1].spell[0].match;
       response.correction.href = generateSearchUrl(q, true);
-      response.result = await ElasticClient.elasticSearch({query: results[1].spell[0].match, limit: limit, offset: offset})
+      response.result = await ElasticClient.elasticSearch({query: results[1].spell[0].match, limit: limit, offset: offset});
     }
 
     ctx.body = JSON.stringify(response);
