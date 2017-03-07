@@ -51,7 +51,7 @@ describe('Testing searchField', () => {
   it('should respond to arrow keys', () => {
     const bUrl = browser.url().value;
     const searchValue = 'geografi';
-    const suggestValue = 'geografisk'
+    const suggestValue = 'geografisk';
     browser.element('.search-field').setValue(searchValue);
     browser.pause();
 
