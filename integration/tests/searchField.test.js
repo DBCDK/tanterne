@@ -35,4 +35,30 @@ describe('Testing searchField', () => {
     labels.should.contain('geografisk');
     labels.should.contain('geografiundervisning');
   });
+
+  it('should redirect on suggestion click', () => {
+    const bUrl = browser.url().value;
+    const searchValue = 'geografi';
+    browser.element('.search-field').setValue(searchValue);
+    browser.pause();
+
+    browser.$('.suggestions--suggestion').click();
+    const aUrl = browser.url().value;
+    aUrl.should.not.equal(bUrl);
+    aUrl.should.contain(searchValue);
+  });
+
+  it('should respond to arrow keys', () => {
+    const bUrl = browser.url().value;
+    const searchValue = 'geografi';
+    const suggestValue = 'geografisk'
+    browser.element('.search-field').setValue(searchValue);
+    browser.pause();
+
+    // Press down twice, then press enter
+    browser.keys('\uE015\uE015\uE007');
+    const aUrl = browser.url().value;
+    aUrl.should.not.equal(bUrl);
+    aUrl.should.contain(suggestValue);
+  });
 });
