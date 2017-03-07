@@ -122,9 +122,9 @@ describe('Testing notes', () => {
   it('it should create a systematic note', () => {
     const esSys = {
       hits: [
-        {_source: {'a40': ['Note text 12.34'], 'a40b': ['12.34']}},
-        {_source: {'a40': ['Note text 12 and 12'], 'a40b': ['12', '12']}},
-        {_source: {'a40': ['Note text', 'Note text 12.34'], 'a40b': ['12.34']}}
+        {_source: {a40: ['Note text 12.34'], 'a40b': ['12.34']}},
+        {_source: {a40: ['Note text 12 and 12'], 'a40b': ['12', '12']}},
+        {_source: {a40: ['Note text', 'Note text 12.34'], 'a40b': ['12.34']}}
       ]
     };
     assert.equal('Note text <dk>12.34</dk>', esUtil.createTaggedSystematicNote(esSys, 0));
@@ -135,9 +135,9 @@ describe('Testing notes', () => {
   it('it should create a register note', () => {
     const esReg = {
       hits: [
-        {_source: {'651': ['Note text 12.34'], '651b': ['12.34']}},
-        {_source: {'651': ['Note text 12 and 12'], '651b': ['12', '12']}},
-        {_source: {'651': ['Note text', 'Note text 12.34'], '651b': ['12.34']}}
+        {_source: {651: ['Note text 12.34'], '651b': ['12.34']}},
+        {_source: {651: ['Note text 12 and 12'], '651b': ['12', '12']}},
+        {_source: {651: ['Note text', 'Note text 12.34'], '651b': ['12.34']}}
       ]
     };
     assert.equal('Note text <dk>12.34</dk>', esUtil.createTaggedRegisterNote(esReg, 0));
@@ -148,15 +148,15 @@ describe('Testing notes', () => {
   it('it should create a notes table', () => {
     const esReg = {
       hits: [
-        {_source: {'652m': ['12.34'], '651': ['Note text 12.34'], '651b': ['12.34']}},
-        {_source: {'652n': ['12'], '651': ['Note text 12 and 12'], '651b': ['12', '12']}},
-        {_source: {'652d': ['12.5'], '651': ['Note text 12.5'], '651b': ['12.5']}}
+        {_source: {'652m': ['12.34'], 651: ['Note text 12.34'], '651b': ['12.34']}},
+        {_source: {'652n': ['12'], 651: ['Note text 12 and 12'], '651b': ['12', '12']}},
+        {_source: {'652d': ['12.5'], 651: ['Note text 12.5'], '651b': ['12.5']}}
       ]
     };
     const expected = {
-      '12.34': 'Note text <dk>12.34</dk>',
-      '12': 'Note text <dk>12</dk> and <dk>12</dk>',
-      '12.5': 'Note text <dk>12.5</dk>'
+      12.34: 'Note text <dk>12.34</dk>',
+      12: 'Note text <dk>12</dk> and <dk>12</dk>',
+      12.5: 'Note text <dk>12.5</dk>'
     };
     assert.deepEqual(expected, esUtil.parseRegisterForNotes(esReg));
   });
