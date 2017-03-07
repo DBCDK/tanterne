@@ -14,7 +14,7 @@ import * as esUtil from './ElasticSearch.util';
 
 const Logger = require('dbc-node-logger');
 
-export default class ElasticClient {
+export class ElasticClient {
 
   /**
    * setup ES and autocomplete object.
