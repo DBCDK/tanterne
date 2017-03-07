@@ -77,3 +77,12 @@
     color: blue;
   }
 }
+
+.spelling-suggestion {
+  font-size: 20pt;
+  line-height: 1em;
+
+  &:before {
+    content: '●';
+  }
+}

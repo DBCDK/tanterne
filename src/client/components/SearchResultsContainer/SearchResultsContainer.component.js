@@ -51,7 +51,8 @@ export class SearchResultsContainerComponent extends Component {
     this.state = {
       corrections: {},
       searchResults: {},
-      query: ''
+      query: '',
+      suggestions: {} // As in spelling suggestions
     };
   }
 
@@ -82,13 +83,19 @@ export class SearchResultsContainerComponent extends Component {
           const bd = JSON.parse(res.text);
           searchResults[searchUrl] = parseSearchResult(bd.result || []);
           const corrections = this.state.corrections;
+          const suggestions = this.state.suggestions;
 
           if (bd.correction && bd.correction.q) {
             corrections[searchUrl] = bd.correction;
           }
 
+          if (bd.correction && bd.correction.suggestions) {
+            suggestions[searchUrl] = bd.correction.suggestions;
+          }
+
           this.setState({
             corrections,
+            suggestions,
             searchResults: searchResults,
             query: searchUrl
           });
@@ -140,6 +147,28 @@ export class SearchResultsContainerComponent extends Component {
     );
   }
 
+  renderNoResults() {
+    let nothingMessage = 'Vi fandt ikke nogen resultater denne gang, prøv med en anden søgning!';
+    let suggestions = '';
+    if (this.state.suggestions[this.state.query] && this.state.suggestions[this.state.query].length) {
+      nothingMessage = 'Vi fandt ikke nogen resultater denne gang, prøv med nogle af disse søgninger!';
+      suggestions = this.state.suggestions[this.state.query].map(sug => {
+        return (
+          <div className="spelling-suggestion">
+            <Link to={sug.href} key={sug.match}>{sug.match}</Link>
+          </div>
+        );
+      });
+    }
+
+    return (
+      <div>
+        {nothingMessage}
+        {suggestions}
+      </div>
+    );
+  }
+
   render() {
     const params = this.props.params || {};
     const searchField = (
@@ -162,7 +191,7 @@ export class SearchResultsContainerComponent extends Component {
       <div>
         {searchField}
         {this.state.corrections[this.state.query] && this.renderSpellingError(this.state.corrections[this.state.query])}
-        {results.length && results || this.renderCategoryTiles(this.props.search.categories)}
+        {results.length && results || !this.state.query && this.renderCategoryTiles(this.props.search.categories) || this.renderNoResults()}
       </div>
     );
   }

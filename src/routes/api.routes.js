@@ -119,6 +119,14 @@ async function searchHandler(ctx) {
       response.result = await ElasticClient.elasticSearch({query: results[1].spell[0].match, limit: limit, offset: offset});
     }
 
+    // no results, but spelling is disabled so give some suggestions instead.
+    if (!offset && results[0] && !results[0].length && spell === 'none') {
+      response.correction.suggestions = results[1].spell.map(spell => {
+        spell.href = generateSearchUrl(spell.match);
+        return spell;
+      });
+    }
+
     ctx.body = JSON.stringify(response);
   }
 }
