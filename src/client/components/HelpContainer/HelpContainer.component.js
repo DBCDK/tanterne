@@ -20,10 +20,9 @@ export class HelpContainerComponent extends Component {
           DK5 er det f&aelig;lles opstillings- og klassifikationssystem for de danske folke- og skolebiblioteker.
         </div>
         <div className="section">
-          DK betyder decimalklassedeling eller DecimalKlassifikation, og DK5 er inddelt i ti hovedgrupper med en talkode (0-9).
-          Disse hovedgrupper er igen underdelt i op til ti grupper, som igen kan underinddeles i op til ti grupper og s&aring; videre.
+          DK betyder decimalklassedeling eller DecimalKlassifikation, og DK5 er inddelt i ti hovedgrupper.
+          Hovedgrupperne er underdelt i op til ti grupper, som igen kan underinddeles i op til ti grupper og s&aring; videre.
           Hertil kommer s&aelig;rlige regler for underdeling, fx geografisk, geografisk-topografisk, sproglig, eller efter biograferede personers navne.
-          I systemet oplyses specifikt, hvilke grupper der kan underdeles.
         </div>
         <div className="section">
           De 10 hovedgrupper grupperer sig p&aring; f&oslash;lgende m&aring;de:
@@ -43,7 +42,7 @@ export class HelpContainerComponent extends Component {
           </ul>
         </div>
         <div className="section">
-          DK5 er et enumerativt klassifikationssystem dvs. et hierarkisk opbygget system, hvor klasserne / grupperne og mulighed for underdeling på forh&aring;nd er opregnet.
+          DK5 er et hierarkisk opbygget system (et enumerativt klassifikationssystem), som vedligeholdes af Dansk Biblioteks Center as
         </div>
       </div>
     );
