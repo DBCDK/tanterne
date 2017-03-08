@@ -6,10 +6,6 @@
 import React, {Component} from 'react';
 
 export class HelpContainerComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <div className='help--container'>
