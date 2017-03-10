@@ -17,7 +17,18 @@ import Link from '../Link';
 function HierarchyElementTopics({topics}) {
   return (
     <ul className="hierarchy-topics">
-      {topics.map(({title}) => <li key={title}>{title}</li>) }
+      {topics.map(({title, note}) => {
+        if (note) {
+          const parsedNote = {};
+          parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
+            return `<a href="#!/hierarchy/${index}">${index}</a>`;
+          }) + '';
+          return <li key={title}>{title} <div className="note" dangerouslySetInnerHTML={parsedNote} /></li>
+        }
+        else {
+          return <li key={title}>{title}</li>
+        }
+      })}
     </ul>
   );
 }
