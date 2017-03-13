@@ -16,7 +16,9 @@ export class TopBarComponent extends Component {
           Find en bog med DK5
         </span>
         </a>
-        <img className="top-bar--question" src="/question.png"/>
+        <a className="top-bar--link" href="/#!/help">
+          <img className="top-bar--question" src="/question.png"/>
+        </a>
       </div>
     );
   }
