@@ -129,9 +129,9 @@ export function createTaggedSystematicNote(systRec, hitPos) {
  * @returns {*|string|String}
  */
 export function createTaggedRegisterNote(regRecs, hitPos) {
-  let note = [];
+  const note = [];
   ['651', 'b00'].forEach((noteTag) => {
-    let noteText = getEsField(regRecs, hitPos, noteTag).join('<br >');
+    const noteText = getEsField(regRecs, hitPos, noteTag).join('<br >');
     if (noteText) {
       note.push(parseTextAndTagSyst(noteText, getEsField(regRecs, hitPos, noteTag + 'b')));
     }
