@@ -22,7 +22,7 @@ export class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,b*', index: 'register', sort: ''};
+    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,b*,a20*', index: 'register', sort: ''};
     this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
 
     /* loadTabsFromElasticSearch() loads the following */
@@ -116,8 +116,9 @@ export class ElasticClient {
       if (!top.title) {
         for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
           const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
+          const note = esUtil.createTaggedRegisterNote(esRes, hitPos);
           if (syst.index && syst.title) {
-            regRecords.push({index: syst.index, title: syst.title});
+            regRecords.push({index: syst.index, title: syst.title, note: note});
           }
         }
 
@@ -128,8 +129,8 @@ export class ElasticClient {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
               let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
               if (idx === q) {
-                // use note from register. Notes from systematic are currently not used
-                item.note = this.dk5RegisterNotes[idx];
+                // Notes from systematic are currently not used
+                // notes from register are moved to the individual group or aspect
                 item = Object.assign(item, {items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
               }
               parents.push(item);
@@ -261,7 +262,7 @@ export class ElasticClient {
       this.autocomplete.initialize((onReady) => {
         onReady(this.vocabulary);
       });
-      const regNotes = await this.rawElasticSearch({query: '651:*', fields: '651*, 652*', limit: 50000});
+      const regNotes = await this.rawElasticSearch({query: '651:* OR b00:*', fields: '651*, 652*, b00*', limit: 50000});
       this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes);
     }
   }

@@ -46,6 +46,15 @@
       content: "-";
       padding: 0 1rem 0 2rem;
     }
+    .note {
+      display: inline-table;
+      margin-left: 1rem;
+      text-indent: -0.8rem;
+      a {
+        color:white;
+        text-decoration: underline;
+      }
+    }
   }
 }
 

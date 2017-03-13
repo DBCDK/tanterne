@@ -87,8 +87,8 @@ export function titleSort(arr) {
  */
 export function parseRegisterRecord(esRes, pos, dk5Tab) {
   const ret = {};
-  ret.title = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a']);
-  ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e']);
+  ret.title = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
+  ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
   ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
   ret.index = getFirstField(esRes, pos, ['652m']);
   ret.id = getFirstField(esRes, pos, ['001a']);
@@ -107,7 +107,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
 }
 
 /**
- * Parse fields and build a html like note.
+ * Collect systematic notes. Notes are found in field a40
  *
  * @param systRec
  * @param hitPos
@@ -122,21 +122,26 @@ export function createTaggedSystematicNote(systRec, hitPos) {
 }
 
 /**
+ * Collect register notes. Notes are found in field 651 and b00
  *
  * @param regRecs
  * @param hitPos
  * @returns {*|string|String}
  */
 export function createTaggedRegisterNote(regRecs, hitPos) {
-  let note = getEsField(regRecs, hitPos, '651').join('<br >');
-  if (note) {
-    note = parseTextAndTagSyst(note, getEsField(regRecs, hitPos, '651b'));
-  }
-  return note;
+  const note = [];
+  ['651', 'b00'].forEach((noteTag) => {
+    const noteText = getEsField(regRecs, hitPos, noteTag).join('<br >');
+    if (noteText) {
+      note.push(parseTextAndTagSyst(noteText, getEsField(regRecs, hitPos, noteTag + 'b')));
+    }
+  });
+  return note.join('<br />');
 }
 
 /**
  * Parse all register records for notes
+ * Notes for the same index, can be found in more than one record
  *
  * @param regRecs
  * @returns {{}}
@@ -145,7 +150,16 @@ export function parseRegisterForNotes(regRecs) {
   const notes = {};
   for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
     const index = getFirstField(regRecs, hitPos, ['652m', '652n', '652d']);
-    notes[index] = createTaggedRegisterNote(regRecs, hitPos);
+    const note = createTaggedRegisterNote(regRecs, hitPos);
+    if (notes[index]) {
+      if (notes[index].indexOf(note) === -1) {
+        notes[index] += '<br />' + note;
+      }
+    }
+    else {
+      notes[index] = note;
+
+    }
   }
   return notes;
 }
@@ -164,7 +178,7 @@ export function parseRegisterForUniqueWords(regRecs, wordFields) {
       const wordArr = getEsField(regRecs, hitPos, fld);
       for (let i = 0; i < wordArr.length; i++) {
         wordArr[i].split(/[\s,]+/).forEach((word) => {
-          word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"]+/g, '');
+          word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"()]+/g, '');
           let num = word.replace(/[\.:-]/g, '');
           if (num.length > 2 && parseInt(num, 10) !== num) {
             uniqueWords[word.toLowerCase()] = true;
