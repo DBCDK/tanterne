@@ -121,9 +121,9 @@ async function searchHandler(ctx) {
 
     // no results, but spelling is disabled so give some suggestions instead.
     if (!offset && results[0] && !results[0].length && spell === 'none') {
-      response.correction.suggestions = results[1].spell.map(spell => {
-        spell.href = generateSearchUrl(spell.match);
-        return spell;
+      response.correction.suggestions = results[1].spell.map(altSpell => {
+        altSpell.href = generateSearchUrl(altSpell.match);
+        return altSpell;
       });
     }
 
