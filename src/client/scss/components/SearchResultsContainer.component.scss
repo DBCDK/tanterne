@@ -66,3 +66,23 @@
 .result-element-link {
   font-weight: normal;
 }
+
+.spelling-error {
+  margin: 5px;
+  margin-bottom: 15px;
+  padding: 5px;
+  border: 2px solid $red;
+
+  .spelling-error--correction {
+    color: blue;
+  }
+}
+
+.spelling-suggestion {
+  font-size: 20pt;
+  line-height: 1em;
+
+  &:before {
+    content: '●';
+  }
+}

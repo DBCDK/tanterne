@@ -49,8 +49,10 @@ export class SearchResultsContainerComponent extends Component {
     super(props);
 
     this.state = {
+      corrections: {},
       searchResults: {},
-      query: ''
+      query: '',
+      suggestions: {} // As in spelling suggestions
     };
   }
 
@@ -80,7 +82,20 @@ export class SearchResultsContainerComponent extends Component {
         .end((err, res) => {
           const bd = JSON.parse(res.text);
           searchResults[searchUrl] = parseSearchResult(bd.result || []);
+          const corrections = this.state.corrections;
+          const suggestions = this.state.suggestions;
+
+          if (bd.correction && bd.correction.q) {
+            corrections[searchUrl] = bd.correction;
+          }
+
+          if (bd.correction && bd.correction.suggestions) {
+            suggestions[searchUrl] = bd.correction.suggestions;
+          }
+
           this.setState({
+            corrections,
+            suggestions,
             searchResults: searchResults,
             query: searchUrl
           });
@@ -121,6 +136,39 @@ export class SearchResultsContainerComponent extends Component {
     );
   }
 
+  renderSpellingError(correction) {
+    return (
+      <div className="spelling-error">
+        <span>
+          Din søgning gav ikke nogle resultater, vi har i stedet søgt på <span className="spelling-error--correction">{correction.q}</span>.
+          Hvis du vil prøve din søgning alligevel <Link to={correction.href}>klik her!</Link>
+        </span>
+      </div>
+    );
+  }
+
+  renderNoResults() {
+    let nothingMessage = 'Vi fandt ikke nogen resultater denne gang, prøv med en anden søgning!';
+    let suggestions = '';
+    if (this.state.suggestions[this.state.query] && this.state.suggestions[this.state.query].length) {
+      nothingMessage = 'Vi fandt ikke nogen resultater denne gang, prøv med nogle af disse søgninger!';
+      suggestions = this.state.suggestions[this.state.query].map(sug => {
+        return (
+          <div className="spelling-suggestion">
+            <Link to={sug.href} key={sug.match}>{sug.match}</Link>
+          </div>
+        );
+      });
+    }
+
+    return (
+      <div>
+        {nothingMessage}
+        {suggestions}
+      </div>
+    );
+  }
+
   render() {
     const params = this.props.params || {};
     const searchField = (
@@ -135,12 +183,15 @@ export class SearchResultsContainerComponent extends Component {
       if (entry.dk5) {
         return (<SearchResultSingle key={entry.dk5.index} {...entry} />);
       }
+
       return (<SearchResultGroup key={entry.title} {...entry} />);
     });
+
     return (
       <div>
         {searchField}
-        {results.length && results || this.renderCategoryTiles(this.props.search.categories)}
+        {this.state.corrections[this.state.query] && this.renderSpellingError(this.state.corrections[this.state.query])}
+        {results.length && results || !this.state.query && this.renderCategoryTiles(this.props.search.categories) || this.renderNoResults()}
       </div>
     );
   }
