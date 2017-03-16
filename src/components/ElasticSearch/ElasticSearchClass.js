@@ -97,7 +97,7 @@ export class ElasticClient {
     });
     const query = [];
     ['652m', 'b52m'].forEach((reg) => {
-      query.push(reg + '"' + q + '"');
+      query.push(reg + ':"' + q + '"');
     });
     let esRes = await this.rawElasticSearch({query: query.join(' '), index: 'register'});
     if (esRes.total) {
@@ -117,7 +117,7 @@ export class ElasticClient {
         for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
           const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
           const note = esUtil.createTaggedRegisterNote(esRes, hitPos);
-          if (syst.index && syst.title) {
+          if (syst.title) {
             regRecords.push({index: syst.index, title: syst.title, note: note});
           }
         }
