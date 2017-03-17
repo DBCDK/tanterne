@@ -39,7 +39,7 @@ export class ElasticClient {
       fields: '_sourceInclude',
       index: 'index',
       sort: 'sort',
-      op: 'defaultOperator',
+      op: 'defaultOperator'
     };
 
     /* loadTabsFromElasticSearch() loads the following */
