@@ -22,8 +22,25 @@ export class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,b*,a20*', index: 'register', sort: ''};
-    this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
+    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d'.split(',');
+    this.defaultParameters = {
+      query: '',
+      limit: 50,
+      offset: 0,
+      fields: '001a,6*,b*,a20*',
+      index: 'register',
+      sort: '',
+      op: 'AND'
+    };
+    this.esParMap = {
+      query: 'q',
+      limit: 'size',
+      offset: 'from',
+      fields: '_sourceInclude',
+      index: 'index',
+      sort: 'sort',
+      op: 'defaultOperator',
+    };
 
     /* loadTabsFromElasticSearch() loads the following */
     this.vocabulary = {};
@@ -275,6 +292,13 @@ export class ElasticClient {
    */
   async rawElasticSearch(pars) {
     let esHits = {};
+    if (pars.query.indexOf(':') === -1) {
+      const q = [];
+      this.defaultSearchFields.forEach((fld) => {
+        q.push(fld + ':(' + pars.query + ')');
+      });
+      pars.query = q.join(' OR ');
+    }
     await this.elasticClient.search(esUtil.setAndMap(pars, this.defaultParameters, this.esParMap))
       .then(function (body) {
         esHits = body.hits;
