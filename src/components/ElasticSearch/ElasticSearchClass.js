@@ -89,7 +89,6 @@ export class ElasticClient {
   async elasticSearch(pars) {
     await this.loadTabsFromElasticSearch();
     const res = [];
-    pars.query = pars.query.split(/[ ]+/).join(' AND ');   // force AND operator between words
     const esRes = await this.rawElasticSearch(pars);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst));
@@ -113,10 +112,10 @@ export class ElasticClient {
       }
     });
     const query = [];
-    ['652m', 'b52m'].forEach((reg) => {
+    ['652m', '652d', 'b52m'].forEach((reg) => {
       query.push(reg + ':"' + q + '"');
     });
-    let esRes = await this.rawElasticSearch({query: query.join(' '), index: 'register'});
+    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
     if (esRes.total) {
       // collect systematic for children
       let children = [];
