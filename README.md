@@ -25,6 +25,7 @@ Filter only one dk5 group like (for test purposes)
 ###Load Elastic Search
 * curl -XDELETE localhost:9200/* or delete indexes: register, systematic and ignored
 * curl -XPUT localhost:9200/systematic -d '{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}'
+* curl -XPUT localhost:9200/register -d '{"settings":{"analysis":{"char_filter":{"dk5":{"type":"mapping","mappings":[":=>kolon"]}},"analyzer":{"default":{"type":"custom","char_filter":["dk5"],"tokenizer":"standard","filter":["lowercase"]}}}}}'
 * curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
 * curl -XPUT localhost:9200/*/_settings -d '{"index": {"max_result_window": 50000}}'
  
