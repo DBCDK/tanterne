@@ -1,4 +1,6 @@
 # tanterne
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/DBCDK/tanterne.svg)](https://greenkeeper.io/)
 DK5 Digital
 
 ##Releases
