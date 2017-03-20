@@ -6,10 +6,12 @@
   display: flex;
   align-items: center;
   margin-bottom: 3rem;
+
   a {
     display: flex;
     height: 40px;
   }
+
   .top-bar--logo {
     margin: 0 10px;
   }
@@ -30,5 +32,13 @@
     font-weight: 300;
     font-size: 28px;
     line-height: 40px;
+
+    @include small-phone {
+      font-size: 20px;
+    }
+
+    @include phone {
+      font-size: 24px;
+    }
   }
 }

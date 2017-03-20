@@ -1,0 +1,28 @@
+// breakpoints
+$phone: 400px;
+$tablet: 600px;
+$desktop: 800px;
+
+@mixin small-phone {
+  @media (max-width: $phone - 1px) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media (min-width: $phone) and (max-width: $tablet - 1px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $tablet) and (max-width: $desktop - 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $desktop) {
+    @content;
+  }
+}
