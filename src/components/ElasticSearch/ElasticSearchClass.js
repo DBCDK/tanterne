@@ -22,8 +22,25 @@ export class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultParameters = {query: '', limit: 50, offset: 0, fields: '001a,6*,b*,a20*', index: 'register', sort: ''};
-    this.esParMap = {query: 'q', limit: 'size', offset: 'from', fields: '_sourceInclude', index: 'index', sort: 'sort'};
+    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d'.split(',');
+    this.defaultParameters = {
+      query: '',
+      limit: 50,
+      offset: 0,
+      fields: '001a,6*,b*,a20*',
+      index: 'register',
+      sort: '',
+      op: 'AND'
+    };
+    this.esParMap = {
+      query: 'q',
+      limit: 'size',
+      offset: 'from',
+      fields: '_sourceInclude',
+      index: 'index',
+      sort: 'sort',
+      op: 'defaultOperator'
+    };
 
     /* loadTabsFromElasticSearch() loads the following */
     this.vocabulary = {};
@@ -73,7 +90,6 @@ export class ElasticClient {
   async elasticSearch(pars) {
     await this.loadTabsFromElasticSearch();
     const res = [];
-    pars.query = pars.query.split(/[ ]+/).join(' AND ');   // force AND operator between words
     const esRes = await this.rawElasticSearch(pars);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst));
@@ -100,7 +116,7 @@ export class ElasticClient {
     ['652m', '652d', 'b52m'].forEach((reg) => {
       query.push(reg + ':"' + q + '"');
     });
-    let esRes = await this.rawElasticSearch({query: query.join(' '), index: 'register'});
+    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
     if (esRes.total) {
       // collect systematic for children
       let children = [];
@@ -278,6 +294,13 @@ export class ElasticClient {
    */
   async rawElasticSearch(pars) {
     let esHits = {};
+    if (pars.query.indexOf(':') === -1) {
+      const q = [];
+      this.defaultSearchFields.forEach((fld) => {
+        q.push(fld + ':(' + pars.query + ')');
+      });
+      pars.query = q.join(' OR ');
+    }
     await this.elasticClient.search(esUtil.setAndMap(pars, this.defaultParameters, this.esParMap))
       .then(function (body) {
         esHits = body.hits;
