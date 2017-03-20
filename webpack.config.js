@@ -3,8 +3,8 @@ const path = require('path');
 const extractTextPlugin = require('extract-text-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 
-const noErrorsPlugin = new webpack.NoErrorsPlugin();
-const extractCss = new extractTextPlugin('../css/[name].css', {allChunks: true});
+const noErrorsPlugin = new webpack.NoEmitOnErrorsPlugin();
+const extractCss = new extractTextPlugin({filename: '../css/[name].css', allChunks: true});
 
 module.exports = [{
   name: 'browser',
@@ -21,7 +21,7 @@ module.exports = [{
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           presets: ['es2015', 'react'],
           plugins: ['transform-async-to-generator', 'transform-class-properties', 'transform-es2015-modules-commonjs', 'transform-object-rest-spread']
@@ -29,15 +29,10 @@ module.exports = [{
       },
       {
         test: /\.(scss|css)$/,
-        loader: extractTextPlugin.extract(['css-loader', 'postcss-loader', 'sass-loader'])}
+        loader: extractTextPlugin.extract(['css-loader', 'postcss-loader', 'sass-loader']) /* Checkout postcss.config.js for details */
+      }
     ]
   },
-
-  postcss: [
-    autoprefixer({browsers: ['last 2 versions'] }),
-    require('postcss-inline-svg'),
-    require('cssnano')
-  ],
   plugins: [
     extractCss,
     noErrorsPlugin
