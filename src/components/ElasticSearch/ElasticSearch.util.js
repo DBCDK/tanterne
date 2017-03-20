@@ -165,6 +165,24 @@ export function parseRegisterForNotes(regRecs) {
 }
 
 /**
+ * Parse all register records for general notes
+ *
+ * @param regRecs
+ * @returns {{}}
+ */
+export function parseRegisterForGeneralNotes(regRecs) {
+  const notes = {};
+  for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
+    const noteText = getEsField(regRecs, hitPos, 'b00').join('<br >');
+    if (noteText) {
+      const index = getFirstField(regRecs, hitPos, ['652m', '652n', '652d']);
+      notes[index] = noteText;
+    }
+  }
+  return notes;
+}
+
+/**
  * Parse register records and extract unique words
  *
  * @param regRecs
