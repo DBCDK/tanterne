@@ -42,6 +42,7 @@ export class ElasticClient {
     };
     this.dk5Syst = {};
     this.dk5SystematicNotes = {};
+    this.dk5GeneralNote = {};
     this.dk5RegisterNotes = {};
   }
 
@@ -96,7 +97,7 @@ export class ElasticClient {
       }
     });
     const query = [];
-    ['652m', 'b52m'].forEach((reg) => {
+    ['652m', '652d', 'b52m'].forEach((reg) => {
       query.push(reg + ':"' + q + '"');
     });
     let esRes = await this.rawElasticSearch({query: query.join(' '), index: 'register'});
@@ -129,9 +130,10 @@ export class ElasticClient {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
               let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
               if (idx === q) {
+                const note = this.dk5GeneralNote[idx];
                 // Notes from systematic are currently not used
                 // notes from register are moved to the individual group or aspect
-                item = Object.assign(item, {items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
+                item = Object.assign(item, {note: note, items: esUtil.titleSort(regRecords)}, {children: esUtil.titleSort(children)});
               }
               parents.push(item);
             }
@@ -264,6 +266,7 @@ export class ElasticClient {
       });
       const regNotes = await this.rawElasticSearch({query: '651:* OR b00:*', fields: '651*, 652*, b00*', limit: 50000});
       this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes);
+      this.dk5GeneralNote = esUtil.parseRegisterForGeneralNotes(regNotes);
     }
   }
 
