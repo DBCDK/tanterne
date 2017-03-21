@@ -41,15 +41,19 @@
   li {
     margin-bottom: 1rem;
     list-style-type: none;
+    padding-left: 2rem;
+
     &:before {
       display: inline-block;
       content: "-";
-      padding: 0 1rem 0 2rem;
+      text-indent: -5px;
     }
+
     .note {
       display: inline-table;
       margin-left: 1rem;
       text-indent: -0.8rem;
+
       a {
         color:white;
         text-decoration: underline;
@@ -80,4 +84,10 @@
 }
 .level-5 h2 {
  font-size: 1.4rem;
+}
+
+.title-note {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 1rem;
 }
