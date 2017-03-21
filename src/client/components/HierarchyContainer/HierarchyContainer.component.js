@@ -23,9 +23,18 @@ function HierarchyElementTopics({topics}) {
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
             return `<a href="#!/hierarchy/${index}">${index}</a>`;
           });
-          return <li key={title}>{title} <div className="note" dangerouslySetInnerHTML={parsedNote} /></li>;
+          return (
+            <li key={title}>
+              <div className='title-note'>{title} <div className="note" dangerouslySetInnerHTML={parsedNote} /></div>
+            </li>
+          );
         }
-        return <li key={title}>{title}</li>;
+
+        return (
+          <li key={title}>
+            <div className='title-note'>{title}</div>
+          </li>
+        );
       })}
     </ul>
   );
