@@ -22,6 +22,7 @@ router.get('/', ctx => {
       <body>
         <div class="main">
           <div id="content"></div>
+          <script src="/js/main.js"></script>
           <script src="/js/index.js"></script>
         </div>
       </body>
