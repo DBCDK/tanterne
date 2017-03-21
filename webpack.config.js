@@ -9,9 +9,7 @@ const extractCss = new extractTextPlugin({filename: '../css/[name].css', allChun
 module.exports = [{
   name: 'browser',
   cache: true,
-  entry: {
-    index: './src/client/index.js'
-  },
+  entry: ['babel-polyfill', './src/client/index.js'],
   output: {
     path: path.join(__dirname, 'public/js'),
     filename: '[name].js'
