@@ -208,15 +208,15 @@ let config = {
 
 // Override config with setup for local selenium server
 if (process.env.TEST_ENV === 'local') {
-  config = Object.assign(config, require('./local.conf').default);
+  config = Object.assign(config, require('./local.conf'));
 }
 
 if (process.env.TEST_ENV === 'saucelabs') {
-  config = Object.assign(config, require('./sauce.conf').default);
+  config = Object.assign(config, require('./sauce.conf'));
 }
 
 if (process.env.TEST_ENV === 'jenkins') {
-  config = Object.assign(config, require('./jenkins.conf').default);
+  config = Object.assign(config, require('./jenkins.conf'));
 }
 
 exports.config = config;
