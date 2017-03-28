@@ -192,7 +192,7 @@ export class ElasticClient {
         result[dk5] = Object.assign(result[dk5], {note: this.dk5SystematicNotes[dk5]});
       }
       result[dk5] = Object.assign(result[dk5], {items: esUtil.titleSort(regRecords)});
-    };
+    }
     return result;
   }
 
