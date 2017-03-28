@@ -184,7 +184,6 @@ export class ElasticClient {
   async elasticList(dk5List) {
     await this.loadTabsFromElasticSearch();
     const result = {};
-    //dk5List.split(',').forEach((dk5) => {
     for (let dk5 of dk5List.split(',')) {
       dk5 = dk5.trim();
       const regRecords = await this.fetchAspects(dk5);
