@@ -50,7 +50,7 @@ export class SearchFieldComponent extends Component {
   // Helper function to prevent dispatching requests while a user is typing.
   deferExecution(func, timeout) {
     let timer = null;
-    return function () {
+    return function() {
       if (timer) {
         clearTimeout(timer);
       }
@@ -78,9 +78,22 @@ export class SearchFieldComponent extends Component {
       });
   }
 
+  getValue(input) {
+    const regex = /^\d{3,}/g;
+
+    if (regex.test(input)) {
+      input = [input.slice(0, 2), '.', input.slice(2)].join('');
+    }
+    else if (input.length === 3 && input.charAt(2) === '.') {
+      input = input.slice(0, 2);
+    }
+
+    return input;
+  }
+
   // Updates the state of the component and calls getSuggestions
   onTextEntered(evt) {
-    const query = evt.target.value;
+    const query = this.getValue(evt.target.value);
     const queryUrl = `/search/${encodeURIComponent(query)}/10/0/relevance/dictionary`;
     this.setState({
       queryUrl,
@@ -191,7 +204,7 @@ export class SearchFieldComponent extends Component {
 
             <Link to={this.state.queryUrl}>
               <span className="search-field--button">
-                <img src="/icon-search.svg" /> SØG
+                <img src="/icon-search.svg"/> SØG
               </span>
             </Link>
           </span>
