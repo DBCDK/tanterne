@@ -112,12 +112,8 @@ export class ElasticClient {
         top = this.topGroups[idx];
       }
     });
-    const query = [];
-    ['652m', '652d', 'b52m'].forEach((reg) => {
-      query.push(reg + ':"' + q + '"');
-    });
-    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
-    if (esRes.total) {
+    const regRecords = await this.fetchAspects(q);
+    if (regRecords.length) {
       // collect systematic for children
       let children = [];
       Object.keys(this.dk5Syst).forEach((idx) => {
@@ -127,17 +123,9 @@ export class ElasticClient {
       });
 
       // collect register records refered to
-      let regRecords = [];
       let parents = [];
       let parent = {};
       if (!top.title) {
-        for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-          const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
-          const note = esUtil.createTaggedRegisterNote(esRes, hitPos);
-          if (syst.title) {
-            regRecords.push({index: syst.index, title: syst.title, note: note});
-          }
-        }
 
         // collect systematic for parents
         if (this.dk5Syst[q]) {
@@ -196,16 +184,35 @@ export class ElasticClient {
   async elasticList(dk5List) {
     await this.loadTabsFromElasticSearch();
     const result = {};
-    dk5List.split(',').forEach((dk5) => {
+    //dk5List.split(',').forEach((dk5) => {
+    for (let dk5 of dk5List.split(',')) {
       dk5 = dk5.trim();
+      const regRecords = await this.fetchAspects(dk5);
       result[dk5] = this.dk5Syst[dk5] ? this.dk5Syst[dk5] : {};
       if (this.dk5SystematicNotes[dk5]) {
         result[dk5] = Object.assign(result[dk5], {note: this.dk5SystematicNotes[dk5]});
       }
-    });
+      result[dk5] = Object.assign(result[dk5], {items: esUtil.titleSort(regRecords)});
+    };
     return result;
   }
 
+  async fetchAspects(dk5) {
+    const regRecords = [];
+    const query = [];
+    ['652m', '652d', 'b52m'].forEach((reg) => {
+      query.push(reg + ':"' + dk5 + '"');
+    });
+    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
+    for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
+      const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
+      const note = esUtil.createTaggedRegisterNote(esRes, hitPos);
+      if (syst.title) {
+        regRecords.push({index: syst.index, title: syst.title, note: note});
+      }
+    }
+    return regRecords;
+  }
   /**
    * return completion (if any) and spellcheck
    *
