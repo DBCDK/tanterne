@@ -1,7 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const extractTextPlugin = require('extract-text-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 
 const noErrorsPlugin = new webpack.NoEmitOnErrorsPlugin();
 const extractCss = new extractTextPlugin({filename: '../css/[name].css', allChunks: true});
@@ -27,7 +26,7 @@ module.exports = [{
       },
       {
         test: /\.(scss|css)$/,
-        loader: extractTextPlugin.extract(['css-loader', 'postcss-loader', 'sass-loader']) /* Checkout postcss.config.js for details */
+        loader: extractTextPlugin.extract(['css-loader?importLoaders=1', 'postcss-loader?sourceMap=inline', 'sass-loader?sourceMap=true']) /* Checkout postcss.config.js for details */
       }
     ]
   },
@@ -37,7 +36,7 @@ module.exports = [{
   ],
   resolve: {
     alias: {
-      'react': 'preact-compat',
+      react: 'preact-compat',
       'react-dom': 'preact-compat',
       'react-enroute': 'preact-enroute'
     }
