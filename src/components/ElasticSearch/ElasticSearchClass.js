@@ -189,7 +189,7 @@ export class ElasticClient {
       const regRecords = await this.fetchAspects(dk5);
       result[dk5] = this.dk5Syst[dk5] ? this.dk5Syst[dk5] : {};
       if (this.dk5SystematicNotes[dk5]) {
-        result[dk5] = Object.assign(result[dk5], {note: this.dk5SystematicNotes[dk5]});
+        result[dk5] = Object.assign(result[dk5], {note: this.dk5SystematicNotes[dk5], note2: this.dk5GeneralNote[dk5]});
       }
       result[dk5] = Object.assign(result[dk5], {items: esUtil.titleSort(regRecords)});
     }
@@ -197,9 +197,10 @@ export class ElasticClient {
   }
 
   async fetchAspects(dk5) {
+    const aspectIndex = ['652m', '652d', 'b52m'];  // one of these subFields contains the dk5 index for the aspect
     const regRecords = [];
     const query = [];
-    ['652m', '652d', 'b52m'].forEach((reg) => {
+    aspectIndex.forEach((reg) => {
       query.push(reg + ':"' + dk5 + '"');
     });
     let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});

@@ -79,6 +79,8 @@ export function titleSort(arr) {
 
 /**
  * parse a register record and return a consolidated structure
+ * To understand where title, notes and like are placed, you have to consult the
+ * marc format specifications for dk5
  *
  * @param esRes
  * @param pos
@@ -90,7 +92,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   ret.title = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
   ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
   ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
-  ret.index = getFirstField(esRes, pos, ['652m']);
+  ret.index = getFirstField(esRes, pos, ['652m', 'b52m']);
   ret.id = getFirstField(esRes, pos, ['001a']);
   ret.parent = Object.assign({}, dk5Tab[ret.index]);
   const aspectDk5 = getEsField(esRes, pos, 'b52m');
