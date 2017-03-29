@@ -1,10 +1,10 @@
 # tanterne
 
+[![Build Status](https://travis-ci.org/DBCDK/tanterne.svg?branch=master)](https://travis-ci.org/DBCDK/tanterne)
 [![Greenkeeper badge](https://badges.greenkeeper.io/DBCDK/tanterne.svg)](https://greenkeeper.io/)
-DK5 Digital
 
 ## Releases
-Releases are found at GitHub [/releases](https://github.com/DBCDK/tanterne/releases). Each containing a link to the changelog for the given release. A consolidated changelog for all releases is found at [CHANGELOG.md](https://github.com/DBCDK/hejmdal/blob/master/CHANGELOG.md) in the project root.  
+Releases are found at GitHub [/releases](https://github.com/DBCDK/tanterne/releases). Each containing a link to the changelog for the given release. A consolidated changelog for all releases is found at [CHANGELOG.md](https://github.com/DBCDK/hejmdal/blob/master/CHANGELOG.md) in the project root.    
 The changelog is made with [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator) and can be created with the command `github_changelog_generator -u DBCDK -p tanterne --exclude-tags-regex "(jenkins-|\d\.\d\d{1,})"` -- you may need a valid github token to run the command.
 
 ## Installation
@@ -16,22 +16,22 @@ Install and start it
 ### Get data
 Records are dumped from the DBC libv3 system like:
 
-NLS_LANG=AMERICAN_DENMARK.WE8ISO8859P1 ; dump_v3 oracle_user/oracle_password@my.oracle.host.dbc.dk | marcunicode > dk5_total.iso2709
+`NLS_LANG=AMERICAN_DENMARK.WE8ISO8859P1 ; dump_v3 oracle_user/oracle_password@my.oracle.host.dbc.dk | marcunicode > dk5_total.iso2709`
 
 ### Convert
-* iso2709ToElasticLoad -i dk5_total.iso2709 -o elastic_bulk_load.json
+* `iso2709ToElasticLoad -i dk5_total.iso2709 -o elastic_bulk_load.json`
 
 Filter only one dk5 group like (for test purposes)
-* iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json
+* `iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json`
 
 ### Load Elastic Search
-* curl -XDELETE localhost:9200/* or delete indexes: register, systematic and ignored
-* curl -XPUT localhost:9200/systematic -d '{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}'
-* curl -XPUT localhost:9200/register -d '{"settings":{"analysis":{"char_filter":{"dk5":{"type":"mapping","mappings":[":=>kolon"]}},"analyzer":{"default":{"type":"custom","char_filter":["dk5"],"tokenizer":"standard","filter":["lowercase"]}}}}}'
-* curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'
-* curl -XPUT localhost:9200/*/_settings -d '{"index": {"max_result_window": 50000}}'
+* `curl -XDELETE localhost:9200/* or delete indexes: register, systematic and ignored`
+* `curl -XPUT localhost:9200/systematic -d '{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}'`
+* `curl -XPUT localhost:9200/register -d '{"settings":{"analysis":{"char_filter":{"dk5":{"type":"mapping","mappings":[":=>kolon"]}},"analyzer":{"default":{"type":"custom","char_filter":["dk5"],"tokenizer":"standard","filter":["lowercase"]}}}}}'`
+* `curl -XPOST localhost:9200/_bulk --data-binary '@elastic_bulk_load.json'`
+* `curl -XPUT localhost:9200/*/_settings -d '{"index": {"max_result_window": 50000}}'`
  
-##Development
+## Development
 After cloning the repository, run `npm install` to install dependencies. Copy test.env to env.env and set the environment variables (see below) to you need/liking. The application is started with `npm run dev`, which include [nodemon](https://www.npmjs.com/package/nodemon) in order to restart the application, when the code is changed.
 
 ## Environment variables
