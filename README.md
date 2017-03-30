@@ -65,6 +65,8 @@ Set to `1` (`PRETTY_LOG=1`) for pretty printed log statements. Any other setting
 
 - `/api/hierarchy/?q=india`
 
+- `/api/list/?q=61.643,13.12`
+
 - `/api/search/?q=india&limit=1&offset=0`
 
 - `/api/suggest/?q=india`
