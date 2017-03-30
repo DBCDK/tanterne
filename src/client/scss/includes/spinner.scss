@@ -1,13 +1,25 @@
 // This spinner is based on the spinners found at http://tobiasahlin.com/spinkit
 
-@mixin spinner($size: 30px){
+$dark: #616161;
+$light: #fff;
+
+
+@mixin spinner($size: 30px, $color: $dark){
   width: $size;
   height: $size;
   display: inline-block;
+
+  .sk-fading-circle .sk-circle:before {
+    background-color: $color;
+  }
 }
 
 .spinner-container--small {
   @include spinner(20px);
+}
+
+.spinner-container--small-light {
+  @include spinner(20px, $light);
 }
 
 .spinner-container--medium {
@@ -34,7 +46,6 @@
   margin: 0 auto;
   width: 15%;
   height: 15%;
-  background-color: #616161;
   border-radius: 100%;
   -webkit-animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;
   animation: sk-circleFadeDelay 1.2s infinite ease-in-out both;

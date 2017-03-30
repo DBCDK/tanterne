@@ -8,6 +8,7 @@ import {wrapper} from '../../state/state';
 import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.component';
 import {Layout} from '../General/layout.component';
 import Link from '../Link';
+import {Spinner} from '../General/spinner.component';
 
 /**
  * Topics in Hierarchy element
@@ -23,9 +24,12 @@ function HierarchyElementTopics({topics}) {
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
             return `<a href="#!/hierarchy/${index}">${index}</a>`;
           });
+
           return (
             <li key={title}>
-              <div className='title-note'>{title} <div className="note" dangerouslySetInnerHTML={parsedNote} /></div>
+              <div className='title-note'>{title}
+                <div className="note" dangerouslySetInnerHTML={parsedNote}/>
+              </div>
             </li>
           );
         }
@@ -84,7 +88,7 @@ function HierarchyElement({topics, description = ''}) {
  *
  * @constructor
  */
-function HierarchyLevel({hierarchy, Header = 'h2', level=1, selected}) {
+function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
   const {index, title, children, items, note} = hierarchy;
   const isSelected = selected === index;
 
@@ -99,12 +103,11 @@ function HierarchyLevel({hierarchy, Header = 'h2', level=1, selected}) {
         <Header>
           <Link to={`/hierarchy/${index}`}>
             <span className="name">{title}</span>
-          <span className="dk5">
-               {index}
-            </span>
+            <span className="dk5">{index}</span>
+            <div className="hierarchy-spinner">{isSelected && !contains && <Spinner size="small-light"/>}</div>
           </Link>
         </Header>
-        {isSelected && items && <HierarchyElement topics={items} description={note}/>}
+        {isSelected && !items && <HierarchyElement topics={items} description={note}/>}
         {selected && contains && contains.map(el => <HierarchyLevel {...{
           hierarchy: el,
           key: el.index,
