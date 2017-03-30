@@ -23,7 +23,7 @@ export class SearchFieldComponent extends Component {
       suggestions: {},
       suggestActive: false,
       selectedSuggestion: -1,
-      pending: false
+      pendingSuggest: false
     };
 
     // Bind context where required
@@ -69,7 +69,7 @@ export class SearchFieldComponent extends Component {
     this.setState({suggestions});
 
     const suggestUrl = encodeURI(`/api/suggest?q=${query}&limit=10`);
-    this.setState({pending: true});
+    this.setState({pendingSuggest: true});
     request
       .get(suggestUrl)
       .set('Accept', 'application/json')
@@ -77,7 +77,7 @@ export class SearchFieldComponent extends Component {
         const bd = JSON.parse(res.text);
         const newSuggestions = Object.assign({}, this.state.suggestions);
         newSuggestions[query] = bd.response;
-        this.setState({suggestions: newSuggestions, pending: false});
+        this.setState({suggestions: newSuggestions, pendingSuggest: false});
       });
   }
 
@@ -206,7 +206,7 @@ export class SearchFieldComponent extends Component {
             />
 
             <span className="search-field--spinner">
-              {this.state.pending && <Spinner size="small" />}
+              {this.state.pendingSuggest && <Spinner size="small" />}
             </span>
 
 

@@ -1,12 +1,17 @@
+// This spinner is based on the spinners found at http://tobiasahlin.com/spinkit
+
 @mixin spinner($size: 30px){
   width: $size;
   height: $size;
   display: inline-block;
-  position: absolute;
 }
 
 .spinner-container--small {
   @include spinner(20px);
+}
+
+.spinner-container--medium {
+  @include spinner(30px);
 }
 
 .sk-fading-circle {
