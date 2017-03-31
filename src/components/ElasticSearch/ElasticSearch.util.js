@@ -222,7 +222,6 @@ function parseTextAndTagSyst(note, noteSyst, dk5Syst = false) {
   let notePos = 0;
   for (let i = 0; i < noteSyst.length; i++) {
     let syst = noteSyst[i];
-    console.log('syst', syst, dk5Syst[syst]);
     const p = ret.indexOf(syst, notePos);
     if (p > -1) {
       const replace = (dk5Syst && !dk5Syst[syst]) ? '<dk>' + syst + '</dk>' : syst;
