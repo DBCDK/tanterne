@@ -68,19 +68,44 @@ function HierarchyElementDescription({description}) {
   );
 }
 
+function getRenderedTopics(topics) {
+  if (!topics || !topics.length) {
+    return null;
+  }
+
+  let rendered = null;
+
+  if (topics.length > 5) {
+    rendered = (
+      <div>
+        <HierarchyElementTopics topics={topics.slice(0, 5)}/>
+        <ToggleContainer show={false}>
+          <ToggleContent content={<HierarchyElementTopics topics={topics.slice(5)}/>}/>
+          <ToggleButton showText={`Vis flere (${topics.slice(5).length})`} hideText='Skjul'/>
+        </ToggleContainer>
+      </div>
+    );
+  }
+  else {
+    rendered = <HierarchyElementTopics topics={topics}/>;
+  }
+
+  return rendered;
+}
 /**
  * The currently selected hierarchy element
  *
  * @constructor
  */
 function HierarchyElement({topics, description = ''}) {
+  const renderedTopics = getRenderedTopics(topics);
+
   return (
     <div className="hierarchy-el">
       {description && <HierarchyElementDescription description={description}/>}
-      {topics && <HierarchyElementTopics topics={topics}/>}
+      {renderedTopics}
     </div>
   );
-
 }
 
 /**
@@ -107,13 +132,8 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
             <div className="hierarchy-spinner">{isSelected && !contains && <Spinner size="small-light"/>}</div>
           </Link>
         </Header>
-        {isSelected && !items && <HierarchyElement topics={items} description={note}/>}
-        {selected && contains && contains.map(el => <HierarchyLevel {...{
-          hierarchy: el,
-          key: el.index,
-          selected,
-          level: level + 1
-        }} />)}
+        {isSelected && items && <HierarchyElement topics={items} description={note}/>}
+        {selected && contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index, selected, level: level + 1}} />)}
       </div>
     </div>
   );
