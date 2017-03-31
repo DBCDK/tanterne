@@ -22,7 +22,7 @@ export class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d'.split(',');
+    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d,a20,a40'.split(',');
     this.defaultParameters = {
       query: '',
       limit: 50,
@@ -213,6 +213,7 @@ export class ElasticClient {
     }
     return regRecords;
   }
+
   /**
    * return completion (if any) and spellcheck
    *
@@ -310,7 +311,7 @@ export class ElasticClient {
         onReady(this.vocabulary);
       });
       const regNotes = await this.rawElasticSearch({query: '651:* OR b00:*', fields: '651*, 652*, b00*', limit: 50000});
-      this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes);
+      this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes, this.dk5Syst);
       this.dk5GeneralNote = esUtil.parseRegisterForGeneralNotes(regNotes);
     }
   }
