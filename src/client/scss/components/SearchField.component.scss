@@ -26,7 +26,7 @@
       height: 30px;
       margin-right: 1rem;
       position: relative;
-      top: 2px;
+      top: 5px;
 
       @include small-phone {
         display: none;
@@ -71,10 +71,10 @@
     }
   }
 
-  .search-field--query-area {
-    * + * {
-      margin-left: 2rem;
-    }
+  .search-field--spinner {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: -30px;
   }
 }
 
