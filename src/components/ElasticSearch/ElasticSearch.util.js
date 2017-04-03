@@ -89,7 +89,7 @@ export function titleSort(arr) {
  */
 export function parseRegisterRecord(esRes, pos, dk5Tab) {
   const ret = {};
-  ret.title = getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
+  ret.title = '' + getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
   ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
   ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
   ret.index = getFirstField(esRes, pos, ['652m', 'b52m']);
@@ -130,12 +130,12 @@ export function createTaggedSystematicNote(systRec, hitPos) {
  * @param hitPos
  * @returns {*|string|String}
  */
-export function createTaggedRegisterNote(regRecs, hitPos) {
+export function createTaggedRegisterNote(regRecs, hitPos, dk5Syst) {
   const note = [];
   ['651', 'b00'].forEach((noteTag) => {
     const noteText = getEsField(regRecs, hitPos, noteTag).join('<br >');
     if (noteText) {
-      note.push(parseTextAndTagSyst(noteText, getEsField(regRecs, hitPos, noteTag + 'b')));
+      note.push(parseTextAndTagSyst(noteText, getEsField(regRecs, hitPos, noteTag + 'b'), dk5Syst));
     }
   });
   return note.join('<br />');
@@ -148,11 +148,11 @@ export function createTaggedRegisterNote(regRecs, hitPos) {
  * @param regRecs
  * @returns {{}}
  */
-export function parseRegisterForNotes(regRecs) {
+export function parseRegisterForNotes(regRecs, dk5Syst) {
   const notes = {};
   for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
     const index = getFirstField(regRecs, hitPos, ['652m', '652n', '652d']);
-    const note = createTaggedRegisterNote(regRecs, hitPos);
+    const note = createTaggedRegisterNote(regRecs, hitPos, dk5Syst);
     if (notes[index]) {
       if (notes[index].indexOf(note) === -1) {
         notes[index] += '<br />' + note;
@@ -217,14 +217,14 @@ export function parseRegisterForUniqueWords(regRecs, wordFields) {
  * @param noteSyst
  * @returns {*}
  */
-function parseTextAndTagSyst(note, noteSyst) {
+function parseTextAndTagSyst(note, noteSyst, dk5Syst = false) {
   let ret = note;
   let notePos = 0;
   for (let i = 0; i < noteSyst.length; i++) {
     let syst = noteSyst[i];
-    const replace = '<dk>' + syst + '</dk>';
     const p = ret.indexOf(syst, notePos);
     if (p > -1) {
+      const replace = (!dk5Syst || dk5Syst[syst]) ? '<dk>' + syst + '</dk>' : syst;
       ret = ret.substr(0, p) + replace + ret.substr(p + syst.length);
       notePos = p + replace.length;
     }
