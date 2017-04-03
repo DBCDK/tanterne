@@ -27,7 +27,7 @@ function HierarchyElementTopics({topics}) {
 
           return (
             <li key={title}>
-              <div className='title-note'>{title}
+              <div className='title-note'><AspectTitleElement title={title}/>
                 <div className="note" dangerouslySetInnerHTML={parsedNote}/>
               </div>
             </li>
@@ -36,12 +36,16 @@ function HierarchyElementTopics({topics}) {
 
         return (
           <li key={title}>
-            <div className='title-note'>{title}</div>
+            <div className='title-note'><AspectTitleElement title={title}/></div>
           </li>
         );
       })}
     </ul>
   );
+}
+
+function AspectTitleElement({title}) {
+  return (<a href={`#!/search/${title}/10/0/relevance/dictionary`}>{title}</a>);
 }
 
 /**

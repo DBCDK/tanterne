@@ -214,7 +214,7 @@ export class SearchResultsContainerComponent extends Component {
     );
 
     const results = (this.state.searchResults[this.state.query] || []).map(entry => {
-      if (entry.dk5) {
+      if (entry.items.length <= 1) {
         return (<SearchResultSingle key={entry.dk5.index} {...entry} />);
       }
 
