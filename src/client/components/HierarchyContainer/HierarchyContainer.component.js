@@ -44,6 +44,11 @@ function HierarchyElementTopics({topics}) {
   );
 }
 
+/**
+ * Aspect title made searchable
+ *
+ * @constructor
+ */
 function AspectTitleElement({title}) {
   return (<a href={`#!/search/${title}/10/0/relevance/dictionary`}>{title}</a>);
 }
