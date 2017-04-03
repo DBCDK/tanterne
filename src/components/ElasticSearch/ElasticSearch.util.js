@@ -225,6 +225,9 @@ function parseTextAndTagSyst(note, noteSyst, dk5Syst = false) {
     const p = ret.indexOf(syst, notePos);
     if (p > -1) {
       const replace = (!dk5Syst || dk5Syst[syst]) ? '<dk>' + syst + '</dk>' : syst;
+      if (!dk5Syst) { console.log('not dk5Syst')}
+      if (dk5Syst[syst]) { console.log('found in dk5Syst')}
+      console.log('syst', syst, dk5Syst[syst], replace);
       ret = ret.substr(0, p) + replace + ret.substr(p + syst.length);
       notePos = p + replace.length;
     }

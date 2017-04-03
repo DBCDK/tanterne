@@ -206,7 +206,7 @@ export class ElasticClient {
     let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
-      const note = esUtil.createTaggedRegisterNote(esRes, hitPos);
+      const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
       if (syst.title) {
         regRecords.push({index: syst.index, title: syst.title, note: note});
       }
