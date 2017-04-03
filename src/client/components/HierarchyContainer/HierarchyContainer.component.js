@@ -107,7 +107,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
             <div className="hierarchy-spinner">{isSelected && !contains && <Spinner size="small-light"/>}</div>
           </Link>
         </Header>
-        {isSelected && !items && <HierarchyElement topics={items} description={note}/>}
+        {isSelected && items && <HierarchyElement topics={items} description={note}/>}
         {selected && contains && contains.map(el => <HierarchyLevel {...{
           hierarchy: el,
           key: el.index,
