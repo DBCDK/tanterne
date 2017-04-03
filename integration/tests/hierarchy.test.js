@@ -19,12 +19,12 @@ describe('Testing Hierarchy', () => {
     browser.url('/#!/hierarchy/40-49');
     browser.pause(200);
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(20000);
+    browser.pause(200);
 
     const text = browser.getText('.selected h2 .dk5')[0];
     assert.equal(text, '40', 'title is present');
 
-    const topics = browser.getText('.selected .hierarchy-topics')[0];
+    const topics = browser.getText('.selected .hierarchy-topics');
     assert.include(topics, 'Flyveulykker', 'first topic is present');
   });
 
@@ -39,11 +39,11 @@ describe('Testing Hierarchy', () => {
 
     browser.click('[href="#!/hierarchy/40.6"]');
     browser.pause(200);
-    assert.equal(browser.getText('.selected .dk5')[0], '40.6', '3. level is selected');
+    assert.equal(browser.getText('.selected .dk5'), '40.6', '3. level is selected');
 
-    browser.click('[href="#!/hierarchy/40-46"]');
+    browser.click('[href="#!/hierarchy/40-49"]');
     browser.pause(200);
-    assert.equal(browser.getText('.selected .dk5')[0], '40-46', 'toplevel is selected');
+    assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
 
   });
 });
