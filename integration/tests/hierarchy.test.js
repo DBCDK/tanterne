@@ -25,7 +25,7 @@ describe('Testing Hierarchy', () => {
     assert.equal(text, '40', 'title is present');
 
     const topics = browser.getText('.selected .hierarchy-topics');
-    assert.include(topics, 'Flyveulykker', 'first topic is present');
+    assert.include(topics[0], 'Flyveulykker', 'first topic is present');
   });
 
   it('Click between levels', () => {
