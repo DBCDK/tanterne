@@ -25,7 +25,7 @@ describe('Testing Hierarchy', () => {
     assert.equal(text, '40', 'title is present');
 
     const topics = browser.getText('.selected .hierarchy-topics');
-    assert.include(topics, 'Flyveulykker', 'first topic is present');
+    assert.include(topics[0], 'Flyveulykker', 'first topic is present');
   });
 
   it('Click between levels', () => {
@@ -44,6 +44,47 @@ describe('Testing Hierarchy', () => {
     browser.click('[href="#!/hierarchy/40-49"]');
     browser.pause(200);
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
+  });
 
+  it('Should display the first five aspects only', () => {
+    browser.url('/#!/hierarchy/40');
+
+    const topics = browser.getText('.selected .hierarchy-topics');
+
+    assert.include(topics[0], 'Lokalhistorie');
+    assert.lengthOf(topics[0].split('\n'), 5);
+    assert.notInclude(topics[0], 'Topografi');
+  });
+
+  it('Should display all aspects when "Vis Flere" is clicked', () => {
+    browser.url('/#!/hierarchy/40');
+
+    let topics = browser.getText('.selected .hierarchy-topics');
+    assert.lengthOf(topics[0].split('\n'), 5);
+    assert.lengthOf(browser.getText('.selected .hidden .hierarchy-topics'), 0);
+
+    browser.click('.toggle-button');
+
+    topics = browser.getText('.selected .hierarchy-topics');
+    assert.lengthOf(topics[0].split('\n'), 5);
+    assert.lengthOf(topics[1].split('\n'), 6);
+    assert.isTrue(browser.isExisting('.selected .show .hierarchy-topics'));
+  });
+
+  it('Should hide all but 5 aspects when "Vis Flere" is clicked twice', () => {
+    browser.url('/#!/hierarchy/40');
+
+    browser.click('.toggle-button');
+
+    let topics = browser.getText('.selected .hierarchy-topics');
+    assert.lengthOf(topics[0].split('\n'), 5);
+    assert.lengthOf(topics[1].split('\n'), 6);
+    assert.isTrue(browser.isExisting('.selected .show .hierarchy-topics'));
+
+    browser.click('.toggle-button');
+
+    topics = browser.getText('.selected .hierarchy-topics');
+    assert.lengthOf(topics[0].split('\n'), 5);
+    assert.lengthOf(browser.getText('.selected .hidden .hierarchy-topics'), 0);
   });
 });

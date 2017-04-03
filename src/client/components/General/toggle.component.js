@@ -5,6 +5,7 @@ export class ToggleContainer extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       show: props.show || false
     };
@@ -24,19 +25,32 @@ export class ToggleContainer extends React.Component {
   }
 }
 
+ToggleContainer.propTypes = {
+  show: React.PropTypes.bool
+};
 
 export const ToggleButton = ({show, showText, hideText, onClick}) => {
   return (
-    <a className="upper white border-decoration" href="#" onClick={onClick}>
+    <a className="upper white border-decoration toggle-button" href="#" onClick={onClick}>
       {show && hideText || showText} <span className="icon white"><Arrow
       className={`transition ${show && 'rotate-180' || ''}`}/></span>
     </a>
   );
 };
 
-export const ToggleContent = ({show, className = '', __html}) => {
+/**
+ *
+ * @param {boolean} show
+ * @param {String} className
+ * @param {React.Component} content
+ * @return {XML}
+ * @constructor
+ */
+export const ToggleContent = ({show, className = '', content = null}) => {
   return (
-    <div className={`${className} ${show && 'show' || 'hidden'}`} dangerouslySetInnerHTML={{__html}} />
+    <div className={`${className}${show && 'show' || 'hidden'}`} >
+      {content}
+    </div>
   );
 };
 
