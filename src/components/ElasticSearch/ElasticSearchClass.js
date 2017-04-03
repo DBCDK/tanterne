@@ -22,7 +22,7 @@ export class ElasticClient {
   constructor() {
     this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
 
-    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d'.split(',');
+    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d,a20,a40'.split(',');
     this.defaultParameters = {
       query: '',
       limit: 50,
@@ -206,13 +206,14 @@ export class ElasticClient {
     let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
-      const note = esUtil.createTaggedRegisterNote(esRes, hitPos);
+      const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
       if (syst.title) {
         regRecords.push({index: syst.index, title: syst.title, note: note});
       }
     }
     return regRecords;
   }
+
   /**
    * return completion (if any) and spellcheck
    *
@@ -310,7 +311,7 @@ export class ElasticClient {
         onReady(this.vocabulary);
       });
       const regNotes = await this.rawElasticSearch({query: '651:* OR b00:*', fields: '651*, 652*, b00*', limit: 50000});
-      this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes);
+      this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes, this.dk5Syst);
       this.dk5GeneralNote = esUtil.parseRegisterForGeneralNotes(regNotes);
     }
   }
