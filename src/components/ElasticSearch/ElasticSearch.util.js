@@ -105,7 +105,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   for (let i = 0; i < aspectDk5.length; i++) {
     items.push({index: aspectDk5[i], title: aspectTitle[i], parent: dk5Tab[aspectDk5[i]]});
   }
-  return Object.assign({}, ret, {items: items});
+  return Object.assign({}, ret, {items: titleSort(items)});
 }
 
 /**
