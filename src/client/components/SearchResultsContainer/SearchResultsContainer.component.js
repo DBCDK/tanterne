@@ -93,6 +93,10 @@ export class SearchResultsContainerComponent extends Component {
             console.error(err); // eslint-disable-line no-console
           }
 
+          if (res.body.isIndex) {
+            window.location = `/#!/hierarchy/${res.body.parameters.query}`;
+          }
+
           try {
             const bd = JSON.parse(res.text);
             searchResults[searchUrl] = parseSearchResult(bd.result || []);
