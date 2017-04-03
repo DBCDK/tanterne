@@ -10,6 +10,7 @@ import request from 'superagent';
 // Components
 import Link from '../Link';
 import {SuggestionsComponent} from '../Suggestions/Suggestions.component';
+import {Spinner} from '../General/spinner.component';
 
 export class SearchFieldComponent extends Component {
   constructor() {
@@ -21,7 +22,8 @@ export class SearchFieldComponent extends Component {
       query: '',
       suggestions: {},
       suggestActive: false,
-      selectedSuggestion: -1
+      selectedSuggestion: -1,
+      pendingSuggest: false
     };
 
     // Bind context where required
@@ -50,7 +52,7 @@ export class SearchFieldComponent extends Component {
   // Helper function to prevent dispatching requests while a user is typing.
   deferExecution(func, timeout) {
     let timer = null;
-    return function () {
+    return function() {
       if (timer) {
         clearTimeout(timer);
       }
@@ -67,6 +69,7 @@ export class SearchFieldComponent extends Component {
     this.setState({suggestions});
 
     const suggestUrl = encodeURI(`/api/suggest?q=${query}&limit=10`);
+    this.setState({pendingSuggest: true});
     request
       .get(suggestUrl)
       .set('Accept', 'application/json')
@@ -74,13 +77,26 @@ export class SearchFieldComponent extends Component {
         const bd = JSON.parse(res.text);
         const newSuggestions = Object.assign({}, this.state.suggestions);
         newSuggestions[query] = bd.response;
-        this.setState({suggestions: newSuggestions});
+        this.setState({suggestions: newSuggestions, pendingSuggest: false});
       });
+  }
+
+  getValue(input) {
+    const regex = /^\d{3,}/g;
+
+    if (regex.test(input)) {
+      input = [input.slice(0, 2), '.', input.slice(2)].join('');
+    }
+    else if (input.length === 3 && input.charAt(2) === '.') {
+      input = input.slice(0, 2);
+    }
+
+    return input;
   }
 
   // Updates the state of the component and calls getSuggestions
   onTextEntered(evt) {
-    const query = evt.target.value;
+    const query = this.getValue(evt.target.value);
     const queryUrl = `/search/${encodeURIComponent(query)}/10/0/relevance/dictionary`;
     this.setState({
       queryUrl,
@@ -189,9 +205,14 @@ export class SearchFieldComponent extends Component {
               value={this.state.query}
             />
 
+            <span className="search-field--spinner">
+              {this.state.pendingSuggest && <Spinner size="small" />}
+            </span>
+
+
             <Link to={this.state.queryUrl}>
               <span className="search-field--button">
-                <img src="/icon-search.svg" /> SØG
+                <img src="/icon-search.svg"/>SØG
               </span>
             </Link>
           </span>

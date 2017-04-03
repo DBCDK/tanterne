@@ -86,3 +86,13 @@
     content: '●';
   }
 }
+
+.search-result--messages {
+  text-align: center;
+}
+
+.search-result--spinner {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}

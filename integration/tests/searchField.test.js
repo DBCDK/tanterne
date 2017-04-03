@@ -61,4 +61,13 @@ describe('Testing searchField', () => {
     aUrl.should.not.equal(bUrl);
     aUrl.should.contain(suggestValue);
   });
+
+  it('should insert a . when three or more digits are present in the input field', () => {
+    const searchValue = '123';
+    browser.element('.search-field').setValue(searchValue);
+    browser.pause();
+
+    const value = browser.element('.search-field').getValue();
+    assert.equal(value, '12.3');
+  });
 });
