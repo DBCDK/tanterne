@@ -106,7 +106,7 @@ async function searchHandler(ctx) {
       correction: {},
       elasticStatus: await ElasticClient.elasticPing(),
       result: results[0],
-      isIndex: Object.keys(ElasticClient.dk5Syst).includes(q)
+      isIndex: !!ElasticClient.dk5Syst[q]
     };
 
     // No results found
