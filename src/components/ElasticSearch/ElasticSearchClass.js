@@ -94,7 +94,7 @@ export class ElasticClient {
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst));
     }
-    return res;
+    return esUtil.titleSort(res);
   }
 
   /**
