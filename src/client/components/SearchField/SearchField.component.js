@@ -211,9 +211,10 @@ export class SearchFieldComponent extends Component {
 
 
             <Link to={this.state.queryUrl}>
-              <span className="search-field--button">
-                <img src="/icon-search.svg"/>SØG
-              </span>
+              <div className="search-field--button">
+                <div className="search-field--button--image"><img src="/icon-search.svg"/></div>
+                <div className="search-field--button--text">SØG</div>
+              </div>
             </Link>
           </span>
 

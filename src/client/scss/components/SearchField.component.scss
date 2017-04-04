@@ -4,43 +4,12 @@
     color: #fff;
     text-decoration: none;
     text-align: center;
-    font-size: 16pt;
+    font-size: 2.1rem;
     font-family: 'Open Sans', sans-serif;
   }
 
   .search-field--title {
     font-family: 'Open Sans', sans-serif;
-  }
-
-  .search-field--button {
-    background-color: $blue;
-    border-radius: 5px;
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 40px;
-    vertical-align: middle;
-
-    img {
-      height: 30px;
-      margin-right: 1rem;
-      position: relative;
-      top: 5px;
-
-      @include small-phone {
-        display: none;
-      }
-    }
-
-    @include small-phone {
-      width: 50px;
-      font-size: 13pt;
-    }
-
-    @include desktop {
-      width: 165px;
-    }
   }
 
   .search-field {
@@ -59,11 +28,11 @@
     }
 
     @include small-phone {
-      width: 190px;
+      width: 78%;
     }
 
     @include phone {
-      width: 220px;
+      width: 67%;
     }
 
     @include tablet {
@@ -75,6 +44,53 @@
     position: absolute;
     margin-top: 10px;
     margin-left: -30px;
+  }
+
+  .search-field--button {
+    padding-top: 5px;
+    background-color: $blue;
+    border-radius: 5px;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    vertical-align: middle;
+    margin-left: 10px;
+
+    @include small-phone {
+      width: 20%;
+      padding-top: 12px;
+      margin-left: 5px;
+    }
+
+    @include phone {
+      width: 30%;
+    }
+
+    @include desktop {
+      width: 165px;
+    }
+
+    .search-field--button--image {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 5px;
+
+      img {
+        height: 30px;
+
+        @include small-phone {
+          display: none;
+        }
+      }
+    }
+
+    .search-field--button--text {
+      vertical-align: middle;
+      display: inline-block;
+      font-size: 1.8rem;
+    }
   }
 }
 

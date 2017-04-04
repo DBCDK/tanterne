@@ -13,7 +13,7 @@
   }
 
   .top-bar--logo {
-    margin: 0 10px;
+    margin: 0 10px 0 0;
   }
 
   .top-bar--link {
@@ -30,15 +30,15 @@
     color: #106ff5;
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
-    font-size: 28px;
+    font-size: 2.8rem;
     line-height: 40px;
 
     @include small-phone {
-      font-size: 20px;
+      font-size: 1.5rem;
     }
 
     @include phone {
-      font-size: 24px;
+      font-size: 2.2rem;
     }
   }
 }
