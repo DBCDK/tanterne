@@ -63,7 +63,7 @@
       -webkit-overflow-scrolling: touch;
 
       &.level {
-        h1 {
+        h1.hierarchy-level--header {
           padding: 1rem .5rem;
           margin-bottom: 0;
           background-color: black;
@@ -71,6 +71,10 @@
           .name {
             color: white;
           }
+        }
+
+        h2.hierarchy-level--header {
+          padding: 10px;
         }
       }
     }
@@ -216,7 +220,7 @@
 
 .level-1 {
   @include small-phone {
-    padding: 10px;
+    padding: 15px 10px;
 
     .name {
       display: inline-block;
@@ -242,11 +246,11 @@
   margin-left: 1rem;
 
   @include small-phone {
-    padding: 10px;
+    padding: 15px 10px;
 
     .name {
       display: inline-block;
-      width: 80%;
+      width: 84%;
       margin-right: 0;
       padding-right: 5px;
     }
@@ -254,24 +258,20 @@
     .dk5 {
       float: right;
       display: inline-block;
-      width: 20%;
+      width: 16%;
     }
-  }
-
-  @include phone {
-    padding: 10px;
   }
 
   h2 {
     font-size: 2rem;
 
     @include small-phone {
-      font-size: 1.7rem;
+      font-size: 1.8rem;
       margin-bottom: 0;
     }
 
     @include phone {
-      font-size: 1.7rem;
+      font-size: 1.8rem;
     }
   }
 }
@@ -280,7 +280,7 @@
   margin-left: 2rem;
 
   @include small-phone {
-    padding: 10px;
+    padding: 15px 10px;
 
     .name {
       display: inline-block;
@@ -296,21 +296,15 @@
     }
   }
 
-  @include phone {
-    padding: 10px;
-  }
-
   h2 {
     font-size: 1.8rem;
 
     @include small-phone {
-      font-size: 1.6rem;
       margin-bottom: 0;
       font-weight: 400;
     }
 
     @include phone {
-      font-size: 1.6rem;
       font-weight: 400;
     }
   }
@@ -319,8 +313,34 @@
 .level-4 {
   margin-left: 3rem;
 
+  @include small-phone {
+    padding: 15px 10px;
+
+    .name {
+      display: inline-block;
+      width: 68%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 32%;
+    }
+  }
+
   h2 {
     font-size: 1.6rem;
+
+    @include small-phone {
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    @include phone {
+      font-weight: 400;
+    }
   }
 }
 
@@ -360,11 +380,17 @@
 }
 
 .hierarchy-el {
+  .toggle-wrapper {
+    @include small-phone {
+      margin-bottom: 10px;
+    }
+  }
   .toggle-button {
     margin-left: 2em;
 
     @include small-phone {
       color: black;
+      border-bottom: none;
     }
 
     @include phone {

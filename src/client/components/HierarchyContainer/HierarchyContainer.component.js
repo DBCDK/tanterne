@@ -90,7 +90,7 @@ function getRenderedTopics(topics) {
         <HierarchyElementTopics topics={topics.slice(0, 5)}/>
         <ToggleContainer show={false}>
           <ToggleContent content={<HierarchyElementTopics topics={topics.slice(5)}/>}/>
-          <ToggleButton showText={`Vis flere (${topics.slice(5).length})`} hideText='Skjul'/>
+          <ToggleButton showText={`Vis alle (${topics.slice(5).length})`} hideText='Skjul'/>
         </ToggleContainer>
       </div>
     );
@@ -134,7 +134,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
   return (
     <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
-        <Header>
+        <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
           <Link to={`/hierarchy/${index}`}>
             <span className="name">{title}</span>
             <span className="dk5">{index}</span>
@@ -207,7 +207,6 @@ class HierarchyContainerComponent extends React.Component {
     const elements = hierarchy.items || [hierarchy];
 
     const selectedParents = this.getParentsRecursively(this.props.params.id);
-    console.log(selectedParents);
 
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
