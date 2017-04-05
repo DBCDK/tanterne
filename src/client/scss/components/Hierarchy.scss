@@ -1,5 +1,4 @@
 .hierarchy {
-
   a {
     text-decoration: none;
   }
@@ -7,37 +6,149 @@
   .name {
     color: $black;
   }
+
+  @include small-phone {
+    .hierarchy-level:nth-child(odd) {
+      background-color: #ececec;
+    }
+
+    .hierarchy-level:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  }
+
+  @include phone {
+    .hierarchy-level:nth-child(odd) {
+      background-color: #ececec;
+    }
+
+    .hierarchy-level:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  }
 }
 
 .hierarchy-level {
   margin: 1rem 0;
 
-  .level {
-    transition: background 0ms ease-in;
+  @include small-phone {
+    margin: 0;
+  }
+
+  @include phone {
+    margin: 0;
   }
 
   .selected {
-    transition: background 250ms ease-out;
+    transition: background 100ms ease-out;
     padding: 1rem;
     margin: 0 -1rem;
     background-color: $blue;
     color: white;
 
+    @include small-phone {
+      transition: none;
+      margin: 0;
+      padding: 0;
+      background-color: $white;
+      color: black;
+
+      position: fixed;
+      z-index: 1000;
+      top: 50px;
+      left: 0;
+      height: calc(100% - 50px);
+      width: 100%;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+
+      &.level {
+        h1 {
+          padding: 1rem .5rem;
+          margin-bottom: 0;
+          background-color: black;
+
+          .name {
+            color: white;
+          }
+        }
+      }
+    }
+
     .dk5 {
       background-color: white;
       padding: 0.3rem;
+
+      @include small-phone {
+        padding: 0;
+        background-color: transparent;
+      }
+
+      @include phone {
+        padding: 0;
+        background-color: transparent;
+      }
     }
 
     .name {
       color: white;
+
+      @include small-phone {
+        color: black;
+      }
+
+      @include phone {
+        color: black;
+      }
     }
   }
 
   .dk5 {
     color: $blue;
     display: inline-block;
-    margin-left: 1rem;
   }
+
+  .name {
+    margin-right: 5px;
+  }
+}
+
+.hierarchy--navbar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f6f6f6;
+  height: 50px;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 1px solid #dedede;
+
+  @include phone {
+    display: block;
+  }
+
+  @include small-phone {
+    display: block;
+  }
+}
+
+.hierarchy--navbar--button {
+  display: inline-block;
+  margin-right: 10px;
+
+  a {
+    color: #358cff;
+    display: block;
+    font-size: 4rem;
+    margin: 16px 0 0 10px;
+  }
+}
+
+.hierarchy--navbar--title {
+  display: inline-block;
+  vertical-align: middle;
+  height: 70%;
 }
 
 .hierarchy-topics {
@@ -63,6 +174,14 @@
       a {
         color: white;
         text-decoration: underline;
+
+        @include small-phone {
+          color: black;
+        }
+
+        @include phone {
+          color: black;
+        }
       }
     }
   }
@@ -76,34 +195,146 @@
   .content a {
     color: white;
     text-decoration: underline;
+
+    @include small-phone {
+      color: black;
+    }
+
+    @include phone {
+      color: black;
+    }
+  }
+
+  @include small-phone {
+    display: none;
+  }
+
+  @include phone {
+    display: none;
+  }
+}
+
+.level-1 {
+  @include small-phone {
+    padding: 10px;
+
+    .name {
+      display: inline-block;
+      width: 78%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 18%;
+      text-align: right;
+    }
+  }
+
+  @include phone {
+    padding: 10px;
   }
 }
 
 .level-2 {
   margin-left: 1rem;
 
+  @include small-phone {
+    padding: 10px;
+
+    .name {
+      display: inline-block;
+      width: 80%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 20%;
+    }
+  }
+
+  @include phone {
+    padding: 10px;
+  }
+
   h2 {
     font-size: 2rem;
+
+    @include small-phone {
+      font-size: 1.7rem;
+      margin-bottom: 0;
+    }
+
+    @include phone {
+      font-size: 1.7rem;
+    }
   }
 }
 
 .level-3 {
   margin-left: 2rem;
+
+  @include small-phone {
+    padding: 10px;
+
+    .name {
+      display: inline-block;
+      width: 68%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 32%;
+    }
+  }
+
+  @include phone {
+    padding: 10px;
+  }
+
   h2 {
-  font-size: 1.8rem;
-}}
+    font-size: 1.8rem;
+
+    @include small-phone {
+      font-size: 1.6rem;
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+
+    @include phone {
+      font-size: 1.6rem;
+      font-weight: 400;
+    }
+  }
+}
 
 .level-4 {
   margin-left: 3rem;
+
   h2 {
-  font-size: 1.6rem;
-}}
+    font-size: 1.6rem;
+  }
+}
 
 .level-5 {
   margin-left: 4rem;
+
   h2 {
-  font-size: 1.4rem;
-}}
+    font-size: 1.4rem;
+  }
+}
+
+.level  {
+  margin-left: 0;
+}
 
 .title-note {
   display: inline-block;
@@ -111,6 +342,14 @@
   padding-left: 1rem;
   a {
     color: white;
+
+    @include small-phone {
+      color: black;
+    }
+
+    @include phone {
+      color: black;
+    }
   }
 }
 
@@ -123,5 +362,13 @@
 .hierarchy-el {
   .toggle-button {
     margin-left: 2em;
+
+    @include small-phone {
+      color: black;
+    }
+
+    @include phone {
+      color: black;
+    }
   }
 }

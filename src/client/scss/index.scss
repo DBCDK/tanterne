@@ -43,11 +43,11 @@
 
   @include small-phone {
     margin-top: 0;
-    padding: 1rem;
+    padding: 0;
   }
 
   @include phone {
     margin-top: 0;
-    padding: 1rem;
+    padding: 0;
   }
 }

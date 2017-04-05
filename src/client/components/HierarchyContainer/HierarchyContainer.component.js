@@ -22,8 +22,8 @@ function HierarchyElementTopics({topics}) {
         if (note) {
           const parsedNote = {};
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-            return `<a href="#!/hierarchy/${index}">${index}</a>`;
-          });
+              return `<a href="#!/hierarchy/${index}">${index}</a>`;
+            });
 
           return (
             <li key={title}>
@@ -132,17 +132,22 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
   }
 
   return (
-    <div className={`hierarchy-level level-${level}`}>
+    <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
         <Header>
           <Link to={`/hierarchy/${index}`}>
             <span className="name">{title}</span>
             <span className="dk5">{index}</span>
-            <div className="hierarchy-spinner">{isSelected && !contains && <Spinner size="small-light"/>}</div>
+            {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small"/>}</div>}
           </Link>
         </Header>
         {isSelected && items && <HierarchyElement topics={items} description={note}/>}
-        {selected && contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index, selected, level: level + 1}} />)}
+        {selected && contains && contains.map(el => <HierarchyLevel {...{
+          hierarchy: el,
+          key: el.index,
+          selected,
+          level: level + 1
+        }} />)}
       </div>
     </div>
   );
@@ -167,15 +172,57 @@ class HierarchyContainerComponent extends React.Component {
     }
   }
 
+  getParent(child) {
+    let parent = '';
+    if (!child) {
+      return parent;
+    }
+
+    if (child.includes('.')) {
+      parent = child.split('.')[0];
+    }
+    else if (child) {
+      parent = child !== this.props.hierarchy.index ? this.props.hierarchy.index : '';
+    }
+
+    return parent;
+  }
+
+  getParentsRecursively(child, parents = []) {
+    const next = this.getParent(child);
+
+    if (next && next !== '') {
+      parents.push(next);
+      return this.getParentsRecursively(next, parents);
+    }
+
+    return parents.reverse();
+  }
+
   render() {
     const {hierarchy} = this.props;
 
     // If selected is a top level hierarchy split items to different levels
     // else show hierarchy as one level
-    let elements = hierarchy.items || [hierarchy];
+    const elements = hierarchy.items || [hierarchy];
+
+    const selectedParents = this.getParentsRecursively(this.props.params.id);
+    console.log(selectedParents);
+
+    const navbar = this.props.params.id ? (
+      <div className="hierarchy--navbar">
+          <span className="hierarchy--navbar--button">
+            <a href={`#!/hierarchy/${this.getParent(this.props.params.id)}`}>&#60;</a>
+          </span>
+        <span className="hierarchy--navbar--title">
+            Et niveau op
+          </span>
+      </div>
+    ) : null;
 
     return (
       <div className="hierarchy container">
+        {navbar}
         {elements.map(level => (
           <HierarchyLevel {...{hierarchy: level, key: level.index, Header: 'h1', selected: this.props.params.id}} />
         ))}

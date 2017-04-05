@@ -72,9 +72,9 @@ export class ElasticClient {
     await this.elasticClient.ping({
       // ping usually has a 3000ms timeout
       requestTimeout: 1000
-    }).then(function (body) {
+    }).then(function(body) {
       esStatus = body;
-    }, function (error) {
+    }, function(error) {
       if (error) {
         Logger.log.error('ElasticSearch cluster is down. Msg: ' + error.message);
       }
@@ -225,14 +225,14 @@ export class ElasticClient {
     let result = {prefix: [], spell: []};
     if (this.autocomplete.trie.prefixes) {
       let prefix = [];
-      this.autocomplete.search(term).forEach(function (match) {
+      this.autocomplete.search(term).forEach(function(match) {
         prefix.push({match: match, distance: Levenshtein.get(term, match)});
       });
       result.prefix = esUtil.sortDistanceAndSlice(prefix, 10);
     }
     if (this.vocabulary.length > 0) {
       let spell = [];
-      this.vocabulary.forEach(function (match) {
+      this.vocabulary.forEach(function(match) {
         spell.push({match: match, distance: Levenshtein.get(term, match)});
       });
       result.spell = esUtil.sortDistanceAndSlice(spell, 10);
@@ -332,9 +332,9 @@ export class ElasticClient {
       pars.query = q.join(' OR ');
     }
     await this.elasticClient.search(esUtil.setAndMap(pars, this.defaultParameters, this.esParMap))
-      .then(function (body) {
+      .then(function(body) {
         esHits = body.hits;
-      }, function (error) {
+      }, function(error) {
         const errorMessage = `ElasticSearch search error. Msg: ${error.message}`;
         Logger.log.error(errorMessage);
         esHits.error = errorMessage;

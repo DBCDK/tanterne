@@ -7,6 +7,14 @@
   align-items: center;
   margin-bottom: 3rem;
 
+  @include small-phone {
+    padding: 2rem 1rem 0 1rem;
+  }
+
+  @include phone {
+    padding: 2rem 2rem 0 2rem;
+  }
+
   a {
     display: flex;
     height: 40px;
