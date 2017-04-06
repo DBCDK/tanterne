@@ -1,3 +1,5 @@
+$navbar_height: 60px;
+
 .hierarchy {
   a {
     text-decoration: none;
@@ -45,15 +47,16 @@
 
       position: fixed;
       z-index: 1000;
-      top: 50px;
+      top: $navbar_height;
       left: 0;
-      height: calc(100% - 50px);
+      height: calc(100% - 60px);
       width: 100%;
       overflow-y: scroll;
       -webkit-overflow-scrolling: touch;
 
       &.level {
         h1.hierarchy-level--header {
+          display: none;
           padding: 1rem .5rem;
           margin-bottom: 0;
           background-color: black;
@@ -104,14 +107,15 @@
   position: fixed;
   top: 0;
   left: 0;
-  background-color: #f6f6f6;
-  height: 50px;
+  background-color: white;
+  height: $navbar_height;
   width: 100%;
   z-index: 1000;
   border-bottom: 1px solid #dedede;
-  padding-top: 14px;
+  padding-top: 21px;
 
   a {
+    width: 10%;
     color: #358cff;
   }
 
@@ -131,6 +135,10 @@
   font-size: 2.5rem;
   display: inline-block;
   vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  text-align: center;
 }
 
 .hierarchy-topics {

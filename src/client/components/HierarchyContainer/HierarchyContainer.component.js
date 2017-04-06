@@ -201,10 +201,10 @@ class HierarchyContainerComponent extends React.Component {
           <span className="hierarchy--navbar--button">
             &#60;
           </span>
-          <span className="hierarchy--navbar--title">
-          {this.getParent(this.props.params.id) || 'Et niveau op'}
-          </span>
         </a>
+        <span className="hierarchy--navbar--title">
+          {this.props.params.id}
+          </span>
       </div>
     ) : null;
 
