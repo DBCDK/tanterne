@@ -40,4 +40,14 @@
   background-color: white;
   padding: 3rem;
   margin-top: 3rem;
+
+  @include small-phone {
+    margin-top: 0;
+    padding: 0;
+  }
+
+  @include phone {
+    margin-top: 0;
+    padding: 0;
+  }
 }

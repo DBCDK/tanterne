@@ -84,13 +84,13 @@ function getRenderedTopics(topics) {
 
   let rendered = null;
 
-  if (topics.length > 5) {
+  if (topics.length > 7) {
     rendered = (
       <div>
         <HierarchyElementTopics topics={topics.slice(0, 5)}/>
         <ToggleContainer show={false}>
           <ToggleContent content={<HierarchyElementTopics topics={topics.slice(5)}/>}/>
-          <ToggleButton showText={`Vis flere (${topics.slice(5).length})`} hideText='Skjul'/>
+          <ToggleButton showText={`Vis alle (${topics.slice(5).length})`} hideText='Skjul'/>
         </ToggleContainer>
       </div>
     );
@@ -132,17 +132,22 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
   }
 
   return (
-    <div className={`hierarchy-level level-${level}`}>
+    <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
-        <Header>
+        <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
           <Link to={`/hierarchy/${index}`}>
             <span className="name">{title}</span>
             <span className="dk5">{index}</span>
-            <div className="hierarchy-spinner">{isSelected && !contains && <Spinner size="small-light"/>}</div>
+            {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small"/>}</div>}
           </Link>
         </Header>
         {isSelected && items && <HierarchyElement topics={items} description={note}/>}
-        {selected && contains && contains.map(el => <HierarchyLevel {...{hierarchy: el, key: el.index, selected, level: level + 1}} />)}
+        {selected && contains && contains.map(el => <HierarchyLevel {...{
+          hierarchy: el,
+          key: el.index,
+          selected,
+          level: level + 1
+        }} />)}
       </div>
     </div>
   );
@@ -167,15 +172,45 @@ class HierarchyContainerComponent extends React.Component {
     }
   }
 
+  getParent(child) {
+    let parent = '';
+    if (!child) {
+      return parent;
+    }
+
+    if (child.includes('.')) {
+      parent = child.split('.')[0];
+    }
+    else if (child) {
+      parent = child !== this.props.hierarchy.index ? this.props.hierarchy.index : '';
+    }
+
+    return parent;
+  }
+
   render() {
     const {hierarchy} = this.props;
 
     // If selected is a top level hierarchy split items to different levels
     // else show hierarchy as one level
-    let elements = hierarchy.items || [hierarchy];
+    const elements = hierarchy.items || [hierarchy];
+
+    const navbar = this.props.params.id ? (
+      <div className="hierarchy--navbar">
+        <a href={`#!/hierarchy/${this.getParent(this.props.params.id)}`}>
+          <span className="hierarchy--navbar--button">
+            &#60;
+          </span>
+        </a>
+        <span className="hierarchy--navbar--title">
+          {this.props.params.id}
+          </span>
+      </div>
+    ) : null;
 
     return (
       <div className="hierarchy container">
+        {navbar}
         {elements.map(level => (
           <HierarchyLevel {...{hierarchy: level, key: level.index, Header: 'h1', selected: this.props.params.id}} />
         ))}
