@@ -309,8 +309,30 @@ $navbar_height: 60px;
 .level-5 {
   margin-left: 4rem;
 
+  @include less-than-tablet {
+    padding: 15px 10px;
+
+    .name {
+      display: inline-block;
+      width: 68%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 32%;
+    }
+  }
+
   h2 {
     font-size: 1.4rem;
+
+    @include less-than-tablet {
+      margin-bottom: 0;
+      font-weight: 400;
+    }
   }
 }
 
