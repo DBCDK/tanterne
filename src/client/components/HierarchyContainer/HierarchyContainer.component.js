@@ -84,7 +84,7 @@ function getRenderedTopics(topics) {
 
   let rendered = null;
 
-  if (topics.length > 5) {
+  if (topics.length > 7) {
     rendered = (
       <div>
         <HierarchyElementTopics topics={topics.slice(0, 5)}/>
