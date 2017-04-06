@@ -154,6 +154,10 @@ $navbar_height: 60px;
       display: inline-block;
       content: "-";
       text-indent: -5px;
+
+      @include less-than-tablet {
+        content: '';
+      }
     }
 
     .note {
@@ -349,6 +353,7 @@ $navbar_height: 60px;
 
     @include less-than-tablet {
       color: black;
+      font-size: 1.6rem;
     }
   }
 }
@@ -369,8 +374,12 @@ $navbar_height: 60px;
     margin-left: 2em;
 
     @include less-than-tablet {
-      color: black;
+      color: $blue;
       border-bottom: none;
+
+      .icon, .svg {
+        fill: $blue;
+      }
     }
   }
 }
