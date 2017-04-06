@@ -22,8 +22,8 @@ function HierarchyElementTopics({topics}) {
         if (note) {
           const parsedNote = {};
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-              return `<a href="#!/hierarchy/${index}">${index}</a>`;
-            });
+            return `<a href="#!/hierarchy/${index}">${index}</a>`;
+          });
 
           return (
             <li key={title}>
@@ -188,17 +188,6 @@ class HierarchyContainerComponent extends React.Component {
     return parent;
   }
 
-  getParentsRecursively(child, parents = []) {
-    const next = this.getParent(child);
-
-    if (next && next !== '') {
-      parents.push(next);
-      return this.getParentsRecursively(next, parents);
-    }
-
-    return parents.reverse();
-  }
-
   render() {
     const {hierarchy} = this.props;
 
@@ -206,16 +195,16 @@ class HierarchyContainerComponent extends React.Component {
     // else show hierarchy as one level
     const elements = hierarchy.items || [hierarchy];
 
-    const selectedParents = this.getParentsRecursively(this.props.params.id);
-
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
+        <a href={`#!/hierarchy/${this.getParent(this.props.params.id)}`}>
           <span className="hierarchy--navbar--button">
-            <a href={`#!/hierarchy/${this.getParent(this.props.params.id)}`}>&#60;</a>
+            &#60;
           </span>
-        <span className="hierarchy--navbar--title">
-            Et niveau op
+          <span className="hierarchy--navbar--title">
+          {this.getParent(this.props.params.id) || 'Et niveau op'}
           </span>
+        </a>
       </div>
     ) : null;
 

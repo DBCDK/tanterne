@@ -7,7 +7,7 @@
     color: $black;
   }
 
-  @include small-phone {
+  @include less-than-tablet {
     .hierarchy-level:nth-child(odd) {
       background-color: #ececec;
     }
@@ -15,15 +15,9 @@
     .hierarchy-level:nth-child(even) {
       background-color: #f9f9f9;
     }
-  }
 
-  @include phone {
-    .hierarchy-level:nth-child(odd) {
-      background-color: #ececec;
-    }
-
-    .hierarchy-level:nth-child(even) {
-      background-color: #f9f9f9;
+    &.container {
+      border-top: 1px solid #e0e0e0;
     }
   }
 }
@@ -31,11 +25,7 @@
 .hierarchy-level {
   margin: 1rem 0;
 
-  @include small-phone {
-    margin: 0;
-  }
-
-  @include phone {
+  @include less-than-tablet {
     margin: 0;
   }
 
@@ -46,7 +36,7 @@
     background-color: $blue;
     color: white;
 
-    @include small-phone {
+    @include less-than-tablet {
       transition: none;
       margin: 0;
       padding: 0;
@@ -75,6 +65,7 @@
 
         h2.hierarchy-level--header {
           padding: 10px;
+          font-weight: 600;
         }
       }
     }
@@ -83,12 +74,7 @@
       background-color: white;
       padding: 0.3rem;
 
-      @include small-phone {
-        padding: 0;
-        background-color: transparent;
-      }
-
-      @include phone {
+      @include less-than-tablet {
         padding: 0;
         background-color: transparent;
       }
@@ -97,11 +83,7 @@
     .name {
       color: white;
 
-      @include small-phone {
-        color: black;
-      }
-
-      @include phone {
+      @include less-than-tablet {
         color: black;
       }
     }
@@ -127,32 +109,28 @@
   width: 100%;
   z-index: 1000;
   border-bottom: 1px solid #dedede;
+  padding-top: 14px;
 
-  @include phone {
-    display: block;
+  a {
+    color: #358cff;
   }
 
-  @include small-phone {
+  @include less-than-tablet {
     display: block;
   }
 }
 
 .hierarchy--navbar--button {
   display: inline-block;
-  margin-right: 10px;
-
-  a {
-    color: #358cff;
-    display: block;
-    font-size: 4rem;
-    margin: 16px 0 0 10px;
-  }
+  font-size: 4rem;
+  margin: 0 10px;
+  vertical-align: middle;
 }
 
 .hierarchy--navbar--title {
+  font-size: 2.5rem;
   display: inline-block;
   vertical-align: middle;
-  height: 70%;
 }
 
 .hierarchy-topics {
@@ -179,11 +157,7 @@
         color: white;
         text-decoration: underline;
 
-        @include small-phone {
-          color: black;
-        }
-
-        @include phone {
+        @include less-than-tablet {
           color: black;
         }
       }
@@ -192,6 +166,10 @@
 }
 
 .hierarchy-description {
+  @include less-than-tablet {
+    display: none;
+  }
+
   .content {
     line-height: 1.4;
     margin-bottom: 3rem;
@@ -200,26 +178,14 @@
     color: white;
     text-decoration: underline;
 
-    @include small-phone {
+    @include less-than-tablet {
       color: black;
     }
-
-    @include phone {
-      color: black;
-    }
-  }
-
-  @include small-phone {
-    display: none;
-  }
-
-  @include phone {
-    display: none;
   }
 }
 
 .level-1 {
-  @include small-phone {
+  @include less-than-tablet {
     padding: 15px 10px;
 
     .name {
@@ -237,7 +203,7 @@
     }
   }
 
-  @include phone {
+  @include less-than-tablet {
     padding: 10px;
   }
 }
@@ -245,7 +211,7 @@
 .level-2 {
   margin-left: 1rem;
 
-  @include small-phone {
+  @include less-than-tablet {
     padding: 15px 10px;
 
     .name {
@@ -265,13 +231,9 @@
   h2 {
     font-size: 2rem;
 
-    @include small-phone {
+    @include less-than-tablet {
       font-size: 1.8rem;
       margin-bottom: 0;
-    }
-
-    @include phone {
-      font-size: 1.8rem;
     }
   }
 }
@@ -279,7 +241,7 @@
 .level-3 {
   margin-left: 2rem;
 
-  @include small-phone {
+  @include less-than-tablet {
     padding: 15px 10px;
 
     .name {
@@ -299,13 +261,9 @@
   h2 {
     font-size: 1.8rem;
 
-    @include small-phone {
+    @include less-than-tablet {
+      font-size: 1.6rem;
       margin-bottom: 0;
-      font-weight: 400;
-    }
-
-    @include phone {
-      font-weight: 400;
     }
   }
 }
@@ -313,7 +271,7 @@
 .level-4 {
   margin-left: 3rem;
 
-  @include small-phone {
+  @include less-than-tablet {
     padding: 15px 10px;
 
     .name {
@@ -333,12 +291,8 @@
   h2 {
     font-size: 1.6rem;
 
-    @include small-phone {
+    @include less-than-tablet {
       margin-bottom: 0;
-      font-weight: 400;
-    }
-
-    @include phone {
       font-weight: 400;
     }
   }
@@ -363,11 +317,7 @@
   a {
     color: white;
 
-    @include small-phone {
-      color: black;
-    }
-
-    @include phone {
+    @include less-than-tablet {
       color: black;
     }
   }
@@ -381,20 +331,16 @@
 
 .hierarchy-el {
   .toggle-wrapper {
-    @include small-phone {
+    @include less-than-tablet {
       margin-bottom: 10px;
     }
   }
   .toggle-button {
     margin-left: 2em;
 
-    @include small-phone {
+    @include less-than-tablet {
       color: black;
       border-bottom: none;
-    }
-
-    @include phone {
-      color: black;
     }
   }
 }
