@@ -4,7 +4,7 @@ export const Layout = (props) => {
   const {className, children, ...rest} = props;
   return (
     <div className={className}>
-      {children.map(child => React.cloneElement(child, rest))}
+      {Array.isArray(children) && children.map(child => React.cloneElement(child, rest))}
     </div>
   );
 };

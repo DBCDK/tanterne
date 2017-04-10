@@ -1,43 +1,149 @@
+$navbar_height: 60px;
+
 .hierarchy {
-  padding: 1rem;
   a {
     text-decoration: none;
   }
+
   .name {
     color: $black;
+  }
+
+  @include less-than-tablet {
+    .hierarchy-level:nth-child(odd) {
+      background-color: #ececec;
+    }
+
+    .hierarchy-level:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    &.container {
+      border-top: 1px solid #e0e0e0;
+    }
   }
 }
 
 .hierarchy-level {
-  margin: 2rem 0;
-  padding-left: 2rem;
-  .level {
-    transition: background 500ms ease-in;
+  margin: 1rem 0;
+
+  @include less-than-tablet {
+    margin: 0;
   }
+
   .selected {
-    transition: background 500ms ease-out;
-    padding: 2rem;
-    margin-left: -2rem;
+    transition: background 100ms ease-out;
+    padding: 1rem;
+    margin: 0 -1rem;
     background-color: $blue;
     color: white;
+
+    @include less-than-tablet {
+      transition: none;
+      margin: 0;
+      padding: 0;
+      background-color: $white;
+      color: black;
+
+      position: fixed;
+      z-index: 1000;
+      top: $navbar_height;
+      left: 0;
+      height: calc(100% - 60px);
+      width: 100%;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+
+      &.level {
+        h1.hierarchy-level--header {
+          padding: 1rem .5rem;
+          margin-bottom: 0;
+          background-color: black;
+
+          .name {
+            color: white;
+          }
+        }
+
+        h2.hierarchy-level--header {
+          padding: 10px;
+          font-weight: 600;
+        }
+      }
+    }
+
     .dk5 {
       background-color: white;
       padding: 0.3rem;
+
+      @include less-than-tablet {
+        padding: 0;
+        background-color: transparent;
+      }
     }
+
     .name {
       color: white;
+
+      @include less-than-tablet {
+        color: black;
+      }
     }
   }
+
   .dk5 {
     color: $blue;
     display: inline-block;
-    margin-left: 1rem;
   }
+
+  .name {
+    margin-right: 5px;
+  }
+}
+
+.hierarchy--navbar {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: white;
+  height: $navbar_height;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 1px solid #dedede;
+  padding-top: 21px;
+
+  a {
+    width: 10%;
+    color: #358cff;
+  }
+
+  @include less-than-tablet {
+    display: block;
+  }
+}
+
+.hierarchy--navbar--button {
+  display: inline-block;
+  font-size: 4rem;
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+.hierarchy--navbar--title {
+  font-size: 2.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  text-align: center;
 }
 
 .hierarchy-topics {
   padding-left: 0;
   margin-bottom: 3rem;
+
   li {
     margin-bottom: 1rem;
     list-style-type: none;
@@ -47,6 +153,10 @@
       display: inline-block;
       content: "-";
       text-indent: -5px;
+
+      @include less-than-tablet {
+        content: '';
+      }
     }
 
     .note {
@@ -55,39 +165,251 @@
       text-indent: -0.8rem;
 
       a {
-        color:white;
+        color: white;
         text-decoration: underline;
+
+        @include less-than-tablet {
+          color: black;
+        }
       }
     }
   }
 }
 
 .hierarchy-description {
+  @include less-than-tablet {
+    display: none;
+  }
+
   .content {
     line-height: 1.4;
     margin-bottom: 3rem;
   }
   .content a {
-    color:white;
+    color: white;
     text-decoration: underline;
+
+    @include less-than-tablet {
+      color: black;
+    }
   }
 }
 
-.level-2 h2 {
- font-size: 2rem;
+.level-1 {
+  @include less-than-tablet {
+    padding: 15px 10px;
+
+    .name {
+      display: inline-block;
+      width: 78%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 18%;
+      text-align: right;
+    }
+  }
+
+  @include less-than-tablet {
+    padding: 10px;
+  }
 }
-.level-3 h2 {
- font-size: 1.8rem;
+
+.level-2 {
+  margin-left: 1rem;
+
+  @include less-than-tablet {
+    padding: 15px 10px;
+
+    .name {
+      display: inline-block;
+      width: 84%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 16%;
+    }
+  }
+
+  h2 {
+    font-size: 2rem;
+
+    @include less-than-tablet {
+      font-size: 1.8rem;
+      margin-bottom: 0;
+    }
+  }
 }
-.level-4 h2 {
- font-size: 1.6rem;
+
+.level-3 {
+  margin-left: 2rem;
+
+  @include less-than-tablet {
+    padding: 15px 10px;
+
+    .name {
+      display: inline-block;
+      width: 68%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 32%;
+    }
+  }
+
+  h2 {
+    font-size: 1.8rem;
+
+    @include less-than-tablet {
+      font-size: 1.6rem;
+      margin-bottom: 0;
+    }
+  }
 }
-.level-5 h2 {
- font-size: 1.4rem;
+
+.level-4 {
+  margin-left: 3rem;
+
+  @include less-than-tablet {
+    padding: 15px 10px;
+
+    .name {
+      display: inline-block;
+      width: 68%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 32%;
+    }
+  }
+
+  h2 {
+    font-size: 1.6rem;
+
+    @include less-than-tablet {
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+  }
+}
+
+.level-5 {
+  margin-left: 4rem;
+
+  @include less-than-tablet {
+    padding: 15px 10px;
+
+    .name {
+      display: inline-block;
+      width: 68%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 32%;
+    }
+  }
+
+  h2 {
+    font-size: 1.4rem;
+
+    @include less-than-tablet {
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+  }
+}
+
+.level-6 {
+  margin-left: 4rem;
+
+  @include less-than-tablet {
+    padding: 15px 10px;
+
+    .name {
+      display: inline-block;
+      width: 68%;
+      margin-right: 0;
+      padding-right: 5px;
+    }
+
+    .dk5 {
+      float: right;
+      display: inline-block;
+      width: 32%;
+    }
+  }
+
+  h2 {
+    font-size: 1.4rem;
+
+    @include less-than-tablet {
+      margin-bottom: 0;
+      font-weight: 400;
+    }
+  }
+}
+
+.level  {
+  margin-left: 0;
 }
 
 .title-note {
   display: inline-block;
   vertical-align: middle;
   padding-left: 1rem;
+
+  a {
+    color: white;
+
+    @include less-than-tablet {
+      color: $blue;
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.hierarchy-spinner {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 7px;
+}
+
+.hierarchy-el {
+  .toggle-wrapper {
+    @include less-than-tablet {
+      margin-bottom: 10px;
+    }
+  }
+  .toggle-button {
+    margin-left: 2em;
+
+    @include less-than-tablet {
+      color: $blue;
+      border-bottom: none;
+
+      .icon, .svg {
+        fill: $blue;
+      }
+    }
+  }
 }

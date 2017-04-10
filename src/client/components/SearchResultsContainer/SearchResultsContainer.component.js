@@ -8,6 +8,7 @@ import request from 'superagent';
 
 import {SearchFieldComponent} from '../SearchField/SearchField.component';
 import Link from '../Link';
+import {Spinner} from '../General/spinner.component';
 
 function parseSearchResult(result) {
   return result.map(level => {
@@ -52,7 +53,9 @@ export class SearchResultsContainerComponent extends Component {
       corrections: {},
       searchResults: {},
       query: '',
-      suggestions: {} // As in spelling suggestions
+      suggestions: {}, // As in spelling suggestions
+      pendingSearch: false,
+      error: ''
     };
   }
 
@@ -76,28 +79,53 @@ export class SearchResultsContainerComponent extends Component {
         query: searchUrl
       });
 
+      setTimeout(() => {
+        this.setState({pendingSearch: true});
+      }, 100);
+
       request
         .get(searchUrl)
         .set('Accept', 'application/json')
         .end((err, res) => {
-          const bd = JSON.parse(res.text);
-          searchResults[searchUrl] = parseSearchResult(bd.result || []);
-          const corrections = this.state.corrections;
-          const suggestions = this.state.suggestions;
+          let error = '';
 
-          if (bd.correction && bd.correction.q) {
-            corrections[searchUrl] = bd.correction;
+          if (err) {
+            console.error(err); // eslint-disable-line no-console
           }
 
-          if (bd.correction && bd.correction.suggestions) {
-            suggestions[searchUrl] = bd.correction.suggestions;
+          if (res.body.isIndex) {
+            window.location = `/#!/hierarchy/${res.body.parameters.query}`;
+          }
+
+          try {
+            const bd = JSON.parse(res.text);
+            searchResults[searchUrl] = parseSearchResult(bd.result || []);
+            const corrections = this.state.corrections;
+            const suggestions = this.state.suggestions;
+
+            if (bd.correction && bd.correction.q) {
+              corrections[searchUrl] = bd.correction;
+            }
+
+            if (bd.correction && bd.correction.suggestions) {
+              suggestions[searchUrl] = bd.correction.suggestions;
+            }
+
+            this.setState({
+              corrections,
+              suggestions,
+              searchResults: searchResults
+            });
+
+          }
+          catch (e) {
+            error = 'Der skete desværre en fejl. Prøv evt. at ændre din søgning en smule og søg igen';
           }
 
           this.setState({
-            corrections,
-            suggestions,
-            searchResults: searchResults,
-            query: searchUrl
+            query: searchUrl,
+            pendingSearch: false,
+            error: error
           });
         });
     }
@@ -109,7 +137,7 @@ export class SearchResultsContainerComponent extends Component {
     };
 
     return (
-      <a style={styles} href={`#!/hierarchy/${category.index}`} className='category-tile--container'>
+      <a style={styles} href={`#!/hierarchy/${category.index}`} className='category-tile--container' id={`category-tile--container--${category.index}`}>
         <div className='category-tile--gradient'>
           <div className='category-tile--text-container'>
             <span className='category-tile--label'>{category.label}</span>
@@ -148,10 +176,17 @@ export class SearchResultsContainerComponent extends Component {
   }
 
   renderNoResults() {
-    let nothingMessage = 'Vi fandt ikke nogen resultater denne gang, prøv med en anden søgning!';
+    let message = '';
     let suggestions = '';
-    if (this.state.suggestions[this.state.query] && this.state.suggestions[this.state.query].length) {
-      nothingMessage = 'Vi fandt ikke nogen resultater denne gang, prøv med nogle af disse søgninger!';
+
+    if (this.state.pendingSearch) {
+      message = 'Søger efter emner...';
+    }
+    else if (this.state.error.length) {
+      message = this.state.error;
+    }
+    else if (this.state.suggestions[this.state.query] && this.state.suggestions[this.state.query].length) {
+      message = 'Vi fandt ikke nogen resultater denne gang, prøv med nogle af disse søgninger!';
       suggestions = this.state.suggestions[this.state.query].map(sug => {
         return (
           <div className="spelling-suggestion">
@@ -162,8 +197,11 @@ export class SearchResultsContainerComponent extends Component {
     }
 
     return (
-      <div>
-        {nothingMessage}
+      <div className="search-result--messages">
+        <div className="search-result--spinner">
+          {this.state.pendingSearch && <Spinner size="medium"/>}
+        </div>
+        {message}
         {suggestions}
       </div>
     );
@@ -180,7 +218,7 @@ export class SearchResultsContainerComponent extends Component {
     );
 
     const results = (this.state.searchResults[this.state.query] || []).map(entry => {
-      if (entry.dk5) {
+      if (entry.items.length <= 1) {
         return (<SearchResultSingle key={entry.dk5.index} {...entry} />);
       }
 

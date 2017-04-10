@@ -1,10 +1,17 @@
 .search-field--container {
   margin-bottom: 3rem;
+
+  @include less-than-tablet {
+    padding: 0 10px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
   a {
     color: #fff;
     text-decoration: none;
     text-align: center;
-    font-size: 16pt;
+    font-size: 2.1rem;
     font-family: 'Open Sans', sans-serif;
   }
 
@@ -12,7 +19,45 @@
     font-family: 'Open Sans', sans-serif;
   }
 
+  .search-field {
+    height: 40px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15pt;
+    border-bottom: 3px solid $text-color;
+    display: inline-block;
+    width: 550px;
+    line-height: 1.4;
+    padding-left: 0;
+
+    &:focus {
+      outline: none;
+      border-bottom-color: $blue;
+    }
+
+    @include small-phone {
+      width: 78%;
+    }
+
+    @include phone {
+      width: 67%;
+    }
+
+    @include tablet {
+      width: 410px;
+    }
+  }
+
+  .search-field--spinner {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: -30px;
+  }
+
   .search-field--button {
+    padding-top: 5px;
     background-color: $blue;
     border-radius: 5px;
     display: inline-block;
@@ -21,59 +66,40 @@
     width: 100px;
     height: 40px;
     vertical-align: middle;
-
-    img {
-      height: 30px;
-      margin-right: 1rem;
-      position: relative;
-      top: 2px;
-
-      @include small-phone {
-        display: none;
-      }
-    }
+    margin-left: 10px;
 
     @include small-phone {
-      width: 50px;
-      font-size: 13pt;
+      width: 20%;
+      padding-top: 12px;
+      margin-left: 5px;
+    }
+
+    @include phone {
+      width: 30%;
     }
 
     @include desktop {
       width: 165px;
     }
-  }
 
-  .search-field {
-    height: 40px;
-    background-color: transparent;
-    border: 0;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15pt;
-    border-bottom: 3px solid $text-color;
-    display: inline-block;
-    width: 550px;
+    .search-field--button--image {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 5px;
 
-    &:focus {
-      outline: none;
-      border-bottom-color: $blue;
+      img {
+        height: 30px;
+
+        @include small-phone {
+          display: none;
+        }
+      }
     }
 
-    @include small-phone {
-      width: 190px;
-    }
-
-    @include phone {
-      width: 220px;
-    }
-
-    @include tablet {
-      width: 410px;
-    }
-  }
-
-  .search-field--query-area {
-    * + * {
-      margin-left: 2rem;
+    .search-field--button--text {
+      vertical-align: middle;
+      display: inline-block;
+      font-size: 1.8rem;
     }
   }
 }

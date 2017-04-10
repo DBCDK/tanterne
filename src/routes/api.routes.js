@@ -12,6 +12,7 @@ const Router = require('koa-router');
 const APIRouter = new Router();
 
 const ElasticClient = new ElasticClass();
+ElasticClient.loadTabsFromElasticSearch();  // remove line to lazy load tables
 
 // Small helper function for generating search urls
 function generateSearchUrl(q, force = false) {
@@ -104,7 +105,8 @@ async function searchHandler(ctx) {
       parameters: {endpoint: 'search', query: q, limit: limit, offset: offset},
       correction: {},
       elasticStatus: await ElasticClient.elasticPing(),
-      result: results[0]
+      result: results[0],
+      isIndex: !!ElasticClient.dk5Syst[q]
     };
 
     // No results found
@@ -116,7 +118,11 @@ async function searchHandler(ctx) {
     ) {
       response.correction.q = results[1].spell[0].match;
       response.correction.href = generateSearchUrl(q, true);
-      response.result = await ElasticClient.elasticSearch({query: results[1].spell[0].match, limit: limit, offset: offset});
+      response.result = await ElasticClient.elasticSearch({
+        query: results[1].spell[0].match,
+        limit: limit,
+        offset: offset
+      });
     }
 
     // no results, but spelling is disabled so give some suggestions instead.
@@ -131,10 +137,23 @@ async function searchHandler(ctx) {
   }
 }
 
+async function listHandler(ctx) {
+  let {q} = ctx.query;
+  const response = {
+    status: 200,
+    parameters: {endpoint: 'list', query: q},
+    result: await ElasticClient.elasticList(q)
+  };
+
+  ctx.set('Content-Type', 'application/json');
+  ctx.body = JSON.stringify(response);
+}
+
 // Connect endpoints to the functions.
 APIRouter.get('/api/suggest', suggestHandler);
 APIRouter.get('/api/hierarchy', hierarchyHandler);
 APIRouter.get('/api/search', searchHandler);
+APIRouter.get('/api/list', listHandler);
 
 module.exports = {
   APIRouter

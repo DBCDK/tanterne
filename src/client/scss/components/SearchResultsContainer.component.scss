@@ -51,6 +51,16 @@
   }
 }
 
+.category-tiles--title {
+  h2 {
+    padding: 0 10px 10px 0;
+
+    @include less-than-tablet {
+      padding-left: 10px;
+    }
+  }
+}
+
 .result-list {
   list-style-type: none;
   li * {
@@ -85,4 +95,14 @@
   &:before {
     content: '●';
   }
+}
+
+.search-result--messages {
+  text-align: center;
+}
+
+.search-result--spinner {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
 }
