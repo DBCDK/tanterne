@@ -42,7 +42,7 @@
     "babel-polyfill": "^6.20.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
-    "babel-register": "^6.18.0",
+    "babel-register": "^6.24.1",
     "dbc-node-logger": "^2.0.0",
     "elasticsearch": "^12.1.3",
     "fast-levenshtein": "^2.0.6",
