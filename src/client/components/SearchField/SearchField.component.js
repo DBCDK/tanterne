@@ -162,7 +162,7 @@ export class SearchFieldComponent extends Component {
   // When a user clicks away from the search field we want to hide the suggestions.
   onSearchBlurred() {
     // Wait 100 ms in case the user clicked one of the suggestions
-    setTimeout(() => this.setState({suggestActive: false}), 100);
+    setTimeout(() => this.setState({suggestActive: false}), 200);
   }
 
   // Listens to keys from searchfield
