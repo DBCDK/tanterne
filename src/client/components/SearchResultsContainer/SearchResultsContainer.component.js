@@ -137,7 +137,7 @@ export class SearchResultsContainerComponent extends Component {
     };
 
     return (
-      <a style={styles} href={`#!/hierarchy/${category.index}`} className='category-tile--container'>
+      <a style={styles} href={`#!/hierarchy/${category.index}`} className='category-tile--container' id={`category-tile--container--${category.index}`}>
         <div className='category-tile--gradient'>
           <div className='category-tile--text-container'>
             <span className='category-tile--label'>{category.label}</span>

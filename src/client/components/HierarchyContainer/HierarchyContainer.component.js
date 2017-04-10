@@ -200,7 +200,7 @@ class HierarchyContainerComponent extends React.Component {
 
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
-        <a href={navURL}>
+        <a href={navURL} className="hierarchy--navbar--href">
           <span className="hierarchy--navbar--button">
             &#60;
           </span>
