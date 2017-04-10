@@ -29,6 +29,8 @@
     border-bottom: 3px solid $text-color;
     display: inline-block;
     width: 550px;
+    line-height: 1.4;
+    padding-left: 0;
 
     &:focus {
       outline: none;
