@@ -378,11 +378,12 @@ $navbar_height: 60px;
   display: inline-block;
   vertical-align: middle;
   padding-left: 1rem;
+
   a {
     color: white;
 
     @include less-than-tablet {
-      color: black;
+      color: $blue;
       font-size: 1.6rem;
     }
   }
