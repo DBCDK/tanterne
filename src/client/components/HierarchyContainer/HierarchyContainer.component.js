@@ -195,9 +195,12 @@ class HierarchyContainerComponent extends React.Component {
     // else show hierarchy as one level
     const elements = hierarchy.items || [hierarchy];
 
+    const parentIndex = this.getParent(this.props.params.id);
+    const navURL = parentIndex ? `#!/hierarchy/${parentIndex}` : '/';
+
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
-        <a href={`#!/hierarchy/${this.getParent(this.props.params.id)}`}>
+        <a href={navURL}>
           <span className="hierarchy--navbar--button">
             &#60;
           </span>
