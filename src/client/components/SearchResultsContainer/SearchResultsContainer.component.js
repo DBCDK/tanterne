@@ -129,7 +129,7 @@ export class SearchResultsContainerComponent extends Component {
           });
         });
     }
-    else if (this.state.query !== searchUrl) {
+    else if (q && this.state.query !== searchUrl) {
       this.setState({
         query: searchUrl
       });
