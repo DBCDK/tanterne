@@ -129,6 +129,11 @@ export class SearchResultsContainerComponent extends Component {
           });
         });
     }
+    else if (q && this.state.query !== searchUrl) {
+      this.setState({
+        query: searchUrl
+      });
+    }
   }
 
   renderCategoryTile(categoryIndex, category) {
