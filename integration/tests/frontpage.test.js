@@ -16,7 +16,7 @@ describe('Testing frontpage', () => {
 
   it('Should render pro frontpage', () => {
     browser.url(`${getBaseUrl(true)}/`);
-    browser.pause(200)
+    browser.pause(200);
 
     const text = browser.getText('body');
     const expected = 'DK5 PRO';
