@@ -21,7 +21,8 @@ router.get('/', ctx => {
       </head>
       <body>
         <div class="main">
-          <div id="content" data-pro=${true}></div>
+          <div id="content"></div>
+          <script>window.PRO = ${ctx.pro}</script>
           <script src="/js/main.js"></script>
         </div>
       </body>

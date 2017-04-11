@@ -21,40 +21,53 @@ const {CONFIG, validateConfig} = require('./utils/config.util');
 const {sanityCheck} = require('./utils/sanityCheck.util');
 const {VERSION} = require('./utils/version.util');
 
-const app = new Koa();
-app.name = 'tanterne';
+function createApp(pro) {
+  const app = new Koa();
+  app.name = 'tanterne';
 
-app.startServer = function startServer() {
-  // Prepare to start
-  validateConfig();
-  Logger.setInfo({name: 'Tanterne', version: VERSION});
-  sanityCheck();
+  // Set a pro key on context object.
+  Object.defineProperty(app.context, 'pro', {__proto__: null, value: pro});
 
-  // Set constants
-  const PORT = CONFIG.app.port;
+  let PORT = CONFIG.app.port;
+  let loggerName = 'Tanterne';
 
-  // Trust proxy
-  app.proxy = true;
+  if (pro) {
+    PORT = CONFIG.pro.port;
+    app.name = 'tanterne-pro';
+    loggerName = 'Tanterne-PRO';
+  }
 
-  // Setup middlewares
-  app.use(convert(serve('./static')));
-  app.use(convert(serve('./public')));
-  app.use(SetVersionHeader);
-  app.use(LoggerMiddleware);
+  app.startServer = function startServer() {
+    // Prepare to start
+    validateConfig();
+    Logger.setInfo({name: loggerName, version: VERSION});
+    sanityCheck();
 
-  // Setup routes
-  app.use(indexRouter.routes());
-  app.use(APIRouter.routes());
+    // Trust proxy
+    app.proxy = true;
 
-  // Setup error middleware
-  app.use(errorMiddleware);
+    // Setup middlewares
+    app.use(convert(serve('./static')));
+    app.use(convert(serve('./public')));
+    app.use(SetVersionHeader);
+    app.use(LoggerMiddleware);
 
-  // Finally start listening
-  app.listen(PORT, () => {
-    Logger.log.debug(`Server is now running on http://localhost:${PORT}`);
-  });
-};
+    // Setup routes
+    app.use(indexRouter.routes());
+    app.use(APIRouter.routes());
+
+    // Setup error middleware
+    app.use(errorMiddleware);
+
+    // Finally start listening
+    app.listen(PORT, () => {
+      Logger.log.debug(`Server is now running on http://localhost:${PORT}`);
+    });
+  };
+
+  return app;
+}
 
 module.exports = {
-  app
+  createApp
 };

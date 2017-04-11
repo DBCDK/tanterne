@@ -88,6 +88,7 @@ const state = {
   cart: {
     contents: {}
   }
+  pro: typeof window !== 'undefined' && window.PRO
 };
 
 export class RootContainerComponent extends Component {
