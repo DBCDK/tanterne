@@ -9,6 +9,8 @@ import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.co
 import {Layout} from '../General/layout.component';
 import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
+import {Plus} from "../svg/svg.container";
+
 
 /**
  * Topics in Hierarchy element
@@ -122,7 +124,7 @@ function HierarchyElement({topics, description = ''}) {
  *
  * @constructor
  */
-function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
+function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, cart}) {
   const {index, title, children, items, note} = hierarchy;
   const isSelected = selected === index;
 
@@ -130,6 +132,8 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
   if (contains && contains.length && contains[0].selected) {
     contains = contains[0].items;
   }
+
+  const cartButton = level >= 2 ? CartButton(index, cart) : null;
 
   return (
     <div className={`hierarchy-level level level-${level}`}>
@@ -140,16 +144,27 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
             <span className="dk5">{index}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small"/>}</div>}
           </Link>
+          {cartButton}
         </Header>
         {isSelected && items && <HierarchyElement topics={items} description={note}/>}
         {selected && contains && contains.map(el => <HierarchyLevel {...{
           hierarchy: el,
           key: el.index,
           selected,
-          level: level + 1
+          level: level + 1,
+          cart
         }} />)}
       </div>
     </div>
+  );
+}
+
+function CartButton(index, cart) {
+  const inCart = Object.keys(cart.contents).includes(index);
+  const inCartClass = inCart ? ' in-cart' : '';
+
+  return (
+    <span className={`add-to-cart${inCartClass}`} onClick={cart.addOrRemoveContent.bind(this, {index: index})}><Plus /></span>
   );
 }
 
@@ -215,7 +230,7 @@ class HierarchyContainerComponent extends React.Component {
       <div className="hierarchy container">
         {navbar}
         {elements.map(level => (
-          <HierarchyLevel {...{hierarchy: level, key: level.index, Header: 'h1', selected: this.props.params.id}} />
+          <HierarchyLevel {...{hierarchy: level, key: level.index, Header: 'h1', selected: this.props.params.id, cart: this.props.cart}} />
         ))}
       </div>
     );

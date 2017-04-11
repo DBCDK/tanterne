@@ -84,12 +84,18 @@ const state = {
     }
   },
   hierarchy: {},
-  suggest: {}
+  suggest: {},
+  cart: {
+    contents: {}
+  }
 };
 
 export class RootContainerComponent extends Component {
   constructor() {
     super();
+
+    state.pro = this.getProContext();
+    state.cart.addOrRemoveContent = this.addRemoveContentsToCart.bind(this);
     this.state = state;
   }
 
@@ -99,6 +105,23 @@ export class RootContainerComponent extends Component {
         location: getHash(window.location.hash)
       });
     });
+  }
+
+  addRemoveContentsToCart(item) {
+    const cart = Object.assign({}, this.state.cart);
+    if (cart.contents[item.index]) {
+      delete cart.contents[item.index];
+    }
+    else {
+      cart.contents[item.index] = item;
+    }
+
+    this.setState({cart: cart});
+  }
+
+  getProContext() {
+    const data = document.getElementById('content').dataset;
+    return (data.pro && data.pro === 'true');
   }
 
   getChildContext() {
@@ -115,13 +138,13 @@ export class RootContainerComponent extends Component {
   render() {
     return (
       <div>
-        <TopBarComponent />
+        <TopBarComponent cart={this.state.cart.contents} pro={this.state.pro}/>
 
         <Router {...this.state}>
-          <Route path="/" component={SearchResultsContainerComponent} />
-          <Route path="/help" component={HelpContainerComponent} />
-          <Route path="/hierarchy/:id?" component={HierarchyContainerComponent} />
-          <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent} />
+          <Route path="/" component={SearchResultsContainerComponent}/>
+          <Route path="/help" component={HelpContainerComponent}/>
+          <Route path="/hierarchy/:id?" component={HierarchyContainerComponent}/>
+          <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent}/>
         </Router>
       </div>
     );
