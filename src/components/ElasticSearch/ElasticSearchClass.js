@@ -20,7 +20,8 @@ export class ElasticClient {
    * setup ES and autocomplete object.
    */
   constructor() {
-    this.elasticClient = new ElasticSearch.Client({host: CONFIG.elastic.host, log: CONFIG.elastic.log});
+    const host = CONFIG.elastic.host === 'static_mocks' ? 'localhost:9200' : CONFIG.elastic.host;
+    this.elasticClient = new ElasticSearch.Client({host: host, log: CONFIG.elastic.log});
 
     this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d,a20,a40'.split(',');
     this.defaultParameters = {

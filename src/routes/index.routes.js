@@ -22,6 +22,7 @@ router.get('/', ctx => {
       <body>
         <div class="main">
           <div id="content"></div>
+          <script>window.PRO = ${ctx.pro}</script>
           <script src="/js/main.js"></script>
         </div>
       </body>

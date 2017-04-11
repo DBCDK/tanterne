@@ -6,5 +6,10 @@
  */
 
 require('babel-register');
-const {app} = require('./app');
+const {createApp} = require('./app');
+
+const app = createApp(false);
+const proApp = createApp(true);
+
 app.startServer();
+proApp.startServer();
