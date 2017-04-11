@@ -11,7 +11,6 @@ import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
 import {Plus} from '../svg/svg.container';
 
-
 /**
  * Topics in Hierarchy element
  *
@@ -24,8 +23,8 @@ function HierarchyElementTopics({topics}) {
         if (note) {
           const parsedNote = {};
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-            return `<a href="#!/hierarchy/${index}">${index}</a>`;
-          });
+              return `<a href="#!/hierarchy/${index}">${index}</a>`;
+            });
 
           return (
             <li key={title}>
@@ -124,7 +123,7 @@ function HierarchyElement({topics, description = ''}) {
  *
  * @constructor
  */
-function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, cart}) {
+function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, cart}) {
   const {index, title, children, items, note} = hierarchy;
   const isSelected = selected === index;
 
@@ -133,7 +132,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, cart}) {
     contains = contains[0].items;
   }
 
-  const cartButton = level >= 2 ? <CartButton {...{index, cart}} /> : null;
+  const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} /> : null;
 
   return (
     <div className={`hierarchy-level level level-${level}`}>
@@ -152,6 +151,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, cart}) {
           key: el.index,
           selected,
           level: level + 1,
+          pro,
           cart
         }} />)}
       </div>
@@ -161,10 +161,16 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, cart}) {
 
 function CartButton({index, cart}) {
   const inCart = Object.keys(cart.contents).includes(index);
+  const tooltip = inCart ? 'Fjern fra kurv' : 'Tilføj til kurv';
   const inCartClass = inCart ? ' in-cart' : '';
 
   return (
-    <span className={`add-to-cart${inCartClass}`} onClick={cart.addOrRemoveContent.bind(this, {index: index})}><Plus /></span>
+    <span
+      className={`add-to-cart${inCartClass}`}
+      onClick={cart.addOrRemoveContent.bind(this, {index: index})}
+      title={tooltip}>
+      <Plus />
+    </span>
   );
 }
 
@@ -230,7 +236,14 @@ class HierarchyContainerComponent extends React.Component {
       <div className="hierarchy container">
         {navbar}
         {elements.map(level => (
-          <HierarchyLevel {...{hierarchy: level, key: level.index, Header: 'h1', selected: this.props.params.id, cart: this.props.cart}} />
+          <HierarchyLevel {...{
+            hierarchy: level,
+            key: level.index,
+            Header: 'h1',
+            selected: this.props.params.id,
+            pro: this.props.pro,
+            cart: this.props.cart
+          }} />
         ))}
       </div>
     );

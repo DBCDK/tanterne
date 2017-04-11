@@ -395,6 +395,7 @@ $navbar_height: 60px;
 .add-to-cart {
   display: inline-block;
   margin-left: 10px;
+  cursor: pointer;
 
   svg {
     transition: transform .25s ease-out;
