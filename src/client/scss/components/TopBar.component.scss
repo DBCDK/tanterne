@@ -46,3 +46,26 @@
     }
   }
 }
+
+.top-bar--cart {
+  margin-left: 20px;
+
+  img {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.top-bar--cart--count {
+  position: absolute;
+  margin-left: -10px;
+  margin-top: -8px;
+  text-align: center;
+  background: brown;
+  color: #ffffff;
+  border-radius: 50%;
+  height: 18px;
+  width: 18px;
+  font-size: .9rem;
+  padding-top: 1px;
+}

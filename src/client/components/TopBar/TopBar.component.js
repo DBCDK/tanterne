@@ -11,8 +11,17 @@ export class TopBarComponent extends Component {
     super(props);
   }
 
+  getCart() {
+    return (
+      <span className="top-bar--cart">
+        <img src="/cart.svg"/>
+        <span className='top-bar--cart--count'>{Object.keys(this.props.cart).length}</span>
+      </span>
+    );
+  }
+
   render() {
-    const cart = this.props.pro ? (<span className="top-bar--cart">Kurv: {Object.keys(this.props.cart).length}</span>) : null;
+    const cart = this.props.pro ? this.getCart() : null;
 
     let topBarCaption = 'Find en bog med DK5';
     if (this.props.pro) {
@@ -26,8 +35,8 @@ export class TopBarComponent extends Component {
           <span className="top-bar--caption">
           {topBarCaption}
         </span>
-          {cart}
         </a>
+        {cart}
         <a className="top-bar--link" href="/#!/help">
           <img className="top-bar--question" src="/question.png"/>
         </a>
