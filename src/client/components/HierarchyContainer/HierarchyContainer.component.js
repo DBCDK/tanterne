@@ -9,7 +9,7 @@ import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.co
 import {Layout} from '../General/layout.component';
 import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
-import {Plus} from "../svg/svg.container";
+import {Plus} from '../svg/svg.container';
 
 
 /**
