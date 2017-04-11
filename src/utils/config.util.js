@@ -10,6 +10,9 @@ const CONFIG = {
     port: Number(process.env.PORT),
     name: process.env.APP_NAME || 'no name'
   },
+  pro: {
+    port: Number(process.env.PRO_PORT)
+  },
   log: {
     level: process.env.LOG_LEVEL,
     pretty: process.env.PRETTY_LOG === '1'

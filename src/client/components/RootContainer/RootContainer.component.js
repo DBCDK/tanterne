@@ -84,7 +84,8 @@ const state = {
     }
   },
   hierarchy: {},
-  suggest: {}
+  suggest: {},
+  pro: typeof window !== 'undefined' && window.PRO
 };
 
 export class RootContainerComponent extends Component {
@@ -115,7 +116,7 @@ export class RootContainerComponent extends Component {
   render() {
     return (
       <div>
-        <TopBarComponent />
+        <TopBarComponent pro={this.state.pro} />
 
         <Router {...this.state}>
           <Route path="/" component={SearchResultsContainerComponent} />
