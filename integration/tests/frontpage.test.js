@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const {assert} = require('chai');
+const {getBaseUrl} = require('../utils/browser.util');
 
 describe('Testing frontpage', () => {
   beforeEach(() => {
@@ -10,6 +11,16 @@ describe('Testing frontpage', () => {
   it('Should render frontpage', () => {
     const text = browser.getText('body');
     const expected = 'Find en bog';
+    assert.include(text, expected);
+  });
+
+  it('Should render pro frontpage', () => {
+    browser.url(`${getBaseUrl(true)}/`);
+    browser.pause(200)
+
+    const text = browser.getText('body');
+    const expected = 'DK5 PRO';
+
     assert.include(text, expected);
   });
 });
