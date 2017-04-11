@@ -87,7 +87,7 @@ const state = {
   suggest: {},
   cart: {
     contents: {}
-  }
+  },
   pro: typeof window !== 'undefined' && window.PRO
 };
 
@@ -95,7 +95,6 @@ export class RootContainerComponent extends Component {
   constructor() {
     super();
 
-    state.pro = this.getProContext();
     state.cart.addOrRemoveContent = this.addRemoveContentsToCart.bind(this);
     this.state = state;
   }
@@ -118,11 +117,6 @@ export class RootContainerComponent extends Component {
     }
 
     this.setState({cart: cart});
-  }
-
-  getProContext() {
-    const data = document.getElementById('content').dataset;
-    return (data.pro && data.pro === 'true');
   }
 
   getChildContext() {
