@@ -23,8 +23,8 @@ function HierarchyElementTopics({topics}) {
         if (note) {
           const parsedNote = {};
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-              return `<a href="#!/hierarchy/${index}">${index}</a>`;
-            });
+            return `<a href="#!/hierarchy/${index}">${index}</a>`;
+          });
 
           return (
             <li key={title}>
