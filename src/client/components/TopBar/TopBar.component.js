@@ -33,8 +33,8 @@ export class TopBarComponent extends Component {
         <a className="unlink" href="/">
           <img className="top-bar--logo" src="/DK5logo_blue.png"/>
           <span className="top-bar--caption">
-          {topBarCaption}
-        </span>
+            {topBarCaption}
+          </span>
         </a>
         {cart}
         <a className="top-bar--link" href="/#!/help">
