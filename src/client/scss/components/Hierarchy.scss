@@ -72,6 +72,10 @@ $navbar_height: 60px;
       }
     }
 
+    svg {
+      fill: white;
+    }
+
     .dk5 {
       background-color: white;
       padding: 0.3rem;
@@ -384,6 +388,23 @@ $navbar_height: 60px;
     @include less-than-tablet {
       color: $blue;
       font-size: 1.6rem;
+    }
+  }
+}
+
+.add-or-remove-item {
+  display: inline-block;
+  margin-left: 10px;
+  cursor: pointer;
+
+  svg {
+    transition: transform .25s ease-out;
+    width: 16px;
+  }
+
+  &.in-cart {
+    svg {
+      transform: rotate(135deg);
     }
   }
 }
