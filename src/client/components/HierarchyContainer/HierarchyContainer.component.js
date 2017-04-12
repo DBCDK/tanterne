@@ -167,6 +167,7 @@ function CartButton({index, cart}) {
   return (
     <span
       className={`add-to-cart${inCartClass}`}
+      id={`cart-button-${index}`}
       onClick={cart.addOrRemoveContent.bind(this, {index: index})}
       title={tooltip}>
       <Plus />
