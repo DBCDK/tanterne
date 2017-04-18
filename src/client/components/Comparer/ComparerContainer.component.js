@@ -12,9 +12,7 @@ export default class ComparerContainer extends React.Component {
     }
 
     const parts = text.split(/<dk>([^<]*)<\/dk>/g);
-    console.log(parts);
     for (let i = 1; i < parts.length; i += 2) {
-      console.log(parts[i]);
       parts[i] = <span className="match" key={i} onClick={this.props.cart.addOrRemoveContent.bind(this, {index: parts[i]})}>{parts[i]}</span>;
     }
 
