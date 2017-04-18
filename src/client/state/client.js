@@ -16,6 +16,20 @@ export function hierarchy(index) {
 }
 
 /**
+ * Get list items for index.
+ *
+ * @param {Array} indexes
+ * @return {Promise}
+ */
+export function list(indexes) {
+  if (!Array.isArray(indexes)) {
+    indexes = [indexes];
+  }
+
+  return call('list', {q: indexes.join(',')});
+}
+
+/**
  * Call endpoint on API.
  *
  * @param url
