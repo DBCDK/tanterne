@@ -5,6 +5,8 @@
   min-height: 600px;
   vertical-align: top;
   float: right;
+  padding-top: 15px;
+  padding-left: 10px;
 
   .comparer--content {
     opacity: 0;
@@ -17,4 +19,48 @@
       opacity: 1;
     }
   }
+}
+
+.comparer--content--headline {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.comparer--content--items-container {
+  .comparer--item:nth-child(odd) {
+    background-color: #ececec;
+  }
+  .comparer--item:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+.comparer--item {
+  padding: 10px 5px;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+
+.comparer--item--index {
+  display: inline-block;
+  color: $blue;
+}
+
+.comparer--item--cartButton {
+  display: inline-block;
+  float: right;
+}
+
+.comparer--item--title {
+  display: block;
+
+  h4 {
+    line-height: 2rem;
+  }
+}
+
+.comparer--item--note {
+  display: block;
 }
