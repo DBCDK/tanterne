@@ -1,0 +1,21 @@
+#comparer {
+  @include transition-width();
+  background-color: #F50034;
+  display: inline-block;
+  width: 0;
+  min-height: 600px;
+  vertical-align: top;
+  float: right;
+
+  .comparer--content {
+    opacity: 0;
+  }
+
+  &.show-cart {
+    width: 39%;
+
+    .comparer--content {
+      opacity: 1;
+    }
+  }
+}
