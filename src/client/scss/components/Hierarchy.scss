@@ -1,5 +1,18 @@
 $navbar_height: 60px;
 
+.pro {
+  .container {
+    &.hierarchy {
+      @include transition-width();
+      width: 100%;
+      display: inline-block;
+      &.show-cart {
+        width: 60%;
+      }
+    }
+  }
+}
+
 .hierarchy {
   a {
     text-decoration: none;

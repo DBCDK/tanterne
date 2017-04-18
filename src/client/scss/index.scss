@@ -11,6 +11,7 @@
 @import 'includes/gutter';
 @import 'includes/spacer';
 @import 'includes/spinner';
+@import 'includes/transitions';
 @import "includes/media-quires";
 
 /* Globals */
@@ -21,6 +22,7 @@
 @import 'globals/icon';
 
 // Import component styles
+@import 'components/ComparerContainer.component';
 @import 'components/HelpContainer.component';
 @import 'components/Hierarchy';
 @import 'components/TopBar.component';
@@ -34,6 +36,12 @@
 .main {
   max-width: 1024px;
   margin: 0 auto;
+
+  &.pro {
+    @include xldesktop {
+      max-width: 1600px;
+    }
+  }
 }
 
 #content {
