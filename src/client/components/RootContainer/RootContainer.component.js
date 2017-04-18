@@ -6,12 +6,14 @@
 // Libraries
 import React, {Component} from 'react';
 import {Router, Route} from 'react-enroute';
+import * as client from '../../state/client';
 
 // Components
 import {HelpContainerComponent} from '../HelpContainer/HelpContainer.component';
 import HierarchyContainerComponent from '../HierarchyContainer/HierarchyContainer.component';
 import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchResultsContainer.component';
 import {TopBarComponent} from '../TopBar/TopBar.component';
+import ComparerContainer from '../Comparer/ComparerContainer.component';
 
 // Helper function
 function getHash(hash) {
@@ -114,9 +116,29 @@ export class RootContainerComponent extends Component {
     }
     else {
       cart.contents[item.index] = item;
+      this.getAddiotionalInfoOnItems(item.index);
     }
 
     this.setState({cart: cart});
+  }
+
+  getAddiotionalInfoOnItems(indexes) {
+    client.list(indexes)
+      .then((result) => {
+        const cart = Object.assign({}, this.state.cart);
+        const keys = Object.keys(result);
+
+        keys.forEach((index) => {
+          if (cart.contents[index]) {
+            cart.contents[index].data = result[index];
+          }
+        });
+
+        this.setState({cart: cart});
+      })
+      .catch((err) => {
+        console.error(`Der kunne ikke hentes data for index(er): ${indexes}`, err); // eslint-disable-line no-console
+      });
   }
 
   getChildContext() {
@@ -141,6 +163,8 @@ export class RootContainerComponent extends Component {
           <Route path="/hierarchy/:id?" component={HierarchyContainerComponent}/>
           <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent}/>
         </Router>
+
+        {this.state.pro && <ComparerContainer cart={this.state.cart}/>}
       </div>
     );
   }
