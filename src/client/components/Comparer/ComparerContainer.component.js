@@ -1,38 +1,51 @@
 import React from 'react';
 import {CartButton} from '../Cart/CartButton.component';
 
-/**
- *
- * @param {Object} data
- * @param {React.ComponentElement} cartButton
- * @return {React.ComponentElement | null}
- * @constructor
- */
-function CamparerItem({data, cartButton}) {
-  if (!data) {
-    return null;
-  }
-
-  return (
-    <div className="comparer--item">
-      <span>{data.index}</span>
-      <span>{data.title}</span>
-      <span>{data.note}</span>
-      <span>{cartButton}</span>
-    </div>
-  );
-}
-
 export default class ComparerContainer extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  parseAndReplaceDK5(text) {
+    if (!text) {
+      return null;
+    }
+
+    const parts = text.split(/<dk>([^<]*)<\/dk>/g);
+    console.log(parts);
+    for (let i = 1; i < parts.length; i += 2) {
+      console.log(parts[i]);
+      parts[i] = <span className="match" key={i} onClick={this.props.cart.addOrRemoveContent.bind(this, {index: parts[i]})}>{parts[i]}</span>;
+    }
+
+    return (<div>{parts}</div>);
+  }
+
+  getItems(data) {
+    if (!data) {
+      return null;
+    }
+
+    const note = this.parseAndReplaceDK5(data.note);
+
+    return (
+      <div className="comparer--item">
+        <div className="comparer--item--header">
+          <span className="comparer--item--index"><h2>{data.index}</h2></span>
+          <span className="comparer--item--cartButton">
+            <CartButton index={data.index} cart={this.props.cart}/>
+          </span>
+        </div>
+        <span className="comparer--item--title"><h4>{data.title}</h4></span>
+        <span className="comparer--item--note">{note}</span>
+      </div>
+    );
+  }
+
   render() {
     const items = Object.keys(this.props.cart.contents).map((index) => {
       const data = this.props.cart.contents[index].data;
-      const cartButton = <CartButton index={index} cart={this.props.cart}/>;
-      return <CamparerItem data={data} cartButton={cartButton} />;
+      return this.getItems(data);
     });
 
     return (
