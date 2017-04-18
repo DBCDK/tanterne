@@ -4,7 +4,7 @@ import {Plus} from '../svg/svg.container';
 
 export function CartButton({index, cart}) {
   const inCart = Object.keys(cart.contents).includes(index);
-  const tooltip = inCart ? 'Fjern fra kurv' : 'Tilføj til kurv';
+  const tooltip = inCart ? `Fjern ${index} fra kurv` : `Tilføj ${index} til kurv`;
   const inCartClass = inCart ? ' in-cart' : '';
 
   return (
