@@ -3,6 +3,7 @@ import {ElasticClient} from './ElasticSearchClass';
 const suggestions = require('./__mocks__/suggest.mock.json');
 const searchResults = require('./__mocks__/search.mock.json');
 const hierarchy = require('./__mocks__/hierarchy.mock.json');
+const listResult = require('./__mocks__/list.mock.json');
 
 export class StaticElasticClient extends ElasticClient {
   elasticPing() {
@@ -24,6 +25,14 @@ export class StaticElasticClient extends ElasticClient {
       res = {};
     }
 
+    return Promise.resolve(res);
+  }
+
+  elasticList(dk5List) {
+    let res = {};
+    if (dk5List.length > 0) {
+      res = listResult;
+    }
     return Promise.resolve(res);
   }
 

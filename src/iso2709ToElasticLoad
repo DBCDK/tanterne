@@ -116,10 +116,10 @@ function createDk5Tab() {
     }
     if (bibKat === 'REK') {   // only for register
       regs[number] = true;
-      const aspects = dk5['b52m'];
-      if (aspects) {
-        aspects.forEach((aspect) => {
-          regs[aspect] = true;
+      const registerWords = dk5['b52m'];
+      if (registerWords) {
+        registerWords.forEach((registerWord) => {
+          regs[registerWord] = true;
         });
       }
     }

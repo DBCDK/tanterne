@@ -1,0 +1,173 @@
+{
+  "123.456": {
+    "aspects": [],
+    "items": []
+  },
+  "45.5": {
+    "index": "45.5",
+    "parentIndex": "45",
+    "title": "Island",
+    "parent": "Norden i alm.",
+    "noteSystematic": "Samlede beskrivelser af Island, Færøerne og Grønland sættes i <dk>46.5</dk>",
+    "aspects": [
+      {
+        "index": "71.55",
+        "title": "Arkitekturhistorie"
+      },
+      {
+        "index": "45.5",
+        "title": "Geografi",
+        "parent": {
+          "index": "45.5",
+          "parentIndex": "45",
+          "title": "Island",
+          "parent": "Norden i alm."
+        }
+      },
+      {
+        "index": "95.5",
+        "title": "Historie",
+        "parent": {
+          "index": "95.5",
+          "parentIndex": "95",
+          "title": "Islands historie",
+          "parent": "Nordens historie"
+        }
+      },
+      {
+        "index": "27.55",
+        "title": "Kirkehistorie"
+      },
+      {
+        "index": "50.255",
+        "title": "Naturforhold i alm."
+      },
+      {
+        "index": "32.255",
+        "title": "Politisk system"
+      },
+      {
+        "index": "30.255",
+        "title": "Samfundsforhold i alm."
+      },
+      {
+        "index": "33.1855",
+        "title": "Økonomiske forhold i alm."
+      }
+    ],
+    "items": [
+      {
+        "index": "45.5",
+        "title": "Island",
+        "note": ""
+      }
+    ]
+  },
+  "90.1": {
+    "index": "90.1",
+    "parentIndex": "90",
+    "title": "Kulturhistorie i alm.",
+    "parent": "Historie i alm.",
+    "noteSystematic": "Her sættes udblik over menneskets åndelige, intellektuelle og materielle udvikling og situation. Her sættes også almen kulturfilosofi - overvejelser over kulturens oprindelse, væsen og dynamik, f.eks. Albert Schweitzers kulturfilosofi, medens strukturelle og sammenlignende undersøgelser over kulturprocesserne (kultursociologi) sættes i <dk>30.12</dk> eller <dk>30.16</dk> med undergrupper.<br >I <dk>90.1</dk> sættes den æstetiske kulturs historie i alm. og alm. idéhistorie. Enkelte områders idéhistorie - f.eks. filosofiens, religionens, sprogets, litteraturens eller kunstens historie - sættes under det specielle emne.<br >De sociale konventioners historie sættes i <dk>39.6</dk> , materiel folkekultur i alm. sættes i <dk>39.4</dk> , indfødte folks kultur sættes i <dk>59.5</dk> . Enkelte fags kulturhistorie og enkelte emner inden for den materielle kulturhistorie sættes under emnet, f.eks. sættes skrædderfagets kulturhistorie i <dk>68.81</dk> , klædedragtens kulturhistorie i <dk>68.809</dk><br >Enkelte kulturkredses historie sættes i specielle grupper, f.eks. Islams kultur i <dk>90.12</dk> og jødisk kultur i <dk>91.241</dk> , dog sættes den kristne kultur i alm. i <dk>90.1</dk><br >Enkelte kulturers og perioders idéhistorie sættes i <dk>91</dk> med undergrupper, f.eks. det 20. århundredes idéhistorie i <dk>91.9</dk> . Enkelte landes kultur- og idéhistorie sættes under nationalhistorien, enkelte egnes eller byers kulturhistorie sættes under topografi. Forhistorisk europæisk kultur sættes i <dk>91.1</dk><br >Værker om de kulturelle forbindelser mellem to lande sættes under det lands historie, som er væsentligst i fremstillingen. I tvivlstilfælde sættes værket under det i titlen eller den øvrige beskrivelse først nævnte, dog ikke under Danmark.",
+    "noteGeneral": "Enkelte befolkningers nationale identitet må søges under landets historie",
+    "noteHistoric": "se også de enkelte perioder og lande<br />Enkelte mysterier må søges under emnet<br />Enkelte kulturers og perioders idéhistorie sættes i <dk>91</dk> med undergrupper, fx det 20. århundredes idéhistorie i <dk>91.9</dk> . Enkelte landes idéhistorie må søges under nationalhistorien<br />Se også under de enkelte emner<br />Enkelte befolkningers nationale identitet må søges under landets historie",
+    "aspects": [],
+    "items": [
+      {
+        "index": "90.1",
+        "title": "Astroarkæologi",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Civilisationens historie",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Civilisationskritik",
+        "note": ""
+      },
+      {
+        "index": "23",
+        "title": "Det Onde",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Dommedagsprofetier",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Fortidsminder",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Idéhistorie",
+        "note": "Enkelte kulturers og perioders idéhistorie sættes i <dk>91</dk> med undergrupper, fx det 20. århundredes idéhistorie i <dk>91.9</dk> . Enkelte landes idéhistorie må søges under nationalhistorien"
+      },
+      {
+        "index": "90.1",
+        "title": "Konspirationsteorier",
+        "note": "Se også under de enkelte emner"
+      },
+      {
+        "index": "90.1",
+        "title": "Kristen kulturhistorie",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Kulturarv",
+        "note": "se også de enkelte perioder og lande"
+      },
+      {
+        "index": "90.1",
+        "title": "Kulturfilosofi",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Kulturhistorie",
+        "note": "se også de enkelte perioder og lande"
+      },
+      {
+        "index": "90.1",
+        "title": "Livsstilens historie",
+        "note": ""
+      },
+      {
+        "index": "59.1",
+        "title": "Mennesket",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Mysterier",
+        "note": "Enkelte mysterier må søges under emnet"
+      },
+      {
+        "index": "90.1",
+        "title": "National identitet",
+        "note": "Enkelte befolkningers nationale identitet må søges under landets historie"
+      },
+      {
+        "index": "90.1",
+        "title": "Smagens historie",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Stilhistorie",
+        "note": ""
+      },
+      {
+        "index": "90.1",
+        "title": "Underværker",
+        "note": ""
+      }
+    ]
+  }
+}

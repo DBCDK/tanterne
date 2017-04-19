@@ -73,9 +73,9 @@ export class ElasticClient {
     await this.elasticClient.ping({
       // ping usually has a 3000ms timeout
       requestTimeout: 1000
-    }).then(function(body) {
+    }).then(function (body) {
       esStatus = body;
-    }, function(error) {
+    }, function (error) {
       if (error) {
         Logger.log.error('ElasticSearch cluster is down. Msg: ' + error.message);
       }
@@ -113,7 +113,7 @@ export class ElasticClient {
         top = this.topGroups[idx];
       }
     });
-    const regRecords = await this.fetchAspects(q);
+    const regRecords = await this.fetchRegisterWords(q);
     if (regRecords.length) {
       // collect systematic for children
       let children = [];
@@ -137,7 +137,7 @@ export class ElasticClient {
               if (idx === q) {
                 const note = this.dk5GeneralNote[idx];
                 // Notes from systematic are currently not used
-                // notes from register are moved to the individual group or aspect
+                // notes from register are moved to the individual group or register word
                 item = Object.assign(item, {
                   note: note,
                   items: esUtil.titleSort(regRecords)
@@ -187,32 +187,29 @@ export class ElasticClient {
     const result = {};
     for (let dk5 of dk5List.split(',')) {
       dk5 = dk5.trim();
-      const regRecords = await this.fetchAspects(dk5);
-      result[dk5] = this.dk5Syst[dk5] ? this.dk5Syst[dk5] : {};
-      if (this.dk5SystematicNotes[dk5]) {
-        result[dk5] = Object.assign(result[dk5], {note: this.dk5SystematicNotes[dk5], note2: this.dk5GeneralNote[dk5]});
+      const regRecords = await this.fetchRegisterWords(dk5);
+      const aspects = [];
+      if (this.dk5Syst[dk5]) {
+        const aspectRes = await this.rawElasticSearch({query: 'b52m:' + dk5 + ' AND 630a:' + this.dk5Syst[dk5].title});
+        for (let hitPos = 0; hitPos < aspectRes.hits.length; hitPos++) {
+          const source = aspectRes.hits[hitPos]._source;
+          if (source.b52m.length > 1) {
+            for (let i = 0; i < source.b52m.length; i++) {
+              const b52m = source.b52m[i];
+              aspects.push({index: b52m, title: source.b52y[i], parent: this.dk5Syst[b52m]});
+            }
+          }
+        }
       }
-      result[dk5] = Object.assign(result[dk5], {items: esUtil.titleSort(regRecords)});
+      result[dk5] = Object.assign({}, this.dk5Syst[dk5], {
+        noteSystematic: this.dk5SystematicNotes[dk5],
+        noteGeneral: this.dk5GeneralNote[dk5],
+        noteHistoric: this.dk5RegisterNotes[dk5],
+        aspects: esUtil.titleSort(aspects),
+        items: esUtil.titleSort(regRecords)
+      });
     }
     return result;
-  }
-
-  async fetchAspects(dk5) {
-    const aspectIndex = ['652m', '652d', 'b52m'];  // one of these subFields contains the dk5 index for the aspect
-    const regRecords = [];
-    const query = [];
-    aspectIndex.forEach((reg) => {
-      query.push(reg + ':"' + dk5 + '"');
-    });
-    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
-    for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-      const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
-      const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
-      if (syst.title) {
-        regRecords.push({index: syst.index, title: syst.title, note: note});
-      }
-    }
-    return regRecords;
   }
 
   /**
@@ -226,14 +223,14 @@ export class ElasticClient {
     let result = {prefix: [], spell: []};
     if (this.autocomplete.trie.prefixes) {
       let prefix = [];
-      this.autocomplete.search(term).forEach(function(match) {
+      this.autocomplete.search(term).forEach(function (match) {
         prefix.push({match: match, distance: Levenshtein.get(term, match)});
       });
       result.prefix = esUtil.sortDistanceAndSlice(prefix, 10);
     }
     if (this.vocabulary.length > 0) {
       let spell = [];
-      this.vocabulary.forEach(function(match) {
+      this.vocabulary.forEach(function (match) {
         spell.push({match: match, distance: Levenshtein.get(term, match)});
       });
       result.spell = esUtil.sortDistanceAndSlice(spell, 10);
@@ -318,6 +315,30 @@ export class ElasticClient {
   }
 
   /**
+   * Return register words and note for a given dk5 number
+   *
+   * @param dk5
+   * @returns {Array}
+   */
+  async fetchRegisterWords(dk5) {
+    const registerWordIndex = ['652m', '652d', 'b52m'];  // one of these subFields contains the dk5 index for the register word
+    const regRecords = [];
+    const query = [];
+    registerWordIndex.forEach((reg) => {
+      query.push(reg + ':"' + dk5 + '"');
+    });
+    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
+    for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
+      const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
+      const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
+      if (syst.title) {
+        regRecords.push({index: syst.index, title: syst.title, note: note});
+      }
+    }
+    return regRecords;
+  }
+
+  /**
    * Call Elastic Search and return raw result
    *
    * @param pars
@@ -333,9 +354,9 @@ export class ElasticClient {
       pars.query = q.join(' OR ');
     }
     await this.elasticClient.search(esUtil.setAndMap(pars, this.defaultParameters, this.esParMap))
-      .then(function(body) {
+      .then(function (body) {
         esHits = body.hits;
-      }, function(error) {
+      }, function (error) {
         const errorMessage = `ElasticSearch search error. Msg: ${error.message}`;
         Logger.log.error(errorMessage);
         esHits.error = errorMessage;

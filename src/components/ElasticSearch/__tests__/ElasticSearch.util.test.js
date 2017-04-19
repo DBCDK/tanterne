@@ -57,7 +57,7 @@ describe('Testing parseRegisterRecord', () => {
           '630a': ['txt 630A'],
           '652m': ['652.M'],
           b52m: ['b52.m.1', 'b52.m.2'],
-          b52y: ['Aspect 1', 'Aspect 2']
+          b52y: ['Register Word 1', 'Register Word 2']
         }
       }
     ]
@@ -73,10 +73,10 @@ describe('Testing parseRegisterRecord', () => {
     };
     assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab));
     const items = [
-      {index: 'b52.m.1', parent: {index: 'syst b52.m.1'}, title: 'Aspect 1'},
-      {index: 'b52.m.2', parent: {index: 'syst b52.m.2'}, title: 'Aspect 2'}
+      {index: 'b52.m.1', parent: {index: 'syst b52.m.1'}, title: 'Register Word 1'},
+      {index: 'b52.m.2', parent: {index: 'syst b52.m.2'}, title: 'Register Word 2'}
     ];
-    const aspect = {
+    const registerWords = {
       id: 'txt 001A',
       index: '652.M',
       parent: {index: 'syst 652.M'},
@@ -85,7 +85,7 @@ describe('Testing parseRegisterRecord', () => {
       titleFull: 'txt 630A',
       items: items
     };
-    assert.deepEqual(aspect, esUtil.parseRegisterRecord(esRes, 1, dk5Tab));
+    assert.deepEqual(registerWords, esUtil.parseRegisterRecord(esRes, 1, dk5Tab));
   });
 });
 
