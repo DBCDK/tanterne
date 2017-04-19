@@ -11,9 +11,28 @@ export default class ComparerContainer extends React.Component {
       return null;
     }
 
+    // Replace pseudo-linebreaks
+    text = text.replace(/<br >/gi, '\n\n');
+
+    // Filter any DK5 and make them clickable
     const parts = text.split(/<dk>([^<]*)<\/dk>/g);
+
     for (let i = 1; i < parts.length; i += 2) {
-      parts[i] = <span className="match" key={i} onClick={this.props.cart.addOrRemoveContent.bind(this, {index: parts[i]})}>{parts[i]}</span>;
+      let part = parts[i];
+      if (part.includes('-')) {
+        part = part.split('-');
+        parts[i] = (
+          <span>
+            <span className='blue pointer' key={i} onClick={this.props.cart.addOrRemoveContent.bind(this, {index: part[0]})}>{part[0]}</span>
+            -
+            <span className='blue pointer' key={i} onClick={this.props.cart.addOrRemoveContent.bind(this, {index: part[1]})}>{part[1]}</span>
+          </span>
+        );
+      }
+      else {
+        parts[i] =
+          <span className='blue pointer' key={i} onClick={this.props.cart.addOrRemoveContent.bind(this, {index: part})}>{part}</span>;
+      }
     }
 
     return (<div>{parts}</div>);
