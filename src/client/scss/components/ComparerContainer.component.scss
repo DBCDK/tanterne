@@ -22,7 +22,6 @@
     top: 0;
     width: 0;
     height: auto;
-    min-height: 600px;
     vertical-align: top;
     padding-top: 10px;
     padding-left: 10px;
@@ -33,20 +32,22 @@
     opacity: 1;
 
     @include desktop {
+      transition: opacity .1s linear;
+      transition-delay: .4s;
       opacity: 0;
     }
   }
 
   &.show-cart {
-    width: 100%;
+    width: 0;
 
     @include desktop {
-      width: 39%;
+      width: 36%;
       margin-left: 1%;
-    }
 
-    .comparer--content {
-      opacity: 1;
+      .comparer--content {
+        opacity: 1;
+      }
     }
   }
 }
