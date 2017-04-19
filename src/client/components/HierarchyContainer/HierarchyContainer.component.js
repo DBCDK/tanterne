@@ -132,7 +132,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
     contains = contains[0].items;
   }
 
-  const cartButton = level >= 2 && items && pro ? <CartButton {...{index, cart}} /> : null;
+  const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} /> : null;
 
   return (
     <div className={`hierarchy-level level level-${level}`}>
