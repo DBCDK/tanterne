@@ -218,7 +218,7 @@ class HierarchyContainerComponent extends React.Component {
     ) : null;
 
     return (
-      <div className={`hierarchy container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : 'show-cart'}`}>
+      <div className={`hierarchy container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : ''}`}>
         {navbar}
         {elements.map(level => (
           <HierarchyLevel {...{

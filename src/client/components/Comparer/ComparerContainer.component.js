@@ -66,7 +66,7 @@ export default class ComparerContainer extends React.Component {
     });
 
     return (
-      <div id="comparer" className={items.length ? 'show-cart' : 'show-cart'}>
+      <div id="comparer" className={items.length ? 'show-cart' : ''}>
         <div className="comparer--content">
           <span className="comparer--content--headline">Sammenlign poster</span>
           <div className="comparer--content--items-container">{items}</div>
