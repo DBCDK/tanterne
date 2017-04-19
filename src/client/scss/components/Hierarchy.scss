@@ -8,6 +8,10 @@ $navbar_height: 60px;
       display: inline-block;
       &.show-cart {
         width: 60%;
+
+        @include less-than-desktop {
+          width: 100%;
+        }
       }
     }
   }

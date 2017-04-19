@@ -13,9 +13,9 @@ export class TopBarComponent extends Component {
 
   getCart() {
     return (
-      <span className="top-bar--cart">
+      <span className="top-bar--cart" onClick={this.props.cart.toggleCart}>
         <img src="/cart.svg"/>
-        <span className='top-bar--cart--count'>{Object.keys(this.props.cart).length}</span>
+        <span className='top-bar--cart--count'>{Object.keys(this.props.cart.contents).length}</span>
       </span>
     );
   }

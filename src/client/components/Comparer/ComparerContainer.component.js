@@ -65,11 +65,13 @@ export default class ComparerContainer extends React.Component {
       return this.getItems(data);
     });
 
+    const classNames = [items.length ? 'show-cart' : '', this.props.cart.isToggled ? 'toggle-cart' : ''].join(' ');
+
     return (
-      <div id="comparer" className={items.length ? 'show-cart' : ''}>
+      <div id="comparer" className={classNames}>
         <div className="comparer--content">
           <span className="comparer--content--headline">Sammenlign poster</span>
-          <div className="comparer--content--items-container">{items}</div>
+          <div className="comparer--content--items-container">{items.length ? items : 'Der er ingenting i kurven'}</div>
         </div>
       </div>
     );

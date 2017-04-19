@@ -2,7 +2,7 @@
 $phone: 400px;
 $tablet: 600px;
 $desktop: 800px;
-$xl-desktop: 1200px;
+$xl-desktop: 1000px;
 
 
 @mixin small-phone {
@@ -25,6 +25,12 @@ $xl-desktop: 1200px;
 
 @mixin tablet {
   @media (min-width: $tablet) and (max-width: $desktop - 1px) {
+    @content;
+  }
+}
+
+@mixin less-than-desktop{
+  @media (max-width: $desktop - 1px) {
     @content;
   }
 }

@@ -88,7 +88,8 @@ const state = {
   hierarchy: {},
   suggest: {},
   cart: {
-    contents: {}
+    contents: {},
+    isToggled: false
   },
   pro: typeof window !== 'undefined' && window.PRO
 };
@@ -98,6 +99,7 @@ export class RootContainerComponent extends Component {
     super();
 
     state.cart.addOrRemoveContent = this.addRemoveContentsToCart.bind(this);
+    state.cart.toggleCart = this.toggleCart.bind(this);
     this.state = state;
   }
 
@@ -152,10 +154,16 @@ export class RootContainerComponent extends Component {
     };
   }
 
+  toggleCart() {
+    const cart = Object.assign({}, this.state.cart);
+    cart.isToggled = !cart.isToggled;
+    this.setState({cart: cart});
+  }
+
   render() {
     return (
       <div>
-        <TopBarComponent cart={this.state.cart.contents} pro={this.state.pro}/>
+        <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
 
         <Router {...this.state}>
           <Route path="/" component={SearchResultsContainerComponent}/>
