@@ -113,7 +113,7 @@ export class ElasticClient {
         top = this.topGroups[idx];
       }
     });
-    const regRecords = await this.fetchAspects(q);
+    const regRecords = await this.fetchRegisterWords(q);
     if (regRecords.length) {
       // collect systematic for children
       let children = [];
@@ -137,7 +137,7 @@ export class ElasticClient {
               if (idx === q) {
                 const note = this.dk5GeneralNote[idx];
                 // Notes from systematic are currently not used
-                // notes from register are moved to the individual group or aspect
+                // notes from register are moved to the individual group or register word
                 item = Object.assign(item, {
                   note: note,
                   items: esUtil.titleSort(regRecords)
@@ -187,7 +187,7 @@ export class ElasticClient {
     const result = {};
     for (let dk5 of dk5List.split(',')) {
       dk5 = dk5.trim();
-      const regRecords = await this.fetchAspects(dk5);
+      const regRecords = await this.fetchRegisterWords(dk5);
       const aspects = [];
       if (this.dk5Syst[dk5]) {
         const aspectRes = await this.rawElasticSearch({query: 'b52m:' + dk5 + ' AND 630a:' + this.dk5Syst[dk5].title});
@@ -315,16 +315,16 @@ export class ElasticClient {
   }
 
   /**
-   * Return aspect and note for a given dk5 number
+   * Return register words and note for a given dk5 number
    *
    * @param dk5
    * @returns {Array}
    */
-  async fetchAspects(dk5) {
-    const aspectIndex = ['652m', '652d', 'b52m'];  // one of these subFields contains the dk5 index for the aspect
+  async fetchRegisterWords(dk5) {
+    const registerWordIndex = ['652m', '652d', 'b52m'];  // one of these subFields contains the dk5 index for the register word
     const regRecords = [];
     const query = [];
-    aspectIndex.forEach((reg) => {
+    registerWordIndex.forEach((reg) => {
       query.push(reg + ':"' + dk5 + '"');
     });
     let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
