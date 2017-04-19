@@ -1,6 +1,6 @@
 # IDE
 .idea/
-.vscode
+.vscode/
 
 # Logs
 logs
@@ -49,3 +49,4 @@ reports
 yarn.lock
 errorShots
 src/output.json
+errorShots/
