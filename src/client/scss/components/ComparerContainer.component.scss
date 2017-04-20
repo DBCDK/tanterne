@@ -2,17 +2,25 @@
   transition: none;
   position: absolute;
   display: none;
-  top: 120px;
+  top: 60px;
   left: 0;
   background-color: #fdfdfd;
   padding: 10px;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 60px);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+
 
   &.toggle-cart {
     @include less-than-desktop {
       display: block;
+      z-index: 1000;
     }
+  }
+
+  @include tablet {
+    top: 120px;
   }
 
   @include desktop {
@@ -39,7 +47,7 @@
   }
 
   &.show-cart {
-    width: 0;
+    width: 100%;
 
     @include desktop {
       width: 36%;
