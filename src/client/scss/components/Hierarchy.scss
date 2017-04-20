@@ -91,6 +91,9 @@ $navbar_height: 60px;
 
     svg {
       fill: white;
+      @include less-than-tablet {
+        fill: black;
+      }
     }
 
     .dk5 {
@@ -409,23 +412,6 @@ $navbar_height: 60px;
   }
 }
 
-.add-or-remove-item {
-  display: inline-block;
-  margin-left: 10px;
-  cursor: pointer;
-
-  svg {
-    transition: transform .25s ease-out;
-    width: 16px;
-  }
-
-  &.in-cart {
-    svg {
-      transform: rotate(135deg);
-    }
-  }
-}
-
 .hierarchy-spinner {
   display: inline-block;
   vertical-align: middle;
@@ -438,6 +424,7 @@ $navbar_height: 60px;
       margin-bottom: 10px;
     }
   }
+
   .toggle-button {
     margin-left: 2em;
 

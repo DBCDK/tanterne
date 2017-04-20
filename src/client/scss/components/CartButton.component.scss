@@ -1,0 +1,28 @@
+.cart-button-container {
+  @include tablet {
+    display: inline-block;
+  }
+  height: 20px;
+}
+
+.add-or-remove-item {
+  display: inline-block;
+  margin-left: 10px;
+  cursor: pointer;
+
+  @include less-than-tablet {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+
+  svg {
+    transition: transform .25s ease-out;
+    width: 16px;
+  }
+
+  &.in-cart {
+    svg {
+      transform: rotate(135deg);
+    }
+  }
+}
