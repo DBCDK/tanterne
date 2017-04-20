@@ -2,6 +2,14 @@ import React from 'react';
 
 import {Plus} from '../svg/svg.container';
 
+/**
+ * Generates a button that when clicked will ensure the given index is added/remove to/from the cart
+ *
+ * @param {string }index
+ * @param {Object} cart
+ * @return {XML}
+ * @constructor
+ */
 export function CartButton({index, cart}) {
   const inCart = Object.keys(cart.contents).includes(index);
   const tooltip = inCart ? `Fjern ${index} fra kurv` : `Tilføj ${index} til kurv`;
