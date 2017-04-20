@@ -1,5 +1,5 @@
 .cart-button-container {
-  @include tablet {
+  @include  tablet-and-up {
     display: inline-block;
   }
   height: 20px;
