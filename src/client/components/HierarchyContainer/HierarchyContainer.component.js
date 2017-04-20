@@ -214,6 +214,8 @@ class HierarchyContainerComponent extends React.Component {
         <span className="hierarchy--navbar--title">
           {this.props.params.id}
           </span>
+        <span>
+        </span>
       </div>
     ) : null;
 

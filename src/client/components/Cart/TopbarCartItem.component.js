@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function TopbarCart({cart}) {
+export function TopbarCartItem({cart}) {
   return (
     <span className="top-bar--cart" onClick={cart.toggleCart}>
         <img src="/cart.svg"/>
@@ -8,5 +8,3 @@ export function TopbarCart({cart}) {
       </span>
   );
 }
-
-TopbarCart.propTypes = {};

@@ -6,7 +6,7 @@
 // Libraries
 import React, {Component} from 'react';
 
-import {TopbarCart} from '../Cart/TopbarCart.component';
+import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 
 export class TopBarComponent extends Component {
   constructor(props) {
