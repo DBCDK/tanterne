@@ -8,6 +8,7 @@ import {wrapper} from '../../state/state';
 import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.component';
 import {Layout} from '../General/layout.component';
 import {CartButton} from '../Cart/CartButton.component';
+import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
 
@@ -214,7 +215,8 @@ class HierarchyContainerComponent extends React.Component {
         <span className="hierarchy--navbar--title">
           {this.props.params.id}
           </span>
-        <span>
+        <span className="hierarchy--navbar--cart">
+          <TopbarCartItem cart={this.props.cart} />
         </span>
       </div>
     ) : null;

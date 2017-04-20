@@ -14,7 +14,7 @@ export class TopBarComponent extends Component {
   }
 
   render() {
-    const cart = this.props.pro ? <TopbarCart cart={this.props.cart}/> : null;
+    const cart = this.props.pro ? <TopbarCartItem cart={this.props.cart}/> : null;
 
     let topBarCaption = 'Find en bog med DK5';
     if (this.props.pro) {
