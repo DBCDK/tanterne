@@ -55,7 +55,7 @@ describe('Testing cart on pro site (desktop)', () => {
     browser.url(`${getBaseUrl(true)}/#!/hierarchy/40-49`);
 
     browser.click('#cart-button-48');
-    browser.waitForVisible('#item-index-48');
+    // browser.waitForVisible('#item-index-48');
     assert.isTrue(browser.isVisible('#item-index-48'));
   });
 
@@ -64,7 +64,7 @@ describe('Testing cart on pro site (desktop)', () => {
 
     // add item to cart
     browser.click('#cart-button-48');
-    browser.waitForVisible('#item-index-48');
+    // browser.waitForVisible('#item-index-48');
 
     // remove item from cart
     browser.click('#item-index-48 #cart-button-48');
