@@ -46,7 +46,7 @@ export default class ComparerContainer extends React.Component {
     const note = this.parseAndReplaceDK5(data.note);
 
     return (
-      <div className="comparer--item">
+      <div className="comparer--item" id={`item-index-${data.index}`}>
         <div className="comparer--item--header">
           <span className="comparer--item--index"><h2>{data.index}</h2></span>
           <span className="comparer--item--cartButton">

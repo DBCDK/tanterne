@@ -92,6 +92,14 @@
 .comparer--item--cartButton {
   display: inline-block;
   float: right;
+
+  @include small-phone {
+    margin-top: -10px;
+  }
+
+  @include phone {
+    margin-top: -10px;
+  }
 }
 
 .comparer--item--title {
