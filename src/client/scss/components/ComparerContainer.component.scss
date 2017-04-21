@@ -8,14 +8,14 @@
   padding: 10px;
   width: 100%;
   height: calc(100% - 60px);
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
 
 
   &.toggle-cart {
     @include less-than-desktop {
       display: block;
       z-index: 1000;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
     }
   }
 
@@ -41,8 +41,6 @@
     opacity: 1;
 
     @include desktop {
-      transition: opacity .1s linear;
-      transition-delay: .4s;
       opacity: 0;
     }
   }
@@ -55,6 +53,8 @@
       margin-left: 1%;
 
       .comparer--content {
+        transition: opacity .1s linear;
+        transition-delay: .4s;
         opacity: 1;
       }
     }
