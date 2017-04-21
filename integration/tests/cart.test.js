@@ -17,11 +17,11 @@ describe('Testing cart on pro site', () => {
     browser.url(`${getBaseUrl(true)}/#!/hierarchy/40-49`);
     browser.pause(200);
 
-    let cartCount = browser.getText('.top-bar--cart--count');
+    let cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 0);
     browser.click('#cart-button-48');
 
-    cartCount = browser.getText('.top-bar--cart--count');
+    cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 1);
   });
 
@@ -29,20 +29,20 @@ describe('Testing cart on pro site', () => {
     browser.url(`${getBaseUrl(true)}/#!/hierarchy/40-49`);
     browser.pause(200);
 
-    let cartCount = browser.getText('.top-bar--cart--count');
+    let cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 0);
     browser.click('#cart-button-48');
 
-    cartCount = browser.getText('.top-bar--cart--count');
+    cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 1);
 
     browser.click('#cart-button-41');
 
-    cartCount = browser.getText('.top-bar--cart--count');
+    cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 2);
 
     browser.click('#cart-button-48');
-    cartCount = browser.getText('.top-bar--cart--count');
+    cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 1);
   });
 });
