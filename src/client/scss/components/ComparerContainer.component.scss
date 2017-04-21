@@ -1,0 +1,116 @@
+#comparer {
+  transition: none;
+  position: absolute;
+  display: none;
+  top: 60px;
+  left: 0;
+  background-color: #fdfdfd;
+  padding: 10px;
+  width: 100%;
+  height: calc(100% - 60px);
+
+
+  &.toggle-cart {
+    @include less-than-desktop {
+      display: block;
+      z-index: 1000;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+
+  @include tablet {
+    top: 120px;
+    height: 100%;
+  }
+
+  @include desktop {
+    @include transition-width();
+    display: inline-block;
+    position: relative;
+    top: 0;
+    width: 0;
+    height: auto;
+    vertical-align: top;
+    padding-top: 10px;
+    padding-left: 10px;
+    background-color: transparent;
+  }
+
+  .comparer--content {
+    opacity: 1;
+
+    @include desktop {
+      opacity: 0;
+    }
+  }
+
+  &.show-cart {
+    width: 100%;
+
+    @include desktop {
+      width: 36%;
+      margin-left: 1%;
+
+      .comparer--content {
+        transition: opacity .1s linear;
+        transition-delay: .4s;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.comparer--content--headline {
+  display: block;
+  font-size: 2.5rem;
+  line-height: 1.1;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.comparer--content--items-container {
+  .comparer--item:nth-child(odd) {
+    background-color: #ececec;
+  }
+  .comparer--item:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}
+
+.comparer--item {
+  padding: 10px 5px;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+
+.comparer--item--index {
+  display: inline-block;
+  color: $blue;
+}
+
+.comparer--item--cartButton {
+  display: inline-block;
+  float: right;
+
+  @include small-phone {
+    margin-top: -10px;
+  }
+
+  @include phone {
+    margin-top: -10px;
+  }
+}
+
+.comparer--item--title {
+  display: block;
+
+  h4 {
+    line-height: 2rem;
+  }
+}
+
+.comparer--item--note {
+  display: block;
+  white-space: pre-line;
+}

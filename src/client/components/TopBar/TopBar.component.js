@@ -6,22 +6,11 @@
 // Libraries
 import React, {Component} from 'react';
 
+import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
+
 export class TopBarComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  getCart() {
-    return (
-      <span className="top-bar--cart">
-        <img src="/cart.svg"/>
-        <span className='top-bar--cart--count'>{Object.keys(this.props.cart).length}</span>
-      </span>
-    );
-  }
-
   render() {
-    const cart = this.props.pro ? this.getCart() : null;
+    const cart = this.props.pro ? <TopbarCartItem cart={this.props.cart}/> : null;
 
     let topBarCaption = 'Find en bog med DK5';
     if (this.props.pro) {

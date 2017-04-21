@@ -28,10 +28,6 @@
   font-style: italic;
 }
 
-.container {
-  margin-bottom: gutter(3);
-}
-
 .is-hidden    { display:    none !important; }
 .is-invisible { visibility: hidden !important; }
 
@@ -62,3 +58,7 @@
 }
 
 .pointer { cursor: pointer; }
+
+.blue {
+  color: $blue;
+}
