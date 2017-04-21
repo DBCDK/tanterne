@@ -9,10 +9,6 @@ import React, {Component} from 'react';
 import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 
 export class TopBarComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const cart = this.props.pro ? <TopbarCartItem cart={this.props.cart}/> : null;
 

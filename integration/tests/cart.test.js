@@ -4,6 +4,11 @@ const {getBaseUrl} = require('../utils/browser.util');
 
 describe('Testing cart on pro site', () => {
   beforeEach(() => {
+    browser.setViewportSize({
+      width: 800,
+      height: 568
+    }, true);
+
     browser.url(`${getBaseUrl(true)}/`);
     browser.pause(200);
   });

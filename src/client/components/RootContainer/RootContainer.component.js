@@ -118,13 +118,13 @@ export class RootContainerComponent extends Component {
     }
     else {
       cart.contents[item.index] = item;
-      this.getAddiotionalInfoOnItems(item.index);
+      this.getAdditionalInfoOnItems(item.index);
     }
 
     this.setState({cart: cart});
   }
 
-  getAddiotionalInfoOnItems(indexes) {
+  getAdditionalInfoOnItems(indexes) {
     client.list(indexes)
       .then((result) => {
         const cart = Object.assign({}, this.state.cart);
