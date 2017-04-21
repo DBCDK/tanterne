@@ -2,7 +2,7 @@
 const {assert} = require('chai');
 const {getBaseUrl} = require('../utils/browser.util');
 
-describe('Testing the navbar', () => {
+describe('Testing the navbar (small screen)', () => {
   beforeEach(() => {
     browser.setViewportSize({
       width: 320,

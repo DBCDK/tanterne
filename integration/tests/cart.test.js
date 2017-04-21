@@ -2,7 +2,7 @@
 const {assert} = require('chai');
 const {getBaseUrl} = require('../utils/browser.util');
 
-describe('Testing cart on pro site', () => {
+describe('Testing cart on pro site (desktop)', () => {
   beforeEach(() => {
     browser.setViewportSize({
       width: 800,
