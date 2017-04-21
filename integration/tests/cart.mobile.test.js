@@ -57,6 +57,7 @@ describe('Testing cart on pro site', () => {
   it('It should display the selected item in the comparer', () => {
     browser.url(`${getBaseUrl(true)}/#!/hierarchy/40-49`);
 
+    browser.waitForVisible('#cart-button-48');
     browser.click('#cart-button-48');
     assert.isFalse(browser.isVisible('#item-index-48'));
 
