@@ -6,7 +6,7 @@ describe('Testing cart on pro site (desktop)', () => {
   beforeEach(() => {
     browser.setViewportSize({
       width: 800,
-      height: 568
+      height: 700
     }, true);
 
     browser.url(`${getBaseUrl(true)}/`);
@@ -24,7 +24,7 @@ describe('Testing cart on pro site (desktop)', () => {
 
     let cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 0);
-    browser.click('#cart-button-40');
+    browser.click('#cart-button-48');
 
     cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 1);
@@ -36,7 +36,7 @@ describe('Testing cart on pro site (desktop)', () => {
 
     let cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 0);
-    browser.click('#cart-button-40');
+    browser.click('#cart-button-48');
 
     cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 1);
@@ -46,7 +46,7 @@ describe('Testing cart on pro site (desktop)', () => {
     cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 2);
 
-    browser.click('#cart-button-40');
+    browser.click('#cart-button-48');
     cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 1);
   });
@@ -54,21 +54,21 @@ describe('Testing cart on pro site (desktop)', () => {
   it('It should display the selected item in the comparer', () => {
     browser.url(`${getBaseUrl(true)}/#!/hierarchy/40-49`);
 
-    browser.click('#cart-button-40');
-    browser.waitForVisible('#item-index-40');
-    assert.isTrue(browser.isVisible('#item-index-40'));
+    browser.click('#cart-button-48');
+    browser.waitForVisible('#item-index-48');
+    assert.isTrue(browser.isVisible('#item-index-48'));
   });
 
   it('It should remove the item from cart', () => {
     browser.url(`${getBaseUrl(true)}/#!/hierarchy/40-49`);
 
     // add item to cart
-    browser.click('#cart-button-40');
-    browser.waitForVisible('#item-index-40');
+    browser.click('#cart-button-48');
+    browser.waitForVisible('#item-index-48');
 
     // remove item from cart
-    browser.click('#item-index-40 #cart-button-40');
+    browser.click('#item-index-48 #cart-button-48');
 
-    assert.isFalse(browser.isVisible('#item-index-40'));
+    assert.isFalse(browser.isVisible('#item-index-48'));
   });
 });
