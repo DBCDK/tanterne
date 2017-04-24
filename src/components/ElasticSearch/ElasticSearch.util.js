@@ -66,6 +66,18 @@ export function sortDistanceAndSlice(buf, elements) {
 }
 
 /**
+ * sort an array on the index field
+ *
+ * @param arr
+ * @returns {*}
+ */
+export function indexSort(arr) {
+  return arr.sort(function (a, b) {
+    return (a.index > b.index ? 1 : -1);
+  });
+}
+
+/**
  * sort an array on the title field
  *
  * @param arr
@@ -105,7 +117,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   for (let i = 0; i < registerWords.length; i++) {
     items.push({index: registerWords[i], title: registerWordTitle[i], parent: dk5Tab[registerWords[i]]});
   }
-  return Object.assign({}, ret, {items: titleSort(items)});
+  return Object.assign({}, ret, {items: indexSort(items)});
 }
 
 /**

@@ -95,7 +95,7 @@ export class ElasticClient {
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst));
     }
-    return esUtil.titleSort(res);
+    return esUtil.indexSort(res);
   }
 
   /**
@@ -141,7 +141,7 @@ export class ElasticClient {
                 item = Object.assign(item, {
                   note: note,
                   items: esUtil.titleSort(regRecords)
-                }, {children: esUtil.titleSort(children)});
+                }, {children: esUtil.indexSort(children)});
               }
               parents.push(item);
             }
@@ -154,15 +154,15 @@ export class ElasticClient {
         const items = Object.keys(this.topGroups).map((idx) => {
           const grp = {index: this.topGroups[idx].index, title: this.topGroups[idx].title};
           if (grp.index === q) {
-            grp.children = esUtil.titleSort(children);
+            grp.children = esUtil.indexSort(children);
           }
           return grp;
         });
-        hierarchy = {index: top.index, title: top.title, selected: q, items: esUtil.titleSort(items)};
+        hierarchy = {index: top.index, title: top.title, selected: q, items: esUtil.indexSort(items)};
       }
       else {
         // collect the hierarchy from parent and to the top
-        hierarchy = {selected: q, items: esUtil.titleSort(parents)};
+        hierarchy = {selected: q, items: esUtil.indexSort(parents)};
         if (parent.index) {
           lastChild = this.dk5Syst[parent.index].index;
           while (parent = this.dk5Syst[parent.parentIndex]) {         // eslint-disable-line no-cond-assign
@@ -205,7 +205,7 @@ export class ElasticClient {
         noteSystematic: this.dk5SystematicNotes[dk5],
         noteGeneral: this.dk5GeneralNote[dk5],
         noteHistoric: this.dk5RegisterNotes[dk5],
-        aspects: esUtil.titleSort(aspects),
+        aspects: esUtil.indexSort(aspects),
         items: esUtil.titleSort(regRecords)
       });
     }
