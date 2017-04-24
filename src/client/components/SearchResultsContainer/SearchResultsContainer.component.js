@@ -24,24 +24,24 @@ function parseSearchResult(result) {
   });
 }
 
-const SearchResultSingle = ({title, dk5, parent, cart}) => {
+const SearchResultSingle = ({title, dk5, parent, pro, cart}) => {
   return (
     <div className="result-element">
       <h2>
         {title}
         <span className="result-element-link">, se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
-        <CartButton index={dk5.index} cart={cart} />
+        {pro && <CartButton index={dk5.index} cart={cart} />}
       </h2>
     </div>
   );
 };
 
-const SearchResultGroup = ({title, items, cart}) => {
+const SearchResultGroup = ({title, items, pro, cart}) => {
   return (
     <div className="result-group">
       <h2><span className="name">{title}</span></h2>
       <ul className="result-list">
-        {items.map(el => <li key={el.dk5.index}><SearchResultSingle cart={cart} {...el}/></li>)}
+        {items.map(el => <li key={el.dk5.index}><SearchResultSingle pro={pro} cart={cart} {...el}/></li>)}
       </ul>
     </div>
   );
@@ -229,7 +229,7 @@ export class SearchResultsContainerComponent extends Component {
         return (<SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />);
       }
 
-      return (<SearchResultGroup key={entry.title} cart={this.props.cart} {...entry} />);
+      return (<SearchResultGroup key={entry.title} pro={this.props.pro} cart={this.props.cart} {...entry} />);
     });
 
     return (
