@@ -1,5 +1,22 @@
 $navbar_height: 60px;
 
+.pro {
+  .container {
+    &.hierarchy {
+      @include transition-width();
+      width: 100%;
+      display: inline-block;
+      &.show-cart {
+        width: 60%;
+
+        @include less-than-desktop {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
 .hierarchy {
   a {
     text-decoration: none;
@@ -72,6 +89,13 @@ $navbar_height: 60px;
       }
     }
 
+    svg {
+      fill: white;
+      @include less-than-tablet {
+        fill: black;
+      }
+    }
+
     .dk5 {
       background-color: white;
       padding: 0.3rem;
@@ -109,7 +133,7 @@ $navbar_height: 60px;
   background-color: white;
   height: $navbar_height;
   width: 100%;
-  z-index: 1000;
+  z-index: 10;
   border-bottom: 1px solid #dedede;
   padding-top: 21px;
 
@@ -136,8 +160,17 @@ $navbar_height: 60px;
   vertical-align: middle;
   margin-left: auto;
   margin-right: auto;
-  width: 80%;
+  width: 70%;
   text-align: center;
+}
+
+.hierarchy--navbar--cart {
+  float: right;
+
+  .top-bar--cart {
+    margin-left: 0;
+    margin-right: 10px;
+  }
 }
 
 .hierarchy-topics {
@@ -148,6 +181,10 @@ $navbar_height: 60px;
     margin-bottom: 1rem;
     list-style-type: none;
     padding-left: 2rem;
+
+    @include less-than-tablet {
+      padding-left: 0;
+    }
 
     &:before {
       display: inline-block;
@@ -400,12 +437,14 @@ $navbar_height: 60px;
       margin-bottom: 10px;
     }
   }
+
   .toggle-button {
-    margin-left: 2em;
+    margin-left: 2rem;
 
     @include less-than-tablet {
       color: $blue;
       border-bottom: none;
+      margin-left: 1rem;
 
       .icon, .svg {
         fill: $blue;

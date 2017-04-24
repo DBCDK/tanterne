@@ -7,6 +7,8 @@ import React from 'react';
 import {wrapper} from '../../state/state';
 import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.component';
 import {Layout} from '../General/layout.component';
+import {CartButton} from '../Cart/CartButton.component';
+import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
 
@@ -122,7 +124,7 @@ function HierarchyElement({topics, description = ''}) {
  *
  * @constructor
  */
-function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
+function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, cart}) {
   const {index, title, children, items, note} = hierarchy;
   const isSelected = selected === index;
 
@@ -130,6 +132,8 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
   if (contains && contains.length && contains[0].selected) {
     contains = contains[0].items;
   }
+
+  const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} /> : null;
 
   return (
     <div className={`hierarchy-level level level-${level}`}>
@@ -140,13 +144,16 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected}) {
             <span className="dk5">{index}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small"/>}</div>}
           </Link>
+          {cartButton}
         </Header>
         {isSelected && items && <HierarchyElement topics={items} description={note}/>}
         {selected && contains && contains.map(el => <HierarchyLevel {...{
           hierarchy: el,
           key: el.index,
           selected,
-          level: level + 1
+          level: level + 1,
+          pro,
+          cart
         }} />)}
       </div>
     </div>
@@ -208,14 +215,26 @@ class HierarchyContainerComponent extends React.Component {
         <span className="hierarchy--navbar--title">
           {this.props.params.id}
           </span>
+        {this.props.pro &&
+        <span className="hierarchy--navbar--cart">
+          <TopbarCartItem cart={this.props.cart}/>
+        </span>
+        }
       </div>
     ) : null;
 
     return (
-      <div className="hierarchy container">
+      <div className={`hierarchy container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : ''}`}>
         {navbar}
         {elements.map(level => (
-          <HierarchyLevel {...{hierarchy: level, key: level.index, Header: 'h1', selected: this.props.params.id}} />
+          <HierarchyLevel {...{
+            hierarchy: level,
+            key: level.index,
+            Header: 'h1',
+            selected: this.props.params.id,
+            pro: this.props.pro,
+            cart: this.props.cart
+          }} />
         ))}
       </div>
     );

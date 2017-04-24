@@ -11,6 +11,8 @@ const router = new Router();
 
 // Routes
 router.get('/', ctx => {
+  const proClass = ctx.pro ? 'main pro' : 'main';
+
   ctx.body = `
     <!DOCTYPE html>
     <html>
@@ -20,7 +22,7 @@ router.get('/', ctx => {
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
       </head>
       <body>
-        <div class="main">
+        <div class="${proClass}">
           <div id="content"></div>
           <script>window.PRO = ${ctx.pro}</script>
           <script src="/js/main.js"></script>

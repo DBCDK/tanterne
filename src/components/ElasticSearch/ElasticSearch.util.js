@@ -95,15 +95,15 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   ret.index = getFirstField(esRes, pos, ['652m', 'b52m']);
   ret.id = getFirstField(esRes, pos, ['001a']);
   ret.parent = Object.assign({}, dk5Tab[ret.index]);
-  const aspectDk5 = getEsField(esRes, pos, 'b52m');
-  if (aspectDk5.length === 0) {
+  const registerWords = getEsField(esRes, pos, 'b52m');
+  if (registerWords.length === 0) {
     return ret;
   }
 
-  const aspectTitle = getEsField(esRes, pos, 'b52y');
+  const registerWordTitle = getEsField(esRes, pos, 'b52y');
   const items = [];
-  for (let i = 0; i < aspectDk5.length; i++) {
-    items.push({index: aspectDk5[i], title: aspectTitle[i], parent: dk5Tab[aspectDk5[i]]});
+  for (let i = 0; i < registerWords.length; i++) {
+    items.push({index: registerWords[i], title: registerWordTitle[i], parent: dk5Tab[registerWords[i]]});
   }
   return Object.assign({}, ret, {items: titleSort(items)});
 }
@@ -128,6 +128,7 @@ export function createTaggedSystematicNote(systRec, hitPos) {
  *
  * @param regRecs
  * @param hitPos
+ * @param dk5Syst
  * @returns {*|string|String}
  */
 export function createTaggedRegisterNote(regRecs, hitPos, dk5Syst) {
@@ -146,6 +147,7 @@ export function createTaggedRegisterNote(regRecs, hitPos, dk5Syst) {
  * Notes for the same index, can be found in more than one record
  *
  * @param regRecs
+ * @param dk5Syst
  * @returns {{}}
  */
 export function parseRegisterForNotes(regRecs, dk5Syst) {
@@ -215,6 +217,7 @@ export function parseRegisterForUniqueWords(regRecs, wordFields) {
  *
  * @param note
  * @param noteSyst
+ * @param dk5Syst
  * @returns {*}
  */
 function parseTextAndTagSyst(note, noteSyst, dk5Syst = false) {

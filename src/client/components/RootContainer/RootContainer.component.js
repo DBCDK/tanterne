@@ -6,12 +6,14 @@
 // Libraries
 import React, {Component} from 'react';
 import {Router, Route} from 'react-enroute';
+import * as client from '../../state/client';
 
 // Components
 import {HelpContainerComponent} from '../HelpContainer/HelpContainer.component';
 import HierarchyContainerComponent from '../HierarchyContainer/HierarchyContainer.component';
 import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchResultsContainer.component';
 import {TopBarComponent} from '../TopBar/TopBar.component';
+import ComparerContainer from '../Comparer/ComparerContainer.component';
 
 // Helper function
 function getHash(hash) {
@@ -85,12 +87,19 @@ const state = {
   },
   hierarchy: {},
   suggest: {},
+  cart: {
+    contents: {},
+    isToggled: false
+  },
   pro: typeof window !== 'undefined' && window.PRO
 };
 
 export class RootContainerComponent extends Component {
   constructor() {
     super();
+
+    state.cart.addOrRemoveContent = this.addRemoveContentsToCart.bind(this);
+    state.cart.toggleCart = this.toggleCart.bind(this);
     this.state = state;
   }
 
@@ -100,6 +109,38 @@ export class RootContainerComponent extends Component {
         location: getHash(window.location.hash)
       });
     });
+  }
+
+  addRemoveContentsToCart(item) {
+    const cart = Object.assign({}, this.state.cart);
+    if (cart.contents[item.index]) {
+      delete cart.contents[item.index];
+    }
+    else {
+      cart.contents[item.index] = item;
+      this.getAdditionalInfoOnItems(item.index);
+    }
+
+    this.setState({cart: cart});
+  }
+
+  getAdditionalInfoOnItems(indexes) {
+    client.list(indexes)
+      .then((result) => {
+        const cart = Object.assign({}, this.state.cart);
+        const keys = Object.keys(result);
+
+        keys.forEach((index) => {
+          if (cart.contents[index]) {
+            cart.contents[index].data = result[index];
+          }
+        });
+
+        this.setState({cart: cart});
+      })
+      .catch((err) => {
+        console.error(`Der kunne ikke hentes data for index(er): ${indexes}`, err); // eslint-disable-line no-console
+      });
   }
 
   getChildContext() {
@@ -113,17 +154,25 @@ export class RootContainerComponent extends Component {
     };
   }
 
+  toggleCart() {
+    const cart = Object.assign({}, this.state.cart);
+    cart.isToggled = !cart.isToggled;
+    this.setState({cart: cart});
+  }
+
   render() {
     return (
       <div>
-        <TopBarComponent pro={this.state.pro} />
+        <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
 
         <Router {...this.state}>
-          <Route path="/" component={SearchResultsContainerComponent} />
-          <Route path="/help" component={HelpContainerComponent} />
-          <Route path="/hierarchy/:id?" component={HierarchyContainerComponent} />
-          <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent} />
+          <Route path="/" component={SearchResultsContainerComponent}/>
+          <Route path="/help" component={HelpContainerComponent}/>
+          <Route path="/hierarchy/:id?" component={HierarchyContainerComponent}/>
+          <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent}/>
         </Router>
+
+        {this.state.pro && <ComparerContainer cart={this.state.cart}/>}
       </div>
     );
   }
