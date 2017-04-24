@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import {assert} from 'chai';
 const {getBaseUrl} = require('../utils/browser.util');
 
