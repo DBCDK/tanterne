@@ -19,7 +19,7 @@ export function CartButton({index, cart}) {
     <div className='cart-button-container'>
       <span
         className={`add-or-remove-item${inCartClass}`}
-        id={`cart-button-${index}`}
+        id={`cart-button-${index.replace('.', '-')}`}
         onClick={cart.addOrRemoveContent.bind(this, {index: index})}
         title={tooltip}>
       <Plus />
