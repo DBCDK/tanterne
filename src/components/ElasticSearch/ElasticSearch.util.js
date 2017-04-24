@@ -73,6 +73,9 @@ export function sortDistanceAndSlice(buf, elements) {
  */
 export function indexSort(arr) {
   return arr.sort(function (a, b) {
+    if (a.index === b.index) {
+      return (a.title > b.title ? 1 : -1);
+    }
     return (a.index > b.index ? 1 : -1);
   });
 }
