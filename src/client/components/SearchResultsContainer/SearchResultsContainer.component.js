@@ -45,7 +45,7 @@ const SearchResultGroup = ({title, items}) => {
   );
 };
 
-export class SearchResultsContainerComponent extends Component {
+export class  SearchResultsContainerComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -231,7 +231,7 @@ export class SearchResultsContainerComponent extends Component {
     });
 
     return (
-      <div>
+      <div className={`container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : ''}`}>
         {searchField}
         {this.state.corrections[this.state.query] && this.renderSpellingError(this.state.corrections[this.state.query])}
         {results.length && results || !this.state.query && this.renderCategoryTiles(this.props.search.categories) || this.renderNoResults()}
