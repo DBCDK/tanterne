@@ -3,6 +3,8 @@
     "title": "Geografi",
     "id": "61021272",
     "index": "40",
+    "titleDetails": "",
+    "titleFull": "Geografi",
     "parent": {
       "index": "40",
       "parentIndex": "40-49",
@@ -35,7 +37,15 @@
   {
     "title": "Turkestan",
     "id": "61080856",
-    "parent": {},
+    "index": "48.25",
+    "titleDetails": "",
+    "titleFull": "Turkestan",
+    "parent": {
+      "index": "48.25",
+      "parentIndex": "48.1",
+      "title": "Centralasien i alm.",
+      "parent": "Asien"
+    },
     "items": [
       {
         "index": "48.25",
