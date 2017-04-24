@@ -61,6 +61,12 @@
   }
 }
 
+.result-element {
+  h2 {
+    display: inline-block;
+  }
+}
+
 .result-list {
   list-style-type: none;
   li * {
