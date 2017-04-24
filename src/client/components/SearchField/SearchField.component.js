@@ -206,7 +206,7 @@ export class SearchFieldComponent extends Component {
             />
 
             <span className="search-field--spinner">
-              {this.state.pendingSuggest && <Spinner size="small" />}
+              {this.state.pendingSuggest && <Spinner size="small"/>}
             </span>
 
 

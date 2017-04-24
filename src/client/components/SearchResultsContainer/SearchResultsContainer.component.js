@@ -45,7 +45,7 @@ const SearchResultGroup = ({title, items}) => {
   );
 };
 
-export class  SearchResultsContainerComponent extends Component {
+export class SearchResultsContainerComponent extends Component {
   constructor(props) {
     super(props);
 
