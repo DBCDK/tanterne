@@ -44,7 +44,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-register": "^6.24.1",
     "dbc-node-logger": "^2.0.0",
-    "elasticsearch": "^12.1.3",
+    "elasticsearch": "^13.0.0",
     "fast-levenshtein": "^2.0.6",
     "koa": "^2.0.0",
     "koa-body": "^2.0.0",
