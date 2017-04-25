@@ -30,7 +30,7 @@ const SearchResultSingle = ({title, dk5, parent, pro, cart}) => {
       <h2>
         {title}
         <span className="result-element-link">, se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
-        {pro && <CartButton index={dk5.index} cart={cart} />}
+        {pro && <CartButton index={dk5.index} cart={cart}/>}
       </h2>
     </div>
   );
@@ -225,6 +225,9 @@ export class SearchResultsContainerComponent extends Component {
     );
 
     const results = (this.state.searchResults[this.state.query] || []).map(entry => {
+      if (!entry.dk5) {
+        return null;
+      }
       if (entry.items.length <= 1) {
         return (<SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />);
       }

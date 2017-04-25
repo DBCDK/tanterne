@@ -11,6 +11,10 @@ import {Plus} from '../svg/svg.container';
  * @constructor
  */
 export function CartButton({index, cart}) {
+  if (!index || !cart) {
+    return null;
+  }
+
   const inCart = Object.keys(cart.contents).includes(index);
   const tooltip = inCart ? `Fjern ${index} fra kurv` : `Tilføj ${index} til kurv`;
   const inCartClass = inCart ? ' in-cart' : '';

@@ -27,12 +27,10 @@ async function suggestHandler(ctx) {
     status: 200,
     query: {endpoint: 'suggest', query: q},
     response: (await ElasticClient.elasticSuggest(q)).prefix.map(match => {
-      const res = {
+      return {
         label: match.match || '',
         href: generateSearchUrl(match.match || '')
       };
-
-      return res;
     })
   };
 
