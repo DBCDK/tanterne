@@ -61,6 +61,12 @@
   }
 }
 
+.result-element {
+  h2 {
+    display: inline-block;
+  }
+}
+
 .result-list {
   list-style-type: none;
   li * {
@@ -70,6 +76,16 @@
     font-size: 2rem;
     content: '-';
     margin-right: 1rem;
+  }
+
+  .result-element {
+    h2 {
+      font-size: 1.8rem;
+
+      .result-element-link {
+        font-weight: 400;
+      }
+    }
   }
 }
 
@@ -105,4 +121,16 @@
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
+}
+
+ul.result-list {
+  padding-left: 1rem;
+}
+
+.result-group {
+  padding: 0 10px;
+
+  @include tablet-and-up {
+    padding: 0;
+  }
 }
