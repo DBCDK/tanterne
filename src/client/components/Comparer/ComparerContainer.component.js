@@ -40,7 +40,6 @@ export default class ComparerContainer extends React.Component {
 
   getAspects(aspects) {
     return aspects.map((aspect, index) => {
-      console.log(aspect);
       return (<li key={index}>
         <span>- </span>
         <span className="comparer--item--aspects--aspect--title">{aspect.title} </span>
