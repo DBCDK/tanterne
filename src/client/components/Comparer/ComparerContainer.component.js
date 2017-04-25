@@ -38,12 +38,31 @@ export default class ComparerContainer extends React.Component {
     return (<div>{parts}</div>);
   }
 
+  getAspects(aspects) {
+    return aspects.map((aspect, index) => {
+      console.log(aspect);
+      return (<li key={index}>
+        <span>- </span>
+        <span className="comparer--item--aspects--aspect--title">{aspect.title} </span>
+        {
+          aspect.parent ?
+            <span>
+              <span className='blue pointer' onClick={this.props.cart.addOrRemoveContent.bind(this, {index: aspect.index})}>{aspect.index}</span>
+              <span> {aspect.parent.title}</span>
+            </span> :
+            <span className=''>{aspect.index}</span>
+        }
+      </li>);
+    });
+  }
+
   getItems(data) {
     if (!data) {
       return null;
     }
 
-    const note = this.parseAndReplaceDK5(data.note);
+    const note = this.parseAndReplaceDK5(data.noteSystematic);
+    const aspects = this.getAspects(data.aspects);
 
     return (
       <div className="comparer--item" id={`item-index-${data.index}`}>
@@ -55,6 +74,13 @@ export default class ComparerContainer extends React.Component {
         </div>
         <span className="comparer--item--title"><h4>{data.title}</h4></span>
         <span className="comparer--item--note">{note}</span>
+        {
+          aspects.length >= 1 &&
+          <div className="comparer--item--aspects">
+          <h4>Se også</h4>
+          <ul className="comparer--item--aspects--list">{aspects}</ul>
+        </div>
+        }
       </div>
     );
   }
