@@ -76,7 +76,7 @@
     "style-loader": "^0.16.0",
     "wdio-junit-reporter": "^0.2.0",
     "wdio-mocha-framework": "^0.5.10",
-    "wdio-sauce-service": "^0.3.1",
+    "wdio-sauce-service": "^0.4.0",
     "wdio-selenium-standalone-service": "0.0.8",
     "webdriverio": "^4.6.1",
     "webpack": "^2.4.1"
