@@ -9,6 +9,7 @@ import request from 'superagent';
 import {SearchFieldComponent} from '../SearchField/SearchField.component';
 import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
+import {CartButton} from '../Cart/CartButton.component';
 
 function parseSearchResult(result) {
   return result.map(level => {
@@ -23,23 +24,24 @@ function parseSearchResult(result) {
   });
 }
 
-const SearchResultSingle = ({title, dk5, parent}) => {
+const SearchResultSingle = ({title, dk5, parent, pro, cart}) => {
   return (
     <div className="result-element">
       <h2>
         {title}
         <span className="result-element-link">, se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
+        {pro && <CartButton index={dk5.index} cart={cart}/>}
       </h2>
     </div>
   );
 };
-const SearchResultGroup = ({title, items}) => {
 
+const SearchResultGroup = ({title, items, pro, cart}) => {
   return (
     <div className="result-group">
       <h2><span className="name">{title}</span></h2>
       <ul className="result-list">
-        {items.map(el => <li key={el.dk5.index}><SearchResultSingle {...el}/></li>)}
+        {items.map(el => <li key={el.dk5.index}><SearchResultSingle pro={pro} cart={cart} {...el}/></li>)}
       </ul>
     </div>
   );
@@ -223,15 +225,18 @@ export class SearchResultsContainerComponent extends Component {
     );
 
     const results = (this.state.searchResults[this.state.query] || []).map(entry => {
+      if (!entry.dk5) {
+        return null;
+      }
       if (entry.items.length <= 1) {
-        return (<SearchResultSingle key={entry.dk5.index} {...entry} />);
+        return (<SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />);
       }
 
-      return (<SearchResultGroup key={entry.title} {...entry} />);
+      return (<SearchResultGroup key={entry.title} pro={this.props.pro} cart={this.props.cart} {...entry} />);
     });
 
     return (
-      <div>
+      <div className={`container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : ''}`}>
         {searchField}
         {this.state.corrections[this.state.query] && this.renderSpellingError(this.state.corrections[this.state.query])}
         {results.length && results || !this.state.query && this.renderCategoryTiles(this.props.search.categories) || this.renderNoResults()}
@@ -242,6 +247,7 @@ export class SearchResultsContainerComponent extends Component {
 
 SearchResultsContainerComponent.displayName = 'SearchResults';
 SearchResultsContainerComponent.propTypes = {
+  cart: PropTypes.object.isRequired,
   params: PropTypes.object,
   search: PropTypes.object,
   suggest: PropTypes.object

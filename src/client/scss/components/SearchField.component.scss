@@ -1,3 +1,10 @@
+.pro {
+  .search-field--container {
+    @include desktop {
+      max-width: 70%;
+    }
+  }
+}
 .search-field--container {
   margin-bottom: 3rem;
 
@@ -28,7 +35,8 @@
     font-size: 15pt;
     border-bottom: 3px solid $text-color;
     display: inline-block;
-    width: 550px;
+    width: 70%;
+    max-width: 500px;
     line-height: 1.4;
     padding-left: 0;
 
@@ -37,16 +45,16 @@
       border-bottom-color: $blue;
     }
 
-    @include small-phone {
-      width: 78%;
-    }
-
     @include phone {
-      width: 67%;
+      width: 60%;
     }
 
     @include tablet {
-      width: 410px;
+      width: 72%;
+    }
+
+    @include desktop {
+      width: 72%;
     }
   }
 
@@ -57,29 +65,32 @@
   }
 
   .search-field--button {
-    padding-top: 5px;
     background-color: $blue;
     border-radius: 5px;
     display: inline-block;
     justify-content: center;
     align-items: center;
-    width: 100px;
+    width: 20%;
     height: 40px;
     vertical-align: middle;
-    margin-left: 10px;
-
-    @include small-phone {
-      width: 20%;
-      padding-top: 12px;
-      margin-left: 5px;
-    }
+    padding-top: 11px;
+    padding-right: 5px;
+    margin-left: 5px;
+    max-width: 150px;
 
     @include phone {
       width: 30%;
+      padding-top: 5px;
+    }
+
+    @include tablet {
+      width: 25%;
+      padding-top: 6px;
     }
 
     @include desktop {
-      width: 165px;
+      width: 25%;
+      padding-top: 6px;
     }
 
     .search-field--button--image {

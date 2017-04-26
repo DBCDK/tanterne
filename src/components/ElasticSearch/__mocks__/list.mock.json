@@ -3,6 +3,51 @@
     "aspects": [],
     "items": []
   },
+  "48": {
+    "index": "48",
+    "parentIndex": "40-49",
+    "title": "Andre verdensdele",
+    "parent": "Geografi og rejser. Lokalhistorie",
+    "noteSystematic": "Her sættes værker om flere end to fremmede verdensdele. Alm. rejseskildringer, som indbefatter Europa, sættes i <dk>40.4</dk>",
+    "aspects": [],
+    "items": [
+      {
+        "index": "91.99",
+        "title": "Atlanterhavet",
+        "note": ""
+      },
+      {
+        "index": "48",
+        "title": "Det Indiske Ocean",
+        "note": ""
+      },
+      {
+        "index": "48",
+        "title": "Det Røde Hav",
+        "note": ""
+      },
+      {
+        "index": "48",
+        "title": "Sargassohavet",
+        "note": ""
+      },
+      {
+        "index": "91.99",
+        "title": "Stillehavet",
+        "note": ""
+      },
+      {
+        "index": "48",
+        "title": "Subtroperne",
+        "note": ""
+      },
+      {
+        "index": "48",
+        "title": "Troperne",
+        "note": ""
+      }
+    ]
+  },
   "45.5": {
     "index": "45.5",
     "parentIndex": "45",
