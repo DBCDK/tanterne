@@ -52,7 +52,7 @@
     "koa-router": "^7.0.0",
     "koa-static": "^3.0.0",
     "preact": "8.1.0",
-    "preact-compat": "3.14.1",
+    "preact-compat": "3.16.0",
     "preact-enroute": "1.2.3",
     "request": "^2.79.0",
     "stdio": "^0.2.7",
