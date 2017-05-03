@@ -60,6 +60,7 @@ export class ElasticClient {
     };
     this.dk5Syst = {};
     this.dk5SystematicNotes = {};
+    this.dk5SystematicHistoricNotes = {};
     this.dk5GeneralNote = {};
     this.dk5RegisterNotes = {};
   }
@@ -140,6 +141,8 @@ export class ElasticClient {
                 // notes from register are moved to the individual group or register word
                 item = Object.assign(item, {
                   note: note,
+                  noteSystematic: this.dk5SystematicNotes[idx],
+                  noteSystematicHistoric: this.dk5SystematicHistoricNotes[idx],
                   items: esUtil.titleSort(regRecords)
                 }, {children: esUtil.indexSort(children)});
               }
@@ -255,7 +258,7 @@ export class ElasticClient {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
         limit: 9999,
-        fields: '001a, 652*, a40, a40*, parent',
+        fields: '001a, 652*, a40, a40*, a30, a30*, parent',
         index: 'systematic'
       });
       if (syst.total > 9999) {
@@ -286,7 +289,8 @@ export class ElasticClient {
         }
         const grp = esUtil.getFirstField(syst, hitPos, ['652m', '652n', '652d']);
         if (grp) {
-          this.dk5SystematicNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos);
+          this.dk5SystematicNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a40');
+          this.dk5SystematicHistoricNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a30');
           this.dk5Syst[grp] = {
             index: grp,
             parentIndex: parentIndex,
