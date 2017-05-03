@@ -139,12 +139,12 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
     <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
         <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
+          {cartButton}
           <Link to={`/hierarchy/${index}`}>
-            <span className="name">{title}</span>
             <span className="dk5">{index}</span>
+             <span className="name">{title}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
           </Link>
-          {cartButton}
         </Header>
         {isSelected && items && <HierarchyElement topics={items} description={note}/>}
         {selected && contains && contains.map(el => <HierarchyLevel {...{

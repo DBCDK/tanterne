@@ -7,12 +7,12 @@
 
 .add-or-remove-item {
   display: inline-block;
-  margin-left: 10px;
+  margin-right: 10px;
   cursor: pointer;
 
   @include less-than-tablet {
     margin-top: 10px;
-    margin-left: 0;
+    margin-right: 0;
   }
 
   svg {
