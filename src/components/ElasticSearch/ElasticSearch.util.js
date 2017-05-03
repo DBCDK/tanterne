@@ -128,12 +128,13 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
  *
  * @param systRec
  * @param hitPos
+ * @param fld
  * @returns {string}
  */
-export function createTaggedSystematicNote(systRec, hitPos) {
-  let note = getEsField(systRec, hitPos, 'a40').join('<br >');
+export function createTaggedSystematicNote(systRec, hitPos, fld) {
+  let note = getEsField(systRec, hitPos, fld).join('<br >');
   if (note) {
-    note = parseTextAndTagSyst(note, getEsField(systRec, hitPos, 'a40b'));
+    note = parseTextAndTagSyst(note, getEsField(systRec, hitPos, fld + 'b'));
   }
   return note;
 }
