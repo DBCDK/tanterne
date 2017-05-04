@@ -125,7 +125,7 @@ function HierarchyElement({topics, description = ''}) {
  * @constructor
  */
 function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, cart}) {
-  const {index, title, hasChildren, children, items, note} = hierarchy;
+  const {index, title, children, items, note} = hierarchy;
   const isSelected = selected === index;
 
   let contains = children;
@@ -134,7 +134,6 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
   }
 
   const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} /> : null;
-  const childInfo = hasChildren && pro ? 'hasChildren' : '';
 
   return (
     <div className={`hierarchy-level level level-${level}`}>
@@ -142,7 +141,6 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
         <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
           {cartButton}
           <Link to={`/hierarchy/${index}`}>
-            <span className={`dk5 ${childInfo}`}>{index}</span>
              <span className="name">{title}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
           </Link>
