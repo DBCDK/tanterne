@@ -122,6 +122,14 @@ $navbar_height: 60px;
   .name {
     margin-right: 5px;
   }
+
+  .hasChildren {
+    &:after {
+      margin-left: 2px;
+      font-size: 75%;
+      content: '+';
+    }
+  }
 }
 
 .hierarchy--navbar {
