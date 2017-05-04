@@ -141,6 +141,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
         <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
           {cartButton}
           <Link to={`/hierarchy/${index}`}>
+             <span className="dk5">{index}</span>
              <span className="name">{title}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
           </Link>
