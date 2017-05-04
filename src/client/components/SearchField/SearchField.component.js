@@ -188,10 +188,11 @@ export class SearchFieldComponent extends Component {
   render() {
     return (
       <form className="search-field--container" onSubmit={this.queryWasSubmitted}>
+        {!this.props.pro &&
         <div className="search-field--title">
           <h2>Hvor står bøgerne om...?</h2>
         </div>
-
+        }
         <div className="search-field--suggestions">
           <span className="search-field--query-area">
             <input
@@ -234,10 +235,12 @@ SearchFieldComponent.displayName = 'Search';
 SearchFieldComponent.propTypes = {
   search: PropTypes.object,
   suggest: PropTypes.object,
-  params: PropTypes.object
+  params: PropTypes.object,
+  pro: PropTypes.bool
 };
 SearchFieldComponent.defaultProps = {
   search: {},
   suggest: {},
-  params: {}
+  params: {},
+  pro: false
 };
