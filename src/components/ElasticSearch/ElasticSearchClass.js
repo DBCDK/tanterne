@@ -111,7 +111,7 @@ export class ElasticClient {
     let hierarchy = {};
     let top = {};
     let query = q;
-    while (query.length > 2 && !this.dk5Syst[query]) {  // cut until found - handling country codes
+    while (query.indexOf('.') !== -1 && query.length > 2 && !this.dk5Syst[query]) {  // cut until found - handling country codes
       query = query.substr(0, query.length - 1);
     }
     Object.keys(this.topGroups).forEach((idx) => {
