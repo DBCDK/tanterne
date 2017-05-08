@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import {SearchFieldComponent} from '../SearchField/SearchField.component';
 import {wrapper} from '../../state/state';
 import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.component';
 import {Layout} from '../General/layout.component';
@@ -206,6 +207,15 @@ class HierarchyContainerComponent extends React.Component {
     const parentIndex = this.getParent(this.props.params.id);
     const navURL = parentIndex ? `#!/hierarchy/${parentIndex}` : '/';
 
+    const params = this.props.params || {};
+    const searchField = (
+      <SearchFieldComponent
+        search={this.props.search}
+        suggest={this.props.suggest}
+        params={params}
+        pro={this.props.pro}
+      />
+    );
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
         <a href={navURL} className="hierarchy--navbar--href">
@@ -227,6 +237,7 @@ class HierarchyContainerComponent extends React.Component {
     return (
       <div className={`hierarchy container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : ''}`}>
         {navbar}
+        {this.props.pro && searchField}
         {elements.map(level => (
           <HierarchyLevel {...{
             hierarchy: level,

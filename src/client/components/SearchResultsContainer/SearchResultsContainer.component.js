@@ -221,6 +221,7 @@ export class SearchResultsContainerComponent extends Component {
         search={this.props.search}
         suggest={this.props.suggest}
         params={params}
+        pro={false}
       />
     );
 
