@@ -5,6 +5,7 @@
 
 // Libraries
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 
@@ -36,7 +37,7 @@ export class TopBarComponent extends Component {
 
 TopBarComponent.displayName = 'TopBar';
 TopBarComponent.propTypes = {
-  cart: React.PropTypes.object.isRequired,
-  pro: React.PropTypes.bool.isRequired
+  cart: PropTypes.object.isRequired,
+  pro: PropTypes.bool.isRequired
 };
 

@@ -149,7 +149,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
           </Link>
         </Header>
         {isSelected && items && <HierarchyElement topics={items} description={note}/>}
-        {selected && contains && contains.map(el => <HierarchyLevel {...{
+        {selected && contains && contains.map(el => <HierarchyLevel key={level.index} {...{
           hierarchy: el,
           key: el.index,
           selected,
@@ -239,7 +239,7 @@ class HierarchyContainerComponent extends React.Component {
         {navbar}
         {this.props.pro && searchField}
         {elements.map(level => (
-          <HierarchyLevel {...{
+          <HierarchyLevel key={level.index} {...{
             hierarchy: level,
             key: level.index,
             Header: 'h1',

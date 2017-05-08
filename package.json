@@ -54,6 +54,7 @@
     "preact": "8.1.0",
     "preact-compat": "3.16.0",
     "preact-enroute": "1.2.3",
+    "prop-types": "^15.5.0",
     "request": "^2.79.0",
     "stdio": "^0.2.7",
     "superagent": "^3.5.2"
@@ -64,7 +65,7 @@
     "css-loader": "^0.28.1",
     "cssnano": "^3.10.0",
     "eslint": "^3.13.0",
-    "eslint-plugin-react": "^6.9.0",
+    "eslint-plugin-react": "^7.0.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "mocha": "^3.3.0",
     "node-sass": "^4.3.0",

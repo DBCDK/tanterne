@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {Plus} from '../svg/svg.container';
 
@@ -33,6 +34,6 @@ export function CartButton({index, cart}) {
 }
 
 CartButton.propTypes = {
-  index: React.PropTypes.string.isRequired,
-  cart: React.PropTypes.object.isRequired
+  index: PropTypes.string.isRequired,
+  cart: PropTypes.object.isRequired
 };

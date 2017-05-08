@@ -3,7 +3,8 @@
  * Link component for react enroute
  */
 
-import React, {PropTypes} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Link({to, children}, {navigate}) {
   function click(e) {
