@@ -2,7 +2,8 @@
  * @file: This file defines the suggestions dropdown that is triggered on typing in the search field.
  */
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 export class SuggestionsComponent extends Component {
   render() {
@@ -20,7 +21,7 @@ export class SuggestionsComponent extends Component {
       }
 
       return (
-        <a href={suggestion.href} className={className}>{suggestion.label}</a>
+        <a key={suggestion.href} href={suggestion.href} className={className}>{suggestion.label}</a>
       );
     });
 

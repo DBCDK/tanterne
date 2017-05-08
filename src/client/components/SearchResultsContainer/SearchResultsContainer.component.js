@@ -3,7 +3,8 @@
  * Search results are collected and rendered here
  */
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import request from 'superagent';
 
 import {SearchFieldComponent} from '../SearchField/SearchField.component';
@@ -196,7 +197,7 @@ export class SearchResultsContainerComponent extends Component {
       message = 'Vi fandt ikke nogen resultater denne gang, prøv med nogle af disse søgninger!';
       suggestions = this.state.suggestions[this.state.query].map(sug => {
         return (
-          <div className="spelling-suggestion">
+          <div key={sug.href} className="spelling-suggestion">
             <Link to={sug.href} key={sug.match}>{sug.match}</Link>
           </div>
         );
