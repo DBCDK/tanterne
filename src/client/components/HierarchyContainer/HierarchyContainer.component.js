@@ -243,7 +243,7 @@ class HierarchyContainerComponent extends React.Component {
             hierarchy: level,
             key: level.index,
             Header: 'h1',
-            selected: this.props.params.id,
+            selected: level.query ? level.query : this.props.params.id,
             pro: this.props.pro,
             cart: this.props.cart
           }} />
