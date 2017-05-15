@@ -455,3 +455,12 @@ $navbar_height: 60px;
     }
   }
 }
+
+.historic-note, .systematic-note {
+  padding-bottom: 0.55em;
+
+  a {
+    color: $white;
+    text-decoration: underline;
+  }
+}
