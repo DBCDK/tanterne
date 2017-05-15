@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {CartButton} from '../Cart/CartButton.component';
 
 export default class ComparerContainer extends React.Component {
@@ -104,5 +105,5 @@ export default class ComparerContainer extends React.Component {
 }
 
 ComparerContainer.propTypes = {
-  cart: React.PropTypes.object.isRequired
+  cart: PropTypes.object.isRequired
 };

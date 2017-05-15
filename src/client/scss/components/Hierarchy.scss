@@ -116,10 +116,19 @@ $navbar_height: 60px;
   .dk5 {
     color: $blue;
     display: inline-block;
+    margin-right: 10px;
   }
 
   .name {
     margin-right: 5px;
+  }
+
+  .hasChildren {
+    &:after {
+      margin-left: 2px;
+      font-size: 75%;
+      content: '+';
+    }
   }
 }
 

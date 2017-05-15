@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import {SearchFieldComponent} from '../SearchField/SearchField.component';
 import {wrapper} from '../../state/state';
 import {ToggleButton, ToggleContainer, ToggleContent} from '../General/toggle.component';
 import {Layout} from '../General/layout.component';
@@ -125,7 +126,7 @@ function HierarchyElement({topics, description = ''}) {
  * @constructor
  */
 function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, cart}) {
-  const {index, title, children, items, note} = hierarchy;
+  const {index, title, hasChildren, children, items, note} = hierarchy;
   const isSelected = selected === index;
 
   let contains = children;
@@ -134,20 +135,21 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
   }
 
   const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} /> : null;
+  const infoChildren = pro & hasChildren ? 'hasChildren' : '';
 
   return (
     <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
         <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
+          {cartButton}
           <Link to={`/hierarchy/${index}`}>
+            <span className={`dk5 ${infoChildren}`}>{index}</span>
             <span className="name">{title}</span>
-            <span className="dk5">{index}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
           </Link>
-          {cartButton}
         </Header>
         {isSelected && items && <HierarchyElement topics={items} description={note}/>}
-        {selected && contains && contains.map(el => <HierarchyLevel {...{
+        {selected && contains && contains.map(el => <HierarchyLevel key={level.index} {...{
           hierarchy: el,
           key: el.index,
           selected,
@@ -205,6 +207,15 @@ class HierarchyContainerComponent extends React.Component {
     const parentIndex = this.getParent(this.props.params.id);
     const navURL = parentIndex ? `#!/hierarchy/${parentIndex}` : '/';
 
+    const params = this.props.params || {};
+    const searchField = (
+      <SearchFieldComponent
+        search={this.props.search}
+        suggest={this.props.suggest}
+        params={params}
+        pro={this.props.pro}
+      />
+    );
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
         <a href={navURL} className="hierarchy--navbar--href">
@@ -226,12 +237,13 @@ class HierarchyContainerComponent extends React.Component {
     return (
       <div className={`hierarchy container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : ''}`}>
         {navbar}
+        {this.props.pro && searchField}
         {elements.map(level => (
-          <HierarchyLevel {...{
+          <HierarchyLevel key={level.index} {...{
             hierarchy: level,
             key: level.index,
             Header: 'h1',
-            selected: this.props.params.id,
+            selected: level.query ? level.query : this.props.params.id,
             pro: this.props.pro,
             cart: this.props.cart
           }} />

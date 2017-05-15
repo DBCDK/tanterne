@@ -127,9 +127,9 @@ describe('Testing notes', () => {
         {_source: {a40: ['Note text', 'Note text 12.34'], a40b: ['12.34']}}
       ]
     };
-    assert.equal('Note text <dk>12.34</dk>', esUtil.createTaggedSystematicNote(esSys, 0));
-    assert.equal('Note text <dk>12</dk> and <dk>12</dk>', esUtil.createTaggedSystematicNote(esSys, 1));
-    assert.equal('Note text<br >Note text <dk>12.34</dk>', esUtil.createTaggedSystematicNote(esSys, 2));
+    assert.equal('Note text <dk>12.34</dk>', esUtil.createTaggedSystematicNote(esSys, 0, 'a40'));
+    assert.equal('Note text <dk>12</dk> and <dk>12</dk>', esUtil.createTaggedSystematicNote(esSys, 1, 'a40'));
+    assert.equal('Note text<br >Note text <dk>12.34</dk>', esUtil.createTaggedSystematicNote(esSys, 2, 'a40'));
     assert.equal('', esUtil.createTaggedSystematicNote(esSys, 3));
   });
   it('it should create a register note', () => {

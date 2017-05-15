@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Arrow} from '../svg/svg.container';
 
 export class ToggleContainer extends React.Component {
@@ -26,7 +27,7 @@ export class ToggleContainer extends React.Component {
 }
 
 ToggleContainer.propTypes = {
-  show: React.PropTypes.bool
+  show: PropTypes.bool
 };
 
 export const ToggleButton = ({show, showText, hideText, onClick}) => {

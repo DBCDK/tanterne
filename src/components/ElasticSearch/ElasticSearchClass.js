@@ -59,7 +59,9 @@ export class ElasticClient {
       9: {index: '90-99', title: ''}
     };
     this.dk5Syst = {};
+    this.dk5HasChildren = {};
     this.dk5SystematicNotes = {};
+    this.dk5SystematicHistoricNotes = {};
     this.dk5GeneralNote = {};
     this.dk5RegisterNotes = {};
   }
@@ -108,18 +110,26 @@ export class ElasticClient {
     await this.loadTabsFromElasticSearch();
     let hierarchy = {};
     let top = {};
+    let query = q;
+    while (query.indexOf('.') !== -1 && query.length > 2 && !this.dk5Syst[query]) {  // cut until found - handling country codes
+      query = query.substr(0, query.length - 1);
+    }
     Object.keys(this.topGroups).forEach((idx) => {
       if (this.topGroups[idx].index === q) {
         top = this.topGroups[idx];
       }
     });
-    const regRecords = await this.fetchRegisterWords(q);
+    const regRecords = await this.fetchRegisterWords(query);
     if (regRecords.length) {
       // collect systematic for children
       let children = [];
       Object.keys(this.dk5Syst).forEach((idx) => {
-        if (this.dk5Syst[idx].parentIndex === q) {
-          children.push({index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title});
+        if (this.dk5Syst[idx].parentIndex === query) {
+          children.push({
+            index: this.dk5Syst[idx].index,
+            title: this.dk5Syst[idx].title,
+            hasChildren: this.dk5HasChildren[idx] || false
+          });
         }
       });
 
@@ -129,17 +139,23 @@ export class ElasticClient {
       if (!top.title) {
 
         // collect systematic for parents
-        if (this.dk5Syst[q]) {
-          parent = this.dk5Syst[q];
+        if (this.dk5Syst[query]) {
+          parent = this.dk5Syst[query];
           Object.keys(this.dk5Syst).forEach((idx) => {
             if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
-              let item = {index: this.dk5Syst[idx].index, title: this.dk5Syst[idx].title};
-              if (idx === q) {
+              let item = {
+                index: this.dk5Syst[idx].index,
+                title: this.dk5Syst[idx].title,
+                hasChildren: this.dk5HasChildren[idx] || false
+              };
+              if (idx === query) {
                 const note = this.dk5GeneralNote[idx];
                 // Notes from systematic are currently not used
                 // notes from register are moved to the individual group or register word
                 item = Object.assign(item, {
                   note: note,
+                  noteSystematic: this.dk5SystematicNotes[idx],
+                  noteSystematicHistoric: this.dk5SystematicHistoricNotes[idx],
                   items: esUtil.titleSort(regRecords)
                 }, {children: esUtil.indexSort(children)});
               }
@@ -149,28 +165,42 @@ export class ElasticClient {
         }
       }
 
-      let lastChild = q.substr(0, 1);
+      let lastChild = query.substr(0, 1);
       if (top.title) {
         const items = Object.keys(this.topGroups).map((idx) => {
-          const grp = {index: this.topGroups[idx].index, title: this.topGroups[idx].title};
-          if (grp.index === q) {
+          const grp = {index: this.topGroups[idx].index, title: this.topGroups[idx].title, hasChildren: true};
+          if (grp.index === query) {
             grp.children = esUtil.indexSort(children);
           }
           return grp;
         });
-        hierarchy = {index: top.index, title: top.title, selected: q, items: esUtil.indexSort(items)};
+        hierarchy = {
+          index: top.index,
+          title: top.title,
+          query: query,
+          hasChildren: this.dk5HasChildren[top.index] || false,
+          selected: query,
+          items: esUtil.indexSort(items)
+        };
       }
       else {
         // collect the hierarchy from parent and to the top
-        hierarchy = {selected: q, items: esUtil.indexSort(parents)};
+        hierarchy = {selected: query, items: esUtil.indexSort(parents)};
         if (parent.index) {
           lastChild = this.dk5Syst[parent.index].index;
           while (parent = this.dk5Syst[parent.parentIndex]) {         // eslint-disable-line no-cond-assign
-            hierarchy = Object.assign({index: parent.index, title: parent.title}, {children: [hierarchy]});
+            hierarchy = Object.assign({
+              index: parent.index,
+              title: parent.title,
+              hasChildren: this.dk5HasChildren[parent.index] || false
+            }, {children: [hierarchy]});
             lastChild = parent.index;
           }
         }
-        hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)] || {}, {children: [hierarchy]});
+        hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)] || {}, {
+          query: query,
+          children: [hierarchy]
+        });
       }
     }
     return hierarchy;
@@ -196,12 +226,18 @@ export class ElasticClient {
           if (source.b52m.length > 1) {
             for (let i = 0; i < source.b52m.length; i++) {
               const b52m = source.b52m[i];
-              aspects.push({index: b52m, title: source.b52y[i], parent: this.dk5Syst[b52m]});
+              aspects.push({
+                index: b52m,
+                title: source.b52y[i],
+                hasChildren: this.dk5HasChildren[b52m] || false,
+                parent: this.dk5Syst[b52m]
+              });
             }
           }
         }
       }
       result[dk5] = Object.assign({}, this.dk5Syst[dk5], {
+        hasChildren: this.dk5HasChildren[dk5] || false,
         noteSystematic: this.dk5SystematicNotes[dk5],
         noteGeneral: this.dk5GeneralNote[dk5],
         noteHistoric: this.dk5RegisterNotes[dk5],
@@ -247,6 +283,7 @@ export class ElasticClient {
       for (let i = 0; i <= 9; i++) {
         let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].index, index: 'systematic'});
         this.topGroups[i].title = esUtil.getEsField(topRes, 0, '652u')[0];
+        this.topGroups[i].hasChildren = true;
       }
     }
 
@@ -255,7 +292,7 @@ export class ElasticClient {
       const syst = await this.rawElasticSearch({
         query: '652j:*',
         limit: 9999,
-        fields: '001a, 652*, a40, a40*, parent',
+        fields: '001a, 652*, a40, a40*, a30, a30*, parent',
         index: 'systematic'
       });
       if (syst.total > 9999) {
@@ -286,7 +323,9 @@ export class ElasticClient {
         }
         const grp = esUtil.getFirstField(syst, hitPos, ['652m', '652n', '652d']);
         if (grp) {
-          this.dk5SystematicNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos);
+          this.dk5SystematicNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a40');
+          this.dk5SystematicHistoricNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a30');
+          this.dk5HasChildren[parentIndex] = true;
           this.dk5Syst[grp] = {
             index: grp,
             parentIndex: parentIndex,
@@ -332,7 +371,12 @@ export class ElasticClient {
       const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
       const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
       if (syst.title) {
-        regRecords.push({index: syst.index, title: syst.title, note: note});
+        regRecords.push({
+          index: syst.index,
+          title: syst.title,
+          hasChildren: this.dk5HasChildren[syst.index] || false,
+          note: note
+        });
       }
     }
     return regRecords;
