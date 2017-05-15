@@ -238,6 +238,7 @@ class HierarchyContainerComponent extends React.Component {
       <div className={`hierarchy container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : ''}`}>
         {navbar}
         {this.props.pro && searchField}
+        <div className="hierarchy-display">
         {elements.map(level => (
           <HierarchyLevel key={level.index} {...{
             hierarchy: level,
@@ -248,6 +249,7 @@ class HierarchyContainerComponent extends React.Component {
             cart: this.props.cart
           }} />
         ))}
+        </div>
       </div>
     );
   }

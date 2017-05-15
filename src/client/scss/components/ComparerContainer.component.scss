@@ -7,8 +7,6 @@
   background-color: #fdfdfd;
   padding: 10px;
   width: 100%;
-  height: calc(100% - 60px);
-
 
   &.toggle-cart {
     @include less-than-desktop {
@@ -35,6 +33,11 @@
     padding-top: 10px;
     padding-left: 10px;
     background-color: transparent;
+  }
+
+  @include tablet-and-up {
+    overflow-y: scroll;
+    height: calc(100% - 70px);
   }
 
   .comparer--content {

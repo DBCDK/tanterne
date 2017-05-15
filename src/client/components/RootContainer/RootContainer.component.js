@@ -161,8 +161,10 @@ export class RootContainerComponent extends Component {
   }
 
   render() {
+    const displayComparer = this.state.pro && (Object.keys(this.state.cart.contents).length || this.state.cart.isToggled);
+
     return (
-      <div>
+      <div className="root-container">
         <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
 
         <Router {...this.state}>
@@ -172,7 +174,7 @@ export class RootContainerComponent extends Component {
           <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent}/>
         </Router>
 
-        {this.state.pro && <ComparerContainer cart={this.state.cart}/>}
+        {displayComparer && <ComparerContainer cart={this.state.cart}/>}
       </div>
     );
   }
