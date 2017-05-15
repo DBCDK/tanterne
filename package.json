@@ -54,7 +54,7 @@
     "preact": "8.1.0",
     "preact-compat": "3.16.0",
     "preact-enroute": "1.2.3",
-    "prop-types": "^15.5.0",
+    "prop-types": "^15.5.10",
     "request": "^2.79.0",
     "stdio": "^0.2.7",
     "superagent": "^3.5.2"
