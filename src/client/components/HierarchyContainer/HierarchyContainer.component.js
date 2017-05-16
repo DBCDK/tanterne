@@ -12,7 +12,7 @@ import {CartButton} from '../Cart/CartButton.component';
 import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
-import * as client from "../../state/client";
+import * as client from '../../state/client';
 
 /**
  * Topics in Hierarchy element
@@ -26,8 +26,8 @@ function HierarchyElementTopics({topics}) {
         if (note) {
           const parsedNote = {};
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-              return `<a href="#!/hierarchy/${index}">${index}</a>`;
-            });
+            return `<a href="#!/hierarchy/${index}">${index}</a>`;
+          });
 
           return (
             <li key={title}>
