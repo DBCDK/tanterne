@@ -12,6 +12,7 @@ import {CartButton} from '../Cart/CartButton.component';
 import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
+import * as client from "../../state/client";
 
 /**
  * Topics in Hierarchy element
@@ -25,8 +26,8 @@ function HierarchyElementTopics({topics}) {
         if (note) {
           const parsedNote = {};
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-            return `<a href="#!/hierarchy/${index}">${index}</a>`;
-          });
+              return `<a href="#!/hierarchy/${index}">${index}</a>`;
+            });
 
           return (
             <li key={title}>
@@ -171,6 +172,14 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
  * @constructor
  */
 class HierarchyContainerComponent extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      parentIndexes: {}
+    };
+  }
+
   componentDidMount() {
     this.props.globalState.getHierarchy(this.props.params.id || '00-07');
   }
@@ -182,16 +191,28 @@ class HierarchyContainerComponent extends React.Component {
   }
 
   getParent(child) {
-    let parent = '';
+    let parent = null;
     if (!child) {
       return parent;
     }
 
-    if (child.includes('.')) {
-      parent = child.split('.')[0];
+    if (this.state.parentIndexes.hasOwnProperty(child)) {
+      parent = this.state.parentIndexes[child];
     }
-    else if (child) {
-      parent = child !== this.props.hierarchy.index ? this.props.hierarchy.index : '';
+    else {
+      client
+        .list(child)
+        .then((result) => {
+          const parentIndexes = Object.assign(this.state.parentIndexes, {});
+          if (result[child].hasOwnProperty('parentIndex')) {
+            parentIndexes[child] = result[child].parentIndex;
+          }
+          else {
+            parentIndexes[child] = null;
+          }
+          this.setState({parentIndexes: parentIndexes});
+        })
+        .catch();
     }
 
     return parent;
@@ -216,6 +237,7 @@ class HierarchyContainerComponent extends React.Component {
         pro={this.props.pro}
       />
     );
+
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
         <a href={navURL} className="hierarchy--navbar--href">
@@ -239,16 +261,16 @@ class HierarchyContainerComponent extends React.Component {
         {navbar}
         {this.props.pro && searchField}
         <div className="hierarchy-display">
-        {elements.map(level => (
-          <HierarchyLevel key={level.index} {...{
-            hierarchy: level,
-            key: level.index,
-            Header: 'h1',
-            selected: level.query ? level.query : this.props.params.id,
-            pro: this.props.pro,
-            cart: this.props.cart
-          }} />
-        ))}
+          {elements.map(level => (
+            <HierarchyLevel key={level.index} {...{
+              hierarchy: level,
+              key: level.index,
+              Header: 'h1',
+              selected: level.query ? level.query : this.props.params.id,
+              pro: this.props.pro,
+              cart: this.props.cart
+            }} />
+          ))}
         </div>
       </div>
     );
