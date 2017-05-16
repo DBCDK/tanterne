@@ -39,6 +39,10 @@
   margin: 0 auto;
 
   &.pro {
+    @include tablet-and-up {
+      height: 100%;
+    }
+
     @include xldesktop {
       max-width: 1600px;
     }
@@ -49,6 +53,7 @@
   background-color: white;
   padding: 3rem;
   margin-top: 3rem;
+  height: 100%;
 
   @include small-phone {
     margin-top: 0;
@@ -59,4 +64,8 @@
     margin-top: 0;
     padding: 0;
   }
+}
+
+.root-container {
+  height: 100%;
 }
