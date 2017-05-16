@@ -56,18 +56,22 @@ function AspectTitleElement({title}) {
   return (<a href={`#!/search/${title}/10/0/relevance/dictionary`}>{title}</a>);
 }
 
+function parseDescriptiveText(text) {
+  return text.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
+    return `
+     <a href="#!/hierarchy/${index}">
+      ${index}
+    </a>`;
+  });
+}
+
 /**
  * Description of Hierarchy element
  *
  * @constructor
  */
 function HierarchyElementDescription({description}) {
-  const parsedText = description.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-    return `
-     <a href="#!/hierarchy/${index}">
-      ${index}
-    </a>`;
-  });
+  const parsedText = parseDescriptiveText(description);
   return (
     <div className="hierarchy-description">
       <ToggleContainer>
@@ -109,12 +113,14 @@ function getRenderedTopics(topics) {
  *
  * @constructor
  */
-function HierarchyElement({topics, description = ''}) {
+function HierarchyElement({topics, description = '', pro = false, noteSystematic = '', noteSystematicHistoric = ''}) {
   const renderedTopics = getRenderedTopics(topics);
 
   return (
     <div className="hierarchy-el">
       {description && <HierarchyElementDescription description={description}/>}
+      {pro && <div className={'historic-note'} dangerouslySetInnerHTML={{__html: parseDescriptiveText(noteSystematicHistoric)}} />}
+      {pro && <div className={'systematic-note'} dangerouslySetInnerHTML={{__html: parseDescriptiveText(noteSystematic)}} />}
       {renderedTopics}
     </div>
   );
@@ -126,7 +132,7 @@ function HierarchyElement({topics, description = ''}) {
  * @constructor
  */
 function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, cart}) {
-  const {index, title, hasChildren, children, items, note} = hierarchy;
+  const {index, title, hasChildren, children, items, note, noteSystematic, noteSystematicHistoric} = hierarchy;
   const isSelected = selected === index;
 
   let contains = children;
@@ -148,7 +154,13 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
           </Link>
         </Header>
-        {isSelected && items && <HierarchyElement topics={items} description={note}/>}
+        {isSelected && items && <HierarchyElement
+          topics={items}
+          description={note}
+          pro={pro}
+          noteSystematic={noteSystematic}
+          noteSystematicHistoric={noteSystematicHistoric}
+        />}
         {selected && contains && contains.map(el => <HierarchyLevel key={level.index} {...{
           hierarchy: el,
           key: el.index,
