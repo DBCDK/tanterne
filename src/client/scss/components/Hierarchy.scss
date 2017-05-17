@@ -3,8 +3,11 @@ $navbar_height: 60px;
 .pro {
   .container {
     @include transition-width();
-    width: 100%;
+    width: calc(100% - 20px);
     display: inline-block;
+    height: calc(100% - 100px);
+    overflow-y: auto;
+    overflow-x: hidden;
     &.show-cart {
       width: 60%;
 
@@ -37,6 +40,10 @@ $navbar_height: 60px;
       border-top: 1px solid #e0e0e0;
     }
   }
+}
+
+.hierarchy-display {
+  height: inherit;
 }
 
 .hierarchy-level {
