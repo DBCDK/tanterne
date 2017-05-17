@@ -20,7 +20,7 @@ export class TopBarComponent extends Component {
 
     return (
       <div className="top-bar--container">
-        <a className="unlink" href="/">
+        <a accesskey="H" className="unlink" href="/">
           <img className="top-bar--logo" src="/DK5logo_blue.png"/>
           <span className="top-bar--caption">
             {topBarCaption}
