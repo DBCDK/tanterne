@@ -1,4 +1,375 @@
 {
+  "00-07": {
+    "hasChildren": true,
+    "aspects": [],
+    "items": [
+      {
+        "index": "",
+        "title": "Værker af almindeligt og blandet indhold",
+        "hasChildren": false,
+        "note": ""
+      }
+    ]
+  },
+  "00": {
+    "index": "00",
+    "parentIndex": "00-07",
+    "title": "Bogvæsen og boghåndværk",
+    "parent": "Bogvæsen. Biblioteker. Museer. Medier. Leksika og blandede værker",
+    "hasChildren": true,
+    "noteSystematic": "<dk>00</dk> er fællesgruppe for <dk>00-02</dk> . Her sættes værker om boghåndværket i alm. Typografisk teknik sættes i <dk>00.1</dk> , reproduktionsteknik i <dk>00.2</dk> . Bogtilrettelægning sættes i <dk>00</dk> . I undergrupperne <dk>00.4</dk> og <dk>00.5</dk> placeres foruden bogforlagsvirksomhed også publiceringsvirksomhed i alm.",
+    "noteGeneral": "Bibliometrisk metode anvendt på enkelte områder må søges under området",
+    "noteHistoric": "Bibliometrisk metode anvendt på enkelte områder må søges under området",
+    "aspects": [],
+    "items": [
+      {
+        "index": "00",
+        "title": "Avisfremstilling",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bibliometri",
+        "hasChildren": true,
+        "note": "Bibliometrisk metode anvendt på enkelte områder må søges under området"
+      },
+      {
+        "index": "00",
+        "title": "Billedredaktion",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bladfremstilling",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bogformater",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bogfremstilling",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Boghåndværk",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bogkunst",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bogomslag",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bogtilrettelægning",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bogvæsen",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bogæstetik",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Bøger",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00",
+        "title": "Publicering",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "37.33",
+        "title": "Skoleblade",
+        "hasChildren": false,
+        "note": "Enkelte skoleblade må søges under den pågældende skole, f.eks. Enkelte danske skoler 37.5"
+      },
+      {
+        "index": "",
+        "title": "Værker af almindeligt og blandet indhold",
+        "hasChildren": false,
+        "note": ""
+      }
+    ]
+  },
+  "00.1": {
+    "index": "00.1",
+    "parentIndex": "00",
+    "title": "Bogtryk",
+    "parent": "Bogvæsen og boghåndværk",
+    "hasChildren": true,
+    "noteSystematic": "Her sættes typograffagets alm. teknik. Her sættes også trykprocesser i alm.<br >Bogtrykmetal sættes i <dk>66.3</dk> , tryksværte i <dk>66.69</dk>",
+    "aspects": [],
+    "items": [
+      {
+        "index": "00.1",
+        "title": "Accidenstryk",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "90.84",
+        "title": "Alfabeter",
+        "hasChildren": false,
+        "note": "Alfabeter for enkelte sprog må søges under sproget"
+      },
+      {
+        "index": "00.1",
+        "title": "Avistryk",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Blankettryk",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Bogskrifter",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Bogtryk",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Bogtrykkerier",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Bogtrykmaskiner",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Computersætning",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Datatryk",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Desk top publishing",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Elektrotypi",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Fotosætning",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Grafisk teknik",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Grafiske fag",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Hustrykkerier",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Håndsætning",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "75.1",
+        "title": "Højtryk",
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Korrekturlæsning",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Manuskriptteknik",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Maskinsats",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Maskinsætning",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Satsteknik",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Skrift",
+        "hasChildren": true,
+        "note": "Enkelte alfabeter og skrifttegn må søges under sprogvidenskab"
+      },
+      {
+        "index": "00.1",
+        "title": "Skriftdesign i alm.",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Stereotypi",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Sætning",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Teletypi",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Trykfejl",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Trykkerier",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Trykning",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Tryksager",
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "00.1",
+        "title": "Typografi",
+        "hasChildren": true,
+        "note": ""
+      }
+    ]
+  },
+  "00.109": {
+    "index": "00.109",
+    "parentIndex": "00.1",
+    "title": "Bogtrykkerkunstens historie",
+    "parent": "Bogtryk",
+    "hasChildren": false,
+    "noteSystematic": "Her sættes værker om blokbøger og inkunabler. Her sættes også bogtrykkerihistorie. Bogmaleriets historie sættes i <dk>75.09</dk> . Papirets historie og værker om vandmærker sættes i <dk>67.6</dk>",
+    "aspects": [],
+    "items": [
+      {
+        "index": "00.109",
+        "title": "Blokbogtrykkets historie",
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "00.109",
+        "title": "Inkunabeltrykkets historie",
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "00.109",
+        "title": "Palæotypernes historie",
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "00.109",
+        "title": "Trykkunstens historie",
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "00.109",
+        "title": "Vuggetrykkets historie",
+        "hasChildren": false,
+        "note": ""
+      }
+    ]
+  },
   "123.456": {
     "aspects": [],
     "items": []
