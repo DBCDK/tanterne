@@ -7,6 +7,7 @@ import ElasticClass from '../components/ElasticSearch';
 
 // Libraries
 const Router = require('koa-router');
+const {CONFIG} = require('../utils/config.util');
 
 // Init router
 const APIRouter = new Router();
@@ -144,6 +145,9 @@ async function listHandler(ctx) {
   };
 
   ctx.set('Content-Type', 'application/json');
+  if (CONFIG.app.env === 'production') {
+    ctx.set('Max-age', '864000'); // Allow the browser to cache the response for 10 days
+  }
   ctx.body = JSON.stringify(response);
 }
 
