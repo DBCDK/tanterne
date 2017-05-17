@@ -44,7 +44,7 @@ async function hierarchyHandler(ctx) {
     status: 200,
     parameters: {endpoint: 'hierarchy', query: q},
     response: {},
-    result: await ElasticClient.elasticHierarchy(q)
+    result: await ElasticClient.elasticHierarchy(q, ctx.pro)
   };
 
   ctx.set('Content-Type', 'application/json');
@@ -94,7 +94,7 @@ async function searchHandler(ctx) {
 
   if (errors === 0) {
     const results = await Promise.all([
-      ElasticClient.elasticSearch({query: q, limit: limit, offset: offset}),
+      ElasticClient.elasticSearch({query: q, limit: limit, offset: offset}, ctx.pro),
       ElasticClient.elasticSuggest(q)
     ]);
 
@@ -120,7 +120,7 @@ async function searchHandler(ctx) {
         query: results[1].spell[0].match,
         limit: limit,
         offset: offset
-      });
+      }, ctx.pro);
     }
 
     // no results, but spelling is disabled so give some suggestions instead.
