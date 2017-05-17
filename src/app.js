@@ -47,8 +47,8 @@ function createApp(pro) {
     app.proxy = true;
 
     // Setup middlewares
-    app.use(convert(serve('./static', {maxage: 864000000})));
-    app.use(convert(serve('./public')));
+    app.use(convert(serve('./static', {maxage: 864000}))); // 10 days
+    app.use(convert(serve('./public'), {maxage: 86400})); // 1 day
     app.use(SetVersionHeader);
     app.use(LoggerMiddleware);
 
