@@ -167,7 +167,6 @@ export class ElasticClient {
         }
         return grp;
       });
-      console.log(top);
       hierarchy = {
         index: top.index,
         title: top.title,
@@ -327,7 +326,7 @@ export class ElasticClient {
             index: grp,
             parentIndex: parentIndex,
             title: esUtil.getFirstField(syst, hitPos, ['652u']),
-            decommissioned: esUtil.getFirstField(syst, hitPos, ['652x']) === "2",
+            decommissioned: esUtil.getFirstField(syst, hitPos, ['652x']) === '2',
             parent: parent
           };
         }

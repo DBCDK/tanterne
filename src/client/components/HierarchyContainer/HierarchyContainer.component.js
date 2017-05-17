@@ -133,7 +133,6 @@ function HierarchyElement({topics, description = '', pro = false, noteSystematic
  * @constructor
  */
 function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, cart}) {
-  console.log('hier', hierarchy);
   const {index, title, decommissioned, hasChildren, children, items, note, noteSystematic, noteSystematicHistoric} = hierarchy;
   const isSelected = selected === index;
 

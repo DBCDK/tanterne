@@ -39,7 +39,7 @@ const SearchResultSingle = ({title, dk5, parent, pro, cart, decommissioned}) => 
   );
 };
 
-const SearchResultGroup = ({title, items, pro, cart, decommissioned}) => {
+const SearchResultGroup = ({title, items, pro, cart}) => {
   return (
     <div className="result-group">
       <h2><span className="name">{title}</span></h2>
