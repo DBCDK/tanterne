@@ -120,89 +120,88 @@ export class ElasticClient {
       }
     });
     const regRecords = await this.fetchRegisterWords(query);
-    if (regRecords.length) {
-      // collect systematic for children
-      let children = [];
-      Object.keys(this.dk5Syst).forEach((idx) => {
-        if (this.dk5Syst[idx].parentIndex === query) {
-          children.push({
-            index: this.dk5Syst[idx].index,
-            title: this.dk5Syst[idx].title,
-            hasChildren: this.dk5HasChildren[idx] || false
-          });
-        }
-      });
-
-      // collect register records refered to
-      let parents = [];
-      let parent = {};
-      if (!top.title) {
-
-        // collect systematic for parents
-        if (this.dk5Syst[query]) {
-          parent = this.dk5Syst[query];
-          Object.keys(this.dk5Syst).forEach((idx) => {
-            if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
-              let item = {
-                index: this.dk5Syst[idx].index,
-                title: this.dk5Syst[idx].title,
-                hasChildren: this.dk5HasChildren[idx] || false
-              };
-              if (idx === query) {
-                const note = this.dk5GeneralNote[idx];
-                // Notes from systematic are currently not used
-                // notes from register are moved to the individual group or register word
-                item = Object.assign(item, {
-                  note: note,
-                  noteSystematic: this.dk5SystematicNotes[idx],
-                  noteSystematicHistoric: this.dk5SystematicHistoricNotes[idx],
-                  items: esUtil.titleSort(regRecords)
-                }, {children: esUtil.indexSort(children)});
-              }
-              parents.push(item);
-            }
-          });
-        }
-      }
-
-      let lastChild = query.substr(0, 1);
-      if (top.title) {
-        const items = Object.keys(this.topGroups).map((idx) => {
-          const grp = {index: this.topGroups[idx].index, title: this.topGroups[idx].title, hasChildren: true};
-          if (grp.index === query) {
-            grp.children = esUtil.indexSort(children);
-          }
-          return grp;
+    // collect systematic for children
+    let children = [];
+    Object.keys(this.dk5Syst).forEach((idx) => {
+      if (this.dk5Syst[idx].parentIndex === query) {
+        children.push({
+          index: this.dk5Syst[idx].index,
+          title: this.dk5Syst[idx].title,
+          hasChildren: this.dk5HasChildren[idx] || false
         });
-        hierarchy = {
-          index: top.index,
-          title: top.title,
-          query: query,
-          hasChildren: this.dk5HasChildren[top.index] || false,
-          selected: query,
-          items: esUtil.indexSort(items)
-        };
       }
-      else {
-        // collect the hierarchy from parent and to the top
-        hierarchy = {selected: query, items: esUtil.indexSort(parents)};
-        if (parent.index) {
-          lastChild = this.dk5Syst[parent.index].index;
-          while (parent = this.dk5Syst[parent.parentIndex]) {         // eslint-disable-line no-cond-assign
-            hierarchy = Object.assign({
-              index: parent.index,
-              title: parent.title,
-              hasChildren: this.dk5HasChildren[parent.index] || false
-            }, {children: [hierarchy]});
-            lastChild = parent.index;
+    });
+
+    // collect register records refered to
+    let parents = [];
+    let parent = {};
+    if (!top.title) {
+
+      // collect systematic for parents
+      if (this.dk5Syst[query]) {
+        parent = this.dk5Syst[query];
+        Object.keys(this.dk5Syst).forEach((idx) => {
+          if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
+            let item = {
+              index: this.dk5Syst[idx].index,
+              title: this.dk5Syst[idx].title,
+              hasChildren: this.dk5HasChildren[idx] || false
+            };
+            if (idx === query) {
+              const note = this.dk5GeneralNote[idx];
+              // Notes from systematic are currently not used
+              // notes from register are moved to the individual group or register word
+              item = Object.assign(item, {
+                note: note,
+                noteSystematic: this.dk5SystematicNotes[idx],
+                noteSystematicHistoric: this.dk5SystematicHistoricNotes[idx],
+                items: esUtil.titleSort(regRecords)
+              }, {children: esUtil.indexSort(children)});
+            }
+            parents.push(item);
           }
-        }
-        hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)] || {}, {
-          query: query,
-          children: [hierarchy]
         });
       }
     }
+
+    let lastChild = query.substr(0, 1);
+    if (top.title) {
+      const items = Object.keys(this.topGroups).map((idx) => {
+        const grp = {index: this.topGroups[idx].index, title: this.topGroups[idx].title, hasChildren: true};
+        if (grp.index === query) {
+          grp.children = esUtil.indexSort(children);
+        }
+        return grp;
+      });
+      hierarchy = {
+        index: top.index,
+        title: top.title,
+        query: query,
+        hasChildren: this.dk5HasChildren[top.index] || false,
+        selected: query,
+        items: esUtil.indexSort(items)
+      };
+    }
+    else {
+      // collect the hierarchy from parent and to the top
+      hierarchy = {selected: query, items: esUtil.indexSort(parents)};
+      if (parent.index) {
+        lastChild = this.dk5Syst[parent.index].index;
+        while (parent = this.dk5Syst[parent.parentIndex]) {         // eslint-disable-line no-cond-assign
+          hierarchy = Object.assign({
+            index: parent.index,
+            title: parent.title,
+            hasChildren: this.dk5HasChildren[parent.index] || false
+          }, {children: [hierarchy]});
+          lastChild = parent.index;
+        }
+      }
+      hierarchy = Object.assign(this.topGroups[lastChild.substr(0, 1)] || {}, {
+        query: query,
+        children: [hierarchy]
+      });
+    }
+
     return hierarchy;
   }
 
