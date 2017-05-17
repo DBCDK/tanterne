@@ -211,7 +211,7 @@ export class SearchFieldComponent extends Component {
               className="search-field"
               placeholder="Skriv emne"
               value={this.state.query}
-              accesskey="S"
+              accessKey="S"
             />
 
             <span className="search-field--spinner">
