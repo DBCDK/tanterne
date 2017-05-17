@@ -130,6 +130,9 @@ $navbar_height: 60px;
     margin-right: 5px;
   }
 
+  .decommissioned {
+    color: $decommissioned;
+  }
   .hasChildren {
     &:after {
       margin-left: 2px;
