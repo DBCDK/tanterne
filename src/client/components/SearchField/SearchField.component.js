@@ -50,6 +50,12 @@ export class SearchFieldComponent extends Component {
     }
   }
 
+  componentWillReceiveProps(props) {
+    if (props.params && props.params.q) {
+      this.setState({query: props.params.q});
+    }
+  }
+
   // Helper function to prevent dispatching requests while a user is typing.
   deferExecution(func, timeout) {
     let timer = null;
