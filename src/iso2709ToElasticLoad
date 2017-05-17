@@ -48,7 +48,7 @@ const filter = option.filter;
 const dk5Buf = [];
 const info = [''];
 let deleted = 0;
-let obsolete = 0;
+let closed = 0;
 let missing = 0;
 
 records.forEach(function (record) {
@@ -59,8 +59,8 @@ records.forEach(function (record) {
 const {dk5SystTab, dk5RegTab} = createDk5Tab();
 
 dumpRecords();
-info.push('  skipped ' + deleted + ' deleted records');
-info.push('  skipped ' + obsolete + ' closed records');
+info.push('  found ' + closed + ' closed records (652x: 2)');
+info.push('  skipped ' + deleted + ' deleted records (004r: d)');
 info.push('Created ' + missing + ' register records from systematic');
 
 fs.closeSync(outfile);
@@ -144,42 +144,40 @@ function dumpRecords() {
     }
     else {
       if (dk5['652x'] && dk5['652x'][0] === '2') {
-        obsolete++;
+        closed++;
       }
-      else {
-        const d09aStem = dk5['d09a'] ? dk5['d09a'][0].substr(0, 3) : 'NUL';
-        const bibKat = bibKatMap[d09aStem] ? d09aStem : 'NUL';
-        let number = '';
-        ['652m', '652n', '652d'].forEach((subf) => {
-          if (!number && Array.isArray(dk5[subf])) {
-            number = dk5[subf][0];
-          }
-        });
-        if (bibKat === 'DK5') {
-          const parent = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
-          if (!dk5RegTab[number]) {
-            missing++;
-          }
-          if (dk5SystTab[parent]) {
-            dk5['parent'] = [dk5SystTab[parent]];
-          }
-          // create "missing" register record - not all systematic have a register record
-          if (!dk5RegTab[number] || (dk5['652d'] && topGroup.indexOf(dk5['652d'][0]) > -1)) {
-            bibKatMap['REK'].no++;
-            indexRec.index._id = recno++;
-            indexRec.index._index = 'register';
-            writeRecord(JSON.stringify(indexRec));
-            writeRecord(JSON.stringify(dk5));
-          }
+      const d09aStem = dk5['d09a'] ? dk5['d09a'][0].substr(0, 3) : 'NUL';
+      const bibKat = bibKatMap[d09aStem] ? d09aStem : 'NUL';
+      let number = '';
+      ['652m', '652n', '652d'].forEach((subf) => {
+        if (!number && Array.isArray(dk5[subf])) {
+          number = dk5[subf][0];
         }
-        let index = bibKatMap[bibKat].index;
-        bibKatMap[bibKat].no++;
-        indexRec.index._id = recno++;
-        indexRec.index._index = index;
-        if (!filter || (number && (filter === number.substr(0, filter.length)))) {
+      });
+      if (bibKat === 'DK5') {
+        const parent = Array.isArray(dk5['652j']) ? dk5['652j'][0] : '';
+        if (!dk5RegTab[number]) {
+          missing++;
+        }
+        if (dk5SystTab[parent]) {
+          dk5['parent'] = [dk5SystTab[parent]];
+        }
+        // create "missing" register record - not all systematic have a register record
+        if (!dk5RegTab[number] || (dk5['652d'] && topGroup.indexOf(dk5['652d'][0]) > -1)) {
+          bibKatMap['REK'].no++;
+          indexRec.index._id = recno++;
+          indexRec.index._index = 'register';
           writeRecord(JSON.stringify(indexRec));
           writeRecord(JSON.stringify(dk5));
         }
+      }
+      let index = bibKatMap[bibKat].index;
+      bibKatMap[bibKat].no++;
+      indexRec.index._id = recno++;
+      indexRec.index._index = index;
+      if (!filter || (number && (filter === number.substr(0, filter.length)))) {
+        writeRecord(JSON.stringify(indexRec));
+        writeRecord(JSON.stringify(dk5));
       }
     }
   });

@@ -88,12 +88,13 @@ export class ElasticClient {
   /**
    *
    * @param pars
+   * @param pro
    * @returns {*}
    */
-  async elasticSearch(pars) {
+  async elasticSearch(pars, pro) {
     await this.loadTabsFromElasticSearch();
     const res = [];
-    const esRes = await this.rawElasticSearch(pars);
+    const esRes = await this.rawElasticSearch(pars, pro);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst));
     }
@@ -104,14 +105,15 @@ export class ElasticClient {
    * Build hierarchy.
    *
    * @param q
+   * @param pro
    * @returns {*}
    */
-  async elasticHierarchy(q) {
+  async elasticHierarchy(q, pro) {
     await this.loadTabsFromElasticSearch();
     let hierarchy = {};
     let top = {};
     let query = q;
-    while (query.indexOf('.') !== -1 && query.length > 2 && !this.dk5Syst[query]) {  // cut until found - handling country codes
+    while (query.indexOf('.') !== -1 && query.length > 2 && (!this.dk5Syst[query] || (!pro && this.dk5Syst[query].decommissioned))) {  // cut until found - handling country codes
       query = query.substr(0, query.length - 1);
     }
     Object.keys(this.topGroups).forEach((idx) => {
@@ -119,16 +121,12 @@ export class ElasticClient {
         top = this.topGroups[idx];
       }
     });
-    const regRecords = await this.fetchRegisterWords(query);
+    const regRecords = await this.fetchRegisterWords(query, pro);
     // collect systematic for children
     let children = [];
     Object.keys(this.dk5Syst).forEach((idx) => {
       if (this.dk5Syst[idx].parentIndex === query) {
-        children.push({
-          index: this.dk5Syst[idx].index,
-          title: this.dk5Syst[idx].title,
-          hasChildren: this.dk5HasChildren[idx] || false
-        });
+        children.push(this.setItemFromIdx(idx));
       }
     });
 
@@ -142,11 +140,7 @@ export class ElasticClient {
         parent = this.dk5Syst[query];
         Object.keys(this.dk5Syst).forEach((idx) => {
           if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
-            let item = {
-              index: this.dk5Syst[idx].index,
-              title: this.dk5Syst[idx].title,
-              hasChildren: this.dk5HasChildren[idx] || false
-            };
+            let item = this.setItemFromIdx(idx);
             if (idx === query) {
               const note = this.dk5GeneralNote[idx];
               // Notes from systematic are currently not used
@@ -176,6 +170,7 @@ export class ElasticClient {
       hierarchy = {
         index: top.index,
         title: top.title,
+        decommissioned: top.decommissioned,
         query: query,
         hasChildren: this.dk5HasChildren[top.index] || false,
         selected: query,
@@ -191,6 +186,7 @@ export class ElasticClient {
           hierarchy = Object.assign({
             index: parent.index,
             title: parent.title,
+            decommissioned: this.dk5Syst[parent.index].decommissioned,
             hasChildren: this.dk5HasChildren[parent.index] || false
           }, {children: [hierarchy]});
           lastChild = parent.index;
@@ -216,7 +212,7 @@ export class ElasticClient {
     const result = {};
     for (let dk5 of dk5List.split(',')) {
       dk5 = dk5.trim();
-      const regRecords = await this.fetchRegisterWords(dk5);
+      const regRecords = await this.fetchRegisterWords(dk5, true);
       const aspects = [];
       if (this.dk5Syst[dk5]) {
         const aspectRes = await this.rawElasticSearch({query: 'b52m:' + dk5 + ' AND 630a:' + this.dk5Syst[dk5].title});
@@ -282,6 +278,7 @@ export class ElasticClient {
       for (let i = 0; i <= 9; i++) {
         let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].index, index: 'systematic'});
         this.topGroups[i].title = esUtil.getEsField(topRes, 0, '652u')[0];
+        this.topGroups[i].decommissioned = false;
         this.topGroups[i].hasChildren = true;
       }
     }
@@ -293,7 +290,7 @@ export class ElasticClient {
         limit: 9999,
         fields: '001a, 652*, a40, a40*, a30, a30*, parent',
         index: 'systematic'
-      });
+      }, true);
       if (syst.total > 9999) {
         Logger.log.error('More that 9999 systematic records');
       }
@@ -329,6 +326,7 @@ export class ElasticClient {
             index: grp,
             parentIndex: parentIndex,
             title: esUtil.getFirstField(syst, hitPos, ['652u']),
+            decommissioned: esUtil.getFirstField(syst, hitPos, ['652x']) === '2',
             parent: parent
           };
         }
@@ -341,12 +339,16 @@ export class ElasticClient {
     // load words into autocomplete trie.
     if (!this.autocomplete.trie.prefixes) {
       const wordFields = ['630a', 'b52y'];
-      const regRecs = await this.rawElasticSearch({query: '*', fields: wordFields.join(','), limit: 50000});
+      const regRecs = await this.rawElasticSearch({query: '*', fields: wordFields.join(','), limit: 50000}, true);
       this.vocabulary = esUtil.parseRegisterForUniqueWords(regRecs, wordFields);
       this.autocomplete.initialize((onReady) => {
         onReady(this.vocabulary);
       });
-      const regNotes = await this.rawElasticSearch({query: '651:* OR b00:*', fields: '651*, 652*, b00*', limit: 50000});
+      const regNotes = await this.rawElasticSearch({
+        query: '651:* OR b00:*',
+        fields: '651*, 652*, b00*',
+        limit: 50000
+      }, true);
       this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes, this.dk5Syst);
       this.dk5GeneralNote = esUtil.parseRegisterForGeneralNotes(regNotes);
     }
@@ -356,16 +358,17 @@ export class ElasticClient {
    * Return register words and note for a given dk5 number
    *
    * @param dk5
+   * @param pro
    * @returns {Array}
    */
-  async fetchRegisterWords(dk5) {
+  async fetchRegisterWords(dk5, pro) {
     const registerWordIndex = ['652m', '652d', 'b52m'];  // one of these subFields contains the dk5 index for the register word
     const regRecords = [];
     const query = [];
     registerWordIndex.forEach((reg) => {
       query.push(reg + ':"' + dk5 + '"');
     });
-    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'});
+    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'}, pro);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
       const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
@@ -373,6 +376,7 @@ export class ElasticClient {
         regRecords.push({
           index: syst.index,
           title: syst.title,
+          decommissioned: this.dk5Syst[syst.index] ? this.dk5Syst[syst.index].decommissioned : false,
           hasChildren: this.dk5HasChildren[syst.index] || false,
           note: note
         });
@@ -385,9 +389,10 @@ export class ElasticClient {
    * Call Elastic Search and return raw result
    *
    * @param pars
+   * @param pro
    * @returns {{}}
    */
-  async rawElasticSearch(pars) {
+  async rawElasticSearch(pars, pro = false) {
     let esHits = {};
     if (pars.query.indexOf(':') === -1) {
       const q = [];
@@ -395,6 +400,9 @@ export class ElasticClient {
         q.push(fld + ':(' + pars.query + ')');
       });
       pars.query = q.join(' OR ');
+    }
+    if (!pro) {
+      pars.query += ' NOT 652x: 2';
     }
     await this.elasticClient.search(esUtil.setAndMap(pars, this.defaultParameters, this.esParMap))
       .then(function (body) {
@@ -407,4 +415,17 @@ export class ElasticClient {
     return esHits;
   }
 
+  /**
+   *
+   * @param idx
+   * @returns {{index: *, title: *, decommissioned: (*|boolean), hasChildren: (*|boolean)}}
+   */
+  setItemFromIdx(idx) {
+    return {
+      index: this.dk5Syst[idx].index,
+      title: this.dk5Syst[idx].title,
+      decommissioned: this.dk5Syst[idx].decommissioned,
+      hasChildren: this.dk5HasChildren[idx] || false
+    };
+  }
 }

@@ -55,7 +55,7 @@
     "preact-compat": "3.16.0",
     "preact-enroute": "1.2.3",
     "prop-types": "^15.5.10",
-    "request": "^2.79.0",
+    "request": "^2.81.0",
     "stdio": "^0.2.7",
     "superagent": "^3.5.2"
   },
@@ -68,7 +68,7 @@
     "eslint-plugin-react": "^7.0.1",
     "extract-text-webpack-plugin": "^2.1.0",
     "mocha": "^3.4.1",
-    "node-sass": "^4.3.0",
+    "node-sass": "^4.5.3",
     "nodemon": "^1.11.0",
     "postcss-inline-svg": "^3.0.0",
     "postcss-loader": "^2.0.0",
