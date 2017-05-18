@@ -14,20 +14,22 @@ import {CartButton} from '../Cart/CartButton.component';
 
 function parseSearchResult(result) {
   return result.map(level => {
-    const {title, items, index, parent} = level;
+    const {title, items, decommissioned, index, parent} = level;
     const subLevel = items && items.length && parseSearchResult(items) || [];
     return {
       title,
       dk5: index && {index, title} || null,
+      decommissioned: decommissioned || false,
       items: subLevel,
       parent: parent && parent.title
     };
   });
 }
 
-const SearchResultSingle = ({title, dk5, parent, pro, cart}) => {
+const SearchResultSingle = ({title, dk5, parent, pro, cart, decommissioned}) => {
+  const infoDecommissioned = decommissioned ? 'decommissioned' : '';
   return (
-    <div className="result-element">
+    <div className={`result-element ${infoDecommissioned}`}>
       <h2>
         {title}
         <span className="result-element-link">, se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>

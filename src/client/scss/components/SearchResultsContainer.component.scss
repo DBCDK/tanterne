@@ -89,6 +89,12 @@
   }
 }
 
+.result-element {
+  &.decommissioned {
+    background-color: $decommissioned-bg;
+  };
+}
+
 .result-element-link {
   font-weight: normal;
   margin-right: 0.5rem;

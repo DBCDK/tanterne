@@ -108,6 +108,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
   ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
   ret.index = getFirstField(esRes, pos, ['652m', 'b52m']);
+  ret.decommissioned = dk5Tab[ret.index].decommissioned;
   ret.id = getFirstField(esRes, pos, ['001a']);
   ret.parent = Object.assign({}, dk5Tab[ret.index]);
   const registerWords = getEsField(esRes, pos, 'b52m');
