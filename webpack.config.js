@@ -26,7 +26,14 @@ module.exports = [{
       },
       {
         test: /\.(scss|css)$/,
-        loader: extractTextPlugin.extract(['css-loader?importLoaders=1', 'postcss-loader?sourceMap=inline', 'sass-loader?sourceMap=true']) /* Checkout postcss.config.js for details */
+        loader: extractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {loader: 'css-loader', options: {sourceMap: true}},
+            {loader: 'postcss-loader', options: {sourceMap: 'inline'}},
+            {loader: 'sass-loader', options: {sourceMap: true}}
+          ]
+        }) /* Checkout postcss.config.js for details */
       }
     ]
   },
@@ -34,6 +41,7 @@ module.exports = [{
     extractCss,
     noErrorsPlugin
   ],
+  devtool: 'source-map#inline',
   resolve: {
     alias: {
       react: 'preact-compat',
