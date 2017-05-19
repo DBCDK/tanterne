@@ -233,7 +233,11 @@ export class SearchResultsContainerComponent extends Component {
         return null;
       }
       if (entry.items.length <= 1) {
-        return (<SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />);
+        return (
+          <div className="result-group">
+            <SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />
+          </div>
+        );
       }
 
       return (<SearchResultGroup key={entry.title} pro={this.props.pro} cart={this.props.cart} {...entry} />);
