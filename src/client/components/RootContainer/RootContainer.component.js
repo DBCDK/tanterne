@@ -160,11 +160,35 @@ export class RootContainerComponent extends Component {
     this.setState({cart: cart});
   }
 
+  resetTimer() {
+    this.setTimeout();
+  }
+
+  resetToFrontpage() {
+    window.location = '/';
+  }
+
+  setTimeout() {
+    if (window.location.hash === '' || window.location.hash === '/') {
+      return;
+    }
+
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = null;
+    }
+
+    this.timeoutId = setTimeout(() => {
+      this.resetToFrontpage();
+    }, 200);
+  }
+
   render() {
+    this.setTimeout();
     const displayComparer = this.state.pro && (Object.keys(this.state.cart.contents).length || this.state.cart.isToggled);
 
     return (
-      <div className="root-container">
+      <div className="root-container" onWheel={this.resetTimer.bind(this)} onScroll={this.resetTimer.bind(this)}>
         <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
 
         <Router {...this.state}>
