@@ -37,6 +37,7 @@
 .main {
   max-width: 1024px;
   margin: 0 auto;
+  height: 100%;
 
   &.pro {
     @include tablet-and-up {

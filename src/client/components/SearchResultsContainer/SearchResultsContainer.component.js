@@ -31,8 +31,8 @@ const SearchResultSingle = ({title, dk5, parent, pro, cart, decommissioned}) => 
   return (
     <div className={`result-element ${infoDecommissioned}`}>
       <h2>
-        {title}
-        <span className="result-element-link">, se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
+        <span className="result-element-title">{title},&nbsp;</span>
+        <span className="result-element-link">se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
         {pro && <CartButton index={dk5.index} cart={cart}/>}
       </h2>
     </div>
@@ -233,7 +233,11 @@ export class SearchResultsContainerComponent extends Component {
         return null;
       }
       if (entry.items.length <= 1) {
-        return (<SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />);
+        return (
+          <div className="result-group">
+            <SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />
+          </div>
+        );
       }
 
       return (<SearchResultGroup key={entry.title} pro={this.props.pro} cart={this.props.cart} {...entry} />);
