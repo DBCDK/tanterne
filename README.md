@@ -2,10 +2,12 @@
 
 [![Build Status](https://travis-ci.org/DBCDK/tanterne.svg?branch=master)](https://travis-ci.org/DBCDK/tanterne)
 [![Greenkeeper badge](https://badges.greenkeeper.io/DBCDK/tanterne.svg)](https://greenkeeper.io/)
+[![dependencies Status](https://david-dm.org/DBCDK/tanterne/status.svg)](https://david-dm.org/DBCDK/tanterne)
+[![devDependencies Status](https://david-dm.org/DBCDK/tanterne/dev-status.svg)](https://david-dm.org/DBCDK/tanterne?type=dev)
 
 ## Releases
-Releases are found at GitHub [/releases](https://github.com/DBCDK/tanterne/releases). Each containing a link to the changelog for the given release. A consolidated changelog for all releases is found at [CHANGELOG.md](https://github.com/DBCDK/hejmdal/blob/master/CHANGELOG.md) in the project root.    
-The changelog is made with [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator) and can be created with the command `github_changelog_generator -u DBCDK -p tanterne --exclude-tags-regex "(jenkins-|\d\.\d\d{1,})"` -- you may need a valid github token to run the command.
+Releases are found at GitHub [/releases](https://github.com/DBCDK/tanterne/releases). Each containing a link to the changelog for the given release. A consolidated changelog for all releases is found at [CHANGELOG.md](https://github.com/DBCDK/tanterne/blob/master/CHANGELOG.md) in the project root.    
+The changelog is made with [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator) and can be created with the command `github_changelog_generator -u DBCDK -p tanterne` -- you may need a valid GitHub token to run the command.
 
 ## Installation
 ### Elastic Search
@@ -34,6 +36,9 @@ Filter only one dk5 group like (for test purposes)
 ## Development
 After cloning the repository, run `npm install` to install dependencies. Copy test.env to env.env and set the environment variables (see below) to you need/liking. The application is started with `npm run dev`, which include [nodemon](https://www.npmjs.com/package/nodemon) in order to restart the application, when the code is changed.
 
+When started, the application will spawn two versions of the user interface: pro and non-pro. The pro version contains a more advanced featureset targeted professional users, while the non-pro version is targeted endusers on the libraries and therefore exposes a more limited and focussed featureset.
+The two versions will be available on the ports specified as environment variables. See [Environment variables](https://github.com/DBCDK/tanterne#environment-variables) for more info.
+
 ## Environment variables
 
 The variables are specified at the form `name : internal config object`. References in the log from the startup, will use the internal config object.
@@ -55,7 +60,10 @@ Log level constants supported:: `OFF` (0), `ERROR` (1), `WARN` (2), `WARNING` (2
 When run in production the `NODE_ENV` should be set to `production`: `NODE_ENV=production`
 
 - `PORT` : `app.port`  
-Specifies the port to expose the application. Default: `3010`
+Specifies the port to expose the application.
+
+- `PRO_PORT` : `pro.port`  
+Specifies the port to expose the pro-version of the application.
  
 - `PRETTY_LOG` : `log.pretty`  
 Set to `1` (`PRETTY_LOG=1`) for pretty printed log statements. Any other setting, will result in one-line log statements.
