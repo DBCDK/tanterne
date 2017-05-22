@@ -215,7 +215,7 @@ export class ElasticClient {
       const regRecords = await this.fetchRegisterWords(dk5, true);
       const aspects = [];
       if (this.dk5Syst[dk5]) {
-        const aspectRes = await this.rawElasticSearch({query: 'b52m:' + dk5 + ' AND 630a:' + this.dk5Syst[dk5].title});
+        const aspectRes = await this.rawElasticSearch({query: 'b52m:' + encodeURIComponent(dk5) + ' AND 630a:' + this.dk5Syst[dk5].title});
         for (let hitPos = 0; hitPos < aspectRes.hits.length; hitPos++) {
           const source = aspectRes.hits[hitPos]._source;
           if (source.b52m.length > 1) {
