@@ -17,8 +17,7 @@ export default class ResetToFrontpage extends React.Component {
     }
   }
 
-  resetTimer(e) {
-    console.log(e.type);
+  resetTimer() {
     this.setTimeout();
   }
 
@@ -33,7 +32,6 @@ export default class ResetToFrontpage extends React.Component {
       }
 
       this.setState({warning: {active: true, remaining: delay}});
-      console.log(`Will reset in ${delay} seconds`);
       --delay;
 
     }, 1000);
@@ -68,9 +66,8 @@ export default class ResetToFrontpage extends React.Component {
         onWheel={this.resetTimer.bind(this)}
         onScroll={this.resetTimer.bind(this)}
       >
-        <div className={`${this.state.active ?
-          'show' :
-          'hidden'}`}>Ved fortsat inaktivitet vil siden blive nulstillet til forsiden om {this.state.remaining} sekunder
+        <div className={`reset-to-frontpage--container ${this.state.warning.active ? '' : 'hidden'}`}>
+          <span className="reset-to-frontpage--text">Ved fortsat inaktivitet vil siden blive nulstillet til forsiden om {this.state.warning.remaining} sekunder</span>
         </div>
         {this.props.children}
       </div>
