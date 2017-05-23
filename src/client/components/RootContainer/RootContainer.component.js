@@ -14,6 +14,7 @@ import HierarchyContainerComponent from '../HierarchyContainer/HierarchyContaine
 import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchResultsContainer.component';
 import {TopBarComponent} from '../TopBar/TopBar.component';
 import ComparerContainer from '../Comparer/ComparerContainer.component';
+import ResetToFrontpage from '../ResetToFrontpage/ResetToFrontpage.component';
 
 // Helper function
 function getHash(hash) {
@@ -160,50 +161,28 @@ export class RootContainerComponent extends Component {
     this.setState({cart: cart});
   }
 
-  resetTimer() {
-    this.setTimeout();
-  }
-
-  resetToFrontpage() {
-    window.location = '/';
-  }
-
-  setTimeout() {
-    if (window.location.hash === '' || window.location.hash === '/') {
-      return;
-    }
-
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-      this.timeoutId = null;
-    }
-
-    this.timeoutId = setTimeout(() => {
-      this.resetToFrontpage();
-    }, 200);
-  }
-
   render() {
-    this.setTimeout();
     const displayComparer = this.state.pro && (Object.keys(this.state.cart.contents).length || this.state.cart.isToggled);
 
     return (
-      <div className="root-container" onWheel={this.resetTimer.bind(this)} onScroll={this.resetTimer.bind(this)}>
-        <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
+      <ResetToFrontpage timerEnabled={!(window.location.hash === '' || window.location.hash === '/')}>
+        <div className="root-container">
+          <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
 
-        <Router {...this.state}>
-          <Route path="/" component={SearchResultsContainerComponent}/>
-          <Route path="/help" component={HelpContainerComponent}/>
-          <Route path="/hierarchy/:id?" component={HierarchyContainerComponent}/>
-          <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent}/>
-        </Router>
+          <Router {...this.state}>
+            <Route path="/" component={SearchResultsContainerComponent}/>
+            <Route path="/help" component={HelpContainerComponent}/>
+            <Route path="/hierarchy/:id?" component={HierarchyContainerComponent}/>
+            <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent}/>
+          </Router>
 
-        {displayComparer && <ComparerContainer cart={this.state.cart}/>}
-        <div className="footer">Copyright 2016 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
-          <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
-          <a href="https://kundeservice.dbc.dk/" target="_blank" rel="noopener noreferrer">kundeservice.dbc.dk</a>
+          {displayComparer && <ComparerContainer cart={this.state.cart}/>}
+          <div className="footer">Copyright 2016 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
+            <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
+            <a href="https://kundeservice.dbc.dk/" target="_blank" rel="noopener noreferrer">kundeservice.dbc.dk</a>
+          </div>
         </div>
-      </div>
+      </ResetToFrontpage>
     );
   }
 }
