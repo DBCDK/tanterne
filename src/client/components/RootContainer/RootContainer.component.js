@@ -92,7 +92,8 @@ const state = {
     contents: {},
     isToggled: false
   },
-  pro: typeof window !== 'undefined' && window.PRO
+  pro: typeof window !== 'undefined' && window.PRO,
+  test: typeof window !== 'undefined' && window.TEST
 };
 
 export class RootContainerComponent extends Component {
@@ -165,7 +166,7 @@ export class RootContainerComponent extends Component {
     const displayComparer = this.state.pro && (Object.keys(this.state.cart.contents).length || this.state.cart.isToggled);
 
     return (
-      <ResetToFrontpage timerEnabled={!(window.location.hash === '' || window.location.hash === '/')}>
+      <ResetToFrontpage timerEnabled={!(window.location.hash === '' || window.location.hash === '/')} testEnv={this.state.test}>
         <div className="root-container">
           <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
 

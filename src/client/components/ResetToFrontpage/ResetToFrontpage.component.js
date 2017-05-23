@@ -38,6 +38,7 @@ export default class ResetToFrontpage extends React.Component {
   }
 
   setTimeout() {
+    const delay = this.props.testEnv ? 5000 : 120000;
     this.setState({warning: {active: false, remaining: 30}});
     if (!this.props.timerEnabled) {
       return;
@@ -55,8 +56,9 @@ export default class ResetToFrontpage extends React.Component {
 
     this.setState({timer: {active: true}});
     this.timeoutId = setTimeout(() => {
-      this.setResetWarning(30);
-    }, 1000);
+      const redirectDelay = this.props.testEnv ? 5 : 30;
+      this.setResetWarning(redirectDelay);
+    }, delay);
   }
 
   render() {
@@ -76,5 +78,6 @@ export default class ResetToFrontpage extends React.Component {
 }
 
 ResetToFrontpage.propTypes = {
-  timerEnabled: PropTypes.bool.isRequired
+  timerEnabled: PropTypes.bool.isRequired,
+  testEnv: PropTypes.bool.isRequired
 };

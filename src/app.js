@@ -25,8 +25,11 @@ function createApp(pro) {
   const app = new Koa();
   app.name = 'tanterne';
 
-  // Set a pro key on context object.
+  const test = CONFIG.app.env === 'test';
+
+  // Set a pro key and a test key on context object.
   Object.defineProperty(app.context, 'pro', {__proto__: null, value: pro});
+  Object.defineProperty(app.context, 'test', {__proto__: null, value: test});
 
   let PORT = CONFIG.app.port;
   let loggerName = 'Tanterne';
