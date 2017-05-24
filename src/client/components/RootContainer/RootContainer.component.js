@@ -15,8 +15,10 @@ import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchR
 import {TopBarComponent} from '../TopBar/TopBar.component';
 import ComparerContainer from '../Comparer/ComparerContainer.component';
 
+import {defineShortcuts} from './shortcuts';
+
 // Helper function
-function getHash(hash) {
+export function getHash(hash) {
   if (typeof hash === 'string' && hash.length > 0) {
     if (hash.substring(0, 2) === '#!') {
       return hash.substring(2).length === 0 ? '/' : hash.substring(2);
@@ -109,6 +111,10 @@ export class RootContainerComponent extends Component {
         location: getHash(window.location.hash)
       });
     });
+
+    if (state.pro) {
+      defineShortcuts(this);
+    }
   }
 
   addRemoveContentsToCart(item) {

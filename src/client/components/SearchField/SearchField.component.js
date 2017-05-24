@@ -54,6 +54,9 @@ export class SearchFieldComponent extends Component {
     if (props.params && props.params.q) {
       this.setState({query: props.params.q});
     }
+    else {
+      this.setState({query: ''});
+    }
   }
 
   // Helper function to prevent dispatching requests while a user is typing.
@@ -176,6 +179,7 @@ export class SearchFieldComponent extends Component {
   onSearchKeyUp(evt) {
     switch (evt.key) {
       case 'Escape': {
+        this.refs.searchInputField.blur();
         return this.onSearchBlurred();
       }
       case 'ArrowUp': {
@@ -210,6 +214,7 @@ export class SearchFieldComponent extends Component {
               onKeyDown={this.onSearchKeyUp}
               className="search-field"
               placeholder="Skriv emne"
+              ref="searchInputField"
               value={this.state.query}
               accessKey="S"
             />

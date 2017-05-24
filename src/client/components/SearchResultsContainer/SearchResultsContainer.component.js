@@ -72,6 +72,12 @@ export class SearchResultsContainerComponent extends Component {
     this.searchWasTriggered(this.props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location === '/') {
+      this.setState({query: ''});
+    }
+  }
+
   searchWasTriggered(props) {
     const searchResults = this.state.searchResults;
     const {limit = 10, offset = 0, q = null, sort = 'relevance', spell = 'dictionary'} = props.params;
