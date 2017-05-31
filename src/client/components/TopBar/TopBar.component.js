@@ -10,6 +10,10 @@ import PropTypes from 'prop-types';
 import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 
 export class TopBarComponent extends Component {
+  clearCart() {
+    location.reload();
+  }
+
   render() {
     const cart = this.props.pro ? <TopbarCartItem cart={this.props.cart}/> : null;
 
@@ -18,14 +22,9 @@ export class TopBarComponent extends Component {
       topBarCaption = 'DK5 PRO';
     }
 
-    let emptyCart;
-    if (Object.keys(this.props.cart.contents).length) {
-      emptyCart = <a accessKey="T" href="javascript:location.reload()"/>;  // eslint-disable-line no-script-url
-    }
-
     return (
       <div className="top-bar--container">
-        {emptyCart}
+       {Object.keys(this.props.cart.contents).length > 0 && <a accessKey="T" onClick={this.clearCart.bind(this)}/>}
         <a accessKey="H" className="unlink" href="/">
           <img className="top-bar--logo" src="/DK5logo_blue.png"/>
           <span className="top-bar--caption">
