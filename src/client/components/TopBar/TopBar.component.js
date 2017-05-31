@@ -18,8 +18,14 @@ export class TopBarComponent extends Component {
       topBarCaption = 'DK5 PRO';
     }
 
+    let emptyCart;
+    if (Object.keys(this.props.cart.contents).length) {
+      emptyCart = <a accessKey="T" href="javascript:location.reload()"/>;
+    }
+
     return (
       <div className="top-bar--container">
+        {emptyCart}
         <a accessKey="H" className="unlink" href="/">
           <img className="top-bar--logo" src="/DK5logo_blue.png"/>
           <span className="top-bar--caption">
