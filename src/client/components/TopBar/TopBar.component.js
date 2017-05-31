@@ -24,7 +24,7 @@ export class TopBarComponent extends Component {
 
     return (
       <div className="top-bar--container">
-       {Object.keys(this.props.cart.contents).length > 0 && <a accessKey="T" onClick={this.clearCart.bind(this)}/>}
+       {(Object.keys(this.props.cart.contents).length > 0) && <a accessKey="T" onClick={this.clearCart.bind(this)}/>}
         <a accessKey="H" className="unlink" href="/">
           <img className="top-bar--logo" src="/DK5logo_blue.png"/>
           <span className="top-bar--caption">
