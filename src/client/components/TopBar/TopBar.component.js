@@ -20,7 +20,7 @@ export class TopBarComponent extends Component {
 
     let emptyCart;
     if (Object.keys(this.props.cart.contents).length) {
-      emptyCart = <a accessKey="T" href="javascript:location.reload()"/>;
+      emptyCart = <a accessKey="T" href="javascript:location.reload()"/>;  // eslint-disable-line no-script-url
     }
 
     return (
