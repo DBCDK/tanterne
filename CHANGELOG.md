@@ -7,18 +7,29 @@
 **Implemented enhancements:**
 
 - PRO: Nedlagte grupper skal markeres  [\#170](https://github.com/DBCDK/tanterne/issues/170)
+- PRO: Genvejstaster [\#167](https://github.com/DBCDK/tanterne/issues/167)
 
 **Fixed bugs:**
 
+- Alt for stor linieafstand i resultat for Jacob \(JAW\) [\#162](https://github.com/DBCDK/tanterne/issues/162)
 - Klik fra oversigtsside \(fx. 30-39\) lander på dbc.dk [\#161](https://github.com/DBCDK/tanterne/issues/161)
 - Navigation via navbar på mobil skal fikses [\#125](https://github.com/DBCDK/tanterne/issues/125)
 
 **Closed issues:**
 
 - An in-range update of node-sass is breaking the build 🚨 [\#201](https://github.com/DBCDK/tanterne/issues/201)
+- Udviklerdokumentation [\#185](https://github.com/DBCDK/tanterne/issues/185)
+- Ikoner... [\#138](https://github.com/DBCDK/tanterne/issues/138)
+- søgeresultat skal være responsivt [\#136](https://github.com/DBCDK/tanterne/issues/136)
 
 **Merged pull requests:**
 
+- Footer [\#211](https://github.com/DBCDK/tanterne/pull/211) ([hrmoller](https://github.com/hrmoller))
+- List kolon fvs [\#210](https://github.com/DBCDK/tanterne/pull/210) ([fvsdbc](https://github.com/fvsdbc))
+- Update style-loader to the latest version 🚀 [\#209](https://github.com/DBCDK/tanterne/pull/209) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
+- Udviklerdokumentation [\#208](https://github.com/DBCDK/tanterne/pull/208) ([hrmoller](https://github.com/hrmoller))
+- Responsivt søgeresultat [\#207](https://github.com/DBCDK/tanterne/pull/207) ([hrmoller](https://github.com/hrmoller))
+- \#167: H for home and S for search [\#206](https://github.com/DBCDK/tanterne/pull/206) ([fvsdbc](https://github.com/fvsdbc))
 - Issue 170 fvs [\#205](https://github.com/DBCDK/tanterne/pull/205) ([fvsdbc](https://github.com/fvsdbc))
 
 ## [0.40](https://github.com/DBCDK/tanterne/tree/0.40) (2017-05-17)
@@ -60,7 +71,7 @@
 - chore\(package\): update eslint-plugin-react to version 7.0.1 [\#196](https://github.com/DBCDK/tanterne/pull/196) ([fvsdbc](https://github.com/fvsdbc))
 - chore\(package\): update mocha to version 3.4.1 [\#195](https://github.com/DBCDK/tanterne/pull/195) ([fvsdbc](https://github.com/fvsdbc))
 - chore\(package\): update autoprefixer to version 7.1.0 [\#194](https://github.com/DBCDK/tanterne/pull/194) ([fvsdbc](https://github.com/fvsdbc))
-- Update postcss-inline-svg to the latest version 🚀 [\#188](https://github.com/DBCDK/tanterne/pull/188) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update postcss-inline-svg to the latest version 🚀 [\#188](https://github.com/DBCDK/tanterne/pull/188) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 
 ## [0.37](https://github.com/DBCDK/tanterne/tree/0.37) (2017-05-15)
 [Full Changelog](https://github.com/DBCDK/tanterne/compare/0.35...0.37)
@@ -89,8 +100,8 @@
 - 180: bump webpack [\#186](https://github.com/DBCDK/tanterne/pull/186) ([fvsdbc](https://github.com/fvsdbc))
 - \#171: bugfix - only cut when . is found [\#183](https://github.com/DBCDK/tanterne/pull/183) ([fvsdbc](https://github.com/fvsdbc))
 - eslint-plugin-react version 7 [\#182](https://github.com/DBCDK/tanterne/pull/182) ([fvsdbc](https://github.com/fvsdbc))
-- Update postcss-loader to the latest version 🚀 [\#181](https://github.com/DBCDK/tanterne/pull/181) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
-- Update autoprefixer to the latest version 🚀 [\#179](https://github.com/DBCDK/tanterne/pull/179) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update postcss-loader to the latest version 🚀 [\#181](https://github.com/DBCDK/tanterne/pull/181) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
+- Update autoprefixer to the latest version 🚀 [\#179](https://github.com/DBCDK/tanterne/pull/179) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 - \#171: Cut classification until hit [\#177](https://github.com/DBCDK/tanterne/pull/177) ([fvsdbc](https://github.com/fvsdbc))
 - \#164: Search box on pro hierarchy page - drop leader text [\#176](https://github.com/DBCDK/tanterne/pull/176) ([fvsdbc](https://github.com/fvsdbc))
 - Issue 168 fvs [\#175](https://github.com/DBCDK/tanterne/pull/175) ([fvsdbc](https://github.com/fvsdbc))
@@ -111,9 +122,9 @@
 **Merged pull requests:**
 
 - bump versions [\#160](https://github.com/DBCDK/tanterne/pull/160) ([fvsdbc](https://github.com/fvsdbc))
-- Update style-loader to the latest version 🚀 [\#156](https://github.com/DBCDK/tanterne/pull/156) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
-- Update preact-compat to the latest version 🚀 [\#155](https://github.com/DBCDK/tanterne/pull/155) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
-- Update wdio-sauce-service to the latest version 🚀 [\#152](https://github.com/DBCDK/tanterne/pull/152) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update style-loader to the latest version 🚀 [\#156](https://github.com/DBCDK/tanterne/pull/156) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
+- Update preact-compat to the latest version 🚀 [\#155](https://github.com/DBCDK/tanterne/pull/155) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
+- Update wdio-sauce-service to the latest version 🚀 [\#152](https://github.com/DBCDK/tanterne/pull/152) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 
 ## [0.34](https://github.com/DBCDK/tanterne/tree/0.34) (2017-04-25)
 [Full Changelog](https://github.com/DBCDK/tanterne/compare/0.33...0.34)
@@ -136,13 +147,13 @@
 **Merged pull requests:**
 
 - Visning af aspekter i sammenlignings-intefacer [\#149](https://github.com/DBCDK/tanterne/pull/149) ([hrmoller](https://github.com/hrmoller))
-- Update elasticsearch to the latest version 🚀 [\#148](https://github.com/DBCDK/tanterne/pull/148) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update elasticsearch to the latest version 🚀 [\#148](https://github.com/DBCDK/tanterne/pull/148) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 - \#95: sort all but register words by index instead of title [\#147](https://github.com/DBCDK/tanterne/pull/147) ([fvsdbc](https://github.com/fvsdbc))
 - \#139: add group 48 to list mock data [\#146](https://github.com/DBCDK/tanterne/pull/146) ([fvsdbc](https://github.com/fvsdbc))
 - Visning af sammenligner på søgeresultatsside mm. [\#145](https://github.com/DBCDK/tanterne/pull/145) ([hrmoller](https://github.com/hrmoller))
 - Addressing Greenkeeper issues [\#143](https://github.com/DBCDK/tanterne/pull/143) ([hrmoller](https://github.com/hrmoller))
 - chore\(package\): update webpack to version 2.4.1 [\#142](https://github.com/DBCDK/tanterne/pull/142) ([hrmoller](https://github.com/hrmoller))
-- Update babel-loader to the latest version 🚀 [\#140](https://github.com/DBCDK/tanterne/pull/140) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update babel-loader to the latest version 🚀 [\#140](https://github.com/DBCDK/tanterne/pull/140) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 - Det skal laves en visning til at sammenligne poster [\#130](https://github.com/DBCDK/tanterne/pull/130) ([hrmoller](https://github.com/hrmoller))
 
 ## [0.33](https://github.com/DBCDK/tanterne/tree/0.33) (2017-04-19)
@@ -183,7 +194,7 @@
 - chore\(package\): update babel-preset-es2015 to version 6.24.1 [\#120](https://github.com/DBCDK/tanterne/pull/120) ([hrmoller](https://github.com/hrmoller))
 - chore\(package\): update webpack to version 2.3.3 [\#119](https://github.com/DBCDK/tanterne/pull/119) ([hrmoller](https://github.com/hrmoller))
 - chore\(package\): update babel-register to version 6.24.1 [\#118](https://github.com/DBCDK/tanterne/pull/118) ([hrmoller](https://github.com/hrmoller))
-- Update preact to the latest version 🚀 [\#117](https://github.com/DBCDK/tanterne/pull/117) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update preact to the latest version 🚀 [\#117](https://github.com/DBCDK/tanterne/pull/117) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 - Forsiden skal justeres på mobil/tablet [\#114](https://github.com/DBCDK/tanterne/pull/114) ([hrmoller](https://github.com/hrmoller))
 - Responsiv visning af hierarkiet [\#108](https://github.com/DBCDK/tanterne/pull/108) ([hrmoller](https://github.com/hrmoller))
 - \#101: aspecttitle clickable. Show all items in search result and sort them [\#107](https://github.com/DBCDK/tanterne/pull/107) ([fvsdbc](https://github.com/fvsdbc))
@@ -206,7 +217,7 @@
 
 **Merged pull requests:**
 
-- Update style-loader to the latest version 🚀 [\#78](https://github.com/DBCDK/tanterne/pull/78) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update style-loader to the latest version 🚀 [\#78](https://github.com/DBCDK/tanterne/pull/78) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 
 ## [0.28](https://github.com/DBCDK/tanterne/tree/0.28) (2017-03-27)
 [Full Changelog](https://github.com/DBCDK/tanterne/compare/0.29...0.28)
@@ -216,7 +227,7 @@
 
 **Merged pull requests:**
 
-- Update preact to the latest version 🚀 [\#80](https://github.com/DBCDK/tanterne/pull/80) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update preact to the latest version 🚀 [\#80](https://github.com/DBCDK/tanterne/pull/80) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 - Update saucelabs config to hopefully stabilize the tests. [\#77](https://github.com/DBCDK/tanterne/pull/77) ([hyatt03](https://github.com/hyatt03))
 
 ## [0.27](https://github.com/DBCDK/tanterne/tree/0.27) (2017-03-23)
@@ -273,7 +284,7 @@
 
 **Merged pull requests:**
 
-- Update sinon to the latest version 🚀 [\#73](https://github.com/DBCDK/tanterne/pull/73) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update sinon to the latest version 🚀 [\#73](https://github.com/DBCDK/tanterne/pull/73) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 
 ## [0.17](https://github.com/DBCDK/tanterne/tree/0.17) (2017-03-21)
 [Full Changelog](https://github.com/DBCDK/tanterne/compare/0.16...0.17)
@@ -287,7 +298,7 @@
 
 **Merged pull requests:**
 
-- Update style-loader to the latest version 🚀 [\#74](https://github.com/DBCDK/tanterne/pull/74) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update style-loader to the latest version 🚀 [\#74](https://github.com/DBCDK/tanterne/pull/74) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 
 ## [0.15](https://github.com/DBCDK/tanterne/tree/0.15) (2017-03-20)
 [Full Changelog](https://github.com/DBCDK/tanterne/compare/0.14...0.15)
@@ -316,7 +327,7 @@
 
 **Merged pull requests:**
 
-- Update dependencies to enable Greenkeeper 🌴 [\#65](https://github.com/DBCDK/tanterne/pull/65) ([greenkeeper[bot]](https://github.com/integration/greenkeeper))
+- Update dependencies to enable Greenkeeper 🌴 [\#65](https://github.com/DBCDK/tanterne/pull/65) ([greenkeeper[bot]](https://github.com/app/greenkeeper))
 
 ## [0.11](https://github.com/DBCDK/tanterne/tree/0.11) (2017-03-20)
 [Full Changelog](https://github.com/DBCDK/tanterne/compare/0.10...0.11)
