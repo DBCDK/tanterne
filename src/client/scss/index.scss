@@ -23,6 +23,7 @@
 
 // Import component styles
 @import 'components/CartButton.component';
+@import 'components/ResetToFrontpage.component';
 @import 'components/ComparerContainer.component';
 @import 'components/HelpContainer.component';
 @import 'components/Hierarchy';
@@ -37,6 +38,7 @@
 .main {
   max-width: 1024px;
   margin: 0 auto;
+  height: 100%;
 
   &.pro {
     @include tablet-and-up {
@@ -53,7 +55,6 @@
   background-color: white;
   padding: 3rem;
   margin-top: 3rem;
-  height: 100%;
 
   @include small-phone {
     margin-top: 0;
@@ -68,4 +69,21 @@
 
 .root-container {
   height: 100%;
+}
+
+.footer {
+  text-align: center;
+  width: 100%;
+  margin-top: 50px;
+  font-size: 1rem;
+  color: #292b2c;
+
+  a {
+    text-decoration: none;
+    color: #292b2c;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
 }
