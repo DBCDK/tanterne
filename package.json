@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.2 ",
-    "chai": "^3.5.0",
+    "chai": "^4.0.2",
     "css-loader": "^0.28.3",
     "cssnano": "^3.10.0",
     "eslint": "^3.13.0",
