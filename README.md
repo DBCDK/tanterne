@@ -79,3 +79,5 @@ Set to `1` (`PRETTY_LOG=1`) for pretty printed log statements. Any other setting
 
 - `/api/suggest/?q=india`
 
+# Architecture 
+See [architecture.jpg](docs/architecture.jpg)
