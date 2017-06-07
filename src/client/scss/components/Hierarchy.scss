@@ -4,18 +4,20 @@ $navbar_height: 60px;
   .container {
     @include transition-width();
     width: calc(100% - 20px);
-    display: inline-block;
-    height: calc(100% - 100px);
-    overflow-y: auto;
     overflow-x: hidden;
+    display: inline-block;
     &.show-cart {
       width: 60%;
-
       @include less-than-desktop {
         width: 100%;
       }
     }
   }
+}
+
+.pro .has-comparer .container {
+  height: calc(100vh - 120px);
+  overflow-y: auto;
 }
 
 .hierarchy {
