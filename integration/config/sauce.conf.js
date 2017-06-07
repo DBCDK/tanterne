@@ -13,6 +13,6 @@ module.exports = {
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 120000
+    timeout: 180000
   }
 };
