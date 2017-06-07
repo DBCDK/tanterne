@@ -167,7 +167,7 @@ export class RootContainerComponent extends Component {
 
     return (
       <ResetToFrontpage timerEnabled={!(window.location.hash === '' || window.location.hash === '/')} testEnv={this.state.test}>
-        <div className="root-container">
+        <div className={`root-container ${displayComparer && 'has-comparer' || ''}`}>
           <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
 
           <Router {...this.state}>
