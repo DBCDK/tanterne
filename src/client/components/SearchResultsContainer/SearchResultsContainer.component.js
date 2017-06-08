@@ -232,7 +232,7 @@ export class SearchResultsContainerComponent extends Component {
       if (!entry.dk5) {
         return null;
       }
-      if (entry.items.length <= 1) {
+      if (entry.items.length === 0) {
         return (
           <div className="result-group">
             <SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />
