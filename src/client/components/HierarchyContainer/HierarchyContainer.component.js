@@ -144,6 +144,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
   const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} /> : null;
   const infoChildren = pro & hasChildren ? 'hasChildren' : '';
   const infoDecommissioned = pro & decommissioned ? 'decommissioned' : '';
+  const link_82_88 = pro && isSelected && index === '82-88' ? <Link to={`/help`}><span className="dk5"> Se till&aelig;gstal</span></Link> : null;
 
   return (
     <div className={`hierarchy-level level level-${level}`}>
@@ -155,6 +156,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
             <span className="name">{title}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
           </Link>
+          {link_82_88}
         </Header>
         {isSelected && items && <HierarchyElement
           topics={items}
