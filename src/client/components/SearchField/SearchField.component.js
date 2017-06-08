@@ -104,7 +104,7 @@ export class SearchFieldComponent extends Component {
   // Updates the state of the component and calls getSuggestions
   onTextEntered(evt) {
     const query = this.getValue(evt.target.value);
-    const queryUrl = `/search/${encodeURIComponent(query)}/10/0/relevance/dictionary`;
+    const queryUrl = `/search/${encodeURIComponent(query)}/100/0/relevance/dictionary`;
     this.setState({
       queryUrl,
       query,
