@@ -432,6 +432,7 @@ $navbar_height: 60px;
 
   a {
     color: white;
+    text-decoration: underline;
 
     @include less-than-tablet {
       color: $blue;
