@@ -28,7 +28,7 @@ function parseSearchResult(result) {
 
 const SearchResultSingle = ({title, dk5, parent, pro, cart, decommissioned}) => {
   const infoDecommissioned = decommissioned ? 'decommissioned' : '';
-  return ( !decommissioned &&
+  return (!decommissioned &&
     <div className={`result-element ${infoDecommissioned}`}>
       <h2>
         <span className="result-element-title">{title},&nbsp;</span>
