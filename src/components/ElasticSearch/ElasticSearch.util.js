@@ -279,5 +279,5 @@ function parseTextAndTagSyst(note, noteSyst, dk5Syst = false) {
       notePos = p + replace.length;
     }
   }
-  return ret;
+  return ret.replace(' . ', '. ').replace(' , ',', ');
 }

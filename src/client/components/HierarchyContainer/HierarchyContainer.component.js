@@ -59,10 +59,7 @@ function AspectTitleElement({title}) {
 
 function parseDescriptiveText(text) {
   return text.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-    return `
-     <a href="#!/hierarchy/${index}">
-      ${index}
-    </a>`;
+    return `<a href="#!/hierarchy/${index}">${index}</a>`;
   });
 }
 
