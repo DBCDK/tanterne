@@ -66,13 +66,43 @@ export function sortDistanceAndSlice(buf, elements) {
 }
 
 /**
- * sort an array on the index field
+ * sort an array on the index field.
  *
  * @param arr
  * @returns {*}
  */
 export function indexSort(arr) {
   return arr.sort(function (a, b) {
+    if (a.index === b.index) {
+      return (a.title > b.title ? 1 : -1);
+    }
+    return (a.index > b.index ? 1 : -1);
+  });
+}
+
+/**
+ * sort an array first on query title match second on the index field.
+ *
+ * @param arr
+ * @returns {*}
+ */
+export function indexMatchSort(arr, query = null) {
+  const normQuery = query && query.replace(/(\*|%)/, '').toLowerCase() || null;
+  return arr.sort(function (a, b) {
+    if (normQuery) {
+      if (normQuery === a.title.toLowerCase()) {
+        return -1;
+      }
+      if (normQuery === b.title.toLowerCase()) {
+        return 1;
+      }
+      if (a.title.toLowerCase().includes(normQuery)) {
+        return -1;
+      }
+      if (b.title.toLowerCase().includes(normQuery)) {
+        return 1;
+      }
+    }
     if (a.index === b.index) {
       return (a.title > b.title ? 1 : -1);
     }
@@ -102,7 +132,7 @@ export function titleSort(arr) {
  * @param dk5Tab
  * @returns {*}
  */
-export function parseRegisterRecord(esRes, pos, dk5Tab) {
+export function parseRegisterRecord(esRes, pos, dk5Tab, query = null) {
   const ret = {};
   ret.title = '' + getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
   ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
@@ -121,7 +151,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab) {
   for (let i = 0; i < registerWords.length; i++) {
     items.push({index: registerWords[i], title: registerWordTitle[i], parent: dk5Tab[registerWords[i]]});
   }
-  return Object.assign({}, ret, {items: indexSort(items)});
+  return Object.assign({}, ret, {items: indexMatchSort(items, query)});
 }
 
 /**

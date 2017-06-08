@@ -92,13 +92,14 @@ export class ElasticClient {
    * @returns {*}
    */
   async elasticSearch(pars, pro) {
+    const {query} = pars;
     await this.loadTabsFromElasticSearch();
     const res = [];
     const esRes = await this.rawElasticSearch(pars, pro);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-      res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst));
+      res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, query));
     }
-    return esUtil.indexSort(res);
+    return esUtil.indexMatchSort(res, query || '');
   }
 
   /**
