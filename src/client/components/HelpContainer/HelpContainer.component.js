@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 export class HelpContainerComponent extends Component {
   proHelp() {
     if (this.props.pro) {
-    return (
+      return (
       <div className='help-pro--container'>
         <a name="supplNumbers"/>
         <div className="section-head">
