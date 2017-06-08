@@ -1,8 +1,8 @@
 module.exports = {
-  maxInstances: 10,
+  maxInstances: 2,
   capabilities: [
     {
-      maxInstances: 4,
+      maxInstances: 2,
       browserName: 'chrome',
       platform: 'OS X 10.11',
       version: 'latest',
@@ -13,6 +13,6 @@ module.exports = {
   mochaOpts: {
     ui: 'bdd',
     compilers: ['js:babel-register'],
-    timeout: 120000
+    timeout: 180000
   }
 };
