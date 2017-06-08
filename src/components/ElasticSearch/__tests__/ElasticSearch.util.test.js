@@ -41,6 +41,39 @@ describe('Testing titleSort', () => {
   });
 });
 
+describe('Testing indexSort', () => {
+  const titles = [
+    {title: 'bbbb', index: 1},
+    {title: 'aaaa', index: 2}
+  ];
+  it('it should sort array in ascending index sort order', () => {
+    assert.equal(1, esUtil.indexSort(titles)[0].index);
+    assert.isArray(esUtil.indexSort([]));
+    assert.equal(0, esUtil.indexSort([]).length);
+  });
+});
+
+describe('Testing indexMatchSort', () => {
+  const titles = [
+    {title: 'bbbb', index: 1},
+    {title: 'aaaa', index: 2},
+    {title: 'aaa', index: 3},
+    {title: 'aa', index: 4}
+  ];
+  it('it should sort array in ascending index sort order', () => {
+    assert.equal(1, esUtil.indexMatchSort(titles)[0].index);
+    assert.isArray(esUtil.indexMatchSort([]));
+    assert.equal(0, esUtil.indexMatchSort([]).length);
+  });
+  it('it should sort array in ascending index, but prioritise matches', () => {
+    assert.equal(2, esUtil.indexMatchSort(titles, 'aaaa')[0].index);
+    assert.equal(3, esUtil.indexMatchSort(titles, 'aaa')[0].index);
+    assert.equal(2, esUtil.indexMatchSort(titles, 'aaa')[1].index);
+    assert.equal(4, esUtil.indexMatchSort(titles, 'aa*')[0].index);
+    assert.equal(3, esUtil.indexMatchSort(titles, 'aa*')[1].index);
+  });
+});
+
 describe('Testing parseRegisterRecord', () => {
   const dk5Tab = {
     '652.m': {index: 'syst 652.m', decommissioned: false},
