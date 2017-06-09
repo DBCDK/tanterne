@@ -56,6 +56,9 @@ Set Elastic Search log level (trace, warning, error). default: error, warning
 Specifies the log level used by the application. Defaults to `INFO`
 Log level constants supported:: `OFF` (0), `ERROR` (1), `WARN` (2), `WARNING` (2), `INFO` (3), `DEBUG` (4), `TRACE` (5)
 
+- `NEWRELIC_LICENSE_KEY` : not validated  
+When given a valid license key the applicaion will report to New Relic and idetify itself as `Tanterne - DK5`. The given value in `NEWRELIC_LICENSE_KEY` is not not validated but if an invalid license key is given, the New Relic deamon wont start which happens silenty. 
+
 - `NODE_ENV` : `app.env`  
 When run in production the `NODE_ENV` should be set to `production`: `NODE_ENV=production`
 
