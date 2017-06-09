@@ -103,12 +103,16 @@ describe('Testing parseRegisterRecord', () => {
       parent: {index: 'syst 652.m', decommissioned: false},
       title: 'txt 630a',
       titleDetails: '',
-      titleFull: 'txt 630a'
+      titleFull: 'txt 630a',
+      note: {
+        index: '',
+        name: ''
+      }
     };
     assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab));
     const items = [
-      {index: 'b52.m.1', parent: {index: 'syst b52.m.1', decommissioned: false}, title: 'Register Word 1'},
-      {index: 'b52.m.2', parent: {index: 'syst b52.m.2', decommissioned: false}, title: 'Register Word 2'}
+      {index: 'b52.m.1', parent: {index: 'syst b52.m.1', decommissioned: false}, title: 'Register Word 1', note: null},
+      {index: 'b52.m.2', parent: {index: 'syst b52.m.2', decommissioned: false}, title: 'Register Word 2', note: null}
     ];
     const registerWords = {
       id: 'txt 001A',
@@ -118,6 +122,10 @@ describe('Testing parseRegisterRecord', () => {
       title: 'txt 630A',
       titleDetails: '',
       titleFull: 'txt 630A',
+      note: {
+        index: '',
+        name: ''
+      },
       items: items
     };
     assert.deepEqual(registerWords, esUtil.parseRegisterRecord(esRes, 1, dk5Tab));
