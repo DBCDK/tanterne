@@ -5,6 +5,8 @@
 
 // Libraries
 const Router = require('koa-router');
+const newrelic = require('newrelic');
+import {CONFIG} from '../utils/config.util';
 
 // Init router
 const router = new Router();
@@ -13,10 +15,13 @@ const router = new Router();
 router.get('/', ctx => {
   const proClass = ctx.pro ? 'main pro' : 'main';
 
+  const newrelicHeader = CONFIG.app.env === 'production' ? newrelic.getBrowserTimingHeader() : null;
+
   ctx.body = `
     <!DOCTYPE html>
     <html>
       <head>
+        ${newrelicHeader}
         <title>Tanterne</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
