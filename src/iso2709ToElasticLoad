@@ -220,7 +220,7 @@ function parseTag(dataRec, tag, value) {
   let subField = value.split(US);
   let tagValue = [];
   subField.forEach(function (subf) {
-    if (subf) {
+    if (subf && !(tag === 'a40' && subf.substr(0, 1) === 'x')) {
       let subVal = subf.substr(1).trim();
       if (subVal && subVal !== '.' && subVal !== ',') {
         savePush(dataRec, tag + subf.substr(0, 1), subVal);
