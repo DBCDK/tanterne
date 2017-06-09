@@ -99,7 +99,7 @@ export class ElasticClient {
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
       res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, query));
     }
-    return esUtil.indexMatchSort(res, query || '');
+    return esUtil.titleMatchSort(res, query || '');
   }
 
   /**
