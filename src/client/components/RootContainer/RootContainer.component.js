@@ -166,7 +166,7 @@ export class RootContainerComponent extends Component {
     const displayComparer = this.state.pro && (Object.keys(this.state.cart.contents).length || this.state.cart.isToggled);
 
     return (
-      <ResetToFrontpage timerEnabled={!(window.location.hash === '' || window.location.hash === '/')} testEnv={this.state.test}>
+      <ResetToFrontpage timerEnabled={!this.state.pro && !(window.location.hash === '' || window.location.hash === '/')} testEnv={this.state.test}>
         <div className={`root-container ${displayComparer && 'has-comparer' || ''}`}>
           <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
 
