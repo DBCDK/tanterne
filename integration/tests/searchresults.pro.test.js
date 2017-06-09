@@ -10,9 +10,8 @@ describe('Testing the serchresultspage on pro version', () => {
 
   it('CartButton on items should be visble', () => {
     assert.isTrue(browser.isVisible('#cart-button-55-1'));
-
     const allCartButtons = browser.elements('.cart-button-container').value;
-    assert.equal(allCartButtons.length, 4);
+    assert.equal(allCartButtons.length, 6);
   });
 
   it('Should display the comparer when adding an item', () => {
