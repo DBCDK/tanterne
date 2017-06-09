@@ -14,35 +14,41 @@ import {CartButton} from '../Cart/CartButton.component';
 
 function parseSearchResult(result) {
   return result.map(level => {
-    const {title, items, decommissioned, index, parent} = level;
+    const {note, title, items, decommissioned, index, parent} = level;
     const subLevel = items && items.length && parseSearchResult(items) || [];
     return {
       title,
       dk5: index && {index, title} || null,
       decommissioned: decommissioned || false,
       items: subLevel,
-      parent: parent && parent.title
+      parent: parent && parent.title,
+      note: note || ''
     };
   });
 }
 
-const SearchResultSingle = ({title, dk5, parent, pro, cart, decommissioned}) => {
+const SearchResultSingle = ({note, title, dk5, parent, pro, cart, decommissioned}) => {
   const infoDecommissioned = decommissioned ? 'decommissioned' : '';
   return (!decommissioned &&
     <div className={`result-element ${infoDecommissioned}`}>
       <h2>
         <span className="result-element-title">{title},&nbsp;</span>
         <span className="result-element-link">se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
+        {note.name && <span className="result-element-link">({note.name} <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)</span>}
         {pro && <CartButton index={dk5.index} cart={cart}/>}
       </h2>
     </div>
   );
 };
 
-const SearchResultGroup = ({title, items, pro, cart}) => {
+const SearchResultGroup = ({note, dk5, title, items, pro, cart}) => {
   return (
     <div className="result-group">
-      <h2><span className="name">{title}</span></h2>
+      <h2><span className="result-element-title">{title},&nbsp;</span>
+        <span className="result-element-link">se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
+        {note.name && <span className="result-element-link">({note.name} <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)</span>}
+        {pro && <CartButton index={dk5.index} cart={cart}/>}
+      </h2>
       <ul className="result-list">
         {items.map(el => <li key={el.dk5.index}><SearchResultSingle pro={pro} cart={cart} {...el}/></li>)}
       </ul>

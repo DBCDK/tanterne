@@ -131,16 +131,32 @@ export function parseRegisterRecord(esRes, pos, dk5Tab, query = null) {
   ret.index = getFirstField(esRes, pos, ['652m', 'b52m', '652n']);
   ret.decommissioned = ret.index && dk5Tab[ret.index] ? dk5Tab[ret.index].decommissioned : false;
   ret.id = getFirstField(esRes, pos, ['001a']);
+  ret.note = {
+    name: getFirstField(esRes, pos, ['651a']),
+    index: getFirstField(esRes, pos, ['651b'])
+  };
   ret.parent = Object.assign({}, dk5Tab[ret.index]);
   const registerWords = getEsField(esRes, pos, 'b52m');
   if (registerWords.length === 0) {
     return ret;
   }
+  const noteNames = getEsField(esRes, pos, 'b51a'); // ["Før ..."]
+  const noteDk5 = getEsField(esRes, pos, 'b51b'); // ["11.12"]
+  const noteRelationIndex = getEsField(esRes, pos, 'b51å'); // [2]
+  const registerWordIndex = getEsField(esRes, pos, 'b52å'); // [1, 2]
 
   const registerWordTitle = getEsField(esRes, pos, 'b52y');
   const items = [];
   for (let i = 0; i < registerWords.length; i++) {
-    items.push({index: registerWords[i], title: registerWordTitle[i], parent: dk5Tab[registerWords[i]]});
+    const hasNoteIndex = noteRelationIndex.indexOf(registerWordIndex[i]);
+    let note = null;
+    if (hasNoteIndex >= 0) {
+      note = {
+        name: noteNames[hasNoteIndex],
+        index: noteDk5[hasNoteIndex]
+      };
+    }
+    items.push({index: registerWords[i], title: registerWordTitle[i], parent: dk5Tab[registerWords[i]], note});
   }
   return Object.assign({}, ret, {items: titleMatchSort(items, query)});
 }
