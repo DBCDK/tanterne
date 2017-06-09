@@ -86,7 +86,7 @@ export function indexSort(arr) {
  * @param arr
  * @returns {*}
  */
-export function indexMatchSort(arr, query = null) {
+export function titleMatchSort(arr, query = null) {
   const normQuery = query && query.replace(/(\*|%)/, '').toLowerCase() || null;
   return arr.sort(function (a, b) {
     if (normQuery) {
@@ -96,17 +96,8 @@ export function indexMatchSort(arr, query = null) {
       if (normQuery === b.title.toLowerCase()) {
         return 1;
       }
-      if (a.title.toLowerCase().includes(normQuery)) {
-        return -1;
-      }
-      if (b.title.toLowerCase().includes(normQuery)) {
-        return 1;
-      }
     }
-    if (a.index === b.index) {
-      return (a.title > b.title ? 1 : -1);
-    }
-    return (a.index > b.index ? 1 : -1);
+    return (a.title > b.title ? 1 : -1);
   });
 }
 
@@ -151,7 +142,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab, query = null) {
   for (let i = 0; i < registerWords.length; i++) {
     items.push({index: registerWords[i], title: registerWordTitle[i], parent: dk5Tab[registerWords[i]]});
   }
-  return Object.assign({}, ret, {items: indexMatchSort(items, query)});
+  return Object.assign({}, ret, {items: titleMatchSort(items, query)});
 }
 
 /**

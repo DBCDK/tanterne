@@ -61,16 +61,15 @@ describe('Testing indexMatchSort', () => {
     {title: 'aa', index: 4}
   ];
   it('it should sort array in ascending index sort order', () => {
-    assert.equal(1, esUtil.indexMatchSort(titles)[0].index);
-    assert.isArray(esUtil.indexMatchSort([]));
-    assert.equal(0, esUtil.indexMatchSort([]).length);
+    assert.equal(4, esUtil.titleMatchSort(titles)[0].index);
+    assert.isArray(esUtil.titleMatchSort([]));
+    assert.equal(0, esUtil.titleMatchSort([]).length);
   });
   it('it should sort array in ascending index, but prioritise matches', () => {
-    assert.equal(2, esUtil.indexMatchSort(titles, 'aaaa')[0].index);
-    assert.equal(3, esUtil.indexMatchSort(titles, 'aaa')[0].index);
-    assert.equal(2, esUtil.indexMatchSort(titles, 'aaa')[1].index);
-    assert.equal(4, esUtil.indexMatchSort(titles, 'aa*')[0].index);
-    assert.equal(3, esUtil.indexMatchSort(titles, 'aa*')[1].index);
+    assert.equal(2, esUtil.titleMatchSort(titles, 'aaaa')[0].index);
+    assert.equal(3, esUtil.titleMatchSort(titles, 'aaa')[0].index);
+    assert.equal(4, esUtil.titleMatchSort(titles, 'aa*')[0].index);
+    assert.equal(3, esUtil.titleMatchSort(titles, 'aa*')[1].index);
   });
 });
 
