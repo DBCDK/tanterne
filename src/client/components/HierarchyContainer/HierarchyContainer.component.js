@@ -54,7 +54,7 @@ function HierarchyElementTopics({topics}) {
  * @constructor
  */
 function AspectTitleElement({title}) {
-  return (<a href={`#!/search/${title}/10/0/relevance/dictionary`}>{title}</a>);
+  return (<Link to={`#!/search/${title}/100/0/relevance/dictionary`}>{title}</Link>);
 }
 
 function parseDescriptiveText(text) {
