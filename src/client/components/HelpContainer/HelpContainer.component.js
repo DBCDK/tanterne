@@ -6,13 +6,252 @@
 import React, {Component} from 'react';
 
 export class HelpContainerComponent extends Component {
+  princip() {
+    return (
+      <div className='help-chapter--container'>
+        <a name="princip"/>
+        <div className="section-head">
+          Principper for DK5-udvikling
+        </div>
+        <div className="section">
+          Vedtaget i Bibliografisk Råd, februar 2007
+        </div>
+        <div className="section">
+          Bibliografisk Råd under Biblioteksstyrelsen har ansvaret for den overordnede prioritering af DK5’s udvikling.
+          Den løbende redaktion af systemet varetages af den af Dansk BiblioteksCenter nedsatte DK5-redaktionsgruppe.
+        </div>
+        <div className="section">
+          Der gælder følgende generelle principper for udviklingen af DK5:
+        </div>
+        <div className="sub-section-head">
+          1. Systemets orden
+        </div>
+        <div className="section">
+          DK5 er et aspektorienteret klassifikationssystem. De 100 hovedgrupper er underdelt efter decimalprincippet.
+          Den primære underdeling i decimalklassedelingen sker efter discipliner og fag.
+          Strukturen er i princippet hierarkisk i såvel notation som i grupperelationer.
+        </div>
+        <div className="section">
+          Det er målet, at DK5’s systematik i videst muligt omfang afspejler det vidensunivers, der kommer til udtryk i den aktuelle danske publikationsmasse.
+        </div>
+        <div className="section">
+          Målsætningen om aktualitet indebærer, at der løbende må kunne foretages revisioner i systemet og systemets terminologi med henblik på ajourføring i
+          overensstemmelse med den faglige/samfundsmæssige udvikling.<br/>
+          Der vil i et kontrolleret system dog altid være tale om en vis tilbageskuen i revisionsarbejdet.
+        </div>
+        <div className="sub-section-head">
+          2. Specificitet
+        </div>
+        <div className="section">
+          Generelt niveau:<br/>
+          DK5’s specificitet udvikles, så den modsvarer behovet for findeling ved nationalbibliografisk registrering af fysiske materialer, som opstilles efter systemet.
+        </div>
+        <div className="section">
+          Udviklingen af det generelle niveau for DK5 knytter sig med andre ord til dets funktion som opstillingssystem.
+        </div>
+        <div className="section">
+          Øget specificitet på specielle områder:<br/>
+          I det omfang, hvor der hos enkelte eller grupper af institutioner er behov for en findeling, der går videre end DK5’s generelle niveau,
+          kan DK5-redaktionen være rådgivende ved udarbejdelse af vejledende underdelinger til systemet.
+        </div>
+        <div className="section">
+          For de vejledende underdelinger gælder også, at de først og fremmest bør udarbejdes, hvis der af hensyn til materialernes opstilling er behov for yderligere findelinger af systemet
+        </div>
+        <div className="sub-section-head">
+          3. Terminologi
+        </div>
+        <div className="section">
+          Det tilstræbes, at terminologien i systemets grupper er præcis og i overensstemmelse med nutidig sprogbrug.
+        </div>
+      </div>);
+  }
+
+  greenland() {
+    return (
+      <div className='help-chapter--container'>
+        <a name="kommisorium"/>
+        <div className="section-head">
+          Grønlandske stednavne
+        </div>
+        <div className="section">
+          <i>Stednavne autoriseret af Nunat Aqquinik Aalajangiisartut (Grønlands Stednavnenævn)</i>
+        </div>
+        <div className="section col-3-newspaper">
+          1. Qaanaap kommunia<br/>
+          Qaanaaq<br/>
+          Siorapaluk<br/>
+          Qeqertarsuaq<br/>
+          Qeqertat<br/>
+          Moriusaq<br/>
+          Pituffik<br/>
+          Savissivik<br/>
+      <br/>
+          2. Kommuneqarfik Upernavik<br/>
+          Upernavik<br/>
+          Kullorsuaq<br/>
+          Nuussuaq<br/>
+          Nutaarmiut<br/>
+          Tasiusaq<br/>
+          Innaarsuit<br/>
+          Naajaat<br/>
+          Aappilattoq<br/>
+          Kangersuatsiaq<br/>
+          UpernavikKujalleq<br/>
+      <br/>
+          3. Uummannap kommunia<br/>
+          Uummannaq<br/>
+          Nuugaatsiaq<br/>
+          Illorsuit<br/>
+          Ukkusissat<br/>
+          Saattut<br/>
+          Ikerasak<br/>
+          Qaarsut<br/>
+          Niaqornat<br/>
+      <br/>
+          4. Ilulissat kommuniat<br/>
+          Ilulissat<br/>
+          Saqqaq<br/>
+          Qeqertaq<br/>
+          Oqaatsut<br/>
+          Ilimanaq<br/>
+      <br/>
+          5. Qasigiannguit kommuniat<br/>
+          Qasigiannguit<br/>
+          Ikamiut<br/>
+      <br/>
+          6. Qeqertarsuup kommunia<br/>
+          Qeqertarsuaq<br/>
+          Kangerluk<br/>
+      <br/>
+          7. Kommuneqarfik Aasiaat<br/>
+          Aasiaat<br/>
+          Akunnaaq<br/>
+          Kitsissuarsuit<br/>
+      <br/>
+          8. Kommuneqarfik Kangaatsiaq<br/>
+          Kangaatsiaq<br/>
+          Niaqornaarsuk<br/>
+          Ikerasaarsuk<br/>
+          Iginniarfik<br/>
+          Attu<br/>
+      <br/>
+          9. Sisimiut kommuniat<br/>
+          Sisimiut<br/>
+          Sarfannguit<br/>
+          Itilleq<br/>
+          Kangerlussuaq<br/>
+      <br/>
+          10. Maniitsup kommunia<br/>
+          Maniitsoq<br/>
+          Kangaamiut<br/>
+          Napasoq<br/>
+          Atammik<br/>
+      <br/>
+          11. Nuup kommunia<br/>
+          Nuuk<br/>
+          Kapisillit<br/>
+          Qeqertarsuatsiaat<br/>
+          Nordafar<br/>
+          Nuussuaq<br/>
+      <br/>
+          12. Paamiut kommuniat<br/>
+          Paamiut<br/>
+          Arsuk<br/>
+      <br/>
+          13. Ivittuut kommuniat<br/>
+          Ivittuut<br/>
+          Kangilinnguit<br/>
+      <br/>
+          14. Qaqortup kommunia<br/>
+          Qaqortoq<br/>
+          Qassimiut<br/>
+          Eqalugaarsuit<br/>
+          Saarloq<br/>
+          Upernaviarsuk<br/>
+      <br/>
+          15. Narsap kommunia<br/>
+          Narsaq<br/>
+          Qassiarsuk<br/>
+          Igaliku<br/>
+          Narsarsuaq<br/>
+      <br/>
+          16. Nanortallip kommunia<br/>
+          Nanortalik<br/>
+          Ammassivik<br/>
+          Alluitsoq<br/>
+          AlluitsupPaa<br/>
+          Tasiusaq<br/>
+          NarsaqKujalleq<br/>
+          Aappilattoq<br/>
+          Qallimiut<br/>
+      <br/>
+          17. Ammassallip kommunia<br/>
+          Tasiilaq<br/>
+          Isortoq<br/>
+          Ikkatteq<br/>
+          Tiniteqilaaq<br/>
+          Qernertuarsuit<br/>
+          Kuummiut<br/>
+          Sermiligaaq<br/>
+          Kulusuk<br/>
+          KapDan<br/>
+      <br/>
+          18. Illoqqortoormiut kommuniat<br/>
+          Illoqqortoormiut<br/>
+          Uunarteq<br/>
+          Itterajivit<br/>
+          NerleritInaat<br/>
+      <br/>
+          19. Stationit:<br/>
+            Mestersvig<br/>
+          Danmarkshavn<br/>
+          Station Nord<br/>
+          Brønlundsfjord<br/>
+          Angisoq<br/>
+          Prins Christians Sund<br/>
+          Daneborg<br/>
+      <br/>
+          Oversigten er først udfærdiget den 11.11.1991.  I takt med ændringer i Grønlands kommunaleinddeling og kommunernes ændringer af egne betegnelser er rettelserne opdateret, sidst pr. 1. juni, 2000.<br/>
+        </div>
+      </div>);
+  }
   kommisorium() {
     return (
       <div className='help-chapter--container'>
-        <a name="tips"/>
+        <a name="kommisorium"/>
         <div className="section-head">
           Kommisorium
-       </div>
+        </div>
+        <div className="sub-section-head">
+          Opgaver og formål
+        </div>
+        <div className="section">
+          DK5-forum forestår udviklingen af DK5 i løbende og åben dialog med biblioteksansatte og brugere i hele landet.
+          Bibliotekernes bevidsthed om muligheden for at have indflydelse på DK5 skal øges og deres lyst til at give input skal stimuleres.
+        </div>
+        <div className="section">
+          DK5-forum lægger problemstillinger ud til debat og præsenterer løsningsforslag og løsninger på profblog.
+        </div>
+        <div className="section">
+          DK5-forum skal endvidere formulere den principielle fortolkning af klassifi­kationssystemet.
+        </div>
+        <div className="section">
+          DK5-forums årlige beretning og arbejdsplan forelægges for Bibliografisk Råd, der har det overordnede ansvar for DK5's udvikling.
+        </div>
+        <div className="sub-section-head">
+          Sammensætning
+        </div>
+        <div className="section">
+          DK5-forum består af i alt 4 medarbejdere fra de klassificerende team, hvoraf 1 er sekretær for gruppen.
+          DK5-forum kan trække på DBC’s egne fagreferenter og eksterne specialister og interessenter ved udvikling inden for specifikke DK5-grupper.
+        </div>
+        <div className="sub-section-head">
+          Arbejdsform
+        </div>
+        <div className="section">
+          DK5-forum afholder møder efter behov, ca. 4-6 møder årligt.
+          DK5-forum kan afholde møder/workshops på et bibliotek, hvor der er adgang til at se litteraturen på hylderne, i samarbejde med bibliotekarer på det pågældende bibliotek.
+        </div>
       </div>);
   }
   tips() {
@@ -244,6 +483,9 @@ export class HelpContainerComponent extends Component {
         {this.tips()}
         {this.props.pro && this.proHelp()}
         {this.generel()}
+        {this.kommisorium()}
+        {this.greenland()}
+        {this.princip()}
       </div>
     );
   }
