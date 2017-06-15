@@ -2,8 +2,12 @@
   margin: 3rem;
 
   .section-head {
-    font-size: 28px;
-    line-height: 40px;
+    padding: 1rem 0 1rem 0;
+    font-size: 200%;
+  }
+  .sub-section-head {
+    padding: 2rem 0 0.5rem 0;
+    font-size: 150%;
   }
   .section {
     margin-top: 1rem;
@@ -35,6 +39,10 @@
     padding: 0 0 0 7rem;
     line-height: 120%;
     font-size: 70%;
+  }
+  img {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 1rem;
   }
 }
 

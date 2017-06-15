@@ -6,6 +6,15 @@
 import React, {Component} from 'react';
 
 export class HelpContainerComponent extends Component {
+  kommisorium() {
+    return (
+      <div className='help-chapter--container'>
+        <a name="tips"/>
+        <div className="section-head">
+          Kommisorium
+       </div>
+      </div>);
+  }
   tips() {
     return (
       <div className='help-chapter--container'>
@@ -42,7 +51,7 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           <img src="/tips_3.png"/>
         </div>
-        <div className="section-head">
+        <div className="sub-section-head">
           Søg bredt
         </div>
         <div className="section">
@@ -58,7 +67,7 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           Prøv i stedet at søge bredere. Skriv japan i søgefeltet og se, om du kan bruge et af de forslag du får vist.
         </div>
-        <div className="section-head">
+        <div className="sub-section-head">
           Ingen sammenhæng til bibliotekets system
         </div>
         <div className="section">
