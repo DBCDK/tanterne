@@ -15,7 +15,7 @@ const router = new Router();
 router.get('/', ctx => {
   const proClass = ctx.pro ? 'main pro' : 'main';
 
-  const newrelicHeader = CONFIG.app.env === 'production' ? newrelic.getBrowserTimingHeader() : null;
+  const newrelicHeader = CONFIG.app.env === 'production' ? newrelic.getBrowserTimingHeader() : '';
 
   ctx.body = `
     <!DOCTYPE html>
