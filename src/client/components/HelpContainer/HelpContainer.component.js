@@ -238,7 +238,7 @@ export class HelpContainerComponent extends Component {
           DK5-forum skal endvidere formulere den principielle fortolkning af klassifi­kationssystemet.
         </div>
         <div className="section">
-          DK5-forums årlige beretning og arbejdsplan forelægges for Bibliografisk Råd, der har det overordnede ansvar for DK5's udvikling.
+          DK5-forums årlige beretning og arbejdsplan forelægges for Bibliografisk Råd, der har det overordnede ansvar for DK5&apos;s udvikling.
         </div>
         <div className="sub-section-head">
           Sammensætning
@@ -454,9 +454,9 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           Den danske bibliotekspioner <a href="https://da.wikipedia.org/wiki/Andreas_Schack_Steenberg">Andreas Schack Steenberg</a> var initiativtager
           til den første udgave af Dansk Decimal-Klassedeling.
-          På en rejse i USA 1902 mødte Steenberg <a href="https://en.wikipedia.org/wiki/Melvil_Dewey">Melvil Dewey</a>,
+          På en rejse i USA 1902 mødte Steenberg <a href="https://en.wikipedia.org/wiki/Melvil_Dewey">Melvil Dewey</a>,
           og på grundlag af dennes <a href="https://da.wikipedia.org/wiki/Dewey_Decimal_Classification">Dewey Decimal Classification System</a>,
-          (7th edition, 1911) udarbejdede Statens Bogsamlingskomité første udgave af Decimal-Klassedeling : til Brug ved Ordningen af Bogsamlinger, 1. udgave 1915.
+          (7th edition, 1911) udarbejdede Statens Bogsamlingskomité første udgave af Decimal-Klassedeling : til Brug ved Ordningen af Bogsamlinger, 1. udgave 1915.
           Femte udgave, DK5, blev udarbejdet i årene 1959-1969 af en klassifikationskomité med fagleder ved Danmarks Biblioteksskole J. B. Friis-Hansen
           som sekretær og fagligt hovedansvarlig. DK5 udkom første gang i 1970, men er gennem alle årene løbende blevet rettet og ajourført af DBC.
         </div>
@@ -464,7 +464,7 @@ export class HelpContainerComponent extends Component {
           DK5-udvikling
         </div>
         <div className="section">
-          Bibliografisk Råd nedsat af Slots- og Kulturstyrelsen har ansvaret for den overordnede prioritering af DK5's udvikling.
+          Bibliografisk Råd nedsat af Slots- og Kulturstyrelsen har ansvaret for den overordnede prioritering af DK5&apos;s udvikling.
           Den løbende revision af systemet varetages af DBC.
         </div>
         <div className="sub-section-head">
@@ -689,7 +689,7 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           <i>Udenlandske stednavne</i><br />
           For udenlandske stednavne bruges en fordansket form, når en sådan er almindeligt anvendt, f.eks. Korfu (ikke Kerkyra)
-          og Rivieraen (ikke Côte d'Azur), men Napoli (ikke Neapel).
+          og Rivieraen (ikke Côte d&apos;Azur), men Napoli (ikke Neapel).
           I tvivlstilfælde henvises til følgende standardværker:<br />
           »Gyldendals store verdensatlas« eller dettes engelske forlæg, Harper Collins’ »Times Atlas of the World«, nyeste udgave.
         </div>
@@ -749,7 +749,7 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           Valgfri undergrupper anvendes ikke i nationalbibliografien.<br/>
           Valgfri undergrupper er indført i systemet, hvor enkelte specialbiblioteker eller grupper af institutioner har behov for en findeling,
-          der går videre end DK5's generelle niveau, f.eks. 39.5 Festtraditioner.<br/>
+          der går videre end DK5&apos;s generelle niveau, f.eks. 39.5 Festtraditioner.<br/>
           Valgfri undergrupper er i systemet angivet med noten: Valgfri gruppe.
         </div>
         <div className="sub-section-head">
@@ -797,9 +797,9 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           <i>
             Smertebehandling<br />
-            Behandlingsmetoder, se 61.54 Behandlingsformer i alm.<br />
-            Farmakologi, se 61.55 Farmakologi<br />
-            Kirurgisk smertebehandling, se 61.66 Kirurgi. Anæstesiologi
+            Behandlingsmetoder, se 61.54 Behandlingsformer i alm.<br />
+            Farmakologi, se 61.55 Farmakologi<br />
+            Kirurgisk smertebehandling, se 61.66 Kirurgi. Anæstesiologi
           </i>
         </div>
         <div className="sub-section-head">
@@ -843,7 +843,8 @@ export class HelpContainerComponent extends Component {
           Umiddelbart vises de første 5 emner, der er henviser til gruppen, og resten kan udfoldes.<br/>
           F.eks.<br/>
           <i>79.601 Idrætssociologi. Idrætspsykolog. Træningslære</i><br />
-          Specialtræning inden for en enkelt sportsgren sættes i den pågældende undergruppe. I 79.601 sættes også sportsånd. Idrætsteori sættes i 61.1, idrætshygiejne i 61.31.<br />
+          Specialtræning inden for en enkelt sportsgren sættes i den pågældende undergruppe. I 79.601 sættes også sportsånd.
+          Idrætsteori sættes i 61.1, idrætshygiejne i 61.31.<br />
           <ul>
             <li>- Coaching</li><br/>
             <li>- Doping</li><br/>
