@@ -55,7 +55,8 @@ export class HelpContainerComponent extends Component {
           kan DK5-redaktionen være rådgivende ved udarbejdelse af vejledende underdelinger til systemet.
         </div>
         <div className="section">
-          For de vejledende underdelinger gælder også, at de først og fremmest bør udarbejdes, hvis der af hensyn til materialernes opstilling er behov for yderligere findelinger af systemet
+          For de vejledende underdelinger gælder også, at de først og fremmest bør udarbejdes, hvis der af hensyn til materialernes opstilling er behov
+         for yderligere findelinger af systemet
         </div>
         <div className="sub-section-head">
           3. Terminologi
@@ -211,7 +212,8 @@ export class HelpContainerComponent extends Component {
           Prins Christians Sund<br/>
           Daneborg<br/>
       <br/>
-          Oversigten er først udfærdiget den 11.11.1991.  I takt med ændringer i Grønlands kommunaleinddeling og kommunernes ændringer af egne betegnelser er rettelserne opdateret, sidst pr. 1. juni, 2000.<br/>
+          Oversigten er først udfærdiget den 11.11.1991.  I takt med ændringer i Grønlands kommunaleinddeling og kommunernes ændringer af egne betegnelser
+          er rettelserne opdateret, sidst pr. 1. juni, 2000.<br/>
         </div>
       </div>);
   }
@@ -250,7 +252,8 @@ export class HelpContainerComponent extends Component {
         </div>
         <div className="section">
           DK5-forum afholder møder efter behov, ca. 4-6 møder årligt.
-          DK5-forum kan afholde møder/workshops på et bibliotek, hvor der er adgang til at se litteraturen på hylderne, i samarbejde med bibliotekarer på det pågældende bibliotek.
+          DK5-forum kan afholde møder/workshops på et bibliotek, hvor der er adgang til at se litteraturen på hylderne, i samarbejde
+          med bibliotekarer på det pågældende bibliotek.
         </div>
       </div>);
   }
@@ -609,9 +612,10 @@ export class HelpContainerComponent extends Component {
           Metagruppe 01: Fagets grundlag, teori, metode, filosofi, etik, æstetik og psykologi<br/>
           Metagruppe 02: Hjælpevidenskaber og oversigter<br/>
           Metagruppe 03: Systematik og terminologi<br/>
-          Metagruppe 06: Museer og samlinger, udstillinger, almene institutioner og selskaber, almene foreninger og organisationer, fagets medarbejdere og deres sociale status,
-          standens historie og vilkår<br/>
-          Metagruppe 07: Uddannelse og forskning, uddannelses- og forskningsinstitutioner. Institutioner, selskaber, organisationer og foreninger inden for uddannelse og forskning<br/>
+          Metagruppe 06: Museer og samlinger, udstillinger, almene institutioner og selskaber, almene foreninger og organisationer, fagets medarbejdere
+          og deres sociale status, standens historie og vilkår<br/>
+          Metagruppe 07: Uddannelse og forskning, uddannelses- og forskningsinstitutioner. Institutioner, selskaber, organisationer og foreninger inden
+          for uddannelse og forskning<br/>
           Metagruppe 08: Undersøgelsesteknik og -apparatur, fagets hjælpemidler, faglig praksis (eventuelt supplerende historiegruppe)<br/>
           Metagruppe 09: Fagets historie og almindelige tilstandsbeskrivelse<br/>
         </div>
@@ -622,7 +626,8 @@ export class HelpContainerComponent extends Component {
         </div>
         <div className="section">
           Visse af metagrupperne i systemet har ikke det ovenfor beskrevne indhold.
-          Det drejer sig især om grupperne 02 og 08. Inkonsekvenserne stammer fra tidligere udgaver og har fået lov at bestå ud fra ønsket om at ændre bestående grupper så lidt som muligt.
+          Det drejer sig især om grupperne 02 og 08. Inkonsekvenserne stammer fra tidligere udgaver og har fået lov at bestå ud fra ønsket
+          om at ændre bestående grupper så lidt som muligt.
         </div>
         <div className="sub-section-head">
           Værkgrupper
@@ -646,7 +651,8 @@ export class HelpContainerComponent extends Component {
           Systematisk underdeling sker ved kombination af klassemærker.
           F.eks. underdeles gruppe 01.6 Fagbibliografier ved tilføjelse af cifre, som betegner de enkelte emner:
           En bibliografi over Londons økonomiske forhold i alm. får det kombinerede klassemærke 01.6331837 London.
-          Særlige kombinationsregler gælder i 01.6 Fagbibliografier for bibliografier over bibliografier og i 99.3 Faglige og biografiske opslagsværker, se noterne til de to grupper.
+          Særlige kombinationsregler gælder i 01.6 Fagbibliografier for bibliografier over bibliografier og i 99.3 Faglige og biografiske opslagsværker,
+          se noterne til de to grupper.
         </div>
         <div className="section">
           <b>Alfabetisk underdeling</b><br/>
@@ -682,7 +688,8 @@ export class HelpContainerComponent extends Component {
         </div>
         <div className="section">
           <i>Udenlandske stednavne</i><br />
-          For udenlandske stednavne bruges en fordansket form, når en sådan er almindeligt anvendt, f.eks. Korfu (ikke Kerkyra) og Rivieraen (ikke Côte d'Azur), men Napoli (ikke Neapel).
+          For udenlandske stednavne bruges en fordansket form, når en sådan er almindeligt anvendt, f.eks. Korfu (ikke Kerkyra)
+          og Rivieraen (ikke Côte d'Azur), men Napoli (ikke Neapel).
           I tvivlstilfælde henvises til følgende standardværker:<br />
           »Gyldendals store verdensatlas« eller dettes engelske forlæg, Harper Collins’ »Times Atlas of the World«, nyeste udgave.
         </div>
@@ -710,7 +717,8 @@ export class HelpContainerComponent extends Component {
         </div>
         <div className="section">
           <b>Geografisk og topografisk underdeling</b><br />
-          Ved geografisk og topografisk underdeling, som er en udvidelse af den geografiske underdeling, kan man yderligere underdele med grupperne »enkelte lokaliteter«, hvor disse findes.
+          Ved geografisk og topografisk underdeling, som er en udvidelse af den geografiske underdeling,
+          kan man yderligere underdele med grupperne »enkelte lokaliteter«, hvor disse findes.
           Grupperne til enkelte lokaliteter er alfabetisk underdelt efter lokaliteten, og denne underdeling medtages ved den geografisk topografiske underdeling.
           Således består klassemærket for et værk om Dublins bebyggelsesgeografi af de tre elementer: 1) 71.95 Bebyggelsesgeografi – 2) 43.87 Irland enkelte lokaliteter
           (som bliver til 387, når 4-tallet og punktummet fjernes) – 3) Dublin, - altså 71.95387 Dublin.<br />
@@ -806,7 +814,8 @@ export class HelpContainerComponent extends Component {
           Henvisning til hierarkisk underdelte grupper
         </div>
         <div className="section">
-          Når et emne henviser til en gruppe, som er hierarkisk underdelt, betyder det, at bøger om emnet kan stå i både den gruppe, der henvises til og de hierarkisk underordnede grupper.<br/>
+          Når et emne henviser til en gruppe, som er hierarkisk underdelt, betyder det, at bøger om emnet kan stå i både den gruppe,
+          der henvises til og de hierarkisk underordnede grupper.<br/>
           F.eks. betyder henvisningen:
           </div>
         <div className="section">
