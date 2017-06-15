@@ -6,10 +6,72 @@
 import React, {Component} from 'react';
 
 export class HelpContainerComponent extends Component {
+  tips() {
+    return (
+      <div className='help-chapter--container'>
+        <a name="tips"/>
+        <div className="section-head">
+          Tips til søgning
+        </div>
+        <div className="section">
+          Her kan du finde emners placering på hylderne på biblioteket.
+          Når du søger, får du vist søgeordets placering i det emnesystem, der hedder DK5 – et nummersystem, man bruger til opstilling på bibliotekerne.
+        </div>
+        <div className="section">
+          Når du skriver et ord i søgefeltet, får du vist en liste med forslag til ord, der matcher det du søger på.
+        </div>
+        <div className="section">
+          Forslagene er de mest populære søgninger og står ikke nødvendigvis i alfabetisk orden.
+        </div>
+        <div className="section">
+          <img src="/tips_1.png"/>
+        </div>
+        <div className="section">
+          Når du vælger et af ordene, får du vist det emnenummer, som emnet hører til og som svarer til placeringen på hylden.
+        </div>
+        <div className="section">
+          <img src="/tips_2.png"/>
+        </div>
+        <div className="section">
+          Hvis du i eksemplet vælger Italien, får du vist emner, der handler om Italien.
+          Så hvis du vil læse om italiensk arkitekturhistorie, skal du finde den hylde, hvor 71.775 hører til.
+        </div>
+        <div className="section">
+          Du kan også søge videre ved at klikke på 71.775. Så får du vist hvor i systemet 71.775 findes og de emner, der ligger tæt på italiensk arkitekturhistorie:
+        </div>
+        <div className="section">
+          <img src="/tips_3.png"/>
+        </div>
+        <div className="section-head">
+          Søg bredt
+        </div>
+        <div className="section">
+          Hvis du skriver flere ord, der ikke findes i sammenhæng, kommer der forslag på det mest oplagte alternativ.
+          Du kan dog også vælge at fortsætte søgningen ved at søge på det du skrev først.
+        </div>
+        <div className="section">
+          Hvis du søger på japansk kunst, får du denne besked:
+        </div>
+        <div className="section">
+          <b>Din søgning gav ikke nogle resultater, vi har i stedet søgt på fajancekunst. Hvis du vil prøve din søgning alligevel klik her!</b>
+        </div>
+        <div className="section">
+          Prøv i stedet at søge bredere. Skriv japan i søgefeltet og se, om du kan bruge et af de forslag du får vist.
+        </div>
+        <div className="section-head">
+          Ingen sammenhæng til bibliotekets system
+        </div>
+        <div className="section">
+          DK5 er ikke integreret til dit biblioteks system.
+          Så du kan altså ikke via DK5 se, hvilke materialer der er på hylden i dit bibliotek.
+          Du kan bruge DK5 til at finde det rigtige tal, så du kan søge præcist på hylderne eller i bibliotekets hjemmeside.
+        </div>
+      </div>
+    );
+  }
   proHelp() {
-    if (this.props.pro) {
-      return (
-      <div className='help-pro--container'>
+    return (
+      <div className='help-chapter--container'>
         <a name="supplNumbers"/>
         <div className="section-head">
           DK5 - Till&aelig;gstal
@@ -127,47 +189,52 @@ export class HelpContainerComponent extends Component {
           <div><div className="bullet">72-5</div>Humoristiske og satiriske tegninger af enkelte kunstnere.</div>
         </div>
       </div>);
-    }
-    return null;
+  }
+
+  generel() {
+    return (
+      <div className="help-generel--container">
+        <div className="section-head">
+          DK5 - Decimalklassedeling
+        </div>
+        <div className="section">
+          DK5 er det f&aelig;lles opstillings- og klassifikationssystem for de danske folke- og skolebiblioteker.
+        </div>
+        <div className="section">
+          DK betyder decimalklassedeling eller DecimalKlassifikation, og DK5 er inddelt i ti hovedgrupper.
+          Hovedgrupperne er underdelt i op til ti grupper, som igen kan underinddeles i op til ti grupper og s&aring; videre.
+          Hertil kommer s&aelig;rlige regler for underdeling, fx geografisk, geografisk-topografisk, sproglig, eller efter biograferede personers navne.
+        </div>
+        <div className="section">
+          De 10 hovedgrupper grupperer sig p&aring; f&oslash;lgende m&aring;de:
+        </div>
+        <div className="section">
+          <ul>
+            <li><a href="#!/hierarchy/00-07">00-07</a></li>V&aelig;rker af almindeligt og blandet indhold<br />
+            <li><a href="#!/hierarchy/10-19">10-19</a></li>Filosofi. Psykologi. Videnskab og forskning<br />
+            <li><a href="#!/hierarchy/20-29">20-29</a></li>Religion<br />
+            <li><a href="#!/hierarchy/30-39">30-39</a></li>Samfundsvidenskab. P&aelig;dagogik. Folkeliv<br />
+            <li><a href="#!/hierarchy/40-49">40-49</a></li>Geografi og rejser<br />
+            <li><a href="#!/hierarchy/50-59">50-59</a></li>Naturvidenskab og matematik<br />
+            <li><a href="#!/hierarchy/60-69">60-69</a></li>Praktiske fag<br />
+            <li><a href="#!/hierarchy/70-79">70-79</a></li>Kunst. Teater. Film. Musik. Spil. Idr&aelig;t<br />
+            <li><a href="#!/hierarchy/80-89">80-89</a></li>Litteratur. Sprog<br />
+            <li><a href="#!/hierarchy/90-99">90-99</a></li>Historie<br />
+          </ul>
+        </div>
+        <div className="section">
+          DK5 er et hierarkisk opbygget system (et enumerativt klassifikationssystem), som vedligeholdes af Dansk Biblioteks Center as
+        </div>
+      </div>
+    );
   }
 
   render() {
     return (
       <div className='help--container'>
-        {this.proHelp()}
-        <div className="help-generel--container">
-          <div className="section-head">
-            DK5 - Decimalklassedeling
-          </div>
-          <div className="section">
-            DK5 er det f&aelig;lles opstillings- og klassifikationssystem for de danske folke- og skolebiblioteker.
-          </div>
-          <div className="section">
-            DK betyder decimalklassedeling eller DecimalKlassifikation, og DK5 er inddelt i ti hovedgrupper.
-            Hovedgrupperne er underdelt i op til ti grupper, som igen kan underinddeles i op til ti grupper og s&aring; videre.
-            Hertil kommer s&aelig;rlige regler for underdeling, fx geografisk, geografisk-topografisk, sproglig, eller efter biograferede personers navne.
-          </div>
-          <div className="section">
-            De 10 hovedgrupper grupperer sig p&aring; f&oslash;lgende m&aring;de:
-          </div>
-          <div className="section">
-            <ul>
-              <li><a href="#!/hierarchy/00-07">00-07</a></li>V&aelig;rker af almindeligt og blandet indhold<br />
-              <li><a href="#!/hierarchy/10-19">10-19</a></li>Filosofi. Psykologi. Videnskab og forskning<br />
-              <li><a href="#!/hierarchy/20-29">20-29</a></li>Religion<br />
-              <li><a href="#!/hierarchy/30-39">30-39</a></li>Samfundsvidenskab. P&aelig;dagogik. Folkeliv<br />
-              <li><a href="#!/hierarchy/40-49">40-49</a></li>Geografi og rejser<br />
-              <li><a href="#!/hierarchy/50-59">50-59</a></li>Naturvidenskab og matematik<br />
-              <li><a href="#!/hierarchy/60-69">60-69</a></li>Praktiske fag<br />
-              <li><a href="#!/hierarchy/70-79">70-79</a></li>Kunst. Teater. Film. Musik. Spil. Idr&aelig;t<br />
-              <li><a href="#!/hierarchy/80-89">80-89</a></li>Litteratur. Sprog<br />
-              <li><a href="#!/hierarchy/90-99">90-99</a></li>Historie<br />
-            </ul>
-          </div>
-          <div className="section">
-            DK5 er et hierarkisk opbygget system (et enumerativt klassifikationssystem), som vedligeholdes af Dansk Biblioteks Center as
-          </div>
-        </div>
+        {this.tips()}
+        {this.props.pro && this.proHelp()}
+        {this.generel()}
       </div>
     );
   }
