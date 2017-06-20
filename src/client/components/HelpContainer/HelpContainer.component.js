@@ -865,9 +865,9 @@ export class HelpContainerComponent extends Component {
         <Tabs>
           <Tabs.Panel title='Tips'>{this.tips()}</Tabs.Panel>
           <Tabs.Panel title='Generelt'>{this.generel()}</Tabs.Panel>
-          <Tabs.Panel title='Supplerende numre'>{this.supplementNumbers()}</Tabs.Panel>
+          {this.props.pro && <Tabs.Panel title='Supplerende numre'>{this.supplementNumbers()}</Tabs.Panel>}
           <Tabs.Panel title='Kommisorium'>{this.kommisorium()}</Tabs.Panel>
-          <Tabs.Panel title='Greenland'>{this.greenland()}</Tabs.Panel>
+          {this.props.pro && <Tabs.Panel title='Greenland'>{this.greenland()}</Tabs.Panel>}
           <Tabs.Panel title='Princip'>{this.princip()}</Tabs.Panel>
         </Tabs>
       </div>
