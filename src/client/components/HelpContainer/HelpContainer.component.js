@@ -4,6 +4,7 @@
  */
 
 import React, {Component} from 'react';
+import Tabs from 'react-simpletabs';
 
 export class HelpContainerComponent extends Component {
   princip() {
@@ -861,12 +862,14 @@ export class HelpContainerComponent extends Component {
   render() {
     return (
       <div className='help--container'>
-        {this.generel()}
-        {this.tips()}
-        {this.props.pro && this.supplementNumbers()}
-        {this.kommisorium()}
-        {this.greenland()}
-        {this.princip()}
+        <Tabs>
+          <Tabs.Panel title='Tips'>{this.tips()}</Tabs.Panel>
+          <Tabs.Panel title='Generelt'>{this.generel()}</Tabs.Panel>
+          <Tabs.Panel title='Supplerende numre'>{this.supplementNumbers()}</Tabs.Panel>
+          <Tabs.Panel title='Kommisorium'>{this.kommisorium()}</Tabs.Panel>
+          <Tabs.Panel title='Greenland'>{this.greenland()}</Tabs.Panel>
+          <Tabs.Panel title='Princip'>{this.princip()}</Tabs.Panel>
+        </Tabs>
       </div>
     );
   }
