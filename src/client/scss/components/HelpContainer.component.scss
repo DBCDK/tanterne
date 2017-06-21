@@ -22,6 +22,9 @@
 }
 
 .help-chapter--container {
+  box-shadow: 0 0 5px hsl(208, 99%, 50%);
+  border-color: hsl(208, 99%, 50%);
+  padding: 2rem 1rem 3rem 2rem;
   margin-bottom: 4rem;
   .bullet {
     text-align: right;
@@ -56,8 +59,8 @@
 }
 
 .tabs-menu {
-  padding: 0 0 1rem 0;
-  margin: -1rem 0 3rem -2rem;
+  padding: 0 0 0.2rem 0;
+  margin: 0;
 
   .tabs-menu-item {
     display: inline-block;
