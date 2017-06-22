@@ -96,7 +96,6 @@ export default class ComparerContainer extends React.Component {
     return (
       <div id="comparer" className={classNames}>
         <div className="comparer--content">
-          <span className="comparer--content--headline">Sammenlign poster</span>
           <div className="comparer--content--items-container">{items.length ? items : 'Der er ingenting i kurven'}</div>
         </div>
       </div>
