@@ -860,15 +860,18 @@ export class HelpContainerComponent extends Component {
   }
 
   render() {
+    if (!this.props.pro) {
+      return (<div className='help--container'>{this.tips()}</div>);
+    }
     return (
       <div className='help--container'>
         <Tabs>
           <Tabs.Panel title='Tips'>{this.tips()}</Tabs.Panel>
-          {this.props.pro && <Tabs.Panel title='Forord'>{this.generel()}</Tabs.Panel>}
-          {this.props.pro && <Tabs.Panel title='Kommisorium'>{this.kommisorium()}</Tabs.Panel>}
-          {this.props.pro && <Tabs.Panel title='Principper'>{this.princip()}</Tabs.Panel>}
-          {this.props.pro && <Tabs.Panel title='Tillægstal'>{this.supplementNumbers()}</Tabs.Panel>}
-          {this.props.pro && <Tabs.Panel title='Grønlandske stednavne'>{this.greenland()}</Tabs.Panel>}
+          <Tabs.Panel title='Forord'>{this.generel()}</Tabs.Panel>
+          <Tabs.Panel title='Kommisorium'>{this.kommisorium()}</Tabs.Panel>
+          <Tabs.Panel title='Principper'>{this.princip()}</Tabs.Panel>
+          <Tabs.Panel title='Tillægstal'>{this.supplementNumbers()}</Tabs.Panel>
+          <Tabs.Panel title='Grønlandske stednavne'>{this.greenland()}</Tabs.Panel>
         </Tabs>
       </div>
     );
