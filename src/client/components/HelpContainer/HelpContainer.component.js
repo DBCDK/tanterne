@@ -447,7 +447,7 @@ export class HelpContainerComponent extends Component {
     return (
       <div className="help-chapter--container">
         <div className="section-head">
-          Om DK5
+          DK5
         </div>
         <div className="sub-section-head">
           Historie
@@ -864,11 +864,11 @@ export class HelpContainerComponent extends Component {
       <div className='help--container'>
         <Tabs>
           <Tabs.Panel title='Tips'>{this.tips()}</Tabs.Panel>
-          <Tabs.Panel title='Generelt'>{this.generel()}</Tabs.Panel>
-          <Tabs.Panel title='Kommisorium'>{this.kommisorium()}</Tabs.Panel>
-          <Tabs.Panel title='Princip'>{this.princip()}</Tabs.Panel>
-          {this.props.pro && <Tabs.Panel title='Supplerende numre'>{this.supplementNumbers()}</Tabs.Panel>}
-          {this.props.pro && <Tabs.Panel title='Greenland'>{this.greenland()}</Tabs.Panel>}
+          {this.props.pro && <Tabs.Panel title='Forord'>{this.generel()}</Tabs.Panel>}
+          {this.props.pro && <Tabs.Panel title='Kommisorium'>{this.kommisorium()}</Tabs.Panel>}
+          {this.props.pro && <Tabs.Panel title='Principper'>{this.princip()}</Tabs.Panel>}
+          {this.props.pro && <Tabs.Panel title='Tillægstal'>{this.supplementNumbers()}</Tabs.Panel>}
+          {this.props.pro && <Tabs.Panel title='Grønlandske stednavne'>{this.greenland()}</Tabs.Panel>}
         </Tabs>
       </div>
     );
