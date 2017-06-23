@@ -25,6 +25,7 @@
 @import 'components/CartButton.component';
 @import 'components/ResetToFrontpage.component';
 @import 'components/ComparerContainer.component';
+@import 'components/AboutContainer.component';
 @import 'components/HelpContainer.component';
 @import 'components/Hierarchy';
 @import 'components/TopBar.component';
@@ -85,5 +86,10 @@
 
   a:hover {
     text-decoration: underline;
+  }
+
+  a.about {
+    float: right;
+    padding-right: 3rem;
   }
 }

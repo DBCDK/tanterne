@@ -15,14 +15,14 @@ const router = new Router();
 router.get('/', ctx => {
   const proClass = ctx.pro ? 'main pro' : 'main';
 
-  const newrelicHeader = CONFIG.app.env === 'production' ? newrelic.getBrowserTimingHeader() : null;
+  const newrelicHeader = CONFIG.app.env === 'production' ? newrelic.getBrowserTimingHeader() : '';
 
   ctx.body = `
     <!DOCTYPE html>
     <html>
       <head>
         ${newrelicHeader}
-        <title>Tanterne</title>
+        <title>DK5</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
       </head>

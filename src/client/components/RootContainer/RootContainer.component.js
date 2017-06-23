@@ -9,6 +9,7 @@ import {Router, Route} from 'react-enroute';
 import * as client from '../../state/client';
 
 // Components
+import {AboutContainerComponent} from '../AboutContainer/AboutContainer.component';
 import {HelpContainerComponent} from '../HelpContainer/HelpContainer.component';
 import HierarchyContainerComponent from '../HierarchyContainer/HierarchyContainer.component';
 import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchResultsContainer.component';
@@ -173,6 +174,7 @@ export class RootContainerComponent extends Component {
           <Router {...this.state}>
             <Route path="/" component={SearchResultsContainerComponent}/>
             <Route path="/help" component={HelpContainerComponent}/>
+            <Route path="/about" component={AboutContainerComponent}/>
             <Route path="/hierarchy/:id?" component={HierarchyContainerComponent}/>
             <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent}/>
           </Router>
@@ -181,6 +183,7 @@ export class RootContainerComponent extends Component {
           <div className="footer">Copyright 2017 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
             <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
             <a href="https://kundeservice.dbc.dk/" target="_blank" rel="noopener noreferrer">kundeservice.dbc.dk</a>
+            <a className="about" href="/#!/about">Om DK5</a>
           </div>
         </div>
       </ResetToFrontpage>

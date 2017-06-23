@@ -1,0 +1,54 @@
+.about--container {
+  margin: 3rem;
+
+  .section-head {
+    padding: 1rem 0 1rem 0;
+    font-size: 200%;
+  }
+  .sub-section-head {
+    padding: 2rem 0 0.5rem 0;
+    font-size: 150%;
+  }
+  .section {
+    margin-top: 1rem;
+    line-height: 2rem
+  }
+  .example {
+    font-style: italic;
+    margin: 0;
+    padding: 0 0 0 7rem;
+  }
+}
+.about-generel--container {
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+  li {
+    margin-left: -3rem;
+  }
+  ul li:before {
+    content: '-';
+    padding-right: 1rem;
+  }
+}
+
+.about-pro--container {
+  margin-bottom: 4rem;
+  .bullet {
+    text-align: right;
+    display: inline-block;
+    padding: 0 1rem 0 0;
+    min-width: 4rem;
+  }
+  .note {
+    margin: -0.1rem 0;
+    padding: 0 0 0 7rem;
+    line-height: 120%;
+    font-size: 70%;
+  }
+}
+
+ul.hierarchy-topics {
+  margin: 0;
+}

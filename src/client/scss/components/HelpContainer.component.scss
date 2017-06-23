@@ -1,28 +1,30 @@
 .help--container {
   margin: 3rem;
+  max-width: 800px;
 
   .section-head {
-    font-size: 28px;
-    line-height: 40px;
+    padding: 1rem 0 1rem 0;
+    font-size: 200%;
+    font-weight: bolder;
+  }
+  .sub-section-head {
+    padding: 2rem 0 0.5rem 0;
+    font-size: 130%;
+    font-weight: bolder;
   }
   .section {
     margin-top: 1rem;
     line-height: 2rem
   }
 }
+
 .help-generel--container {
-  ul {
-    margin: 0;
-    padding-left: 2rem;
-  }
-  li {
-    list-style: none;
-    display: inline-block;
-    padding-right: 1.2rem;
-  }
 }
 
-.help-pro--container {
+.help-chapter--container {
+  box-shadow: 0 0 5px hsl(208, 99%, 50%);
+  border-color: hsl(208, 99%, 50%);
+  padding: 2rem 1rem 3rem 2rem;
   margin-bottom: 4rem;
   .bullet {
     text-align: right;
@@ -35,6 +37,74 @@
     padding: 0 0 0 7rem;
     line-height: 120%;
     font-size: 70%;
+  }
+  ul {
+    margin: 0;
+    padding-left: 2rem;
+  }
+  li {
+    list-style: none;
+    display: inline-block;
+    padding-right: 1.2rem;
+  }
+  img {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 1rem;
+  }
+  .col-3-newspaper {
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+  }
+}
+
+.tabs-menu {
+  padding: 0 0 0.2rem 0;
+  margin: 0;
+
+  .tabs-menu-item {
+    display: inline-block;
+    border: 1px solid transparent;
+    border-bottom: none;
+    bottom: -1px;
+    position: relative;
+    list-style: none;
+    padding: 6px 12px;
+    cursor: pointer;
+
+    box-shadow: 0 0 5px hsl(208, 99%, 50%);
+    border-color: hsl(208, 99%, 50%);
+    outline: none;
+
+    &:after {
+      content: "";
+      position: absolute;
+      height: 5px;
+      left: -4px;
+      right: -4px;
+      bottom: -5px;
+      background: #fff;
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .is-active {
+    background: blue;
+    border-color: #aaa;
+    color: black;
+    border-radius: 5px 5px 0 0;
+
+    a {
+      color: white;
+    }
+  }
+
+  li {
+    line-height: 130%;
+    font-size: 130%
   }
 }
 
