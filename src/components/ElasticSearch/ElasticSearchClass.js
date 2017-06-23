@@ -217,17 +217,22 @@ export class ElasticClient {
       const aspects = [];
       if (this.dk5Syst[dk5]) {
         const aspectRes = await this.rawElasticSearch({query: 'b52m:' + encodeURIComponent(dk5) + ' AND 630a:' + this.dk5Syst[dk5].title});
+        const dupCheck = new Array();
         for (let hitPos = 0; hitPos < aspectRes.hits.length; hitPos++) {
           const source = aspectRes.hits[hitPos]._source;
           if (source.b52m.length > 1) {
             for (let i = 0; i < source.b52m.length; i++) {
               const b52m = source.b52m[i];
-              aspects.push({
-                index: b52m,
-                title: source.b52y[i],
-                hasChildren: this.dk5HasChildren[b52m] || false,
-                parent: this.dk5Syst[b52m]
-              });
+              const title = source.b52y[i];
+              if (!dupCheck[b52m + title]) {
+                dupCheck[b52m + title] = true;
+                aspects.push({
+                  index: b52m,
+                  title: title,
+                  hasChildren: this.dk5HasChildren[b52m] || false,
+                  parent: this.dk5Syst[b52m]
+                });
+              }
             }
           }
         }
