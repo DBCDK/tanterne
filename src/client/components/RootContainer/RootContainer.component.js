@@ -182,7 +182,7 @@ export class RootContainerComponent extends Component {
           {displayComparer && <ComparerContainer cart={this.state.cart}/>}
           <div className="footer">Copyright 2017 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
             <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
-            <a href="https://kundeservice.dbc.dk/" target="_blank" rel="noopener noreferrer">kundeservice.dbc.dk</a>
+            <a href="https://kundeservice.dbc.dk/" target="_blank" rel="noopener noreferrer">kundeservice.dbc.dk</a><br/>
             <a className="about" href="/#!/about">Om DK5</a>
           </div>
         </div>
