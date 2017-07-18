@@ -51,7 +51,7 @@
     "koa-convert": "^1.2.0",
     "koa-router": "^7.2.1",
     "koa-static": "^3.0.0",
-    "newrelic": "^1.40.0",
+    "newrelic": "^2.0.0",
     "preact": "8.1.0",
     "preact-compat": "3.16.0",
     "preact-enroute": "1.2.3",
