@@ -259,7 +259,7 @@ class HierarchyContainerComponent extends React.Component {
         </a>
         <span className="hierarchy--navbar--title">
           {this.props.params.id}
-          </span>
+        </span>
         {this.props.pro &&
         <span className="hierarchy--navbar--cart">
           <TopbarCartItem cart={this.props.cart}/>
