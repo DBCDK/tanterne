@@ -13,7 +13,7 @@ const {CONFIG} = require('../utils/config.util');
 const APIRouter = new Router();
 
 const ElasticClient = new ElasticClass();
-ElasticClient.loadTabsFromElasticSearch();  // remove line to lazy load tables
+ElasticClient.loadTabsFromElasticSearch(); // remove line to lazy load tables
 
 // Small helper function for generating search urls
 function generateSearchUrl(q, force = false) {

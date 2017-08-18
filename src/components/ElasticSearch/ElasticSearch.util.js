@@ -254,8 +254,8 @@ export function parseRegisterForUniqueWords(regRecs, wordFields) {
       const wordArr = getEsField(regRecs, hitPos, fld);
       for (let i = 0; i < wordArr.length; i++) {
         wordArr[i].split(/[\s,]+/).forEach((word) => {
-          word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"()]+/g, '');
-          let num = word.replace(/[\.:-]/g, '');
+          word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"()]+/g, ''); // eslint-disable-line no-useless-escape
+          let num = word.replace(/[\.:-]/g, ''); // eslint-disable-line no-useless-escape
           if (num.length > 2 && parseInt(num, 10) !== num) {
             uniqueWords[word.toLowerCase()] = true;
           }

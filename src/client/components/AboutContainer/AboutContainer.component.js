@@ -38,8 +38,8 @@ export class AboutContainerComponent extends Component {
                 <li>Behandlingsmetoder, se 61.54 Behandlingsformer i alm.</li>
                 <li>Farmakologi, se 61.55 Farmakologi</li>
                 <li>Kirurgisk smertebehandling, se 61.66 Kirurgi. Anæstesiologi</li>
-             </ul>
-           </div>
+              </ul>
+            </div>
           </div>
           <div className="sub-section-head">
             Historiske noter

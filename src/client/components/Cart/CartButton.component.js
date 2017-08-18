@@ -27,8 +27,8 @@ export function CartButton({index, cart}) {
         id={`cart-button-${index.replace('.', '-')}`}
         onClick={cart.addOrRemoveContent.bind(this, {index: index})}
         title={tooltip}>
-      <Plus />
-    </span>
+        <Plus />
+      </span>
     </div>
   );
 }

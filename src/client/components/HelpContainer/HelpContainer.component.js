@@ -87,7 +87,7 @@ export class HelpContainerComponent extends Component {
           Moriusaq<br/>
           Pituffik<br/>
           Savissivik<br/>
-      <br/>
+          <br/>
           2. Kommuneqarfik Upernavik<br/>
           Upernavik<br/>
           Kullorsuaq<br/>
@@ -99,7 +99,7 @@ export class HelpContainerComponent extends Component {
           Aappilattoq<br/>
           Kangersuatsiaq<br/>
           UpernavikKujalleq<br/>
-      <br/>
+          <br/>
           3. Uummannap kommunia<br/>
           Uummannaq<br/>
           Nuugaatsiaq<br/>
@@ -109,74 +109,74 @@ export class HelpContainerComponent extends Component {
           Ikerasak<br/>
           Qaarsut<br/>
           Niaqornat<br/>
-      <br/>
+          <br/>
           4. Ilulissat kommuniat<br/>
           Ilulissat<br/>
           Saqqaq<br/>
           Qeqertaq<br/>
           Oqaatsut<br/>
           Ilimanaq<br/>
-      <br/>
+          <br/>
           5. Qasigiannguit kommuniat<br/>
           Qasigiannguit<br/>
           Ikamiut<br/>
-      <br/>
+          <br/>
           6. Qeqertarsuup kommunia<br/>
           Qeqertarsuaq<br/>
           Kangerluk<br/>
-      <br/>
+          <br/>
           7. Kommuneqarfik Aasiaat<br/>
           Aasiaat<br/>
           Akunnaaq<br/>
           Kitsissuarsuit<br/>
-      <br/>
+          <br/>
           8. Kommuneqarfik Kangaatsiaq<br/>
           Kangaatsiaq<br/>
           Niaqornaarsuk<br/>
           Ikerasaarsuk<br/>
           Iginniarfik<br/>
           Attu<br/>
-      <br/>
+          <br/>
           9. Sisimiut kommuniat<br/>
           Sisimiut<br/>
           Sarfannguit<br/>
           Itilleq<br/>
           Kangerlussuaq<br/>
-      <br/>
+          <br/>
           10. Maniitsup kommunia<br/>
           Maniitsoq<br/>
           Kangaamiut<br/>
           Napasoq<br/>
           Atammik<br/>
-      <br/>
+          <br/>
           11. Nuup kommunia<br/>
           Nuuk<br/>
           Kapisillit<br/>
           Qeqertarsuatsiaat<br/>
           Nordafar<br/>
           Nuussuaq<br/>
-      <br/>
+          <br/>
           12. Paamiut kommuniat<br/>
           Paamiut<br/>
           Arsuk<br/>
-      <br/>
+          <br/>
           13. Ivittuut kommuniat<br/>
           Ivittuut<br/>
           Kangilinnguit<br/>
-      <br/>
+          <br/>
           14. Qaqortup kommunia<br/>
           Qaqortoq<br/>
           Qassimiut<br/>
           Eqalugaarsuit<br/>
           Saarloq<br/>
           Upernaviarsuk<br/>
-      <br/>
+          <br/>
           15. Narsap kommunia<br/>
           Narsaq<br/>
           Qassiarsuk<br/>
           Igaliku<br/>
           Narsarsuaq<br/>
-      <br/>
+          <br/>
           16. Nanortallip kommunia<br/>
           Nanortalik<br/>
           Ammassivik<br/>
@@ -186,7 +186,7 @@ export class HelpContainerComponent extends Component {
           NarsaqKujalleq<br/>
           Aappilattoq<br/>
           Qallimiut<br/>
-      <br/>
+          <br/>
           17. Ammassallip kommunia<br/>
           Tasiilaq<br/>
           Isortoq<br/>
@@ -197,13 +197,13 @@ export class HelpContainerComponent extends Component {
           Sermiligaaq<br/>
           Kulusuk<br/>
           KapDan<br/>
-      <br/>
+          <br/>
           18. Illoqqortoormiut kommuniat<br/>
           Illoqqortoormiut<br/>
           Uunarteq<br/>
           Itterajivit<br/>
           NerleritInaat<br/>
-      <br/>
+          <br/>
           19. Stationit:<br/>
             Mestersvig<br/>
           Danmarkshavn<br/>
@@ -212,7 +212,7 @@ export class HelpContainerComponent extends Component {
           Angisoq<br/>
           Prins Christians Sund<br/>
           Daneborg<br/>
-      <br/>
+          <br/>
           Oversigten er først udfærdiget den 11.11.1991.  I takt med ændringer i Grønlands kommunaleinddeling og kommunernes ændringer af egne betegnelser
           er rettelserne opdateret, sidst pr. 1. juni, 2000.<br/>
         </div>
@@ -366,28 +366,28 @@ export class HelpContainerComponent extends Component {
               skolebrug i en undergruppe med till&aelig;gstallet -046 eller -246.
               Andre skoleudgaver af sk&oslash;nlitteratur placeres som tilsvarende almindelige udgaver.
             </div>
-         </div>
-         <div><div className="bullet">5</div>Romaner og noveller f&oslash;r 1901. V&aelig;rker af enkelte forfattere</div>
-         <div><div className="bullet">6</div>Romaner og noveller fra 1901. V&aelig;rker af enkelte forfattere</div>
-         <div><div className="bullet">7</div>Humor, tegneserier etc. Antologier
-           <div className="note">
-             Her anbringes samlinger af vittigheder og humoristiske sm&aring;stykker.
-           </div>
-         </div>
-         <div><div className="bullet">8</div>Humor, tegneserier etc. af enkelte forfattere</div>
-         <div><div className="bullet">9</div>B&oslash;rne- og ungdomsb&oslash;ger</div>
-         <div><div className="bullet">90</div>Digte for b&oslash;rn. Antologier</div>
-         <div><div className="bullet">91</div>Digte for b&oslash;rn. Enkelte forfattere</div>
-         <div><div className="bullet">92</div>B&oslash;rnekomedier. Antologier</div>
-         <div><div className="bullet">93</div>B&oslash;rnekomedier. Enkelte forfattere</div>
-         <div><div className="bullet">94</div>Fort&aelig;llinger for b&oslash;rn. Antologier
-           <div className="note">
-             Her anbringes ogs&aring; antologier sammensat af forskellige digtarter.
-           </div>
-         </div>
-         <div><div className="bullet">96</div>Fort&aelig;llinger for b&oslash;rn. Enkelte forfattere</div>
-         <div><div className="bullet">97</div>Humor, tegneserier etc. for b&oslash;rn. Antologier</div>
-         <div><div className="bullet">98</div>Humor, tegneserier etc. for b&oslash;rn. Enkelte forfattere</div>
+          </div>
+          <div><div className="bullet">5</div>Romaner og noveller f&oslash;r 1901. V&aelig;rker af enkelte forfattere</div>
+          <div><div className="bullet">6</div>Romaner og noveller fra 1901. V&aelig;rker af enkelte forfattere</div>
+          <div><div className="bullet">7</div>Humor, tegneserier etc. Antologier
+            <div className="note">
+              Her anbringes samlinger af vittigheder og humoristiske sm&aring;stykker.
+            </div>
+          </div>
+          <div><div className="bullet">8</div>Humor, tegneserier etc. af enkelte forfattere</div>
+          <div><div className="bullet">9</div>B&oslash;rne- og ungdomsb&oslash;ger</div>
+          <div><div className="bullet">90</div>Digte for b&oslash;rn. Antologier</div>
+          <div><div className="bullet">91</div>Digte for b&oslash;rn. Enkelte forfattere</div>
+          <div><div className="bullet">92</div>B&oslash;rnekomedier. Antologier</div>
+          <div><div className="bullet">93</div>B&oslash;rnekomedier. Enkelte forfattere</div>
+          <div><div className="bullet">94</div>Fort&aelig;llinger for b&oslash;rn. Antologier
+            <div className="note">
+              Her anbringes ogs&aring; antologier sammensat af forskellige digtarter.
+            </div>
+          </div>
+          <div><div className="bullet">96</div>Fort&aelig;llinger for b&oslash;rn. Enkelte forfattere</div>
+          <div><div className="bullet">97</div>Humor, tegneserier etc. for b&oslash;rn. Antologier</div>
+          <div><div className="bullet">98</div>Humor, tegneserier etc. for b&oslash;rn. Enkelte forfattere</div>
         </div>
         <div className="section">
           Systemet med till&aelig;gstal, anbragt efter en streg,
@@ -769,7 +769,7 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           Der er til visse grupper i systemet føjet noter med oplysninger om ændringer i forhold til tidligere klassifikation.
         </div>
-         <div className="section">
+        <div className="section">
           Det gælder for ændringer, der er trådt i kraft fra 1991 ff. og det drejer sig om<br/>
           <ul>
             <li>- Grupper, hvor væsentlige dele af den litteratur, der nu står i gruppen, tidligere var placeret et andet sted i systemet</li><br/>
@@ -818,7 +818,7 @@ export class HelpContainerComponent extends Component {
           Når et emne henviser til en gruppe, som er hierarkisk underdelt, betyder det, at bøger om emnet kan stå i både den gruppe,
           der henvises til og de hierarkisk underordnede grupper.<br/>
           F.eks. betyder henvisningen:
-          </div>
+        </div>
         <div className="section">
           <i>Lægemidler, se 61.55 Farmakologi</i>
         </div>
