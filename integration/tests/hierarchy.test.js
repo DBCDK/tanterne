@@ -6,7 +6,7 @@ chai.should();
 describe('Testing Hierarchy', () => {
   it('Should render hierarchy', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(200);
+    browser.pause(400);
 
     const text = browser.getText('.selected .dk5')[0];
     assert.equal(text, '40-49', 'title is present');
@@ -17,9 +17,9 @@ describe('Testing Hierarchy', () => {
 
   it('Click on sublevel', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(200);
+    browser.pause(400);
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(200);
+    browser.pause(400);
 
     const text = browser.getText('.selected h2 .dk5')[0];
     assert.equal(text, '40', 'title is present');
@@ -30,19 +30,19 @@ describe('Testing Hierarchy', () => {
 
   it('Click between levels', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(200);
+    browser.pause(400);
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
 
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(200);
+    browser.pause(400);
     assert.equal(browser.getText('.selected .dk5')[0], '40', '2. level is selected');
 
     browser.click('[href="#!/hierarchy/40.6"]');
-    browser.pause(200);
+    browser.pause(400);
     assert.equal(browser.getText('.selected .dk5'), '40.6', '3. level is selected');
 
     browser.click('[href="#!/hierarchy/40-49"]');
-    browser.pause(200);
+    browser.pause(400);
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
   });
 
