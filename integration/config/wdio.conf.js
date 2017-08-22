@@ -13,7 +13,7 @@ let config = {
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
   specs: [
-    './integration/**/hierarchy.test.js'
+    './integration/**/*.test.js'
   ],
   exclude: [
     // 'path/to/excluded/files'
