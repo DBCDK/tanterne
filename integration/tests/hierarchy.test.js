@@ -21,7 +21,7 @@ describe('Testing Hierarchy', () => {
     browser.click('[href="#!/hierarchy/40"]');
     browser.pause(200);
 
-    const text = browser.getText('.selected .dk5')[0];
+    const text = browser.getText('.selected h2 .dk5')[0];
     assert.equal(text, '40', 'title is present');
 
     const topics = browser.getText('.selected .hierarchy-topics');
