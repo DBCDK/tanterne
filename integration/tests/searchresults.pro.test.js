@@ -19,6 +19,6 @@ describe('Testing the serchresultspage on pro version', () => {
 
     browser.click('#cart-button-55-1');
     browser.pause(500);
-    // fails ????? assert.isTrue(browser.isVisible('.comparer--content'));
+    assert.isTrue(browser.isVisible('.comparer--content'));
   });
 });
