@@ -1,108 +1,86 @@
 {
   "index": "40-49",
   "title": "Geografi og rejser. Lokalhistorie",
-  "children": [
+  "decommissioned": false,
+  "query": "40-49",
+  "hasChildren": true,
+  "selected": "40-49",
+  "items": [
     {
-      "selected": "40",
-      "items": [
-        {
-          "index": "48",
-          "title": "Andre verdensdele"
-        },
-        {
-          "index": "41",
-          "title": "Europa"
-        },
+      "index": "00-07",
+      "title": "Bogvæsen. Biblioteker. Museer. Medier. Leksika og blandede værker",
+      "hasChildren": true
+    },
+    {
+      "index": "10-19",
+      "title": "Filosofi. Psykologi. Videnskab og forskning. Kommunikation og IT",
+      "hasChildren": true
+    },
+    {
+      "index": "20-29",
+      "title": "Religion",
+      "hasChildren": true
+    },
+    {
+      "index": "30-39",
+      "title": "Samfundsfag. Pædagogik. Forsorg. Folkekultur",
+      "hasChildren": true
+    },
+    {
+      "index": "40-49",
+      "title": "Geografi og rejser. Lokalhistorie",
+      "hasChildren": true,
+      "children": [
         {
           "index": "40",
           "title": "Geografi og rejser i alm.",
-          "note": "Under geografi sættes beskrivelser af verdensdeles, landes og enkelte lokaliteters regionalgeografi og almindelige kulturgeografi. Specielle emners eller fags geografi placeres specielt. F.eks. sættes kunstgeografi i alm. i# <dk>70.9</dk>, naturgeografi i alm. i# <dk>50.2</dk><br />Enkelte landområders fysiske geografi sættes i# <dk>55.6</dk>-</dk5>55.7</dk><br />Enkelte landes eller landområders almindelige kulturelle og politiske tilstandsbeskrivelse sættes under historie, enkelte landes samfundskundskab sættes i# <dk>30.2</dk>. Enkelte folks psykologi og karakter sættes i# <dk>13.2</dk>, enkelte folketraditioner og skikke sættes i# <dk>39</dk>, indfødte folk sættes i# <dk>59.5</dk><br />Under geografi sættes også vejledninger til og beskrivelser af rejser uden specielt formål. Beskrivelser af rejser med specielt formål sættes under emnet, f.eks. sættes en beretning om en botanisk ekspedition under botanik. <dk>32.7</dk><br />Beskrivelser af to eller tre lande sættes under det land, som er væsentligst i fremstillingen. I tvivlstilfælde sættes værket under det i titlen eller den øvrige beskrivelse først nævnte land, dog ikke under Danmark, selv om Danmark er nævnt først. Beskrivelser af flere end tre lande sættes i overgruppen. Internationalt samarbejde mellem to eller flere lande sættes i# <dk>36</dk><br />Enkelte egnes og byers historie i alm. sættes under geografi. <dk>33.181</dk>-</dk5>33.19</dk><br />Specielle sider af lokalhistorien sættes under emnet, f.eks. sættes lokalforvaltningens historie og den lokalpolitiske historie i# <dk>92</dk>-</dk5>98</dk><br />med undergrupper, den økonomiske historie i# <dk>46.6</dk>. Politisk historie vedrørende delstater og andre områder med hel eller delvis autonomi sættes i# <dk>46.79</dk>. Det gælder f.eks. Skotlands og Slesvig-Holstens historie. Færøernes historie sættes i# <dk>91.1</dk>, Grønlands i# <dk>91.2</dk>-</dk5>91.4</dk>. Enkelte europæiske lokaliteters forhistorie sættes i# <dk>71.1</dk>-</dk5>71.7</dk>, enkelte lokaliteters oldtidshistorie sættes i# <dk>71.8</dk><br />Under geografi sættes topografiske værker om slotte, gårde og andre beboelseshuse, f.eks. om deres historie og ejerforhold, medens bygningshistorien sættes i# <dk>65.01</dk>. Værker om bygninger med andre formål placeres efter bygningens anvendelse. Kirkers og klostres bygningshistorie sættes dog i# <dk>41</dk>-</dk5>48</dk>. Specielle emner inden for lokalhistorien sættes under emnet, f.eks. sættes topografiske værker om kirker og klostre under kirkehistorie. Lokale vejvisere sættes under# <dk>46.7</dk><br />Inddelingen i grupperne#<br />er politisk geografisk. Samlede beskrivelser af lande, hvis territorier fordeler sig over flere verdensdele, sættes under den verdensdel, hvortil de centrale områder regnes, medens beskrivelser af enkeltområder sættes under den verdensdel, hvor de geografisk hører hjemme, bortset fra Grønland, som sættes i#. Landområder, som har haft skiftende politisk tilhørsforhold sættes under det land, hvortil de nu hører. Beskrivelser af tidligere politiske enheder sættes under det land, hvortil de centrale dele nu hører.",
-          "items": [
-            {
-              "index": "65.83",
-              "title": "Flyveulykker"
-            },
-            {
-              "index": "40",
-              "title": "Geografi"
-            },
-            {
-              "index": "40",
-              "title": "Hjemstavnslære"
-            },
-            {
-              "index": "40",
-              "title": "Lande"
-            },
-            {
-              "index": "40",
-              "title": "Lokalhistorie"
-            },
-            {
-              "index": "40",
-              "title": "Luftfotoatlas"
-            },
-            {
-              "index": "40",
-              "title": "Regionalgeografi"
-            },
-            {
-              "index": "40",
-              "title": "Rejsebeskrivelser"
-            },
-            {
-              "index": "40",
-              "title": "Robinsonader"
-            },
-            {
-              "index": "65.98",
-              "title": "Søulykker"
-            },
-            {
-              "index": "40",
-              "title": "Topografi"
-            }
-          ],
-          "children": [
-            {
-              "index": "40.6",
-              "title": "Foreninger. Institutioner. Museer og samlinger. Selskaber"
-            },
-            {
-              "index": "40.2",
-              "title": "Geodæsi og kartografi"
-            },
-            {
-              "index": "40.1",
-              "title": "Kort og atlas"
-            },
-            {
-              "index": "40.3",
-              "title": "Kulturgeografi i alm."
-            },
-            {
-              "index": "40.9",
-              "title": "Opdagelsesrejsernes historie i alm."
-            },
-            {
-              "index": "40.4",
-              "title": "Rejsebeskrivelser"
-            },
-            {
-              "index": "40.8",
-              "title": "Turistvæsen"
-            },
-            {
-              "index": "40.7",
-              "title": "Uddannelse og forskning"
-            }
-          ]
+          "decommissioned": false,
+          "hasChildren": true
+        },
+        {
+          "index": "41",
+          "title": "Europa",
+          "decommissioned": false,
+          "hasChildren": true
+        },
+        {
+          "index": "48",
+          "title": "Andre verdensdele",
+          "decommissioned": false,
+          "hasChildren": true
         },
         {
           "index": "49",
-          "title": "Polarlandene"
+          "title": "Polarlandene",
+          "decommissioned": false,
+          "hasChildren": true
         }
       ]
+    },
+    {
+      "index": "50-59",
+      "title": "Naturvidenskab. Matematik. Antropologi og etnografi",
+      "hasChildren": true
+    },
+    {
+      "index": "60-69",
+      "title": "Teknik. Sygdom og sundhed. Erhverv. Hus og hjem",
+      "hasChildren": true
+    },
+    {
+      "index": "70-79",
+      "title": "Kultur. Kunstarter. Sport",
+      "hasChildren": true
+    },
+    {
+      "index": "80-89",
+      "title": "Litteratur. Sprog",
+      "hasChildren": true
+    },
+    {
+      "index": "90-99",
+      "title": "Historie. Biografier og erindringer",
+      "hasChildren": true
     }
   ]
 }
