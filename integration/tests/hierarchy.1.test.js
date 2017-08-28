@@ -12,6 +12,6 @@ describe('Testing Hierarchy 1', () => {
     assert.equal(text, '40-49', 'title is present');
 
     const level = browser.getText('.selected .hierarchy-level')[0];
-    assert.include(level, 'Andre verdensdele', 'sublevel is present');
+    assert.include(level, 'Geografi og rejser i alm.', 'sublevel is present');
   });
 });
