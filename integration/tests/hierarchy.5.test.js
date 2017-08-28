@@ -15,7 +15,7 @@ describe('Testing Hierarchy 5', () => {
 
     topics = browser.getText('.selected .hierarchy-topics');
     assert.lengthOf(topics[0].split('\n'), 5);
-    assert.lengthOf(topics[1].split('\n'), 6);
+    assert.lengthOf(topics[1].split('\n'), 12);
     assert.isTrue(browser.isExisting('.selected .show .hierarchy-topics'));
   });
 });
