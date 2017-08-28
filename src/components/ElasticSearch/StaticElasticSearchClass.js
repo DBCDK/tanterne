@@ -20,7 +20,7 @@ export class StaticElasticClient extends ElasticClient {
   }
 
   elasticHierarchy(q) {
-    let res = hierarchy;
+    let res = hierarchy[q] ? hierarchy[q] : hierarchy.default;
     if (q === '0') {
       res = {};
     }
