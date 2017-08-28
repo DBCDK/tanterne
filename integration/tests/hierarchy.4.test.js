@@ -9,7 +9,6 @@ describe('Testing Hierarchy 4', () => {
 
     const topics = browser.getText('.selected .hierarchy-topics');
 
-    browser.pause(10000);
     assert.include(topics[0], 'Atlanterhavet\nBjerge\nFlyveulykker\nGeografi\nHave');
     assert.lengthOf(topics[0].split('\n'), 5);
     assert.notInclude(topics[0], 'Lande');
