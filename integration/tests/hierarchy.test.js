@@ -3,7 +3,12 @@ const chai = require('chai');
 const assert = chai.assert;
 chai.should();
 
-describe('Testing Hierarchy 1', () => {
+describe('Testing Hierarchy', () => {
+  beforeEach(() => {
+    browser.url('/');
+    browser.pause(200);
+  });
+
   it('Should render hierarchy', () => {
     browser.url('/#!/hierarchy/40-49');
     browser.pause(200);
@@ -17,9 +22,9 @@ describe('Testing Hierarchy 1', () => {
 
   it('Click on sublevel', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(500);
+    browser.pause(200);
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(500);
+    browser.pause(200);
 
     const sel = browser.getText('.selected');
     console.log('sel', sel);
