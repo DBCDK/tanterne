@@ -4,12 +4,10 @@ const assert = chai.assert;
 chai.should();
 
 describe('Testing Hierarchy', () => {
-  beforeEach(() => {
-    browser.url('/');
-    browser.pause(1000);
-  });
 
   it('Should render hierarchy', () => {
+    browser.url('/');
+    browser.pause(5000);
     browser.url('/#!/hierarchy/40-49');
     browser.pause(1000);
 
