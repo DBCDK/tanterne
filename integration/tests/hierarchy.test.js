@@ -20,9 +20,9 @@ describe('Testing Hierarchy', () => {
 
   it('Click on sublevel', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(1000);
+    browser.pause(5000);
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(1000);
+    browser.pause(5000);
 
     const sel = browser.getText('.selected');
     console.log('sel', sel);
