@@ -7,9 +7,9 @@ describe('Testing Hierarchy', () => {
 
   it('Should render hierarchy', () => {
     browser.url('/');
-    browser.pause(5000);
+    browser.pause(500);
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(1000);
+    browser.pause(500);
 
     const text = browser.getText('.selected .dk5')[0];
     assert.equal(text, '40-49', 'title is present');
@@ -20,20 +20,12 @@ describe('Testing Hierarchy', () => {
 
   it('Click on sublevel', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(5000);
+    browser.pause(500);
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(5000);
+    browser.pause(500);
 
-    const sel = browser.getText('.selected');
-    console.log('sel', sel);
-    const dk5 = browser.getText('.dk5');
-    console.log('dk5', dk5);
-    const text2 = browser.getText('.selected .dk5');
-    console.log('text2', text2);
-    const h2 = browser.getText('.h2');
-    console.log('h2', h2);
-    const text = browser.getText('.selected h2 .dk5')[0];
-    console.log('text', text);
+    browser.pause(300);
+    const text = browser.getText('.selected .hierarchy-level--header .dk5');
     assert.equal(text, '40', 'title is present');
 
     const topics = browser.getText('.selected .hierarchy-topics');
@@ -42,19 +34,19 @@ describe('Testing Hierarchy', () => {
 
   it('Click between levels', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(1000);
+    browser.pause(500);
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
 
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(1000);
+    browser.pause(500);
     assert.equal(browser.getText('.selected .dk5')[0], '40', '2. level is selected');
 
     browser.click('[href="#!/hierarchy/40.6"]');
-    browser.pause(1000);
+    browser.pause(500);
     assert.equal(browser.getText('.selected .dk5'), '40.6', '3. level is selected');
 
     browser.click('[href="#!/hierarchy/40-49"]');
-    browser.pause(1000);
+    browser.pause(500);
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
   });
 
