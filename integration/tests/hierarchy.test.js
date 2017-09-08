@@ -45,8 +45,6 @@ describe('Testing Hierarchy', () => {
     browser.pause(500);
 
     browser.click('[href="#!/hierarchy/40-49"]');
-    browser.pause(500);
-    browser.click('[href="#!/hierarchy/40-49"]');
     browser.pause(1000);
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
   });
