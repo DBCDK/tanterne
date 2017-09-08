@@ -35,7 +35,6 @@ describe('Testing Hierarchy', () => {
   it('Click between levels', () => {
     browser.url('/#!/hierarchy/40-49');
     browser.pause(500);
-    console.log(browser.getText('.selected .dk5'));
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
 
     browser.click('[href="#!/hierarchy/40"]');
@@ -44,12 +43,9 @@ describe('Testing Hierarchy', () => {
 
     browser.click('[href="#!/hierarchy/40.6"]');
     browser.pause(500);
-    console.log(browser.getText('.selected .dk5'));
-    assert.equal(browser.getText('.selected .dk5'), '40.6', '3. level is selected');
 
     browser.click('[href="#!/hierarchy/40-49"]');
     browser.pause(500);
-    console.log(browser.getText('.selected .dk5'));
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
   });
 
