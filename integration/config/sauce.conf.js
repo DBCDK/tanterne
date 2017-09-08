@@ -2,7 +2,7 @@ module.exports = {
   maxInstances: 4,
   capabilities: [
     {
-      maxInstances: 4,
+      maxInstances: 1,
       browserName: 'chrome',
       platform: 'OS X 10.11',
       version: 'latest',
