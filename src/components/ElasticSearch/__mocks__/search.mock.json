@@ -5,10 +5,12 @@
     "index": "40",
     "titleDetails": "",
     "titleFull": "Geografi",
+    "decommissioned": false,
     "parent": {
       "index": "40",
       "parentIndex": "40-49",
       "title": "Geografi og rejser i alm.",
+      "decommissioned": false,
       "parent": "Geografi og rejser. Lokalhistorie"
     },
     "items": [
@@ -19,8 +21,10 @@
           "index": "55.1",
           "parentIndex": "55",
           "title": "Fysisk geografi i alm. Geofysik i alm. Geomorfologi i alm.",
+          "decommissioned": false,
           "parent": "Geologi og geofysik"
-        }
+        },
+        "note": null
       },
       {
         "index": "22.08",
@@ -29,8 +33,10 @@
           "index": "22.08",
           "parentIndex": "22",
           "title": "Bibelske hjælpevidenskaber i alm.",
+          "decommissioned": false,
           "parent": "Bibelen"
-        }
+        },
+        "note": null
       }
     ]
   },
@@ -40,10 +46,12 @@
     "index": "48.25",
     "titleDetails": "",
     "titleFull": "Turkestan",
+    "decommissioned": false,
     "parent": {
       "index": "48.25",
       "parentIndex": "48.1",
       "title": "Centralasien i alm.",
+      "decommissioned": false,
       "parent": "Asien"
     },
     "items": [
@@ -54,8 +62,10 @@
           "index": "48.25",
           "parentIndex": "48.1",
           "title": "Centralasien i alm.",
+          "decommissioned": false,
           "parent": "Asien"
-        }
+        },
+        "note": null
       },
       {
         "index": "98.25",
@@ -64,8 +74,10 @@
           "index": "98.25",
           "parentIndex": "98.1",
           "title": "Centralasiens historie",
+          "decommissioned": false,
           "parent": "Asiens historie"
-        }
+        },
+        "note": null
       }
     ]
   }

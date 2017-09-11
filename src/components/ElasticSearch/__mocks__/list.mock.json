@@ -374,6 +374,214 @@
     "aspects": [],
     "items": []
   },
+  "55.1": {
+    "index": "55.1",
+    "parentIndex": "55",
+    "title": "Fysisk geografi i alm. Geofysik i alm. Geomorfologi i alm.",
+    "decommissioned": false,
+    "parent": "Geologi og geofysik",
+    "hasChildren": false,
+    "noteSystematic": "Her sættes f.eks. tyngdemåling, geoelektricitet, jordmagnetisme og nordlys.<br >Geokemi sættes i <dk>55.2</dk>. Enkelte landområders geomorfologi eller fysiske geografi sættes i <dk>55.6-55.7</dk> . Enkelte landskabsformers geomorfologi sættes i <dk>55.3</dk><br >Kosmisk stråling sættes i <dk>52.7</dk> . Matematisk geografi sættes i <dk>40.2</dk>, seismologi og vulkanisme i <dk>55.3</dk> , meteorologi i <dk>55.8</dk> , oceanografi og limnologi i <dk>55.9</dk>",
+    "aspects": [],
+    "items": [
+      {
+        "index": "55.1",
+        "title": "Fysiografi",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Fysisk geografi",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Geoelektricitet",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Geofysik",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Geofysikkens historie",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "40",
+        "title": "Geografi",
+        "decommissioned": false,
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Geomorfologi",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Geomorforlogiens historie",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Gravimetri",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Huljordsteorien",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Ionosfæren",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Isostasi",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "52.43",
+        "title": "Jorden",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Jordindret",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Jordmagnetisme",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Jordskorpen",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Kontinentalforskydninger",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Kosmisk geofysik",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Landskabsformer",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "53.8",
+        "title": "Magnetisme",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Magnetometre",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Magnetosfæren",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Nordlys",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Orografi",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Polarlys",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "62.39",
+        "title": "Riometre",
+        "decommissioned": false,
+        "hasChildren": true,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Terrænlære",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      },
+      {
+        "index": "55.1",
+        "title": "Tyngdemåling",
+        "decommissioned": false,
+        "hasChildren": false,
+        "note": ""
+      }
+    ]
+  },
   "48": {
     "index": "48",
     "parentIndex": "40-49",

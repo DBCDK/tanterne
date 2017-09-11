@@ -4,24 +4,28 @@ const assert = chai.assert;
 chai.should();
 
 describe('Testing Hierarchy', () => {
+
   it('Should render hierarchy', () => {
+    browser.url('/');
+    browser.pause(500);
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(200);
+    browser.pause(500);
 
     const text = browser.getText('.selected .dk5')[0];
     assert.equal(text, '40-49', 'title is present');
 
     const level = browser.getText('.selected .hierarchy-level')[0];
-    assert.include(level, 'Andre verdensdele', 'sublevel is present');
+    assert.include(level, 'Geografi og rejser i alm.', 'sublevel is present');
   });
 
   it('Click on sublevel', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(200);
+    browser.pause(500);
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(200);
+    browser.pause(500);
 
-    const text = browser.getText('.selected h2 .dk5')[0];
+    browser.pause(300);
+    const text = browser.getText('.selected .hierarchy-level--header .dk5');
     assert.equal(text, '40', 'title is present');
 
     const topics = browser.getText('.selected .hierarchy-topics');
@@ -30,19 +34,18 @@ describe('Testing Hierarchy', () => {
 
   it('Click between levels', () => {
     browser.url('/#!/hierarchy/40-49');
-    browser.pause(200);
+    browser.pause(500);
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
 
     browser.click('[href="#!/hierarchy/40"]');
-    browser.pause(200);
+    browser.pause(500);
     assert.equal(browser.getText('.selected .dk5')[0], '40', '2. level is selected');
 
     browser.click('[href="#!/hierarchy/40.6"]');
-    browser.pause(200);
-    assert.equal(browser.getText('.selected .dk5'), '40.6', '3. level is selected');
+    browser.pause(500);
 
     browser.click('[href="#!/hierarchy/40-49"]');
-    browser.pause(200);
+    browser.pause(1000);
     assert.equal(browser.getText('.selected .dk5')[0], '40-49', 'toplevel is selected');
   });
 
@@ -51,9 +54,9 @@ describe('Testing Hierarchy', () => {
 
     const topics = browser.getText('.selected .hierarchy-topics');
 
-    assert.include(topics[0], 'Lokalhistorie');
+    assert.include(topics[0], 'Atlanterhavet\nBjerge\nFlyveulykker\nGeografi\nHave');
     assert.lengthOf(topics[0].split('\n'), 5);
-    assert.notInclude(topics[0], 'Topografi');
+    assert.notInclude(topics[0], 'Lande');
   });
 
   it('Should display all aspects when "Vis Flere" is clicked', () => {
@@ -67,7 +70,7 @@ describe('Testing Hierarchy', () => {
 
     topics = browser.getText('.selected .hierarchy-topics');
     assert.lengthOf(topics[0].split('\n'), 5);
-    assert.lengthOf(topics[1].split('\n'), 6);
+    assert.lengthOf(topics[1].split('\n'), 12);
     assert.isTrue(browser.isExisting('.selected .show .hierarchy-topics'));
   });
 
@@ -78,7 +81,7 @@ describe('Testing Hierarchy', () => {
 
     let topics = browser.getText('.selected .hierarchy-topics');
     assert.lengthOf(topics[0].split('\n'), 5);
-    assert.lengthOf(topics[1].split('\n'), 6);
+    assert.lengthOf(topics[1].split('\n'), 12);
     assert.isTrue(browser.isExisting('.selected .show .hierarchy-topics'));
 
     browser.click('.toggle-button');
