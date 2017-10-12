@@ -139,8 +139,8 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
   }
 
   const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} /> : null;
-  const infoChildren = pro & hasChildren ? 'hasChildren' : '';
-  const infoDecommissioned = pro & decommissioned ? 'decommissioned' : '';
+  const infoChildren = pro & hasChildren ? ' hasChildren' : '';
+  const infoDecommissioned = pro & decommissioned ? ' decommissioned' : '';
   const link_82_88 = pro && isSelected && index === '82-88' ? <Link to='/help'><span className='dk5'> Se till&aelig;gstal</span></Link> : null;
 
   return (
@@ -149,7 +149,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
         <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
           {cartButton}
           <Link to={`/hierarchy/${index}`}>
-            <span className={`dk5 ${infoDecommissioned} ${infoChildren}`}>{index}</span>
+            <span className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</span>
             <span className="name">{title}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
           </Link>
@@ -259,7 +259,7 @@ class HierarchyContainerComponent extends React.Component {
         </a>
         <span className="hierarchy--navbar--title">
           {this.props.params.id}
-          </span>
+        </span>
         {this.props.pro &&
         <span className="hierarchy--navbar--cart">
           <TopbarCartItem cart={this.props.cart}/>

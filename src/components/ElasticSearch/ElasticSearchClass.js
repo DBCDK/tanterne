@@ -114,7 +114,7 @@ export class ElasticClient {
     let hierarchy = {};
     let top = {};
     let query = q;
-    while (query.indexOf('.') !== -1 && query.length > 2 && (!this.dk5Syst[query] || (!pro && this.dk5Syst[query].decommissioned))) {  // cut until found - handling country codes
+    while (query.indexOf('.') !== -1 && query.length > 2 && (!this.dk5Syst[query] || (!pro && this.dk5Syst[query].decommissioned))) { // cut until found - handling country codes
       query = query.substr(0, query.length - 1);
     }
     Object.keys(this.topGroups).forEach((idx) => {
@@ -183,7 +183,7 @@ export class ElasticClient {
       hierarchy = {selected: query, items: esUtil.indexSort(parents)};
       if (parent.index) {
         lastChild = this.dk5Syst[parent.index].index;
-        while (parent = this.dk5Syst[parent.parentIndex]) {         // eslint-disable-line no-cond-assign
+        while (parent = this.dk5Syst[parent.parentIndex]) { // eslint-disable-line no-cond-assign
           hierarchy = Object.assign({
             index: parent.index,
             title: parent.title,
@@ -374,7 +374,7 @@ export class ElasticClient {
    * @returns {Array}
    */
   async fetchRegisterWords(dk5, pro) {
-    const registerWordIndex = ['652m', '652d', 'b52m'];  // one of these subFields contains the dk5 index for the register word
+    const registerWordIndex = ['652m', '652d', 'b52m']; // one of these subFields contains the dk5 index for the register word
     const regRecords = [];
     const query = [];
     registerWordIndex.forEach((reg) => {

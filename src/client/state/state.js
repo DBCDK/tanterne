@@ -57,9 +57,7 @@ const globalState = new State();
 export function wrapper(Component, listenTo) {
   const WrapperComponent = (props) => {
     return (
-      <StateWrapper Component={Component} listenTo={listenTo}
-                    globalState={globalState} transfer={props}
-      />
+      <StateWrapper Component={Component} listenTo={listenTo} globalState={globalState} transfer={props} />
     );
   };
   return WrapperComponent;

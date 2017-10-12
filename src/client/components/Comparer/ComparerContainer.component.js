@@ -77,9 +77,9 @@ export default class ComparerContainer extends React.Component {
         {
           aspects.length >= 1 &&
           <div className="comparer--item--aspects">
-          <h4>Se også</h4>
-          <ul className="comparer--item--aspects--list">{aspects}</ul>
-        </div>
+            <h4>Se også</h4>
+            <ul className="comparer--item--aspects--list">{aspects}</ul>
+          </div>
         }
       </div>
     );
