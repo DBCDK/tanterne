@@ -52,7 +52,7 @@
     "koa-router": "^7.2.1",
     "koa-static": "^3.0.0",
     "newrelic": "^2.3.0",
-    "preact": "8.2.5",
+    "preact": "8.2.6",
     "preact-compat": "3.17.0",
     "preact-enroute": "1.2.3",
     "prop-types": "^15.6.0",
