@@ -70,11 +70,11 @@ info.forEach(function (error) {
 });
 
 console.log('\nStart Elastic Search and load data like:\n' +
-  '  curl -XDELETE localhost:9200/*\n' +
-  '  curl -XPUT localhost:9200/systematic -d \'{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}\'\n' +
-  '  curl -XPUT localhost:9200/register -d \'{"settings":{"analysis":{"char_filter":{"dk5Filter":{"type":"mapping","mappings":[":=>kolon"]}},"analyzer":{"default":{"type":"custom","char_filter":["dk5Filter"],"tokenizer":"standard","filter":["lowercase"]}}}}}\'\n' +
-  '  curl -XPOST localhost:9200/_bulk?refresh=wait_for --data-binary \'@' + option.output + '\'\n' +
-  '  curl -XPUT localhost:9200/*/_settings -d \'{"index": {"max_result_window": 50000}}\'\n');
+  '  curl -XDELETE \'localhost:9200/*\'\n' +
+  '  curl -XPUT \'localhost:9200/systematic\' -d \'{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}\'\n' +
+  '  curl -XPUT \'localhost:9200/register\' -d \'{"settings":{"analysis":{"char_filter":{"dk5Filter":{"type":"mapping","mappings":[":=>kolon"]}},"analyzer":{"default":{"type":"custom","char_filter":["dk5Filter"],"tokenizer":"standard","filter":["lowercase"]}}}}}\'\n' +
+  '  curl -XPOST \'localhost:9200/_bulk?refresh=wait_for\' --data-binary \'@' + option.output + '\'\n' +
+  '  curl -XPUT \'localhost:9200/*/_settings\' -d \'{"index": {"max_result_window": 50000}}\'\n');
 process.exit(0);
 
 /* ------------------------------------------------------------------------------------------------------------------------------ */
