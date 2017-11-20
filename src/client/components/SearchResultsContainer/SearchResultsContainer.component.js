@@ -44,10 +44,8 @@ const SearchResultSingle = ({note, title, dk5, parent, pro, cart, decommissioned
 const SearchResultGroup = ({note, dk5, title, items, pro, cart}) => {
   return (
     <div className="result-group">
-      <h2><span className="result-element-title">{title},&nbsp;</span>
-        <span className="result-element-link">se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
+      <h2><span className="result-element-title">{title}&nbsp;</span>
         {note.name && <span className="result-element-link">({note.name} <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)</span>}
-        {pro && <CartButton index={dk5.index} cart={cart}/>}
       </h2>
       <ul className="result-list">
         {items.map(el => <li key={el.dk5.index}><SearchResultSingle pro={pro} cart={cart} {...el}/></li>)}
