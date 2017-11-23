@@ -97,7 +97,7 @@ export class ElasticClient {
     const res = [];
     const esRes = await this.rawElasticSearch(pars, pro);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-      res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, query));
+      res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, this.dk5GeneralNote, query));
     }
     return esUtil.titleMatchSort(res, query || '');
   }
@@ -382,7 +382,7 @@ export class ElasticClient {
     });
     let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'}, pro);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-      const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst);
+      const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, this.dk5GeneralNote);
       const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
       if (syst.index && syst.title) {
         regRecords.push({
