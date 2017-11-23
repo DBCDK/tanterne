@@ -80,7 +80,7 @@ describe('Testing parseRegisterRecord', () => {
     'b52.m.1': {index: 'syst b52.m.1', decommissioned: false},
     'b52.m.2': {index: 'syst b52.m.2', decommissioned: false}
   };
-  const dk5GeneralNote = {
+  const dk5NotesGeneral = {
     '652.m': '652.m noteGeneral',
     '652.M': '652.M noteGeneral'
   };
@@ -126,7 +126,7 @@ describe('Testing parseRegisterRecord', () => {
         name: 'before 1999'
       }
     };
-    assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab, dk5GeneralNote));
+    assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab, dk5NotesGeneral));
     const items = [
       {
         index: 'b52.m.1',
@@ -164,7 +164,7 @@ describe('Testing parseRegisterRecord', () => {
       },
       items: items
     };
-    assert.deepEqual(registerWords, esUtil.parseRegisterRecord(esRes, 1, dk5Tab, dk5GeneralNote));
+    assert.deepEqual(registerWords, esUtil.parseRegisterRecord(esRes, 1, dk5Tab, dk5NotesGeneral));
   });
 });
 

@@ -60,10 +60,10 @@ export class ElasticClient {
     };
     this.dk5Syst = {};
     this.dk5HasChildren = {};
-    this.dk5SystematicNotes = {};
-    this.dk5SystematicHistoricNotes = {};
-    this.dk5GeneralNote = {};
-    this.dk5RegisterNotes = {};
+    this.dk5NotesSystematic = {};
+    this.dk5NotesSystematicHistoric = {};
+    this.dk5NotesGeneral = {};
+    this.dk5NotesRegister = {};
   }
 
   /**
@@ -97,7 +97,7 @@ export class ElasticClient {
     const res = [];
     const esRes = await this.rawElasticSearch(pars, pro);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-      res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, this.dk5GeneralNote, query));
+      res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, this.dk5NotesGeneral, query));
     }
     return esUtil.titleMatchSort(res, query || '');
   }
@@ -143,13 +143,13 @@ export class ElasticClient {
           if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
             let item = this.setItemFromIdx(idx);
             if (idx === query) {
-              const note = this.dk5GeneralNote[idx];
+              const note = this.dk5NotesGeneral[idx];
               // Notes from systematic are currently not used
               // notes from register are moved to the individual group or register word
               item = Object.assign(item, {
                 note: note,
-                noteSystematic: this.dk5SystematicNotes[idx],
-                noteSystematicHistoric: this.dk5SystematicHistoricNotes[idx],
+                noteSystematic: this.dk5NotesSystematic[idx],
+                noteSystematicHistoric: this.dk5NotesSystematicHistoric[idx],
                 items: esUtil.titleSort(regRecords)
               }, {children: esUtil.indexSort(children)});
             }
@@ -239,9 +239,9 @@ export class ElasticClient {
       }
       result[dk5] = Object.assign({}, this.dk5Syst[dk5], {
         hasChildren: this.dk5HasChildren[dk5] || false,
-        noteSystematic: this.dk5SystematicNotes[dk5],
-        noteGeneral: this.dk5GeneralNote[dk5],
-        noteHistoric: this.dk5RegisterNotes[dk5],
+        noteSystematic: this.dk5NotesSystematic[dk5],
+        noteGeneral: this.dk5NotesGeneral[dk5],
+        noteHistoric: this.dk5NotesRegister[dk5],
         aspects: esUtil.indexSort(aspects),
         items: esUtil.titleSort(regRecords)
       });
@@ -331,8 +331,8 @@ export class ElasticClient {
         }
         const grp = esUtil.getFirstField(syst, hitPos, ['652m', '652n', '652d']);
         if (grp) {
-          this.dk5SystematicNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a40');
-          this.dk5SystematicHistoricNotes[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a30');
+          this.dk5NotesSystematic[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a40');
+          this.dk5NotesSystematicHistoric[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a30');
           this.dk5HasChildren[parentIndex] = true;
           this.dk5Syst[grp] = {
             index: grp,
@@ -361,8 +361,8 @@ export class ElasticClient {
         fields: '651*, 652*, b00*',
         limit: 50000
       }, true);
-      this.dk5RegisterNotes = esUtil.parseRegisterForNotes(regNotes, this.dk5Syst);
-      this.dk5GeneralNote = esUtil.parseRegisterForGeneralNotes(regNotes);
+      this.dk5NotesRegister = esUtil.parseRegisterForNotes(regNotes, this.dk5Syst);
+      this.dk5NotesGeneral = esUtil.parseRegisterForGeneralNotes(regNotes);
     }
   }
 
@@ -382,7 +382,7 @@ export class ElasticClient {
     });
     let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'}, pro);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-      const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, this.dk5GeneralNote);
+      const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, this.dk5NotesGeneral);
       const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
       if (syst.index && syst.title) {
         regRecords.push({
