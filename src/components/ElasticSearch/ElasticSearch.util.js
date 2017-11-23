@@ -134,7 +134,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab, dk5GeneralNote, query = 
   ret.index = getFirstField(esRes, pos, ['652m', 'b52m', '652n']);
   ret.decommissioned = ret.index && dk5Tab[ret.index] ? dk5Tab[ret.index].decommissioned : false;
   ret.id = getFirstField(esRes, pos, ['001a']);
-  ret.generalNote = dk5GeneralNote[ret.index];
+  ret.noteGeneral = dk5GeneralNote[ret.index];
   ret.note = {
     name: getFirstField(esRes, pos, ['651a']),
     index: getFirstField(esRes, pos, ['651b'])
