@@ -112,10 +112,13 @@
 }
 
 .result-element-note {
-  display: inline-table;
+  display: inline;
   font-size: 1.6rem;
   font-weight: normal;
   margin-right: 0.5rem;
+  &:before {
+    content: '– ';
+  }
 }
 
 .spelling-error {
