@@ -115,6 +115,7 @@ describe('Testing parseRegisterRecord', () => {
     const expected = {
       id: 'txt 001a',
       index: '652.m',
+      indexMain: '652.m',
       decommissioned: false,
       noteGeneral: '652.m noteGeneral',
       parent: {index: 'syst 652.m', decommissioned: false},
@@ -152,6 +153,7 @@ describe('Testing parseRegisterRecord', () => {
     const registerWords = {
       id: 'txt 001A',
       index: '652.M',
+      indexMain: '652.M',
       decommissioned: false,
       noteGeneral: '652.M noteGeneral',
       parent: {index: 'syst 652.M', decommissioned: false},
