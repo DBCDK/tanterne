@@ -14,20 +14,21 @@ import {CartButton} from '../Cart/CartButton.component';
 
 function parseSearchResult(result) {
   return result.map(level => {
-    const {note, title, items, decommissioned, index, parent} = level;
+    const {noteGeneral, note, title, items, decommissioned, index, indexMain, parent} = level;
     const subLevel = items && items.length && parseSearchResult(items) || [];
     return {
       title,
-      dk5: index && {index, title} || null,
+      dk5: index && {index, indexMain, title} || null,
       decommissioned: decommissioned || false,
       items: subLevel,
       parent: parent && parent.title,
-      note: note || ''
+      note: note || '',
+      noteGeneral: noteGeneral || ''
     };
   });
 }
 
-const SearchResultSingle = ({note, title, dk5, parent, pro, cart, decommissioned}) => {
+const SearchResultSingle = ({note, noteGeneral, title, dk5, parent, pro, cart, decommissioned}) => {
   const infoDecommissioned = decommissioned ? 'decommissioned' : '';
   return (!decommissioned &&
     <div className={`result-element ${infoDecommissioned}`}>
@@ -36,16 +37,21 @@ const SearchResultSingle = ({note, title, dk5, parent, pro, cart, decommissioned
         <span className="result-element-link">se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
         {note.name && <span className="result-element-link">({note.name} <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)</span>}
         {pro && <CartButton index={dk5.index} cart={cart}/>}
+        {noteGeneral && <div className={'result-element-note'} dangerouslySetInnerHTML={{__html: noteGeneral}} />}
       </h2>
     </div>
   );
 };
 
-const SearchResultGroup = ({note, title, items, pro, cart}) => {
+const SearchResultGroup = ({note, noteGeneral, title, dk5, items, pro, cart}) => {
   return (
     <div className="result-group">
-      <h2><span className="result-element-title">{title}&nbsp;</span>
+      <h2>
+        <span className="result-element-title">{title}</span>
+        {dk5.indexMain && <span className="result-element-link">, se <Link to={`/hierarchy/${dk5.indexMain}`}>{dk5.indexMain}</Link> {parent}</span>}
         {note.name && <span className="result-element-link">({note.name} <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)</span>}
+        {pro && dk5.indexMain && <CartButton index={dk5.indexMain} cart={cart}/> || <span> </span>}
+        {noteGeneral && <div className={'result-element-note'} dangerouslySetInnerHTML={{__html: noteGeneral}} />}
       </h2>
       <ul className="result-list">
         {items.map(el => <li key={el.dk5.index}><SearchResultSingle pro={pro} cart={cart} {...el}/></li>)}

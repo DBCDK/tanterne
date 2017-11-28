@@ -80,6 +80,10 @@ describe('Testing parseRegisterRecord', () => {
     'b52.m.1': {index: 'syst b52.m.1', decommissioned: false},
     'b52.m.2': {index: 'syst b52.m.2', decommissioned: false}
   };
+  const dk5NotesGeneral = {
+    '652.m': '652.m noteGeneral',
+    '652.M': '652.M noteGeneral'
+  };
   const esRes = {
     hits: [
       {
@@ -111,7 +115,9 @@ describe('Testing parseRegisterRecord', () => {
     const expected = {
       id: 'txt 001a',
       index: '652.m',
+      indexMain: '652.m',
       decommissioned: false,
+      noteGeneral: '652.m noteGeneral',
       parent: {index: 'syst 652.m', decommissioned: false},
       title: 'txt 630a',
       titleDetails: '',
@@ -121,7 +127,7 @@ describe('Testing parseRegisterRecord', () => {
         name: 'before 1999'
       }
     };
-    assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab));
+    assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab, dk5NotesGeneral));
     const items = [
       {
         index: 'b52.m.1',
@@ -147,7 +153,9 @@ describe('Testing parseRegisterRecord', () => {
     const registerWords = {
       id: 'txt 001A',
       index: '652.M',
+      indexMain: '652.M',
       decommissioned: false,
+      noteGeneral: '652.M noteGeneral',
       parent: {index: 'syst 652.M', decommissioned: false},
       title: 'txt 630A',
       titleDetails: '',
@@ -158,7 +166,7 @@ describe('Testing parseRegisterRecord', () => {
       },
       items: items
     };
-    assert.deepEqual(registerWords, esUtil.parseRegisterRecord(esRes, 1, dk5Tab));
+    assert.deepEqual(registerWords, esUtil.parseRegisterRecord(esRes, 1, dk5Tab, dk5NotesGeneral));
   });
 });
 

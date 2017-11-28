@@ -84,6 +84,7 @@ export function indexSort(arr) {
  * sort an array first on query title match second on the index field.
  *
  * @param arr
+ * @param query
  * @returns {*}
  */
 export function titleMatchSort(arr, query = null) {
@@ -121,16 +122,20 @@ export function titleSort(arr) {
  * @param esRes
  * @param pos
  * @param dk5Tab
+ * @param dk5NotesGeneral
+ * @param query
  * @returns {*}
  */
-export function parseRegisterRecord(esRes, pos, dk5Tab, query = null) {
+export function parseRegisterRecord(esRes, pos, dk5Tab, dk5NotesGeneral, query = null) {
   const ret = {};
   ret.title = '' + getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
   ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
   ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
+  ret.indexMain = getFirstField(esRes, pos, ['652m']);
   ret.index = getFirstField(esRes, pos, ['652m', 'b52m', '652n']);
   ret.decommissioned = ret.index && dk5Tab[ret.index] ? dk5Tab[ret.index].decommissioned : false;
   ret.id = getFirstField(esRes, pos, ['001a']);
+  ret.noteGeneral = '' + getFirstField(esRes, pos, ['b00a']) || dk5NotesGeneral[ret.index];
   ret.note = {
     name: getFirstField(esRes, pos, ['651a']),
     index: getFirstField(esRes, pos, ['651b'])
