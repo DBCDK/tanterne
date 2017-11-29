@@ -42,6 +42,7 @@ describe('Testing cart on pro site (desktop)', () => {
     assert.equal(cartCount, 1);
 
     browser.click('#cart-button-41');
+    browser.pause(100);
 
     cartCount = browser.getText('.top-bar--container .top-bar--cart--count');
     assert.equal(cartCount, 2);
