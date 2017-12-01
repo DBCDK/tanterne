@@ -62,7 +62,7 @@
     "superagent": "^3.8.1"
   },
   "devDependencies": {
-    "babel-eslint": "^8.0.2",
+    "babel-eslint": "^8.0.3",
     "chai": "^4.1.2",
     "css-loader": "^0.28.7",
     "cssnano": "^3.10.0",
