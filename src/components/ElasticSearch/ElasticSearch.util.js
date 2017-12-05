@@ -18,14 +18,14 @@ export function getEsField(esRes, pos, fld) {
 }
 
 /**
- * return first occurrence of a given list of fields
+ * return first entry from first occurrence of a given list of fields
  *
  * @param esRes
  * @param pos
  * @param fldList
  * @returns {*}
  */
-export function getFirstField(esRes, pos, fldList) {
+export function getFirstElementInFieldList(esRes, pos, fldList) {
   let field = '';
   fldList.forEach(function (tag) {
     const fld = getEsField(esRes, pos, tag);
@@ -128,17 +128,17 @@ export function titleSort(arr) {
  */
 export function parseRegisterRecord(esRes, pos, dk5Tab, dk5NotesGeneral, query = null) {
   const ret = {};
-  ret.title = '' + getFirstField(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
-  ret.titleDetails = getFirstField(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
+  ret.title = '' + getFirstElementInFieldList(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
+  ret.titleDetails = getFirstElementInFieldList(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
   ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
-  ret.indexMain = getFirstField(esRes, pos, ['652m']);
-  ret.index = getFirstField(esRes, pos, ['652m', 'b52m', '652n']);
+  ret.indexMain = getFirstElementInFieldList(esRes, pos, ['652m']);
+  ret.index = getFirstElementInFieldList(esRes, pos, ['652m', 'b52m', '652n']);
   ret.decommissioned = ret.index && dk5Tab[ret.index] ? dk5Tab[ret.index].decommissioned : false;
-  ret.id = getFirstField(esRes, pos, ['001a']);
-  ret.noteGeneral = '' + getFirstField(esRes, pos, ['b00a']) || dk5NotesGeneral[ret.index];
+  ret.id = getFirstElementInFieldList(esRes, pos, ['001a']);
+  ret.noteGeneral = '' + getFirstElementInFieldList(esRes, pos, ['b00a']) || dk5NotesGeneral[ret.index];
   ret.note = {
-    name: getFirstField(esRes, pos, ['651a']),
-    index: getFirstField(esRes, pos, ['651b'])
+    name: getFirstElementInFieldList(esRes, pos, ['651a']),
+    index: getFirstElementInFieldList(esRes, pos, ['651b'])
   };
   ret.parent = Object.assign({}, dk5Tab[ret.index]);
   const registerWords = getEsField(esRes, pos, 'b52m');
@@ -151,6 +151,7 @@ export function parseRegisterRecord(esRes, pos, dk5Tab, dk5NotesGeneral, query =
   const registerWordIndex = getEsField(esRes, pos, 'b52å'); // [1, 2]
 
   const registerWordTitle = getEsField(esRes, pos, 'b52y');
+  const registerWordInterval = getEsField(esRes, pos, 'b52d');
   const items = [];
   for (let i = 0; i < registerWords.length; i++) {
     const hasNoteIndex = noteRelationIndex.indexOf(registerWordIndex[i]);
@@ -161,7 +162,8 @@ export function parseRegisterRecord(esRes, pos, dk5Tab, dk5NotesGeneral, query =
         index: noteDk5[hasNoteIndex]
       };
     }
-    items.push({index: registerWords[i], title: registerWordTitle[i], parent: dk5Tab[registerWords[i]], note});
+    const index = registerWordInterval[i] || registerWords[i];
+    items.push({index: index, title: registerWordTitle[i], parent: dk5Tab[index], note});
   }
   return Object.assign({}, ret, {items: titleMatchSort(items, query)});
 }
@@ -212,7 +214,7 @@ export function createTaggedRegisterNote(regRecs, hitPos, dk5Syst) {
 export function parseRegisterForNotes(regRecs, dk5Syst) {
   const notes = {};
   for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
-    const index = getFirstField(regRecs, hitPos, ['652m', '652n', '652d']);
+    const index = getFirstElementInFieldList(regRecs, hitPos, ['652m', '652n', '652d']);
     const note = createTaggedRegisterNote(regRecs, hitPos, dk5Syst);
     if (notes[index]) {
       if (notes[index].indexOf(note) === -1) {
@@ -238,7 +240,7 @@ export function parseRegisterForGeneralNotes(regRecs) {
   for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
     const noteText = getEsField(regRecs, hitPos, 'b00').join('<br >');
     if (noteText) {
-      const index = getFirstField(regRecs, hitPos, ['652m', '652n', '652d']);
+      const index = getFirstElementInFieldList(regRecs, hitPos, ['652m', '652n', '652d']);
       notes[index] = noteText;
     }
   }

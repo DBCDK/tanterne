@@ -245,7 +245,7 @@ export class SearchResultsContainerComponent extends Component {
       if (entry.items.length === 0) {
         return (
           <div className="result-group">
-            <SearchResultSingle key={entry.dk5.index} cart={this.props.cart} {...entry} />
+            <SearchResultSingle key={entry.dk5.index} pro={this.props.pro} cart={this.props.cart} {...entry} />
           </div>
         );
       }

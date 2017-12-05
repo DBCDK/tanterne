@@ -80,6 +80,7 @@
 
   li * {
     display: inline-block;
+    font-size: 1.7rem;
   }
 
   li:before {
@@ -91,7 +92,6 @@
 
 .result-element {
   h2 {
-    font-size: 1.8rem;
 
     .result-element-link {
       font-weight: 400;

@@ -319,8 +319,8 @@ export class ElasticClient {
         89.9999: '90-99'
       };
       for (let hitPos = 0; hitPos < syst.hits.length; hitPos++) {
-        let parentIndex = esUtil.getFirstField(syst, hitPos, ['652j']);
-        let parent = esUtil.getFirstField(syst, hitPos, ['parent']);
+        let parentIndex = esUtil.getFirstElementInFieldList(syst, hitPos, ['652j']);
+        let parent = esUtil.getFirstElementInFieldList(syst, hitPos, ['parent']);
         if (linkTranslate[parentIndex]) {
           parentIndex = linkTranslate[parentIndex];
           Object.keys(this.topGroups).forEach((idx) => {
@@ -329,7 +329,7 @@ export class ElasticClient {
             }
           });
         }
-        const grp = esUtil.getFirstField(syst, hitPos, ['652m', '652n', '652d']);
+        const grp = esUtil.getFirstElementInFieldList(syst, hitPos, ['652m', '652n', '652d']);
         if (grp) {
           this.dk5NotesSystematic[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a40');
           this.dk5NotesSystematicHistoric[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a30');
@@ -337,13 +337,13 @@ export class ElasticClient {
           this.dk5Syst[grp] = {
             index: grp,
             parentIndex: parentIndex,
-            title: esUtil.getFirstField(syst, hitPos, ['652u']),
-            decommissioned: esUtil.getFirstField(syst, hitPos, ['652x']) === '2',
+            title: esUtil.getFirstElementInFieldList(syst, hitPos, ['652u']),
+            decommissioned: esUtil.getFirstElementInFieldList(syst, hitPos, ['652x']) === '2',
             parent: parent
           };
         }
         else {
-          Logger.log.error('No dk5 group for ' + esUtil.getFirstField(syst, hitPos, ['001a']));
+          Logger.log.error('No dk5 group for ' + esUtil.getFirstElementInFieldList(syst, hitPos, ['001a']));
         }
       }
     }

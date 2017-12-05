@@ -180,15 +180,15 @@ describe('Testing Elastic result', () => {
     ]
   };
   it('it should return first field', () => {
-    assert.equal('text 0', esUtil.getFirstField(esRes, 0, ['field']));
-    assert.equal('text 0', esUtil.getFirstField(esRes, 0, ['notThere', 'field']));
+    assert.equal('text 0', esUtil.getFirstElementInFieldList(esRes, 0, ['field']));
+    assert.equal('text 0', esUtil.getFirstElementInFieldList(esRes, 0, ['notThere', 'field']));
   });
   it('it should return empty string if field is not there', () => {
-    assert.equal('', esUtil.getFirstField(esRes, 0, ['notThere', 'neverThere']));
-    assert.equal('', esUtil.getFirstField(esRes, 0, []));
+    assert.equal('', esUtil.getFirstElementInFieldList(esRes, 0, ['notThere', 'neverThere']));
+    assert.equal('', esUtil.getFirstElementInFieldList(esRes, 0, []));
   });
   it('it should return empty string', () => {
-    assert.equal('', esUtil.getFirstField(esRes, 0, ['empty', 'notEmpty']));
+    assert.equal('', esUtil.getFirstElementInFieldList(esRes, 0, ['empty', 'notEmpty']));
   });
   it('it should return specified field', () => {
     assert.equal('text 0', esUtil.getEsField(esRes, 0, 'field'));
