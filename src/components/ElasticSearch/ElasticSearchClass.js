@@ -26,7 +26,7 @@ export class ElasticClient {
     this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d,a20,a40'.split(',');
     this.defaultParameters = {
       query: '',
-      limit: 50,
+      limit: 255,
       offset: 0,
       fields: '001a,6*,b*,a20*',
       index: 'register',
