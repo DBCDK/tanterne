@@ -18,7 +18,7 @@ describe('Testing searchField', () => {
     const searchValue = 'geografi';
     const bUrl = browser.url().value;
     browser.element('.search-field').setValue(searchValue);
-    browser.element('.search-field--container').submitForm();
+    browser.element('.search-field--button').click();
 
     const aUrl = browser.url().value;
     aUrl.should.not.equal(bUrl);
