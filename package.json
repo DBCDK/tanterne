@@ -75,13 +75,13 @@
     "postcss-inline-svg": "^3.0.0",
     "postcss-loader": "^2.0.10",
     "sass-loader": "^6.0.3",
-    "sinon": "^4.1.4",
+    "sinon": "^4.1.5",
     "style-loader": "^0.19.1",
     "wdio-junit-reporter": "^0.3.1",
     "wdio-mocha-framework": "^0.5.12",
     "wdio-sauce-service": "^0.4.6",
     "wdio-selenium-standalone-service": "0.0.8",
-    "webdriverio": "^4.10.0",
+    "webdriverio": "^4.10.1",
     "webpack": "^3.10.0"
   }
 }
