@@ -57,31 +57,14 @@ async function searchHandler(ctx) {
   let {q, limit, offset, sort, spell} = ctx.query; // eslint-disable-line no-unused-vars
   const validSorts = ['relevance', 'dk5'];
   let errors = 0;
-  if (!q) {
+  if (!q || (q === '')) {
     ctx.body = JSON.stringify({status: 400, error: 'No query provided'});
     ctx.status = 400;
     errors += 1;
   }
 
-  if (q && q === '') {
-    ctx.body = JSON.stringify({status: 400, error: 'No query provided'});
-    ctx.status = 400;
-    errors += 1;
-  }
-
-  if (limit && limit !== '') {
-    limit = parseInt(limit, 10) || 10;
-  }
-  else {
-    limit = 10;
-  }
-
-  if (offset && offset !== '') {
-    offset = parseInt(offset, 10) || 0;
-  }
-  else {
-    offset = 0;
-  }
+  limit = setDefault(limit, 10);
+  offset = setDefault(offset, 0);
 
   if (!sort || sort === '') {
     sort = validSorts[0];
@@ -134,6 +117,13 @@ async function searchHandler(ctx) {
 
     ctx.body = JSON.stringify(response);
   }
+}
+
+function setDefault(par, defaultValue) {
+  if (par && par !== '') {
+    return parseInt(par, 10) || defaultValue;
+  }
+  return defaultValue;
 }
 
 async function listHandler(ctx) {
