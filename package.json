@@ -69,7 +69,7 @@
     "eslint": "^4.15.0",
     "eslint-plugin-react": "^7.5.0",
     "extract-text-webpack-plugin": "^3.0.2",
-    "mocha": "^4.1.0",
+    "mocha": "^5.0.0",
     "node-sass": "^4.7.2",
     "nodemon": "^1.14.11",
     "postcss-inline-svg": "^3.0.0",
