@@ -351,7 +351,8 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           2. <i>ciffer</i> tildeles efter nedenst&aring;ende tabel:
           <div><div className="bullet">0</div>Digte. Antologier</div>
-          <div><div className="bullet">1</div>Digte. V&aelig;rker af enkelte forfattere
+          <div>
+            <div className="bullet">1</div>Digte. V&aelig;rker af enkelte forfattere
             <div className="note">
               Till&aelig;gstalene 0 og 1 omfatter ikke epsisk og dramatisk litteratur p&aring; vers.
               Kortere fort&aelig;llende digte placeres dog i formgrupperne 0 og 1.
@@ -359,7 +360,8 @@ export class HelpContainerComponent extends Component {
           </div>
           <div><div className="bullet">2</div>Skuespil. Antologier</div>
           <div><div className="bullet">3</div>Skuespil. V&aelig;rker af enkelte forfattere</div>
-          <div><div className="bullet">4</div>Romaner og noveller. Antologier
+          <div>
+            <div className="bullet">4</div>Romaner og noveller. Antologier
             <div className="note">
               Her anbringes ogs&aring; antologier, sammensat af forskellige digtarter<br />
               I grupperne 86 og 88 placerer Dansk bogfortegnelse l&aelig;seb&oslash;ger og prosaantologier til
@@ -369,7 +371,8 @@ export class HelpContainerComponent extends Component {
           </div>
           <div><div className="bullet">5</div>Romaner og noveller f&oslash;r 1901. V&aelig;rker af enkelte forfattere</div>
           <div><div className="bullet">6</div>Romaner og noveller fra 1901. V&aelig;rker af enkelte forfattere</div>
-          <div><div className="bullet">7</div>Humor, tegneserier etc. Antologier
+          <div>
+            <div className="bullet">7</div>Humor, tegneserier etc. Antologier
             <div className="note">
               Her anbringes samlinger af vittigheder og humoristiske sm&aring;stykker.
             </div>
@@ -380,7 +383,8 @@ export class HelpContainerComponent extends Component {
           <div><div className="bullet">91</div>Digte for b&oslash;rn. Enkelte forfattere</div>
           <div><div className="bullet">92</div>B&oslash;rnekomedier. Antologier</div>
           <div><div className="bullet">93</div>B&oslash;rnekomedier. Enkelte forfattere</div>
-          <div><div className="bullet">94</div>Fort&aelig;llinger for b&oslash;rn. Antologier
+          <div>
+            <div className="bullet">94</div>Fort&aelig;llinger for b&oslash;rn. Antologier
             <div className="note">
               Her anbringes ogs&aring; antologier sammensat af forskellige digtarter.
             </div>
@@ -395,33 +399,39 @@ export class HelpContainerComponent extends Component {
         </div>
         <div className="section">
           <i>Faglitteratur &mdash; Till&aelig;gstal med fast betydning</i>
-          <div><div className="bullet">-6</div>Skole- og l&aelig;reb&oslash;ger (inkl. opgavesamlinger)
+          <div>
+            <div className="bullet">-6</div>Skole- og l&aelig;reb&oslash;ger (inkl. opgavesamlinger)
             <div className="note">
               Bruges i 51.3, 86-04 og 88-24.
             </div>
           </div>
-          <div><div className="bullet">-61</div>Almindelige l&aelig;reb&oslash;ger, l&aelig;seb&oslash;ger
+          <div>
+            <div className="bullet">-61</div>Almindelige l&aelig;reb&oslash;ger, l&aelig;seb&oslash;ger
             <div className="note">
               Bruges i 89.2, 89.3 og 89.4.
             </div>
           </div>
-          <div><div className="bullet">-62</div>&Oslash;velser og opgaver
+          <div>
+            <div className="bullet">-62</div>&Oslash;velser og opgaver
             <div className="note">
               Bruges i 89.2, 89.3 og 89.4.
             </div>
           </div>
           <div><div className="bullet">-65</div>L&aelig;reb&oslash;ger (inkl. opgavesamlinger) for folkeskolen</div>
-          <div><div className="bullet">-66</div>Andre skole- og l&aelig;reb&oslash;ger (inkl. opgavesamlinger)
+          <div>
+            <div className="bullet">-66</div>Andre skole- og l&aelig;reb&oslash;ger (inkl. opgavesamlinger)
             <div className="note">
               -65 og -66 bruger i 40, 51, 51.1, 51.5, 51.8, 53, 54, 56 og 90,
             </div>
           </div>
-          <div><div className="bullet">-8</div>Udgaver for b&oslash;rn
+          <div>
+            <div className="bullet">-8</div>Udgaver for b&oslash;rn
             <div className="note">
               Bruges i 39.12 og 88.99
             </div>
           </div>
-          <div><div className="bullet">-99</div>Enkeltbiografier
+          <div>
+            <div className="bullet">-99</div>Enkeltbiografier
             <div className="note">
               Bruges i alle grupper undtagen de alfabetisk (herunder de geografisk-topografisk) underdelte.
               Underdeles alfabetisk efter den biograferede persones navn.
