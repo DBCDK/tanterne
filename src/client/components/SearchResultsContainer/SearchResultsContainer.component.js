@@ -72,6 +72,8 @@ export class SearchResultsContainerComponent extends Component {
       pendingSearch: false,
       error: ''
     };
+
+    this.onTileClick = this.onTileClick.bind(this);
   }
 
   componentDidMount() {
@@ -80,6 +82,11 @@ export class SearchResultsContainerComponent extends Component {
 
   componentDidUpdate() {
     this.searchWasTriggered(this.props);
+  }
+
+  // Not pretty: Handles IE problem which for some odd reason does not render page when following #-links
+  onTileClick() {
+    this.render();
   }
 
   searchWasTriggered(props) {
@@ -157,7 +164,7 @@ export class SearchResultsContainerComponent extends Component {
     };
 
     return (
-      <a style={styles} href={`#!/hierarchy/${category.index}`} className='category-tile--container' id={`category-tile--container--${category.index}`}>
+      <a onClick={this.onTileClick} style={styles} href={`#!/hierarchy/${category.index}`} className='category-tile--container' id={`category-tile--container--${category.index}`}>
         <div className='category-tile--gradient'>
           <div className='category-tile--text-container'>
             <span className='category-tile--label'>{category.label}</span>
