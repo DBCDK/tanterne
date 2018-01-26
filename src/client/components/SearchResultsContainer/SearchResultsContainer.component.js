@@ -84,6 +84,7 @@ export class SearchResultsContainerComponent extends Component {
     this.searchWasTriggered(this.props);
   }
 
+  // Not pretty: Handles IE problem which for some odd reason does not render page when following #-links
   onTileClick() {
     this.render();
   }
