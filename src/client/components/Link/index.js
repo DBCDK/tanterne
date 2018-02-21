@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Link({to, children}, {navigate}) {
+export default function Link({to, children, style, className}, {navigate}) {
   function click(e) {
     e.preventDefault();
     navigate(`#!${to}`);
@@ -17,7 +17,7 @@ export default function Link({to, children}, {navigate}) {
   }
 
   return (
-    <a href={`#!${to}`} onClick={click}>
+    <a href={`#!${to}`} onClick={click} style={style} className={className}>
       {children}
     </a>
   );
