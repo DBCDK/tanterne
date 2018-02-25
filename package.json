@@ -82,6 +82,6 @@
     "wdio-sauce-service": "^0.4.6",
     "wdio-selenium-standalone-service": "0.0.8",
     "webdriverio": "^4.10.1",
-    "webpack": "^3.10.0"
+    "webpack": "^4.0.0"
   }
 }
