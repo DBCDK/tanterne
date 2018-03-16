@@ -16,7 +16,7 @@ describe('Testing Hierarchy in mobile view', () => {
   });
 
   it('Should navigagte to frontpage', () => {
-    browser.click('#category-tile--container--00-07');
+    browser.click('.category-tile--container');
     browser.waitForVisible('.hierarchy--navbar--href', 1000);
     browser.click('.hierarchy--navbar--href');
     browser.waitForVisible('.search-field--button--text', 1000);
