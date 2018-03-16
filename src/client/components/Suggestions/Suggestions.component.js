@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Link from '../Link';
 
 export class SuggestionsComponent extends Component {
   render() {
@@ -21,7 +22,7 @@ export class SuggestionsComponent extends Component {
       }
 
       return (
-        <a key={suggestion.href} href={suggestion.href} className={className}>{suggestion.label}</a>
+        <Link key={suggestion.href} to={suggestion.href} className={className}>{suggestion.label}</Link>
       );
     });
 

@@ -16,6 +16,7 @@ import {SearchResultsContainerComponent} from '../SearchResultsContainer/SearchR
 import {TopBarComponent} from '../TopBar/TopBar.component';
 import ComparerContainer from '../Comparer/ComparerContainer.component';
 import ResetToFrontpage from '../ResetToFrontpage/ResetToFrontpage.component';
+import Link from '../Link';
 
 // Helper function
 function getHash(hash) {
@@ -184,7 +185,7 @@ export class RootContainerComponent extends Component {
             Copyright 2017 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
             <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
             <a href="https://kundeservice.dbc.dk/" target="_blank" rel="noopener noreferrer">kundeservice.dbc.dk</a><br/>
-            <a className="about" href="/#!/about">Om DK5</a>
+            <Link className="about" to="#!/about">Om DK5</Link>
           </div>
         </div>
       </ResetToFrontpage>
