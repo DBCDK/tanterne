@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react';
 import Tabs from 'react-simpletabs';
+import Link from '../Link';
 
 export class HelpContainerComponent extends Component {
   princip() {
@@ -486,16 +487,16 @@ export class HelpContainerComponent extends Component {
         </div>
         <div className="section">
           <ul>
-            <li><a href="#!/hierarchy/00-07">00-07</a></li>Bogvæsen. Biblioteker. Museer. Medier. Leksika og blandede værker<br />
-            <li><a href="#!/hierarchy/10-19">10-19</a></li>Filosofi. Psykologi. Videnskab og forskning. Kommunikation og IT<br />
-            <li><a href="#!/hierarchy/20-29">20-29</a></li>Religion<br />
-            <li><a href="#!/hierarchy/30-39">30-39</a></li>Samfundsfag. Pædagogik. Forsorg. Folkekultur<br />
-            <li><a href="#!/hierarchy/40-49">40-49</a></li>Geografi og rejser. Lokalhistorie<br />
-            <li><a href="#!/hierarchy/50-59">50-59</a></li>Naturvidenskab. Matematik. Antropologi og etnografi<br />
-            <li><a href="#!/hierarchy/60-69">60-69</a></li>Teknik. Sygdom og sundhed. Erhverv. Hus og hjem<br />
-            <li><a href="#!/hierarchy/70-79">70-79</a></li>Kultur. Kunstarter. Sport<br />
-            <li><a href="#!/hierarchy/80-89">80-89</a></li>Litteratur. Sprog<br />
-            <li><a href="#!/hierarchy/90-99">90-99</a></li>Historie. Biografier og erindringer<br />
+            <li><Link to="#!/hierarchy/00-07">00-07</Link></li>Bogvæsen. Biblioteker. Museer. Medier. Leksika og blandede værker<br />
+            <li><Link to="#!/hierarchy/10-19">10-19</Link></li>Filosofi. Psykologi. Videnskab og forskning. Kommunikation og IT<br />
+            <li><Link to="#!/hierarchy/20-29">20-29</Link></li>Religion<br />
+            <li><Link to="#!/hierarchy/30-39">30-39</Link></li>Samfundsfag. Pædagogik. Forsorg. Folkekultur<br />
+            <li><Link to="#!/hierarchy/40-49">40-49</Link></li>Geografi og rejser. Lokalhistorie<br />
+            <li><Link to="#!/hierarchy/50-59">50-59</Link></li>Naturvidenskab. Matematik. Antropologi og etnografi<br />
+            <li><Link to="#!/hierarchy/60-69">60-69</Link></li>Teknik. Sygdom og sundhed. Erhverv. Hus og hjem<br />
+            <li><Link to="#!/hierarchy/70-79">70-79</Link></li>Kultur. Kunstarter. Sport<br />
+            <li><Link to="#!/hierarchy/80-89">80-89</Link></li>Litteratur. Sprog<br />
+            <li><Link to="#!/hierarchy/90-99">90-99</Link></li>Historie. Biografier og erindringer<br />
           </ul>
         </div>
         <div className="section">

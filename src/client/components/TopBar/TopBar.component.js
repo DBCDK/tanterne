@@ -6,6 +6,7 @@
 // Libraries
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import Link from '../Link';
 
 import {TopbarCartItem} from '../Cart/TopbarCartItem.component';
 
@@ -32,9 +33,9 @@ export class TopBarComponent extends Component {
           </span>
         </a>
         {cart}
-        <a className="top-bar--link" href="/#!/help">
+        <Link className="top-bar--link" to="#!/help">
           <img className="top-bar--question" src="/question.png"/>
-        </a>
+        </Link>
       </div>
     );
   }

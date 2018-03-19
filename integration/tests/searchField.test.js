@@ -6,7 +6,7 @@ chai.should();
 describe('Testing searchField', () => {
   beforeEach(() => {
     browser.url('/');
-    browser.pause(200);
+    browser.waitForExist('.category-tiles');
   });
 
   it('Should render searchField', () => {
