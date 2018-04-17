@@ -133,7 +133,6 @@ export class SearchResultsContainerComponent extends Component {
               suggestions,
               searchResults: searchResults
             });
-            console.log(searchResults);
 
           }
           catch (e) {
