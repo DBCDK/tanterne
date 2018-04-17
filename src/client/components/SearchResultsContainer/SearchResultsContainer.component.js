@@ -14,7 +14,7 @@ import {CartButton} from '../Cart/CartButton.component';
 
 function parseSearchResult(result) {
   return result.map(level => {
-    const {noteGeneral, note, title, items, decommissioned, index, indexMain, parent} = level;
+    const {noteGeneral, noteSystematic, note, title, items, decommissioned, index, indexMain, parent} = level;
     const subLevel = items && items.length && parseSearchResult(items) || [];
     return {
       title,
@@ -23,14 +23,16 @@ function parseSearchResult(result) {
       items: subLevel,
       parent: parent && parent.title,
       note: note || '',
+      noteSystematic: noteSystematic || '',
       noteGeneral: noteGeneral || ''
     };
   });
 }
 
-const SearchResultSingle = ({note, noteGeneral, title, dk5, parent, pro, cart, decommissioned}) => {
+const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, parent, pro, cart, decommissioned}) => {
   const infoDecommissioned = decommissioned ? 'decommissioned' : '';
-  return (!decommissioned &&
+  const skipValgfriGruppe = (noteSystematic === 'Valgfri gruppe') && !pro;
+  return (!decommissioned && !skipValgfriGruppe &&
     <div className={`result-element ${infoDecommissioned}`}>
       <h2>
         <span className="result-element-title">{title},&nbsp;</span>
@@ -131,6 +133,7 @@ export class SearchResultsContainerComponent extends Component {
               suggestions,
               searchResults: searchResults
             });
+            console.log(searchResults);
 
           }
           catch (e) {
