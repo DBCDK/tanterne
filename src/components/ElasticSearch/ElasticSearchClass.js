@@ -28,7 +28,7 @@ export class ElasticClient {
       query: '',
       limit: 255,
       offset: 0,
-      fields: '001a,6*,b*,a20*',
+      fields: '001a,6*,b*,a20*,a40*',
       index: 'register',
       sort: '',
       op: 'AND'
