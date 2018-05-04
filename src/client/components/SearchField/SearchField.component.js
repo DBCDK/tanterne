@@ -67,7 +67,7 @@ export class SearchFieldComponent extends Component {
 
   componentWillReceiveProps(props) {
     if (props.params && props.params.q) {
-      //this.setState({query: props.params.q});
+      // this.setState({query: props.params.q});
     }
   }
 
@@ -108,7 +108,8 @@ export class SearchFieldComponent extends Component {
 
     if (regex.test(input)) {
       input = [input.slice(0, 2), '.', input.slice(2)].join('');
-    } else if (input.length === 3 && input.charAt(2) === '.') {
+    }
+    else if (input.length === 3 && input.charAt(2) === '.') {
       input = input.slice(0, 2);
     }
 

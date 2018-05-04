@@ -121,7 +121,8 @@ export class RootContainerComponent extends Component {
     const cart = Object.assign({}, this.state.cart);
     if (cart.contents[item.index]) {
       delete cart.contents[item.index];
-    } else {
+    }
+    else {
       cart.contents[item.index] = item;
       this.getAdditionalInfoOnItems(item.index);
     }
