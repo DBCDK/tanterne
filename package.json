@@ -76,7 +76,7 @@
     "postcss-loader": "^2.1.2",
     "sass-loader": "^6.0.7",
     "sinon": "^5.0.0",
-    "style-loader": "^0.20.3",
+    "style-loader": "^0.21.0",
     "wdio-junit-reporter": "^0.4.2",
     "wdio-mocha-framework": "^0.5.13",
     "wdio-sauce-service": "^0.4.8",
