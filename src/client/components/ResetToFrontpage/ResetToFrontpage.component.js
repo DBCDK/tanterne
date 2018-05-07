@@ -11,6 +11,22 @@ export default class ResetToFrontpage extends React.Component {
     };
   }
 
+  componentDidMount() {
+    // Add keyPress event listeners
+    document.addEventListener('mousemove', this.resetTimer.bind(this));
+    document.addEventListener('mousewheel', this.resetTimer.bind(this));
+    document.addEventListener('scroll', this.resetTimer.bind(this));
+    document.addEventListener('keydown', this.resetTimer.bind(this));
+  }
+
+  componentWillUnmount() {
+    // Remove keyPress event listeners
+    document.removeEventListener('mousemove', this.resetTimer.bind(this));
+    document.removeEventListener('mousewheel', this.resetTimer.bind(this));
+    document.removeEventListener('scroll', this.resetTimer.bind(this));
+    document.removeEventListener('keydown', this.resetTimer.bind(this));
+  }
+
   componentDidUpdate() {
     if (!this.state.timer.active && this.props.timerEnabled) {
       this.setTimeout();
@@ -33,7 +49,6 @@ export default class ResetToFrontpage extends React.Component {
 
       this.setState({warning: {active: true, remaining: delay}});
       --delay;
-
     }, 1000);
   }
 
@@ -63,13 +78,16 @@ export default class ResetToFrontpage extends React.Component {
 
   render() {
     return (
-      <div
-        onMouseMove={this.resetTimer.bind(this)}
-        onWheel={this.resetTimer.bind(this)}
-        onScroll={this.resetTimer.bind(this)}
-      >
-        <div className={`reset-to-frontpage--container ${this.state.warning.active ? '' : 'hidden'}`}>
-          <span className="reset-to-frontpage--text">Ved fortsat inaktivitet vil siden blive nulstillet til forsiden om {this.state.warning.remaining} sekunder</span>
+      <div>
+        <div
+          className={`reset-to-frontpage--container ${
+            this.state.warning.active ? '' : 'hidden'
+          }`}
+        >
+          <span className="reset-to-frontpage--text">
+            Ved fortsat inaktivitet vil siden blive nulstillet til forsiden om{' '}
+            {this.state.warning.remaining} sekunder
+          </span>
         </div>
         {this.props.children}
       </div>

@@ -35,11 +35,18 @@ export class SearchFieldComponent extends Component {
     this.onSearchKeyUp = this.onSearchKeyUp.bind(this);
     this.selectPreviousSuggestion = this.selectPreviousSuggestion.bind(this);
     this.selectNextSuggestion = this.selectNextSuggestion.bind(this);
-    this.getSuggestions = this.deferExecution(this.getSuggestions.bind(this), 200);
+    this.getSuggestions = this.deferExecution(
+      this.getSuggestions.bind(this),
+      200
+    );
   }
 
   componentDidMount() {
     // If the page is loaded with a query, we want write that query into our textfield.
+
+    // Add keyPress event listener
+    document.addEventListener('keypress', this.onKeyPress);
+
     if (this.props.params.q) {
       this.onTextEntered({
         target: {
@@ -50,9 +57,17 @@ export class SearchFieldComponent extends Component {
     }
   }
 
+  componentWillUnmountn() {
+    document.removeEventListener('keypress', this.onKeyPress);
+  }
+
+  onKeyPress = () => {
+    this.searchField.focus();
+  };
+
   componentWillReceiveProps(props) {
     if (props.params && props.params.q) {
-      this.setState({query: props.params.q});
+      // this.setState({query: props.params.q});
     }
   }
 
@@ -104,7 +119,9 @@ export class SearchFieldComponent extends Component {
   // Updates the state of the component and calls getSuggestions
   onTextEntered(evt) {
     const query = this.getValue(evt.target.value);
-    const queryUrl = `/search/${encodeURIComponent(query)}/100/0/relevance/dictionary`;
+    const queryUrl = `/search/${encodeURIComponent(
+      query
+    )}/100/0/relevance/dictionary`;
     this.setState({
       queryUrl,
       query,
@@ -123,9 +140,17 @@ export class SearchFieldComponent extends Component {
     evt.preventDefault();
     const s = this.state;
     let link = `#!${this.state.queryUrl}`;
-    if (s.selectedSuggestion >= 0 && s.suggestions[s.query] && s.suggestions[s.query][s.selectedSuggestion] && s.suggestActive) {
+    if (
+      s.selectedSuggestion >= 0 &&
+      s.suggestions[s.query] &&
+      s.suggestions[s.query][s.selectedSuggestion] &&
+      s.suggestActive
+    ) {
       link = s.suggestions[s.query][s.selectedSuggestion].href;
-      this.onTextEntered({target: {value: s.suggestions[s.query][s.selectedSuggestion].label}, noSuggest: true});
+      this.onTextEntered({
+        target: {value: s.suggestions[s.query][s.selectedSuggestion].label},
+        noSuggest: true
+      });
     }
 
     this.setState({
@@ -137,7 +162,8 @@ export class SearchFieldComponent extends Component {
 
   // Let's the user use arrow keys to select a suggestion.
   selectPreviousSuggestion() {
-    const suggestLength = (this.state.suggestions[this.state.query] || []).length;
+    const suggestLength = (this.state.suggestions[this.state.query] || [])
+      .length;
     let newSelection = this.state.selectedSuggestion - 1;
     if (newSelection < 0) {
       newSelection = suggestLength - 1;
@@ -150,7 +176,8 @@ export class SearchFieldComponent extends Component {
 
   // Let's the user use arrow keys to select a suggestion.
   selectNextSuggestion() {
-    const suggestLength = (this.state.suggestions[this.state.query] || []).length;
+    const suggestLength = (this.state.suggestions[this.state.query] || [])
+      .length;
     let newSelection = this.state.selectedSuggestion + 1;
     if (newSelection >= suggestLength) {
       newSelection = 0;
@@ -194,16 +221,22 @@ export class SearchFieldComponent extends Component {
 
   render() {
     return (
-      <form className="search-field--container" onSubmit={this.queryWasSubmitted}>
-        {!this.props.pro &&
-        <div className="search-field--title">
-          <h2>Hvor står bøgerne om...?</h2>
-        </div>
-        }
+      <form
+        className="search-field--container"
+        onSubmit={this.queryWasSubmitted}
+      >
+        {!this.props.pro && (
+          <div className="search-field--title">
+            <h2>Hvor står bøgerne om...?</h2>
+          </div>
+        )}
         <div className="search-field--suggestions">
           <span className="search-field--query-area">
             <input
-              type="text"
+              type="search"
+              ref={input => {
+                this.searchField = input;
+              }}
               onChange={this.onTextEntered}
               onBlur={this.onSearchBlurred}
               onFocus={this.onSearchFocus}
@@ -215,13 +248,14 @@ export class SearchFieldComponent extends Component {
             />
 
             <span className="search-field--spinner">
-              {this.state.pendingSuggest && <Spinner size="small"/>}
+              {this.state.pendingSuggest && <Spinner size="small" />}
             </span>
-
 
             <Link to={this.state.queryUrl}>
               <div className="search-field--button">
-                <div className="search-field--button--image"><img src="/icon-search.svg"/></div>
+                <div className="search-field--button--image">
+                  <img src="/icon-search.svg" />
+                </div>
                 <div className="search-field--button--text">SØG</div>
               </div>
             </Link>
