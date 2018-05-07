@@ -5,7 +5,7 @@ import {CONFIG} from '../../utils/config.util';
 let exporter = ElasticClient;
 
 if (CONFIG.elastic.host === 'static_mocks') {
-  // exporter = StaticElasticClient;
+  //exporter = StaticElasticClient;
 }
 
 export default exporter;

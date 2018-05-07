@@ -299,7 +299,7 @@ export class ElasticClient {
    * @returns {*}
    */
   async elasticSuggest(term) {
-    console.log('elasticSuggest running #########3');
+    console.log('elasticSuggest running #########');
 
     await this.loadTabsFromElasticSearch();
     let result = {prefix: [], spell: []};
