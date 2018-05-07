@@ -23,7 +23,7 @@ function generateSearchUrl(q, force = false) {
 
 // Define handler functions
 async function suggestHandler(ctx) {
-  console.log("suggestHandler running ##############")
+  console.log('suggestHandler running ##############');
   let {q} = ctx.query; // eslint-disable-line no-unused-vars
   const response = {
     status: 200,
@@ -58,7 +58,7 @@ async function searchHandler(ctx) {
   let {q, limit, offset, sort, spell} = ctx.query; // eslint-disable-line no-unused-vars
   const validSorts = ['relevance', 'dk5'];
   let errors = 0;
-  if (!q || (q === '')) {
+  if (!q || q === '') {
     ctx.body = JSON.stringify({status: 400, error: 'No query provided'});
     ctx.status = 400;
     errors += 1;
@@ -79,9 +79,14 @@ async function searchHandler(ctx) {
 
   if (errors === 0) {
     const results = await Promise.all([
-      ElasticClient.elasticSearch({query: q, limit: limit, offset: offset}, ctx.pro),
+      ElasticClient.elasticSearch(
+        {query: q, limit: limit, offset: offset},
+        ctx.pro
+      ),
       ElasticClient.elasticSuggest(q)
     ]);
+
+    // console.log(ElasticClient);
 
     const response = {
       status: 200,
@@ -95,17 +100,24 @@ async function searchHandler(ctx) {
     // No results found
     // Look at spelling and send new search
     if (
-      !offset && results[0] && !results[0].length &&
-      results[1] && results[1].spell.length &&
-      spell && spell !== 'none'
+      !offset &&
+      results[0] &&
+      !results[0].length &&
+      results[1] &&
+      results[1].spell.length &&
+      spell &&
+      spell !== 'none'
     ) {
       response.correction.q = results[1].spell[0].match;
       response.correction.href = generateSearchUrl(q, true);
-      response.result = await ElasticClient.elasticSearch({
-        query: results[1].spell[0].match,
-        limit: limit,
-        offset: offset
-      }, ctx.pro);
+      response.result = await ElasticClient.elasticSearch(
+        {
+          query: results[1].spell[0].match,
+          limit: limit,
+          offset: offset
+        },
+        ctx.pro
+      );
     }
 
     // no results, but spelling is disabled so give some suggestions instead.
@@ -117,6 +129,8 @@ async function searchHandler(ctx) {
     }
 
     ctx.body = JSON.stringify(response);
+
+    console.log('response #############', response);
   }
 }
 

@@ -100,6 +100,8 @@ export class SearchFieldComponent extends Component {
         const newSuggestions = Object.assign({}, this.state.suggestions);
         newSuggestions[query] = bd.response;
         this.setState({suggestions: newSuggestions, pendingSuggest: false});
+
+        console.log('newSuggestions:', newSuggestions);
       });
   }
 
@@ -108,8 +110,7 @@ export class SearchFieldComponent extends Component {
 
     if (regex.test(input)) {
       input = [input.slice(0, 2), '.', input.slice(2)].join('');
-    }
-    else if (input.length === 3 && input.charAt(2) === '.') {
+    } else if (input.length === 3 && input.charAt(2) === '.') {
       input = input.slice(0, 2);
     }
 

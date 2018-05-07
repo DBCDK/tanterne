@@ -299,7 +299,7 @@ export class ElasticClient {
    * @returns {*}
    */
   async elasticSuggest(term) {
-    console.log('elasticSuggest running #########3');
+    console.log('elasticSuggest running #########');
 
     await this.loadTabsFromElasticSearch();
     let result = {prefix: [], spell: []};
@@ -315,7 +315,7 @@ export class ElasticClient {
       this.vocabulary.forEach(function(match) {
         spell.push({match: match, distance: Levenshtein.get(term, match)});
       });
-      result.spell = esUtil.sortDistanceAndSlice(spell, 10, 22);
+      result.spell = esUtil.sortDistanceAndSlice(spell, 10, 4);
     }
     console.log(result);
     return result;
