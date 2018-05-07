@@ -69,6 +69,7 @@ describe('Testing Hierarchy', () => {
     assert.lengthOf(topics[0].split('\n'), 5);
     assert.lengthOf(topics[1].split('\n'), 12);
     assert.isTrue(browser.isExisting('.selected .show .hierarchy-topics'));
+    browser.click('.toggle-button');
   });
 
   it('Should hide all but 5 aspects when "Vis Flere" is clicked twice', () => {
