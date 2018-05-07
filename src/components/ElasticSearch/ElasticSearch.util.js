@@ -11,7 +11,13 @@
  * @returns {*}
  */
 export function getEsField(esRes, pos, fld) {
-  if (esRes && Array.isArray(esRes.hits) && esRes.hits[pos] && esRes.hits[pos]._source && Array.isArray(esRes.hits[pos]._source[fld])) {
+  if (
+    esRes &&
+    Array.isArray(esRes.hits) &&
+    esRes.hits[pos] &&
+    esRes.hits[pos]._source &&
+    Array.isArray(esRes.hits[pos]._source[fld])
+  ) {
     return esRes.hits[pos]._source[fld];
   }
   return [];
@@ -27,7 +33,7 @@ export function getEsField(esRes, pos, fld) {
  */
 export function getFirstElementInFieldList(esRes, pos, fldList) {
   let field = '';
-  fldList.forEach(function (tag) {
+  fldList.forEach(function(tag) {
     const fld = getEsField(esRes, pos, tag);
     if (!field && fld[0]) {
       field = fld[0];
@@ -46,7 +52,7 @@ export function getFirstElementInFieldList(esRes, pos, fldList) {
  */
 export function setAndMap(pars, defaultParameters, esParMap) {
   let ret = {};
-  Object.keys(defaultParameters).forEach(function (key) {
+  Object.keys(defaultParameters).forEach(function(key) {
     ret[esParMap[key]] = pars[key] ? pars[key] : defaultParameters[key];
   });
   return ret;
@@ -59,10 +65,13 @@ export function setAndMap(pars, defaultParameters, esParMap) {
  * @param elements
  * @returns {*|Blob|string|ArrayBuffer}
  */
-export function sortDistanceAndSlice(buf, elements) {
-  return buf.sort(function (a, b) {
-    return (parseInt(a.distance, 10) - parseInt(b.distance, 10));
-  }).slice(0, elements);
+export function sortDistanceAndSlice(buf, elements, dist = 10) {
+  return buf
+    .sort(function(a, b) {
+      return parseInt(a.distance, 10) - parseInt(b.distance, 10);
+    })
+    .slice(0, elements)
+    .filter(element => element.distance <= dist);
 }
 
 /**
@@ -72,11 +81,11 @@ export function sortDistanceAndSlice(buf, elements) {
  * @returns {*}
  */
 export function indexSort(arr) {
-  return arr.sort(function (a, b) {
+  return arr.sort(function(a, b) {
     if (a.index === b.index) {
-      return (a.title > b.title ? 1 : -1);
+      return a.title > b.title ? 1 : -1;
     }
-    return (a.index > b.index ? 1 : -1);
+    return a.index > b.index ? 1 : -1;
   });
 }
 
@@ -88,8 +97,9 @@ export function indexSort(arr) {
  * @returns {*}
  */
 export function titleMatchSort(arr, query = null) {
-  const normQuery = query && query.replace(/(\*|%)/, '').toLowerCase() || null;
-  return arr.sort(function (a, b) {
+  const normQuery =
+    (query && query.replace(/(\*|%)/, '').toLowerCase()) || null;
+  return arr.sort(function(a, b) {
     if (normQuery) {
       if (normQuery === a.title.toLowerCase()) {
         return -1;
@@ -98,7 +108,7 @@ export function titleMatchSort(arr, query = null) {
         return 1;
       }
     }
-    return (a.title > b.title ? 1 : -1);
+    return a.title > b.title ? 1 : -1;
   });
 }
 
@@ -109,8 +119,8 @@ export function titleMatchSort(arr, query = null) {
  * @returns {*}
  */
 export function titleSort(arr) {
-  return arr.sort(function (a, b) {
-    return (a.title > b.title ? 1 : -1);
+  return arr.sort(function(a, b) {
+    return a.title > b.title ? 1 : -1;
   });
 }
 
@@ -126,17 +136,43 @@ export function titleSort(arr) {
  * @param query
  * @returns {*}
  */
-export function parseRegisterRecord(esRes, pos, dk5Tab, dk5NotesGeneral, query = null) {
+export function parseRegisterRecord(
+  esRes,
+  pos,
+  dk5Tab,
+  dk5NotesGeneral,
+  query = null
+) {
   const ret = {};
-  ret.title = '' + getFirstElementInFieldList(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
-  ret.titleDetails = getFirstElementInFieldList(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
-  ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
+  ret.title =
+    '' +
+    getFirstElementInFieldList(esRes, pos, [
+      '630a',
+      '633a',
+      '640a',
+      '600a',
+      '610a',
+      'a20a'
+    ]);
+  ret.titleDetails = getFirstElementInFieldList(esRes, pos, [
+    '630e',
+    '633e',
+    '640e',
+    '600f',
+    '610e',
+    'a20b'
+  ]);
+  ret.titleFull =
+    ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
   ret.indexMain = getFirstElementInFieldList(esRes, pos, ['652m']);
   ret.index = getFirstElementInFieldList(esRes, pos, ['652m', 'b52m', '652n']);
-  ret.decommissioned = ret.index && dk5Tab[ret.index] ? dk5Tab[ret.index].decommissioned : false;
+  ret.decommissioned =
+    ret.index && dk5Tab[ret.index] ? dk5Tab[ret.index].decommissioned : false;
   ret.id = getFirstElementInFieldList(esRes, pos, ['001a']);
   ret.noteSystematic = getFirstElementInFieldList(esRes, pos, ['a40a']);
-  ret.noteGeneral = '' + getFirstElementInFieldList(esRes, pos, ['b00a']) || dk5NotesGeneral[ret.index];
+  ret.noteGeneral =
+    '' + getFirstElementInFieldList(esRes, pos, ['b00a']) ||
+    dk5NotesGeneral[ret.index];
   ret.note = {
     name: getFirstElementInFieldList(esRes, pos, ['651a']),
     index: getFirstElementInFieldList(esRes, pos, ['651b'])
@@ -164,7 +200,12 @@ export function parseRegisterRecord(esRes, pos, dk5Tab, dk5NotesGeneral, query =
       };
     }
     const index = registerWordInterval[i] || registerWords[i];
-    items.push({index: index, title: registerWordTitle[i], parent: dk5Tab[index], note});
+    items.push({
+      index: index,
+      title: registerWordTitle[i],
+      parent: dk5Tab[index],
+      note
+    });
   }
   return Object.assign({}, ret, {items: titleMatchSort(items, query)});
 }
@@ -195,10 +236,16 @@ export function createTaggedSystematicNote(systRec, hitPos, fld) {
  */
 export function createTaggedRegisterNote(regRecs, hitPos, dk5Syst) {
   const note = [];
-  ['651', 'b00'].forEach((noteTag) => {
+  ['651', 'b00'].forEach(noteTag => {
     const noteText = getEsField(regRecs, hitPos, noteTag).join('<br >');
     if (noteText) {
-      note.push(parseTextAndTagSyst(noteText, getEsField(regRecs, hitPos, noteTag + 'b'), dk5Syst));
+      note.push(
+        parseTextAndTagSyst(
+          noteText,
+          getEsField(regRecs, hitPos, noteTag + 'b'),
+          dk5Syst
+        )
+      );
     }
   });
   return note.join('<br />');
@@ -215,16 +262,18 @@ export function createTaggedRegisterNote(regRecs, hitPos, dk5Syst) {
 export function parseRegisterForNotes(regRecs, dk5Syst) {
   const notes = {};
   for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
-    const index = getFirstElementInFieldList(regRecs, hitPos, ['652m', '652n', '652d']);
+    const index = getFirstElementInFieldList(regRecs, hitPos, [
+      '652m',
+      '652n',
+      '652d'
+    ]);
     const note = createTaggedRegisterNote(regRecs, hitPos, dk5Syst);
     if (notes[index]) {
       if (notes[index].indexOf(note) === -1) {
         notes[index] += '<br />' + note;
       }
-    }
-    else {
+    } else {
       notes[index] = note;
-
     }
   }
   return notes;
@@ -241,7 +290,11 @@ export function parseRegisterForGeneralNotes(regRecs) {
   for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
     const noteText = getEsField(regRecs, hitPos, 'b00').join('<br >');
     if (noteText) {
-      const index = getFirstElementInFieldList(regRecs, hitPos, ['652m', '652n', '652d']);
+      const index = getFirstElementInFieldList(regRecs, hitPos, [
+        '652m',
+        '652n',
+        '652d'
+      ]);
       notes[index] = noteText;
     }
   }
@@ -258,10 +311,10 @@ export function parseRegisterForGeneralNotes(regRecs) {
 export function parseRegisterForUniqueWords(regRecs, wordFields) {
   let uniqueWords = {};
   for (let hitPos = 0; hitPos < regRecs.hits.length; hitPos++) {
-    wordFields.forEach((fld) => {
+    wordFields.forEach(fld => {
       const wordArr = getEsField(regRecs, hitPos, fld);
       for (let i = 0; i < wordArr.length; i++) {
-        wordArr[i].split(/[\s,]+/).forEach((word) => {
+        wordArr[i].split(/[\s,]+/).forEach(word => {
           word = word.replace(/^[:\-\.#]+|[:\-\.#]+$|[\"()]+/g, ''); // eslint-disable-line no-useless-escape
           let num = word.replace(/[\.:-]/g, ''); // eslint-disable-line no-useless-escape
           if (num.length > 2 && parseInt(num, 10) !== num) {
@@ -289,7 +342,8 @@ function parseTextAndTagSyst(note, noteSyst, dk5Syst = false) {
     let syst = noteSyst[i];
     const p = ret.indexOf(syst, notePos);
     if (p > -1) {
-      const replace = (!dk5Syst || dk5Syst[syst]) ? '<dk>' + syst + '</dk>' : syst;
+      const replace =
+        !dk5Syst || dk5Syst[syst] ? '<dk>' + syst + '</dk>' : syst;
       ret = ret.substr(0, p) + replace + ret.substr(p + syst.length);
       notePos = p + replace.length;
     }
