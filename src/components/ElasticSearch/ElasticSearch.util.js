@@ -305,8 +305,7 @@ export function parseRegisterForNotes(regRecs, dk5Syst) {
       if (notes[index].indexOf(note) === -1) {
         notes[index] += '<br />' + note;
       }
-    }
-    else {
+    } else {
       notes[index] = note;
     }
   }

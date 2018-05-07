@@ -211,8 +211,7 @@ export class ElasticClient {
         selected: query,
         items: esUtil.indexSort(items)
       };
-    }
-    else {
+    } else {
       // collect the hierarchy from parent and to the top
       hierarchy = {selected: query, items: esUtil.indexSort(parents)};
       if (parent.index) {
@@ -300,6 +299,8 @@ export class ElasticClient {
    * @returns {*}
    */
   async elasticSuggest(term) {
+    console.log('elasticSuggest running #########3');
+
     await this.loadTabsFromElasticSearch();
     let result = {prefix: [], spell: []};
     if (this.autocomplete.trie.prefixes) {
@@ -408,8 +409,12 @@ export class ElasticClient {
               esUtil.getFirstElementInFieldList(syst, hitPos, ['652x']) === '2',
             parent: parent
           };
+<<<<<<< 1bf6da8f1e2e43fb851fc6543122f2c5e09d2d88
         }
         else {
+=======
+        } else {
+>>>>>>> location spell & prefix
           Logger.log.error(
             'No dk5 group for ' +
               esUtil.getFirstElementInFieldList(syst, hitPos, ['001a'])

@@ -23,6 +23,7 @@ function generateSearchUrl(q, force = false) {
 
 // Define handler functions
 async function suggestHandler(ctx) {
+  console.log("suggestHandler running ##############")
   let {q} = ctx.query; // eslint-disable-line no-unused-vars
   const response = {
     status: 200,
