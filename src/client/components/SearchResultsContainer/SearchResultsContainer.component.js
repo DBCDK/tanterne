@@ -107,8 +107,8 @@ const SearchResultGroup = ({
         )}
         {(pro &&
           dk5.indexMain && (
-            <CartButton index={dk5.indexMain} cart={cart} />
-          )) || <span> </span>}
+          <CartButton index={dk5.indexMain} cart={cart} />
+        )) || <span> </span>}
         {noteGeneral && (
           <div
             className={'result-element-note'}
@@ -206,7 +206,8 @@ export class SearchResultsContainerComponent extends Component {
               suggestions,
               searchResults: searchResults
             });
-          } catch (e) {
+          }
+          catch (e) {
             error =
               'Der skete desværre en fejl. Prøv evt. at ændre din søgning en smule og søg igen';
           }
@@ -217,7 +218,8 @@ export class SearchResultsContainerComponent extends Component {
             error: error
           });
         });
-    } else if (q && this.state.query !== searchUrl) {
+    }
+    else if (q && this.state.query !== searchUrl) {
       this.setState({
         query: searchUrl
       });
@@ -280,9 +282,11 @@ export class SearchResultsContainerComponent extends Component {
 
     if (!this.state.corrections && this.state.pendingSearch) {
       message = 'Søger efter emner...';
-    } else if (this.state.error.length) {
+    }
+    else if (this.state.error.length) {
       message = this.state.error;
-    } else if (
+    }
+    else if (
       this.state.suggestions[this.state.query] &&
       this.state.suggestions[this.state.query].length
     ) {

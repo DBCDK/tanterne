@@ -211,7 +211,8 @@ export class ElasticClient {
         selected: query,
         items: esUtil.indexSort(items)
       };
-    } else {
+    }
+    else {
       // collect the hierarchy from parent and to the top
       hierarchy = {selected: query, items: esUtil.indexSort(parents)};
       if (parent.index) {
@@ -407,7 +408,8 @@ export class ElasticClient {
               esUtil.getFirstElementInFieldList(syst, hitPos, ['652x']) === '2',
             parent: parent
           };
-        } else {
+        }
+        else {
           Logger.log.error(
             'No dk5 group for ' +
               esUtil.getFirstElementInFieldList(syst, hitPos, ['001a'])

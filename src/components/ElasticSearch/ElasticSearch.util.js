@@ -93,15 +93,14 @@ export function mergeAndSortResults(prefix, spell, elements = 10) {
     result
       // remove duplicated prefix & spells
       .filter((obj, i, arr) => {
-        return arr.map(mapObj => mapObj['match']).indexOf(obj['match']) === i;
+        return arr.map(mapObj => mapObj.match).indexOf(obj.match) === i;
       })
       // Sort by key (primary) & distance (secondary)
       .sort((a, b) => {
         if (a.key === b.key) {
           return a.distance - b.distance;
-        } else {
-          return a.key - b.key;
         }
+        return a.key - b.key;
       })
       // cut array down to specific number
       .slice(0, elements)
@@ -306,7 +305,8 @@ export function parseRegisterForNotes(regRecs, dk5Syst) {
       if (notes[index].indexOf(note) === -1) {
         notes[index] += '<br />' + note;
       }
-    } else {
+    }
+    else {
       notes[index] = note;
     }
   }
