@@ -23,7 +23,6 @@ function generateSearchUrl(q, force = false) {
 
 // Define handler functions
 async function suggestHandler(ctx) {
-  console.log('suggestHandler running ##############');
   let {q} = ctx.query; // eslint-disable-line no-unused-vars
   const response = {
     status: 200,
@@ -86,7 +85,7 @@ async function searchHandler(ctx) {
       ElasticClient.elasticSuggest(q)
     ]);
 
-    // console.log(ElasticClient);
+    //console.log(ElasticClient); // eslint-disable-line no-console
 
     const response = {
       status: 200,
@@ -104,15 +103,15 @@ async function searchHandler(ctx) {
       results[0] &&
       !results[0].length &&
       results[1] &&
-      results[1].spell.length &&
+      results[1].merged.length &&
       spell &&
       spell !== 'none'
     ) {
-      response.correction.q = results[1].spell[0].match;
+      response.correction.q = results[1].merged[0].match;
       response.correction.href = generateSearchUrl(q, true);
       response.result = await ElasticClient.elasticSearch(
         {
-          query: results[1].spell[0].match,
+          query: results[1].merged[0].match,
           limit: limit,
           offset: offset
         },
@@ -122,15 +121,13 @@ async function searchHandler(ctx) {
 
     // no results, but spelling is disabled so give some suggestions instead.
     if (!offset && results[0] && !results[0].length && spell === 'none') {
-      response.correction.suggestions = results[1].spell.map(altSpell => {
+      response.correction.suggestions = results[1].merged.map(altSpell => {
         altSpell.href = generateSearchUrl(altSpell.match);
         return altSpell;
       });
     }
 
     ctx.body = JSON.stringify(response);
-
-    console.log('response #############', response);
   }
 }
 

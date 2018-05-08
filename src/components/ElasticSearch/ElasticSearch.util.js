@@ -75,6 +75,40 @@ export function sortDistanceAndSlice(buf, elements, dist = 10) {
 }
 
 /**
+ * merges and sorts 2 result arrays
+ *
+ * @param prefix
+ * @param spell
+ * @param elements
+ * @returns Array
+ */
+export function mergeAndSortResults(prefix, spell, elements = 10) {
+  // Set priority keys
+  prefix.map(el => (el.key = el.distance));
+  spell.map(el => (el.key = el.match.length * 2));
+  // Merge arrays
+  let result = [...prefix, ...spell];
+
+  return (
+    result
+      // remove duplicated prefix & spells
+      .filter((obj, i, arr) => {
+        return arr.map(mapObj => mapObj['match']).indexOf(obj['match']) === i;
+      })
+      // Sort by key (primary) & distance (secondary)
+      .sort((a, b) => {
+        if (a.key === b.key) {
+          return a.distance - b.distance;
+        } else {
+          return a.key - b.key;
+        }
+      })
+      // cut array down to specific number
+      .slice(0, elements)
+  );
+}
+
+/**
  * sort an array on the index field.
  *
  * @param arr

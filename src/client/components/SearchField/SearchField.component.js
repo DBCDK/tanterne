@@ -62,7 +62,9 @@ export class SearchFieldComponent extends Component {
   }
 
   onKeyPress = () => {
-    this.searchField.focus();
+    if (this.searchField) {
+      this.searchField.focus();
+    }
   };
 
   componentWillReceiveProps(props) {
@@ -100,8 +102,6 @@ export class SearchFieldComponent extends Component {
         const newSuggestions = Object.assign({}, this.state.suggestions);
         newSuggestions[query] = bd.response;
         this.setState({suggestions: newSuggestions, pendingSuggest: false});
-
-        console.log('newSuggestions:', newSuggestions);
       });
   }
 

@@ -179,8 +179,6 @@ export class SearchResultsContainerComponent extends Component {
         .end((err, res) => {
           let error = '';
 
-          console.log('res', res);
-
           if (err) {
             console.error(err); // eslint-disable-line no-console
           }
@@ -280,13 +278,11 @@ export class SearchResultsContainerComponent extends Component {
     let message = '';
     let suggestions = '';
 
-    if (this.state.pendingSearch) {
+    if (!this.state.corrections && this.state.pendingSearch) {
       message = 'Søger efter emner...';
     } else if (this.state.error.length) {
       message = this.state.error;
-    }
-
-    if (
+    } else if (
       this.state.suggestions[this.state.query] &&
       this.state.suggestions[this.state.query].length
     ) {
@@ -303,16 +299,11 @@ export class SearchResultsContainerComponent extends Component {
       });
     }
 
-    console.log('this.state.error', this.state.error);
-    console.log('this.state.query', this.state.query);
-    console.log('this.state.suggestions: ', this.state.suggestions);
-    console.log('ost', this.state.suggestions[this.state.query]);
-    console.log('suggestions: ', suggestions);
-
     return (
       <div className="search-result--messages">
         <div className="search-result--spinner">
-          {this.state.pendingSearch && <Spinner size="medium" />}
+          {!this.state.corrections &&
+            this.state.pendingSearch && <Spinner size="medium" />}
         </div>
         {message}
         {suggestions}
@@ -359,8 +350,6 @@ export class SearchResultsContainerComponent extends Component {
         );
       }
     );
-
-    console.log('results.length: ', results.length);
 
     return (
       <div

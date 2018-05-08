@@ -299,8 +299,6 @@ export class ElasticClient {
    * @returns {*}
    */
   async elasticSuggest(term) {
-    console.log('elasticSuggest running #########');
-
     await this.loadTabsFromElasticSearch();
     let result = {prefix: [], spell: []};
     if (this.autocomplete.trie.prefixes) {
@@ -317,7 +315,8 @@ export class ElasticClient {
       });
       result.spell = esUtil.sortDistanceAndSlice(spell, 10, 4);
     }
-    console.log(result);
+
+    result.merged = esUtil.mergeAndSortResults(result.prefix, result.spell, 10);
     return result;
   }
 
