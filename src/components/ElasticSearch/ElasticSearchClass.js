@@ -299,8 +299,6 @@ export class ElasticClient {
    * @returns {*}
    */
   async elasticSuggest(term) {
-    console.log('elasticSuggest running #########');
-
     await this.loadTabsFromElasticSearch();
     let result = {prefix: [], spell: []};
     if (this.autocomplete.trie.prefixes) {

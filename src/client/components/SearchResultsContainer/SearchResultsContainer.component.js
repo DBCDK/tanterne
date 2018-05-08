@@ -179,8 +179,6 @@ export class SearchResultsContainerComponent extends Component {
         .end((err, res) => {
           let error = '';
 
-          console.log('res', res);
-
           if (err) {
             console.error(err); // eslint-disable-line no-console
           }
@@ -302,12 +300,6 @@ export class SearchResultsContainerComponent extends Component {
         );
       });
     }
-
-    console.log('this.state.error', this.state.error);
-    console.log('this.state.query', this.state.query);
-    console.log('this.state.suggestions: ', this.state.suggestions);
-    console.log('ost', this.state.suggestions[this.state.query]);
-    console.log('suggestions: ', suggestions);
 
     return (
       <div className="search-result--messages">

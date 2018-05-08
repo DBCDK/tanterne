@@ -23,7 +23,6 @@ function generateSearchUrl(q, force = false) {
 
 // Define handler functions
 async function suggestHandler(ctx) {
-  console.log('suggestHandler running ##############');
   let {q} = ctx.query; // eslint-disable-line no-unused-vars
   const response = {
     status: 200,
@@ -86,7 +85,7 @@ async function searchHandler(ctx) {
       ElasticClient.elasticSuggest(q)
     ]);
 
-    // console.log(ElasticClient);
+    //console.log(ElasticClient); // eslint-disable-line no-console
 
     const response = {
       status: 200,
@@ -129,8 +128,6 @@ async function searchHandler(ctx) {
     }
 
     ctx.body = JSON.stringify(response);
-
-    console.log('response #############', response);
   }
 }
 
