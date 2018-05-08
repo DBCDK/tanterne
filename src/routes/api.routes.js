@@ -85,8 +85,6 @@ async function searchHandler(ctx) {
       ElasticClient.elasticSuggest(q)
     ]);
 
-    //console.log(ElasticClient); // eslint-disable-line no-console
-
     const response = {
       status: 200,
       parameters: {endpoint: 'search', query: q, limit: limit, offset: offset},

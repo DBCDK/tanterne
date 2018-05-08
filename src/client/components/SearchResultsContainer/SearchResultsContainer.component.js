@@ -218,7 +218,8 @@ export class SearchResultsContainerComponent extends Component {
             error: error
           });
         });
-    } else if (q && this.state.query !== searchUrl) {
+    }
+    else if (q && this.state.query !== searchUrl) {
       this.setState({
         query: searchUrl
       });
@@ -281,7 +282,8 @@ export class SearchResultsContainerComponent extends Component {
 
     if (!this.state.corrections && this.state.pendingSearch) {
       message = 'Søger efter emner...';
-    } else if (this.state.error.length) {
+    }
+    else if (this.state.error.length) {
       message = this.state.error;
     }
     else if (
