@@ -45,7 +45,7 @@ export class SearchFieldComponent extends Component {
     // If the page is loaded with a query, we want write that query into our textfield.
 
     // Add keyPress event listener
-    document.addEventListener('keypress', this.onKeyPress);
+    document.addEventListener('keypress', this.onKeyPress, true);
 
     if (this.props.params.q) {
       this.onTextEntered({
@@ -58,7 +58,7 @@ export class SearchFieldComponent extends Component {
   }
 
   componentWillUnmountn() {
-    document.removeEventListener('keypress', this.onKeyPress);
+    document.removeEventListener('keypress', this.onKeyPress, true);
   }
 
   onKeyPress = () => {
@@ -119,7 +119,7 @@ export class SearchFieldComponent extends Component {
   }
 
   // Updates the state of the component and calls getSuggestions
-  onTextEntered(evt) {
+  onTextEntered = evt => {
     const query = this.getValue(evt.target.value);
     const queryUrl = `/search/${encodeURIComponent(
       query
@@ -135,7 +135,7 @@ export class SearchFieldComponent extends Component {
     if (!evt.noSuggest && query.length >= 2 && !this.state.suggestions[query]) {
       this.getSuggestions(query);
     }
-  }
+  };
 
   // Called when the user presses enter or clicks the search button.
   queryWasSubmitted(evt) {
