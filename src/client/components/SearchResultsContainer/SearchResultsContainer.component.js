@@ -14,11 +14,21 @@ import {CartButton} from '../Cart/CartButton.component';
 
 function parseSearchResult(result) {
   return result.map(level => {
-    const {noteGeneral, noteSystematic, note, title, items, decommissioned, index, indexMain, parent} = level;
-    const subLevel = items && items.length && parseSearchResult(items) || [];
+    const {
+      noteGeneral,
+      noteSystematic,
+      note,
+      title,
+      items,
+      decommissioned,
+      index,
+      indexMain,
+      parent
+    } = level;
+    const subLevel = (items && items.length && parseSearchResult(items)) || [];
     return {
       title,
-      dk5: index && {index, indexMain, title} || null,
+      dk5: (index && {index, indexMain, title}) || null,
       decommissioned: decommissioned || false,
       items: subLevel,
       parent: parent && parent.title,
@@ -29,34 +39,89 @@ function parseSearchResult(result) {
   });
 }
 
-const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, parent, pro, cart, decommissioned}) => {
+const SearchResultSingle = ({
+  note,
+  noteGeneral,
+  noteSystematic,
+  title,
+  dk5,
+  parent,
+  pro,
+  cart,
+  decommissioned
+}) => {
   const infoDecommissioned = decommissioned ? 'decommissioned' : '';
-  const skipValgfriGruppe = (noteSystematic === 'Valgfri gruppe') && !pro;
-  return (!decommissioned && !skipValgfriGruppe &&
-    <div className={`result-element ${infoDecommissioned}`}>
-      <h2>
-        <span className="result-element-title">{title},&nbsp;</span>
-        <span className="result-element-link">se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}</span>
-        {note.name && <span className="result-element-link">({note.name} <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)</span>}
-        {pro && <CartButton index={dk5.index} cart={cart}/>}
-        {noteGeneral && <div className={'result-element-note'} dangerouslySetInnerHTML={{__html: noteGeneral}} />}
-      </h2>
-    </div>
+  const skipValgfriGruppe = noteSystematic === 'Valgfri gruppe' && !pro;
+  return (
+    !decommissioned &&
+    !skipValgfriGruppe && (
+      <div className={`result-element ${infoDecommissioned}`}>
+        <h2>
+          <span className="result-element-title">{title},&nbsp;</span>
+          <span className="result-element-link">
+            se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}
+          </span>
+          {note.name && (
+            <span className="result-element-link">
+              ({note.name}{' '}
+              <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)
+            </span>
+          )}
+          {pro && <CartButton index={dk5.index} cart={cart} />}
+          {noteGeneral && (
+            <div
+              className={'result-element-note'}
+              dangerouslySetInnerHTML={{__html: noteGeneral}}
+            />
+          )}
+        </h2>
+      </div>
+    )
   );
 };
 
-const SearchResultGroup = ({note, noteGeneral, title, dk5, items, pro, cart}) => {
+const SearchResultGroup = ({
+  note,
+  noteGeneral,
+  title,
+  dk5,
+  items,
+  pro,
+  cart
+}) => {
   return (
     <div className="result-group">
       <h2>
         <span className="result-element-title">{title}</span>
-        {dk5.indexMain && <span className="result-element-link">, se <Link to={`/hierarchy/${dk5.indexMain}`}>{dk5.indexMain}</Link> {parent}</span>}
-        {note.name && <span className="result-element-link">({note.name} <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)</span>}
-        {pro && dk5.indexMain && <CartButton index={dk5.indexMain} cart={cart}/> || <span> </span>}
-        {noteGeneral && <div className={'result-element-note'} dangerouslySetInnerHTML={{__html: noteGeneral}} />}
+        {dk5.indexMain && (
+          <span className="result-element-link">
+            , se <Link to={`/hierarchy/${dk5.indexMain}`}>{dk5.indexMain}</Link>{' '}
+            {parent}
+          </span>
+        )}
+        {note.name && (
+          <span className="result-element-link">
+            ({note.name}{' '}
+            <Link to={`/hierarchy/${note.index}`}>{note.index}</Link>)
+          </span>
+        )}
+        {(pro &&
+          dk5.indexMain && (
+          <CartButton index={dk5.indexMain} cart={cart} />
+        )) || <span> </span>}
+        {noteGeneral && (
+          <div
+            className={'result-element-note'}
+            dangerouslySetInnerHTML={{__html: noteGeneral}}
+          />
+        )}
       </h2>
       <ul className="result-list">
-        {items.map(el => <li key={el.dk5.index}><SearchResultSingle pro={pro} cart={cart} {...el}/></li>)}
+        {items.map(el => (
+          <li key={el.dk5.index}>
+            <SearchResultSingle pro={pro} cart={cart} {...el} />
+          </li>
+        ))}
       </ul>
     </div>
   );
@@ -86,8 +151,16 @@ export class SearchResultsContainerComponent extends Component {
 
   searchWasTriggered(props) {
     const searchResults = this.state.searchResults;
-    const {limit = 10, offset = 0, q = null, sort = 'relevance', spell = 'dictionary'} = props.params;
-    const searchUrl = encodeURI(`/api/search?q=${q}&limit=${limit}&offset=${offset}&sort=${sort}&spell=${spell}`);
+    const {
+      limit = 10,
+      offset = 0,
+      q = null,
+      sort = 'relevance',
+      spell = 'dictionary'
+    } = props.params;
+    const searchUrl = encodeURI(
+      `/api/search?q=${q}&limit=${limit}&offset=${offset}&sort=${sort}&spell=${spell}`
+    );
 
     if (q && !searchResults[searchUrl]) {
       searchResults[searchUrl] = [];
@@ -133,10 +206,10 @@ export class SearchResultsContainerComponent extends Component {
               suggestions,
               searchResults: searchResults
             });
-
           }
           catch (e) {
-            error = 'Der skete desværre en fejl. Prøv evt. at ændre din søgning en smule og søg igen';
+            error =
+              'Der skete desværre en fejl. Prøv evt. at ændre din søgning en smule og søg igen';
           }
 
           this.setState({
@@ -159,11 +232,16 @@ export class SearchResultsContainerComponent extends Component {
     };
 
     return (
-      <Link style={styles} to={`#!/hierarchy/${category.index}`} className='category-tile--container' id={`category-tile--container--${category.index}`}>
-        <div className='category-tile--gradient'>
-          <div className='category-tile--text-container'>
-            <span className='category-tile--label'>{category.label}</span>
-            <span className='category-tile--index'>{categoryIndex}</span>
+      <Link
+        style={styles}
+        to={`#!/hierarchy/${category.index}`}
+        className="category-tile--container"
+        id={`category-tile--container--${category.index}`}
+      >
+        <div className="category-tile--gradient">
+          <div className="category-tile--text-container">
+            <span className="category-tile--label">{category.label}</span>
+            <span className="category-tile--index">{categoryIndex}</span>
           </div>
         </div>
       </Link>
@@ -171,17 +249,16 @@ export class SearchResultsContainerComponent extends Component {
   }
 
   renderCategoryTiles(categories) {
-    const tiles = Object.keys(categories)
-      .map(categoryIndex => this.renderCategoryTile(categoryIndex, categories[categoryIndex]));
+    const tiles = Object.keys(categories).map(categoryIndex =>
+      this.renderCategoryTile(categoryIndex, categories[categoryIndex])
+    );
 
     return (
-      <div className='category-tiles--container'>
-        <div className='category-tiles--title'>
+      <div className="category-tiles--container">
+        <div className="category-tiles--title">
           <h2>Eller vælg her</h2>
         </div>
-        <div className='category-tiles'>
-          {tiles}
-        </div>
+        <div className="category-tiles">{tiles}</div>
       </div>
     );
   }
@@ -190,8 +267,10 @@ export class SearchResultsContainerComponent extends Component {
     return (
       <div className="spelling-error">
         <span>
-          Din søgning gav ikke nogle resultater, vi har i stedet søgt på <span className="spelling-error--correction">{correction.q}</span>.
-          Hvis du vil prøve din søgning alligevel <Link to={correction.href}>klik her!</Link>
+          Din søgning gav ikke nogle resultater, vi har i stedet søgt på{' '}
+          <span className="spelling-error--correction">{correction.q}</span>.
+          Hvis du vil prøve din søgning alligevel{' '}
+          <Link to={correction.href}>klik her!</Link>
         </span>
       </div>
     );
@@ -201,18 +280,24 @@ export class SearchResultsContainerComponent extends Component {
     let message = '';
     let suggestions = '';
 
-    if (this.state.pendingSearch) {
+    if (!this.state.corrections && this.state.pendingSearch) {
       message = 'Søger efter emner...';
     }
     else if (this.state.error.length) {
       message = this.state.error;
     }
-    else if (this.state.suggestions[this.state.query] && this.state.suggestions[this.state.query].length) {
-      message = 'Vi fandt ikke nogen resultater denne gang, prøv med nogle af disse søgninger!';
+    else if (
+      this.state.suggestions[this.state.query] &&
+      this.state.suggestions[this.state.query].length
+    ) {
+      message =
+        'Vi fandt ikke nogen resultater denne gang, prøv med nogle af disse søgninger!';
       suggestions = this.state.suggestions[this.state.query].map(sug => {
         return (
           <div key={sug.href} className="spelling-suggestion">
-            <Link to={sug.href} key={sug.match}>{sug.match}</Link>
+            <Link to={sug.href} key={sug.match}>
+              {sug.match}
+            </Link>
           </div>
         );
       });
@@ -221,7 +306,8 @@ export class SearchResultsContainerComponent extends Component {
     return (
       <div className="search-result--messages">
         <div className="search-result--spinner">
-          {this.state.pendingSearch && <Spinner size="medium"/>}
+          {!this.state.corrections &&
+            this.state.pendingSearch && <Spinner size="medium" />}
         </div>
         {message}
         {suggestions}
@@ -240,26 +326,48 @@ export class SearchResultsContainerComponent extends Component {
       />
     );
 
-    const results = (this.state.searchResults[this.state.query] || []).map(entry => {
-      if (!entry.dk5) {
-        return null;
-      }
-      if (entry.items.length === 0) {
+    const results = (this.state.searchResults[this.state.query] || []).map(
+      entry => {
+        if (!entry.dk5) {
+          return null;
+        }
+        if (entry.items.length === 0) {
+          return (
+            <div className="result-group">
+              <SearchResultSingle
+                key={entry.dk5.index}
+                pro={this.props.pro}
+                cart={this.props.cart}
+                {...entry}
+              />
+            </div>
+          );
+        }
+
         return (
-          <div className="result-group">
-            <SearchResultSingle key={entry.dk5.index} pro={this.props.pro} cart={this.props.cart} {...entry} />
-          </div>
+          <SearchResultGroup
+            key={entry.title}
+            pro={this.props.pro}
+            cart={this.props.cart}
+            {...entry}
+          />
         );
       }
-
-      return (<SearchResultGroup key={entry.title} pro={this.props.pro} cart={this.props.cart} {...entry} />);
-    });
+    );
 
     return (
-      <div className={`container ${Object.keys(this.props.cart.contents).length ? 'show-cart' : ''}`}>
+      <div
+        className={`container ${
+          Object.keys(this.props.cart.contents).length ? 'show-cart' : ''
+        }`}
+      >
         {searchField}
-        {this.state.corrections[this.state.query] && this.renderSpellingError(this.state.corrections[this.state.query])}
-        {results.length && results || !this.state.query && this.renderCategoryTiles(this.props.search.categories) || this.renderNoResults()}
+        {this.state.corrections[this.state.query] &&
+          this.renderSpellingError(this.state.corrections[this.state.query])}
+        {(results.length && results) ||
+          (!this.state.query &&
+            this.renderCategoryTiles(this.props.search.categories)) ||
+          this.renderNoResults()}
       </div>
     );
   }

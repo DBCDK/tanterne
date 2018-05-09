@@ -62,7 +62,9 @@ export class SearchFieldComponent extends Component {
   }
 
   onKeyPress = () => {
-    this.searchField.focus();
+    if (this.searchField) {
+      this.searchField.focus();
+    }
   };
 
   componentWillReceiveProps(props) {
