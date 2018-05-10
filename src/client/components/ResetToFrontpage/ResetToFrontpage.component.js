@@ -13,18 +13,22 @@ export default class ResetToFrontpage extends React.Component {
 
   componentDidMount() {
     // Add keyPress event listeners
-    document.addEventListener('mousemove', this.resetTimer.bind(this));
-    document.addEventListener('mousewheel', this.resetTimer.bind(this));
-    document.addEventListener('scroll', this.resetTimer.bind(this));
-    document.addEventListener('keydown', this.resetTimer.bind(this));
+    document.addEventListener('mousemove', this.resetTimer.bind(this), true);
+    document.addEventListener('mousewheel', this.resetTimer.bind(this), true);
+    document.addEventListener('scroll', this.resetTimer.bind(this), true);
+    document.addEventListener('keyup', this.resetTimer.bind(this), true);
   }
 
   componentWillUnmount() {
     // Remove keyPress event listeners
-    document.removeEventListener('mousemove', this.resetTimer.bind(this));
-    document.removeEventListener('mousewheel', this.resetTimer.bind(this));
-    document.removeEventListener('scroll', this.resetTimer.bind(this));
-    document.removeEventListener('keydown', this.resetTimer.bind(this));
+    document.removeEventListener('mousemove', this.resetTimer.bind(this), true);
+    document.removeEventListener(
+      'mousewheel',
+      this.resetTimer.bind(this),
+      true
+    );
+    document.removeEventListener('scroll', this.resetTimer.bind(this), true);
+    document.removeEventListener('keyup', this.resetTimer.bind(this), true);
   }
 
   componentDidUpdate() {
