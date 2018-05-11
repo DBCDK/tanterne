@@ -245,6 +245,7 @@ export class SearchFieldComponent extends Component {
               ref={input => {
                 this.searchField = input;
               }}
+              autoComplete="off"
               onChange={this.onTextEntered}
               onBlur={this.onSearchBlurred}
               onFocus={this.onSearchFocus}
