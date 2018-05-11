@@ -198,7 +198,7 @@ export class SearchFieldComponent extends Component {
   // When a user clicks away from the search field we want to hide the suggestions.
   onSearchBlurred() {
     // Wait 100 ms in case the user clicked one of the suggestions
-    setTimeout(() => this.setState({suggestActive: false, query: ''}), 200);
+    setTimeout(() => this.setState({suggestActive: false}), 200);
   }
 
   // Listens to keys from searchfield
@@ -206,7 +206,7 @@ export class SearchFieldComponent extends Component {
     switch (evt.keyCode) {
       // Escape key
       case 27: {
-        return this.onSearchBlurred();
+        return [(this.onSearchBlurred(), this.setState({query: ''}))];
       }
       // ArrowUp key
       case 38: {
