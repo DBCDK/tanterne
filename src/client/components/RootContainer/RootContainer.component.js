@@ -177,51 +177,50 @@ export class RootContainerComponent extends Component {
         this.state.cart.isToggled);
 
     return (
-      <ResetToFrontpage
-        timerEnabled={
-          !this.state.pro &&
-          !(window.location.hash === '' || window.location.hash === '/')
-        }
-        testEnv={this.state.test}
+      <div
+        className={`root-container ${(displayComparer && 'has-comparer') ||
+          ''}`}
       >
-        <div
-          className={`root-container ${(displayComparer && 'has-comparer') ||
-            ''}`}
-        >
-          <TopBarComponent cart={this.state.cart} pro={this.state.pro} />
+        <ResetToFrontpage
+          timerEnabled={
+            !this.state.pro &&
+            !(window.location.hash === '' || window.location.hash === '/')
+          }
+          testEnv={this.state.test}
+        />
+        <TopBarComponent cart={this.state.cart} pro={this.state.pro} />
 
-          <Router {...this.state}>
-            <Route path="/" component={SearchResultsContainerComponent} />
-            <Route path="/help" component={HelpContainerComponent} />
-            <Route path="/about" component={AboutContainerComponent} />
-            <Route
-              path="/hierarchy/:id?"
-              component={HierarchyContainerComponent}
-            />
-            <Route
-              path="/search/:q/:limit/:offset/:sort/:spell?"
-              component={SearchResultsContainerComponent}
-            />
-          </Router>
+        <Router {...this.state}>
+          <Route path="/" component={SearchResultsContainerComponent} />
+          <Route path="/help" component={HelpContainerComponent} />
+          <Route path="/about" component={AboutContainerComponent} />
+          <Route
+            path="/hierarchy/:id?"
+            component={HierarchyContainerComponent}
+          />
+          <Route
+            path="/search/:q/:limit/:offset/:sort/:spell?"
+            component={SearchResultsContainerComponent}
+          />
+        </Router>
 
-          {displayComparer && <ComparerContainer cart={this.state.cart} />}
-          <div className="footer">
-            Copyright 2017 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
-            <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
-            <a
-              href="https://kundeservice.dbc.dk/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              kundeservice.dbc.dk
-            </a>
-            <br />
-            <Link className="about" to="#!/about">
-              Om DK5
-            </Link>
-          </div>
+        {displayComparer && <ComparerContainer cart={this.state.cart} />}
+        <div className="footer">
+          Copyright 2017 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
+          <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
+          <a
+            href="https://kundeservice.dbc.dk/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            kundeservice.dbc.dk
+          </a>
+          <br />
+          <Link className="about" to="#!/about">
+            Om DK5
+          </Link>
         </div>
-      </ResetToFrontpage>
+      </div>
     );
   }
 }

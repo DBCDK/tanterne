@@ -203,15 +203,18 @@ export class SearchFieldComponent extends Component {
 
   // Listens to keys from searchfield
   onSearchKeyUp(evt) {
-    switch (evt.key) {
-      case 'Escape': {
-        return this.onSearchBlurred();
+    switch (evt.keyCode) {
+      // Escape key
+      case 27: {
+        return [(this.onSearchBlurred(), this.setState({query: ''}))];
       }
-      case 'ArrowUp': {
+      // ArrowUp key
+      case 38: {
         evt.preventDefault();
         return this.selectPreviousSuggestion();
       }
-      case 'ArrowDown': {
+      // ArrowDown key
+      case 40: {
         evt.preventDefault();
         return this.selectNextSuggestion();
       }
@@ -242,7 +245,7 @@ export class SearchFieldComponent extends Component {
               onChange={this.onTextEntered}
               onBlur={this.onSearchBlurred}
               onFocus={this.onSearchFocus}
-              onKeyDown={this.onSearchKeyUp}
+              onKeyUp={this.onSearchKeyUp}
               className="search-field"
               placeholder="Skriv emne"
               value={this.state.query}
