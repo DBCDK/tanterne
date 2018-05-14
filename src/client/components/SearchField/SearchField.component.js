@@ -69,7 +69,7 @@ export class SearchFieldComponent extends Component {
 
   componentWillReceiveProps(props) {
     if (props.params && props.params.q) {
-      // this.setState({query: props.params.q});
+      this.setState({query: props.params.q});
     }
   }
 
@@ -206,7 +206,10 @@ export class SearchFieldComponent extends Component {
     switch (evt.keyCode) {
       // Escape key
       case 27: {
-        return [(this.onSearchBlurred(), this.setState({query: ''}))];
+        return [
+          (this.onSearchBlurred(),
+          this.setState({suggestActive: false, query: ''}))
+        ];
       }
       // ArrowUp key
       case 38: {
@@ -242,6 +245,7 @@ export class SearchFieldComponent extends Component {
               ref={input => {
                 this.searchField = input;
               }}
+              autoComplete="off"
               onChange={this.onTextEntered}
               onBlur={this.onSearchBlurred}
               onFocus={this.onSearchFocus}

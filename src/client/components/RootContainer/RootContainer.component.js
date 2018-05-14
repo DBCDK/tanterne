@@ -110,11 +110,32 @@ export class RootContainerComponent extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('popstate', () => {
-      this.setState({
-        location: getHash(window.location.hash)
-      });
-    });
+    window.addEventListener(
+      'hashchange',
+      () => {
+        this.setState({
+          location: getHash(window.location.hash)
+        });
+      },
+      true
+    );
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.location === '/') {
+      location.href = window.location.hash;
+    }
+  }
+
+  getChildContext() {
+    return {
+      navigate: path => {
+        window.location.hash = path;
+        this.setState({
+          location: getHash(path)
+        });
+      }
+    };
   }
 
   addRemoveContentsToCart(item) {
@@ -151,17 +172,6 @@ export class RootContainerComponent extends Component {
           err
         ); // eslint-disable-line no-console
       });
-  }
-
-  getChildContext() {
-    return {
-      navigate: path => {
-        window.location.hash = path;
-        this.setState({
-          location: getHash(path)
-        });
-      }
-    };
   }
 
   toggleCart() {
