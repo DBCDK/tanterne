@@ -106,6 +106,7 @@ export class RootContainerComponent extends Component {
 
     state.cart.addOrRemoveContent = this.addRemoveContentsToCart.bind(this);
     state.cart.toggleCart = this.toggleCart.bind(this);
+    state.cart.clearCart = this.clearCart.bind(this);
     this.state = state;
   }
 
@@ -178,6 +179,10 @@ export class RootContainerComponent extends Component {
     const cart = Object.assign({}, this.state.cart);
     cart.isToggled = !cart.isToggled;
     this.setState({cart: cart});
+  }
+
+  clearCart() {
+    location.reload();
   }
 
   render() {
