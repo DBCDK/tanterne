@@ -14,17 +14,7 @@ import {CartButton} from '../Cart/CartButton.component';
 
 function parseSearchResult(result) {
   return result.map(level => {
-    const {
-      noteGeneral,
-      noteSystematic,
-      note,
-      title,
-      items,
-      decommissioned,
-      index,
-      indexMain,
-      parent
-    } = level;
+    const {noteGeneral, noteSystematic, note, title, items, decommissioned, index, indexMain, parent} = level;
     const subLevel = (items && items.length && parseSearchResult(items)) || [];
     return {
       title,
@@ -39,25 +29,16 @@ function parseSearchResult(result) {
   });
 }
 
-const SearchResultSingle = ({
-  note,
-  noteGeneral,
-  noteSystematic,
-  title,
-  dk5,
-  parent,
-  pro,
-  cart,
-  decommissioned
-}) => {
+const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, parent, pro, cart, decommissioned}) => {
   const infoDecommissioned = decommissioned ? 'decommissioned' : '';
   const skipValgfriGruppe = noteSystematic === 'Valgfri gruppe' && !pro;
+  const dispTitle = title ? title : parent;
   return (
     !decommissioned &&
     !skipValgfriGruppe && (
       <div className={`result-element ${infoDecommissioned}`}>
         <h2>
-          <span className="result-element-title">{title},&nbsp;</span>
+          <span className="result-element-title">{dispTitle},&nbsp;</span>
           <span className="result-element-link">
             se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}
           </span>
@@ -80,15 +61,7 @@ const SearchResultSingle = ({
   );
 };
 
-const SearchResultGroup = ({
-  note,
-  noteGeneral,
-  title,
-  dk5,
-  items,
-  pro,
-  cart
-}) => {
+const SearchResultGroup = ({note, noteGeneral, title, dk5, items, pro, cart}) => {
   return (
     <div className="result-group">
       <h2>
@@ -208,8 +181,7 @@ export class SearchResultsContainerComponent extends Component {
             });
           }
           catch (e) {
-            error =
-              'Der skete desværre en fejl. Prøv evt. at ændre din søgning en smule og søg igen';
+            error = 'Der skete desværre en fejl. Prøv evt. at ændre din søgning en smule og søg igen';
           }
 
           this.setState({
@@ -344,14 +316,7 @@ export class SearchResultsContainerComponent extends Component {
           );
         }
 
-        return (
-          <SearchResultGroup
-            key={entry.title}
-            pro={this.props.pro}
-            cart={this.props.cart}
-            {...entry}
-          />
-        );
+        return (<SearchResultGroup key={entry.title} pro={this.props.pro} cart={this.props.cart} {...entry} />);
       }
     );
 
