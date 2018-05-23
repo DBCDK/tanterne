@@ -32,13 +32,13 @@ function parseSearchResult(result) {
 const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, parent, pro, cart, decommissioned}) => {
   const infoDecommissioned = decommissioned ? 'decommissioned' : '';
   const skipValgfriGruppe = noteSystematic === 'Valgfri gruppe' && !pro;
-  const dispTitle = title ? title : parent;
+  const displayTitle = title ? title : parent;
   return (
     !decommissioned &&
     !skipValgfriGruppe && (
       <div className={`result-element ${infoDecommissioned}`}>
         <h2>
-          <span className="result-element-title">{dispTitle},&nbsp;</span>
+          <span className="result-element-title">{displayTitle},&nbsp;</span>
           <span className="result-element-link">
             se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}
           </span>
