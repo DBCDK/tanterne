@@ -166,11 +166,10 @@ export function titleSort(arr) {
  * @param esRes
  * @param pos
  * @param dk5Tab
- * @param dk5NotesGeneral
  * @param query
  * @returns {*}
  */
-export function parseRegisterRecord(esRes, pos, dk5Tab, dk5NotesGeneral, query = null) {
+export function parseRegisterRecord(esRes, pos, dk5Tab, query = null) {
   const ret = {};
   ret.title = '' + getFirstElementInFieldList(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
   ret.titleDetails = getFirstElementInFieldList(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
