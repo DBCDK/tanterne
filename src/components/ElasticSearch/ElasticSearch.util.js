@@ -63,7 +63,8 @@ export function setAndMap(pars, defaultParameters, esParMap) {
  *
  * @param buf
  * @param elements
- * @returns {*|Blob|string|ArrayBuffer}
+ * @param dist
+ * @returns Array
  */
 export function sortDistanceAndSlice(buf, elements, dist = 10) {
   return buf
@@ -165,47 +166,20 @@ export function titleSort(arr) {
  * @param esRes
  * @param pos
  * @param dk5Tab
- * @param dk5NotesGeneral
  * @param query
  * @returns {*}
  */
-export function parseRegisterRecord(
-  esRes,
-  pos,
-  dk5Tab,
-  dk5NotesGeneral,
-  query = null
-) {
+export function parseRegisterRecord(esRes, pos, dk5Tab, query = null) {
   const ret = {};
-  ret.title =
-    '' +
-    getFirstElementInFieldList(esRes, pos, [
-      '630a',
-      '633a',
-      '640a',
-      '600a',
-      '610a',
-      'a20a'
-    ]);
-  ret.titleDetails = getFirstElementInFieldList(esRes, pos, [
-    '630e',
-    '633e',
-    '640e',
-    '600f',
-    '610e',
-    'a20b'
-  ]);
-  ret.titleFull =
-    ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
+  ret.title = '' + getFirstElementInFieldList(esRes, pos, ['630a', '633a', '640a', '600a', '610a', 'a20a']);
+  ret.titleDetails = getFirstElementInFieldList(esRes, pos, ['630e', '633e', '640e', '600f', '610e', 'a20b']);
+  ret.titleFull = ret.title + (ret.titleDetails ? ' - ' + ret.titleDetails : '');
   ret.indexMain = getFirstElementInFieldList(esRes, pos, ['652m']);
   ret.index = getFirstElementInFieldList(esRes, pos, ['652m', 'b52m', '652n']);
-  ret.decommissioned =
-    ret.index && dk5Tab[ret.index] ? dk5Tab[ret.index].decommissioned : false;
+  ret.decommissioned = ret.index && dk5Tab[ret.index] ? dk5Tab[ret.index].decommissioned : false;
   ret.id = getFirstElementInFieldList(esRes, pos, ['001a']);
   ret.noteSystematic = getFirstElementInFieldList(esRes, pos, ['a40a']);
-  ret.noteGeneral =
-    '' + getFirstElementInFieldList(esRes, pos, ['b00a']) ||
-    dk5NotesGeneral[ret.index];
+  ret.noteGeneral = getFirstElementInFieldList(esRes, pos, ['b00a']);
   ret.note = {
     name: getFirstElementInFieldList(esRes, pos, ['651a']),
     index: getFirstElementInFieldList(esRes, pos, ['651b'])

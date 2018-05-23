@@ -116,7 +116,6 @@ export class ElasticClient {
           esRes,
           hitPos,
           this.dk5Syst,
-          this.dk5NotesGeneral,
           query
         )
       );
@@ -467,8 +466,7 @@ export class ElasticClient {
       const syst = esUtil.parseRegisterRecord(
         esRes,
         hitPos,
-        this.dk5Syst,
-        this.dk5NotesGeneral
+        this.dk5Syst
       );
       const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
       if (syst.index && syst.title) {
