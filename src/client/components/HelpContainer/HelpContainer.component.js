@@ -327,21 +327,20 @@ export class HelpContainerComponent extends Component {
       <div className='help-chapter--container'>
         <a name="supplNumbers"/>
         <div className="section-head">
-          DK5 - Till&aelig;gstal
+          Dansk Bogfortegnelses till&aelig;gstal
         </div>
         <div className="section">
           Dansk bogfortegnelse anvender ved underdeling af sk&oslash;nlitteraturen et system af till&aelig;gstal,
-          som adskilles fra det egentlige klassem&aelig;rke ved en bindestreg.
+          som adskilles fra det egentlige klassem&aelig;rke ved en kort streg.
           Disse tal bruges i stedet for decimalerne 1 og 2,
           hvis anvendelse i decimalklassedelingen er beskrevet i noten til 82-88.
-          Till&aelig;gstallene vil ogs&aring; kunne finde anvendelse ved anden bibliografisk systematik over sk&oslash;nlitteratur.
+          Till&aelig;gstallene vil kunne finde anvendelse ogs&aring; ved anden bibliografisk systematik over sk&oslash;nlitteratur.
         </div>
         <div className="section">
-          <i>Till&aelig;gstallene for sk&oslash;nlitteratur</i> best&aring;r af mindst to cifre,
+          <i>Till&aelig;gstallene for sk&oslash;nlitteratur</i> best&aring;r af to eller tre cifre,
           hvoraf det f&oslash;rste angiver publiceringssproget,
-          og det sidste dels angiver digtarten,
+          og det andet og tredje dels angiver digtarten,
           dels markerer antologiform.
-          For b&oslash;rne- og ungdomslitteraturens vedkomne indskydes mellem 1. og 2. ciffer et 9-tal, der markerer m&aring;lgruppen.
         </div>
         <div className="section">
           1. <i>ciffer</i> tildeles efter nedenst&aring;ende tabel:
@@ -350,8 +349,14 @@ export class HelpContainerComponent extends Component {
           <div><div className="bullet">2</div>Skrifter oversat til dansk</div>
         </div>
         <div className="section">
-          2. <i>ciffer</i> tildeles efter nedenst&aring;ende tabel:
-          <div><div className="bullet">0</div>Digte. Antologier</div>
+          2.-3. <i>ciffer</i> tildeles efter nedenst&aring;ende tabel:
+          <div>
+            <div className="bullet">0</div>Digte. Antologier
+            <div className="note">
+             (0 udelades ikke, selv om det er sidste ciffer).
+             Vise- og sangb&oslash;ger s&aelig;ttes i 78.69 eller 79.7.
+            </div>
+          </div>
           <div>
             <div className="bullet">1</div>Digte. V&aelig;rker af enkelte forfattere
             <div className="note">
@@ -367,15 +372,16 @@ export class HelpContainerComponent extends Component {
               Her anbringes ogs&aring; antologier, sammensat af forskellige digtarter<br />
               I grupperne 86 og 88 placerer Dansk bogfortegnelse l&aelig;seb&oslash;ger og prosaantologier til
               skolebrug i en undergruppe med till&aelig;gstallet -046 eller -246.
-              Andre skoleudgaver af sk&oslash;nlitteratur placeres som tilsvarende almindelige udgaver.
+              Andre skoleudgaver af sk&oslash;nlitteratur placeres som tilsvarende alm. udgaver.
             </div>
           </div>
           <div><div className="bullet">5</div>Romaner og noveller f&oslash;r 1901. V&aelig;rker af enkelte forfattere</div>
-          <div><div className="bullet">6</div>Romaner og noveller fra 1901. V&aelig;rker af enkelte forfattere</div>
+          <div><div className="bullet">6</div>Romaner og noveller 1901-. V&aelig;rker af enkelte forfattere</div>
           <div>
             <div className="bullet">7</div>Humor, tegneserier etc. Antologier
             <div className="note">
               Her anbringes samlinger af vittigheder og humoristiske sm&aring;stykker.
+              Vittighedstegninger s&aelig;ttes i 72 eller 74.91 med undergrupper.
             </div>
           </div>
           <div><div className="bullet">8</div>Humor, tegneserier etc. af enkelte forfattere</div>
