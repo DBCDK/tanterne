@@ -75,7 +75,7 @@
     "postcss-inline-svg": "^3.0.0",
     "postcss-loader": "^2.1.5",
     "sass-loader": "^7.0.0",
-    "sinon": "^5.0.3",
+    "sinon": "^6.0.0",
     "style-loader": "^0.21.0",
     "wdio-junit-reporter": "^0.4.3",
     "wdio-mocha-framework": "^0.5.13",
