@@ -80,10 +80,6 @@ describe('Testing parseRegisterRecord', () => {
     'b52.m.1': {index: 'syst b52.m.1', decommissioned: false},
     'b52.m.2': {index: 'syst b52.m.2', decommissioned: false}
   };
-  const dk5NotesGeneral = {
-    '652.m': '652.m noteGeneral',
-    '652.M': '652.M noteGeneral'
-  };
   const esRes = {
     hits: [
       {
@@ -93,7 +89,8 @@ describe('Testing parseRegisterRecord', () => {
           '651a': ['before 1999'],
           '651b': ['12.13'],
           '652m': ['652.m'],
-          '652a': ['652.a']
+          '652a': ['652.a'],
+          b00a: ['General note from b00a']
         }
       },
       {
@@ -102,6 +99,7 @@ describe('Testing parseRegisterRecord', () => {
           '630a': ['txt 630A'],
           '652m': ['652.M'],
           b52m: ['b52.m.1', 'b52.m.2'],
+          b00a: ['General note 2 from b00a'],
           b52y: ['Register Word 1', 'Register Word 2'],
           b52å: [1, 2],
           b51å: [2],
@@ -117,7 +115,8 @@ describe('Testing parseRegisterRecord', () => {
       index: '652.m',
       indexMain: '652.m',
       decommissioned: false,
-      noteGeneral: '652.m noteGeneral',
+      noteGeneral: 'General note from b00a',
+      noteSystematic: '',
       parent: {index: 'syst 652.m', decommissioned: false},
       title: 'txt 630a',
       titleDetails: '',
@@ -127,7 +126,7 @@ describe('Testing parseRegisterRecord', () => {
         name: 'before 1999'
       }
     };
-    assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab, dk5NotesGeneral));
+    assert.deepEqual(expected, esUtil.parseRegisterRecord(esRes, 0, dk5Tab));
     const items = [
       {
         index: 'b52.m.1',
@@ -155,7 +154,8 @@ describe('Testing parseRegisterRecord', () => {
       index: '652.M',
       indexMain: '652.M',
       decommissioned: false,
-      noteGeneral: '652.M noteGeneral',
+      noteGeneral: 'General note 2 from b00a',
+      noteSystematic: '',
       parent: {index: 'syst 652.M', decommissioned: false},
       title: 'txt 630A',
       titleDetails: '',
@@ -166,7 +166,7 @@ describe('Testing parseRegisterRecord', () => {
       },
       items: items
     };
-    assert.deepEqual(registerWords, esUtil.parseRegisterRecord(esRes, 1, dk5Tab, dk5NotesGeneral));
+    assert.deepEqual(registerWords, esUtil.parseRegisterRecord(esRes, 1, dk5Tab));
   });
 });
 

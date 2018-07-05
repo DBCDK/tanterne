@@ -57,7 +57,7 @@ async function searchHandler(ctx) {
   let {q, limit, offset, sort, spell} = ctx.query; // eslint-disable-line no-unused-vars
   const validSorts = ['relevance', 'dk5'];
   let errors = 0;
-  if (!q || (q === '')) {
+  if (!q || q === '') {
     ctx.body = JSON.stringify({status: 400, error: 'No query provided'});
     ctx.status = 400;
     errors += 1;
@@ -78,7 +78,10 @@ async function searchHandler(ctx) {
 
   if (errors === 0) {
     const results = await Promise.all([
-      ElasticClient.elasticSearch({query: q, limit: limit, offset: offset}, ctx.pro),
+      ElasticClient.elasticSearch(
+        {query: q, limit: limit, offset: offset},
+        ctx.pro
+      ),
       ElasticClient.elasticSuggest(q)
     ]);
 
@@ -94,22 +97,29 @@ async function searchHandler(ctx) {
     // No results found
     // Look at spelling and send new search
     if (
-      !offset && results[0] && !results[0].length &&
-      results[1] && results[1].spell.length &&
-      spell && spell !== 'none'
+      !offset &&
+      results[0] &&
+      !results[0].length &&
+      results[1] &&
+      results[1].merged.length &&
+      spell &&
+      spell !== 'none'
     ) {
-      response.correction.q = results[1].spell[0].match;
+      response.correction.q = results[1].merged[0].match;
       response.correction.href = generateSearchUrl(q, true);
-      response.result = await ElasticClient.elasticSearch({
-        query: results[1].spell[0].match,
-        limit: limit,
-        offset: offset
-      }, ctx.pro);
+      response.result = await ElasticClient.elasticSearch(
+        {
+          query: results[1].merged[0].match,
+          limit: limit,
+          offset: offset
+        },
+        ctx.pro
+      );
     }
 
     // no results, but spelling is disabled so give some suggestions instead.
     if (!offset && results[0] && !results[0].length && spell === 'none') {
-      response.correction.suggestions = results[1].spell.map(altSpell => {
+      response.correction.suggestions = results[1].merged.map(altSpell => {
         altSpell.href = generateSearchUrl(altSpell.match);
         return altSpell;
       });

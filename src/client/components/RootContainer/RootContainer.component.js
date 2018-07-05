@@ -37,12 +37,14 @@ const state = {
   search: {
     categories: {
       '00 - 07': {
-        label: 'Bogvæsen. Biblioteker. Museer. Medier. Leksika og blandede værker',
+        label:
+          'Bogvæsen. Biblioteker. Museer. Medier. Leksika og blandede værker',
         index: '00-07',
         backgroundImage: '/categories/bogvaesen.jpg'
       },
       '10 - 19': {
-        label: 'Filosofi. Psykologi. Videnskab og forskning. Kommunikation og IT',
+        label:
+          'Filosofi. Psykologi. Videnskab og forskning. Kommunikation og IT',
         index: '10-19',
         backgroundImage: '/categories/filosofi.jpg'
       },
@@ -104,15 +106,37 @@ export class RootContainerComponent extends Component {
 
     state.cart.addOrRemoveContent = this.addRemoveContentsToCart.bind(this);
     state.cart.toggleCart = this.toggleCart.bind(this);
+    state.cart.clearCart = this.clearCart.bind(this);
     this.state = state;
   }
 
   componentDidMount() {
-    window.addEventListener('popstate', () => {
-      this.setState({
-        location: getHash(window.location.hash)
-      });
-    });
+    window.addEventListener(
+      'hashchange',
+      () => {
+        this.setState({
+          location: getHash(window.location.hash)
+        });
+      },
+      true
+    );
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.location === '/') {
+      location.href = window.location.hash;
+    }
+  }
+
+  getChildContext() {
+    return {
+      navigate: path => {
+        window.location.hash = path;
+        this.setState({
+          location: getHash(path)
+        });
+      }
+    };
   }
 
   addRemoveContentsToCart(item) {
@@ -129,12 +153,13 @@ export class RootContainerComponent extends Component {
   }
 
   getAdditionalInfoOnItems(indexes) {
-    client.list(indexes)
-      .then((result) => {
+    client
+      .list(indexes)
+      .then(result => {
         const cart = Object.assign({}, this.state.cart);
         const keys = Object.keys(result);
 
-        keys.forEach((index) => {
+        keys.forEach(index => {
           if (cart.contents[index]) {
             cart.contents[index].data = result[index];
           }
@@ -142,20 +167,9 @@ export class RootContainerComponent extends Component {
 
         this.setState({cart: cart});
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(`Der kunne ikke hentes data for index(er): ${indexes}`, err); // eslint-disable-line no-console
       });
-  }
-
-  getChildContext() {
-    return {
-      navigate: path => {
-        window.location.hash = path;
-        this.setState({
-          location: getHash(path)
-        });
-      }
-    };
   }
 
   toggleCart() {
@@ -164,31 +178,61 @@ export class RootContainerComponent extends Component {
     this.setState({cart: cart});
   }
 
+  clearCart() {
+    location.reload();
+  }
+
   render() {
-    const displayComparer = this.state.pro && (Object.keys(this.state.cart.contents).length || this.state.cart.isToggled);
+    const displayComparer =
+      this.state.pro &&
+      (Object.keys(this.state.cart.contents).length ||
+        this.state.cart.isToggled);
 
     return (
-      <ResetToFrontpage timerEnabled={!this.state.pro && !(window.location.hash === '' || window.location.hash === '/')} testEnv={this.state.test}>
-        <div className={`root-container ${displayComparer && 'has-comparer' || ''}`}>
-          <TopBarComponent cart={this.state.cart} pro={this.state.pro}/>
+      <div
+        className={`root-container ${(displayComparer && 'has-comparer') ||
+          ''}`}
+      >
+        <ResetToFrontpage
+          timerEnabled={
+            !this.state.pro &&
+            !(window.location.hash === '' || window.location.hash === '/')
+          }
+          testEnv={this.state.test}
+        />
+        <TopBarComponent cart={this.state.cart} pro={this.state.pro} />
 
-          <Router {...this.state}>
-            <Route path="/" component={SearchResultsContainerComponent}/>
-            <Route path="/help" component={HelpContainerComponent}/>
-            <Route path="/about" component={AboutContainerComponent}/>
-            <Route path="/hierarchy/:id?" component={HierarchyContainerComponent}/>
-            <Route path="/search/:q/:limit/:offset/:sort/:spell?" component={SearchResultsContainerComponent}/>
-          </Router>
+        <Router {...this.state}>
+          <Route path="/" component={SearchResultsContainerComponent} />
+          <Route path="/help" component={HelpContainerComponent} />
+          <Route path="/about" component={AboutContainerComponent} />
+          <Route
+            path="/hierarchy/:id?"
+            component={HierarchyContainerComponent}
+          />
+          <Route
+            path="/search/:q/:limit/:offset/:sort/:spell?"
+            component={SearchResultsContainerComponent}
+          />
+        </Router>
 
-          {displayComparer && <ComparerContainer cart={this.state.cart}/>}
-          <div className="footer">
-            Copyright 2017 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
-            <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
-            <a href="https://kundeservice.dbc.dk/" target="_blank" rel="noopener noreferrer">kundeservice.dbc.dk</a><br/>
-            <Link className="about" to="#!/about">Om DK5</Link>
-          </div>
+        {displayComparer && <ComparerContainer cart={this.state.cart} />}
+        <div className="footer">
+          Copyright 2017 © DBC as, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
+          <a href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
+          <a
+            href="https://kundeservice.dbc.dk/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            kundeservice.dbc.dk
+          </a>
+          <br />
+          <Link className="about" to="#!/about">
+            Om DK5
+          </Link>
         </div>
-      </ResetToFrontpage>
+      </div>
     );
   }
 }

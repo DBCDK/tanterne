@@ -15,20 +15,27 @@ import * as esUtil from './ElasticSearch.util';
 const Logger = require('dbc-node-logger');
 
 export class ElasticClient {
-
   /**
    * setup ES and autocomplete object.
    */
   constructor() {
-    const host = CONFIG.elastic.host === 'static_mocks' ? 'localhost:9200' : CONFIG.elastic.host;
-    this.elasticClient = new ElasticSearch.Client({host: host, log: CONFIG.elastic.log});
+    const host =
+      CONFIG.elastic.host === 'static_mocks'
+        ? 'localhost:9200'
+        : CONFIG.elastic.host;
+    this.elasticClient = new ElasticSearch.Client({
+      host: host,
+      log: CONFIG.elastic.log
+    });
 
-    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d,a20,a40'.split(',');
+    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d,a20,a40'.split(
+      ','
+    );
     this.defaultParameters = {
       query: '',
       limit: 255,
       offset: 0,
-      fields: '001a,6*,b*,a20*',
+      fields: '001a,6*,b*,a20*,a40*',
       index: 'register',
       sort: '',
       op: 'AND'
@@ -72,16 +79,23 @@ export class ElasticClient {
    */
   async elasticPing() {
     let esStatus = false;
-    await this.elasticClient.ping({
-      // ping usually has a 3000ms timeout
-      requestTimeout: 1000
-    }).then(function (body) {
-      esStatus = body;
-    }, function (error) {
-      if (error) {
-        Logger.log.error('ElasticSearch cluster is down. Msg: ' + error.message);
-      }
-    });
+    await this.elasticClient
+      .ping({
+        // ping usually has a 3000ms timeout
+        requestTimeout: 1000
+      })
+      .then(
+        function(body) {
+          esStatus = body;
+        },
+        function(error) {
+          if (error) {
+            Logger.log.error(
+              'ElasticSearch cluster is down. Msg: ' + error.message
+            );
+          }
+        }
+      );
     return esStatus;
   }
 
@@ -97,7 +111,14 @@ export class ElasticClient {
     const res = [];
     const esRes = await this.rawElasticSearch(pars, pro);
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-      res.push(esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, this.dk5NotesGeneral, query));
+      res.push(
+        esUtil.parseRegisterRecord(
+          esRes,
+          hitPos,
+          this.dk5Syst,
+          query
+        )
+      );
     }
     return esUtil.titleMatchSort(res, query || '');
   }
@@ -114,10 +135,15 @@ export class ElasticClient {
     let hierarchy = {};
     let top = {};
     let query = q;
-    while (query.indexOf('.') !== -1 && query.length > 2 && (!this.dk5Syst[query] || (!pro && this.dk5Syst[query].decommissioned))) { // cut until found - handling country codes
+    while (
+      query.indexOf('.') !== -1 &&
+      query.length > 2 &&
+      (!this.dk5Syst[query] || (!pro && this.dk5Syst[query].decommissioned))
+    ) {
+      // cut until found - handling country codes
       query = query.substr(0, query.length - 1);
     }
-    Object.keys(this.topGroups).forEach((idx) => {
+    Object.keys(this.topGroups).forEach(idx => {
       if (this.topGroups[idx].index === q) {
         top = this.topGroups[idx];
       }
@@ -125,7 +151,7 @@ export class ElasticClient {
     const regRecords = await this.fetchRegisterWords(query, pro);
     // collect systematic for children
     let children = [];
-    Object.keys(this.dk5Syst).forEach((idx) => {
+    Object.keys(this.dk5Syst).forEach(idx => {
       if (this.dk5Syst[idx].parentIndex === query) {
         children.push(this.setItemFromIdx(idx));
       }
@@ -135,23 +161,26 @@ export class ElasticClient {
     let parents = [];
     let parent = {};
     if (!top.title) {
-
       // collect systematic for parents
       if (this.dk5Syst[query]) {
         parent = this.dk5Syst[query];
-        Object.keys(this.dk5Syst).forEach((idx) => {
+        Object.keys(this.dk5Syst).forEach(idx => {
           if (this.dk5Syst[idx].parentIndex === parent.parentIndex) {
             let item = this.setItemFromIdx(idx);
             if (idx === query) {
               const note = this.dk5NotesGeneral[idx];
               // Notes from systematic are currently not used
               // notes from register are moved to the individual group or register word
-              item = Object.assign(item, {
-                note: note,
-                noteSystematic: this.dk5NotesSystematic[idx],
-                noteSystematicHistoric: this.dk5NotesSystematicHistoric[idx],
-                items: esUtil.titleSort(regRecords)
-              }, {children: esUtil.indexSort(children)});
+              item = Object.assign(
+                item,
+                {
+                  note: note,
+                  noteSystematic: this.dk5NotesSystematic[idx],
+                  noteSystematicHistoric: this.dk5NotesSystematicHistoric[idx],
+                  items: esUtil.titleSort(regRecords)
+                },
+                {children: esUtil.indexSort(children)}
+              );
             }
             parents.push(item);
           }
@@ -161,8 +190,12 @@ export class ElasticClient {
 
     let lastChild = query.substr(0, 1);
     if (top.title) {
-      const items = Object.keys(this.topGroups).map((idx) => {
-        const grp = {index: this.topGroups[idx].index, title: this.topGroups[idx].title, hasChildren: true};
+      const items = Object.keys(this.topGroups).map(idx => {
+        const grp = {
+          index: this.topGroups[idx].index,
+          title: this.topGroups[idx].title,
+          hasChildren: true
+        };
         if (grp.index === query) {
           grp.children = esUtil.indexSort(children);
         }
@@ -183,13 +216,17 @@ export class ElasticClient {
       hierarchy = {selected: query, items: esUtil.indexSort(parents)};
       if (parent.index) {
         lastChild = this.dk5Syst[parent.index].index;
-        while (parent = this.dk5Syst[parent.parentIndex]) { // eslint-disable-line no-cond-assign
-          hierarchy = Object.assign({
-            index: parent.index,
-            title: parent.title,
-            decommissioned: this.dk5Syst[parent.index].decommissioned,
-            hasChildren: this.dk5HasChildren[parent.index] || false
-          }, {children: [hierarchy]});
+        while ((parent = this.dk5Syst[parent.parentIndex])) {
+          // eslint-disable-line no-cond-assign
+          hierarchy = Object.assign(
+            {
+              index: parent.index,
+              title: parent.title,
+              decommissioned: this.dk5Syst[parent.index].decommissioned,
+              hasChildren: this.dk5HasChildren[parent.index] || false
+            },
+            {children: [hierarchy]}
+          );
           lastChild = parent.index;
         }
       }
@@ -216,7 +253,13 @@ export class ElasticClient {
       const regRecords = await this.fetchRegisterWords(dk5, true);
       const aspects = [];
       if (this.dk5Syst[dk5]) {
-        const aspectRes = await this.rawElasticSearch({query: 'b52m:' + encodeURIComponent(dk5) + ' AND 630a:' + this.dk5Syst[dk5].title});
+        const aspectRes = await this.rawElasticSearch({
+          query:
+            'b52m:' +
+            encodeURIComponent(dk5) +
+            ' AND 630a:' +
+            this.dk5Syst[dk5].title
+        });
         const dupCheck = [];
         for (let hitPos = 0; hitPos < aspectRes.hits.length; hitPos++) {
           const source = aspectRes.hits[hitPos]._source;
@@ -260,18 +303,20 @@ export class ElasticClient {
     let result = {prefix: [], spell: []};
     if (this.autocomplete.trie.prefixes) {
       let prefix = [];
-      this.autocomplete.search(term).forEach(function (match) {
+      this.autocomplete.search(term).forEach(function(match) {
         prefix.push({match: match, distance: Levenshtein.get(term, match)});
       });
-      result.prefix = esUtil.sortDistanceAndSlice(prefix, 10);
+      result.prefix = esUtil.sortDistanceAndSlice(prefix, 10, 10);
     }
     if (this.vocabulary.length > 0) {
       let spell = [];
-      this.vocabulary.forEach(function (match) {
+      this.vocabulary.forEach(function(match) {
         spell.push({match: match, distance: Levenshtein.get(term, match)});
       });
-      result.spell = esUtil.sortDistanceAndSlice(spell, 10);
+      result.spell = esUtil.sortDistanceAndSlice(spell, 10, 4);
     }
+
+    result.merged = esUtil.mergeAndSortResults(result.prefix, result.spell, 10);
     return result;
   }
 
@@ -282,7 +327,10 @@ export class ElasticClient {
     // enrich top groups with titles
     if (!this.topGroups[0].title) {
       for (let i = 0; i <= 9; i++) {
-        let topRes = await this.rawElasticSearch({query: '652d:' + this.topGroups[i].index, index: 'systematic'});
+        let topRes = await this.rawElasticSearch({
+          query: '652d:' + this.topGroups[i].index,
+          index: 'systematic'
+        });
         this.topGroups[i].title = esUtil.getEsField(topRes, 0, '652u')[0];
         this.topGroups[i].decommissioned = false;
         this.topGroups[i].hasChildren = true;
@@ -291,12 +339,15 @@ export class ElasticClient {
 
     // create systematic hierarchy and notes
     if (Object.keys(this.dk5Syst).length === 0) {
-      const syst = await this.rawElasticSearch({
-        query: '652j:*',
-        limit: 9999,
-        fields: '001a, 652*, a40, a40*, a30, a30*, parent',
-        index: 'systematic'
-      }, true);
+      const syst = await this.rawElasticSearch(
+        {
+          query: '652j:*',
+          limit: 9999,
+          fields: '001a, 652*, a40, a40*, a30, a30*, parent',
+          index: 'systematic'
+        },
+        true
+      );
       if (syst.total > 9999) {
         Logger.log.error('More that 9999 systematic records');
       }
@@ -319,31 +370,49 @@ export class ElasticClient {
         89.9999: '90-99'
       };
       for (let hitPos = 0; hitPos < syst.hits.length; hitPos++) {
-        let parentIndex = esUtil.getFirstElementInFieldList(syst, hitPos, ['652j']);
-        let parent = esUtil.getFirstElementInFieldList(syst, hitPos, ['parent']);
+        let parentIndex = esUtil.getFirstElementInFieldList(syst, hitPos, [
+          '652j'
+        ]);
+        let parent = esUtil.getFirstElementInFieldList(syst, hitPos, [
+          'parent'
+        ]);
         if (linkTranslate[parentIndex]) {
           parentIndex = linkTranslate[parentIndex];
-          Object.keys(this.topGroups).forEach((idx) => {
+          Object.keys(this.topGroups).forEach(idx => {
             if (this.topGroups[idx].index === parentIndex) {
               parent = this.topGroups[idx].title;
             }
           });
         }
-        const grp = esUtil.getFirstElementInFieldList(syst, hitPos, ['652m', '652n', '652d']);
+        const grp = esUtil.getFirstElementInFieldList(syst, hitPos, [
+          '652m',
+          '652n',
+          '652d'
+        ]);
         if (grp) {
-          this.dk5NotesSystematic[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a40');
-          this.dk5NotesSystematicHistoric[grp] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a30');
+          this.dk5NotesSystematic[grp] = esUtil.createTaggedSystematicNote(
+            syst,
+            hitPos,
+            'a40'
+          );
+          this.dk5NotesSystematicHistoric[
+            grp
+          ] = esUtil.createTaggedSystematicNote(syst, hitPos, 'a30');
           this.dk5HasChildren[parentIndex] = true;
           this.dk5Syst[grp] = {
             index: grp,
             parentIndex: parentIndex,
             title: esUtil.getFirstElementInFieldList(syst, hitPos, ['652u']),
-            decommissioned: esUtil.getFirstElementInFieldList(syst, hitPos, ['652x']) === '2',
+            decommissioned:
+              esUtil.getFirstElementInFieldList(syst, hitPos, ['652x']) === '2',
             parent: parent
           };
         }
         else {
-          Logger.log.error('No dk5 group for ' + esUtil.getFirstElementInFieldList(syst, hitPos, ['001a']));
+          Logger.log.error(
+            'No dk5 group for ' +
+              esUtil.getFirstElementInFieldList(syst, hitPos, ['001a'])
+          );
         }
       }
     }
@@ -351,17 +420,26 @@ export class ElasticClient {
     // load words into autocomplete trie.
     if (!this.autocomplete.trie.prefixes) {
       const wordFields = ['630a', 'b52y'];
-      const regRecs = await this.rawElasticSearch({query: '*', fields: wordFields.join(','), limit: 50000}, true);
+      const regRecs = await this.rawElasticSearch(
+        {query: '*', fields: wordFields.join(','), limit: 50000},
+        true
+      );
       this.vocabulary = esUtil.parseRegisterForUniqueWords(regRecs, wordFields);
-      this.autocomplete.initialize((onReady) => {
+      this.autocomplete.initialize(onReady => {
         onReady(this.vocabulary);
       });
-      const regNotes = await this.rawElasticSearch({
-        query: '651:* OR b00:*',
-        fields: '651*, 652*, b00*',
-        limit: 50000
-      }, true);
-      this.dk5NotesRegister = esUtil.parseRegisterForNotes(regNotes, this.dk5Syst);
+      const regNotes = await this.rawElasticSearch(
+        {
+          query: '651:* OR b00:*',
+          fields: '651*, 652*, b00*',
+          limit: 50000
+        },
+        true
+      );
+      this.dk5NotesRegister = esUtil.parseRegisterForNotes(
+        regNotes,
+        this.dk5Syst
+      );
       this.dk5NotesGeneral = esUtil.parseRegisterForGeneralNotes(regNotes);
     }
   }
@@ -377,18 +455,27 @@ export class ElasticClient {
     const registerWordIndex = ['652m', '652d', 'b52m']; // one of these subFields contains the dk5 index for the register word
     const regRecords = [];
     const query = [];
-    registerWordIndex.forEach((reg) => {
+    registerWordIndex.forEach(reg => {
       query.push(reg + ':"' + dk5 + '"');
     });
-    let esRes = await this.rawElasticSearch({query: query.join(' OR '), index: 'register'}, pro);
+    let esRes = await this.rawElasticSearch(
+      {query: query.join(' OR '), index: 'register'},
+      pro
+    );
     for (let hitPos = 0; hitPos < esRes.hits.length; hitPos++) {
-      const syst = esUtil.parseRegisterRecord(esRes, hitPos, this.dk5Syst, this.dk5NotesGeneral);
+      const syst = esUtil.parseRegisterRecord(
+        esRes,
+        hitPos,
+        this.dk5Syst
+      );
       const note = esUtil.createTaggedRegisterNote(esRes, hitPos, this.dk5Syst);
       if (syst.index && syst.title) {
         regRecords.push({
           index: syst.index,
           title: syst.title,
-          decommissioned: this.dk5Syst[syst.index] ? this.dk5Syst[syst.index].decommissioned : false,
+          decommissioned: this.dk5Syst[syst.index]
+            ? this.dk5Syst[syst.index].decommissioned
+            : false,
           hasChildren: this.dk5HasChildren[syst.index] || false,
           note: note
         });
@@ -408,7 +495,7 @@ export class ElasticClient {
     let esHits = {};
     if (pars.query.indexOf(':') === -1) {
       const q = [];
-      this.defaultSearchFields.forEach((fld) => {
+      this.defaultSearchFields.forEach(fld => {
         q.push(fld + ':(' + pars.query + ')');
       });
       pars.query = q.join(' OR ');
@@ -416,14 +503,20 @@ export class ElasticClient {
     if (!pro) {
       pars.query += ' NOT 652x: 2';
     }
-    await this.elasticClient.search(esUtil.setAndMap(pars, this.defaultParameters, this.esParMap))
-      .then(function (body) {
-        esHits = body.hits;
-      }, function (error) {
-        const errorMessage = `ElasticSearch search error. Msg: ${error.message}`;
-        Logger.log.error(errorMessage);
-        esHits.error = errorMessage;
-      });
+    await this.elasticClient
+      .search(esUtil.setAndMap(pars, this.defaultParameters, this.esParMap))
+      .then(
+        function(body) {
+          esHits = body.hits;
+        },
+        function(error) {
+          const errorMessage = `ElasticSearch search error. Msg: ${
+            error.message
+          }`;
+          Logger.log.error(errorMessage);
+          esHits.error = errorMessage;
+        }
+      );
     return esHits;
   }
 
