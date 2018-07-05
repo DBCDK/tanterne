@@ -168,10 +168,7 @@ export class RootContainerComponent extends Component {
         this.setState({cart: cart});
       })
       .catch(err => {
-        console.error(
-          `Der kunne ikke hentes data for index(er): ${indexes}`,
-          err
-        ); // eslint-disable-line no-console
+        console.error(`Der kunne ikke hentes data for index(er): ${indexes}`, err); // eslint-disable-line no-console
       });
   }
 
