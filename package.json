@@ -33,7 +33,7 @@
   "homepage": "https://github.com/DBCDK/tanterne#readme",
   "dependencies": {
     "autocomplete": "^0.0.1",
-    "autoprefixer": "^8.4.1",
+    "autoprefixer": "^9.2.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
