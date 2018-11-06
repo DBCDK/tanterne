@@ -67,8 +67,8 @@ export class SearchFieldComponent extends Component {
     }
   };
 
-  UNSAFE_componentWillReceiveProps(props) {
-  // componentWillReceiveProps(props) { // eslint-disable-line react/no-deprecated
+  // UNSAFE_componentWillReceiveProps(props) {
+  componentWillReceiveProps(props) { // eslint-disable-line react/no-deprecated
     if (props.params && props.params.q) {
       this.setState({query: props.params.q});
     }
