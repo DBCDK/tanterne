@@ -197,7 +197,8 @@ class HierarchyContainerComponent extends React.Component {
     this.props.globalState.getHierarchy(this.props.params.id || '00-07');
   }
 
-  componentWillReceiveProps(nextProps) {
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) { // eslint-disable-line react/no-deprecated
     if (nextProps.params.id !== this.props.params.id) {
       this.props.globalState.getHierarchy(nextProps.params.id);
     }

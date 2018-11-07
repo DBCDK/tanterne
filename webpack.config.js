@@ -1,9 +1,10 @@
 const webpack = require('webpack');
 const path = require('path');
-const extractTextPlugin = require('extract-text-webpack-plugin');
+
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const noErrorsPlugin = new webpack.NoEmitOnErrorsPlugin();
-const extractCss = new extractTextPlugin({filename: '../css/[name].css', allChunks: true});
+const extractCss = new MiniCssExtractPlugin({filename: '../css/[name].css', allChunks: true});
 
 module.exports = [{
   name: 'browser',
@@ -14,7 +15,7 @@ module.exports = [{
     filename: '[name].js'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -26,14 +27,13 @@ module.exports = [{
       },
       {
         test: /\.(scss|css)$/,
-        loader: extractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {loader: 'css-loader', options: {sourceMap: true}},
-            {loader: 'postcss-loader', options: {sourceMap: 'inline'}},
-            {loader: 'sass-loader', options: {sourceMap: true}}
-          ]
-        }) /* Checkout postcss.config.js for details */
+        exclude: /node_modules/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {loader: 'css-loader', options: {sourceMap: true}},
+          {loader: 'postcss-loader', options: {sourceMap: 'inline'}},
+          {loader: 'sass-loader', options: {sourceMap: true}}
+        ]
       }
     ]
   },
