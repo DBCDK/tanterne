@@ -81,7 +81,7 @@
     "wdio-junit-reporter": "^0.4.4",
     "wdio-mocha-framework": "^0.6.1",
     "wdio-sauce-service": "^0.4.13",
-    "wdio-selenium-standalone-service": "0.0.10",
+    "wdio-selenium-standalone-service": "0.0.11",
     "webdriverio": "^4.14.0",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"
