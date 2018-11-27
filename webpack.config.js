@@ -21,7 +21,7 @@ module.exports = [{
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['env', 'react'],
+          presets: ['es2015', 'react'],
           plugins: ['transform-async-to-generator', 'transform-class-properties', 'transform-es2015-modules-commonjs', 'transform-object-rest-spread']
         }
       },
