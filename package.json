@@ -33,7 +33,7 @@
   "homepage": "https://github.com/DBCDK/tanterne#readme",
   "dependencies": {
     "autocomplete": "^0.0.1",
-    "autoprefixer": "^9.3.1",
+    "autoprefixer": "^9.4.2",
     "babel-loader": "^7.1.4",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -51,7 +51,7 @@
     "koa-convert": "^1.2.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "newrelic": "^4.11.0",
+    "newrelic": "^4.12.0",
     "preact": "8.3.1",
     "preact-compat": "3.18.4",
     "preact-enroute": "1.2.3",
@@ -80,10 +80,10 @@
     "style-loader": "^0.23.1",
     "wdio-junit-reporter": "^0.4.4",
     "wdio-mocha-framework": "^0.6.1",
-    "wdio-sauce-service": "^0.4.13",
+    "wdio-sauce-service": "^0.4.14",
     "wdio-selenium-standalone-service": "0.0.11",
-    "webdriverio": "^4.14.0",
-    "webpack": "^4.26.1",
+    "webdriverio": "^4.14.1",
+    "webpack": "^4.27.1",
     "webpack-cli": "^3.1.2"
   }
 }
