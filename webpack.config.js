@@ -11,6 +11,7 @@ const extractCss = new MiniCssExtractPlugin({
 
 module.exports = [
   {
+    mode: 'development',
     name: 'browser',
     cache: true,
     entry: ['@babel/polyfill', './src/client/index.js'],
@@ -22,7 +23,8 @@ module.exports = [
       rules: [
         {
           test: /\.js$/,
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: {presets: ['@babel/env']}
         },
         {
           test: /\.(scss|css)$/,
@@ -37,7 +39,6 @@ module.exports = [
       ]
     },
     plugins: [extractCss, noErrorsPlugin],
-    devtool: 'source-map#inline',
     resolve: {
       alias: {
         react: 'preact-compat',
