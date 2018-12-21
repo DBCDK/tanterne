@@ -6,7 +6,7 @@
  */
 
 require('newrelic');
-require('babel-register');
+require('@babel/register');
 const {createApp} = require('./app');
 
 const app = createApp(false);

@@ -1,8 +1,7 @@
 /* eslint-disable */
-require('babel-register');
+require('@babel/register');
 
 let config = {
-
   //
   // ==================
   // Specify Test Files
@@ -12,9 +11,7 @@ let config = {
   // NPM script (see https://docs.npmjs.com/cli/run-script) then the current working
   // directory is where your package.json resides, so `wdio` will be called from there.
   //
-  specs: [
-    './integration/**/*.test.js'
-  ],
+  specs: ['./integration/**/*.test.js'],
   exclude: [
     // 'path/to/excluded/files'
   ],
@@ -40,17 +37,19 @@ let config = {
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
-  capabilities: [{
-    // maxInstances can get overwritten per capability. So if you have an in-house Selenium
-    // grid with only 5 firefox instance available you can make sure that not more than
-    // 5 instance gets started at a time.
-    maxInstances: 10,
-    browserName: 'chrome',
-    platform: 'OS X 10.11',
-    version: 'latest',
-    'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
-    build: process.env.TRAVIS_BUILD_NUMBER
-  }],
+  capabilities: [
+    {
+      // maxInstances can get overwritten per capability. So if you have an in-house Selenium
+      // grid with only 5 firefox instance available you can make sure that not more than
+      // 5 instance gets started at a time.
+      maxInstances: 10,
+      browserName: 'chrome',
+      platform: 'OS X 10.11',
+      version: 'latest',
+      'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER,
+      build: process.env.TRAVIS_BUILD_NUMBER
+    }
+  ],
   //
   // ===================
   // Test Configurations
@@ -135,7 +134,6 @@ let config = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    compilers: ['js:babel-register'],
     timeout: 60000
   },
   //
@@ -157,8 +155,9 @@ let config = {
   // before: function (capabilities, specs) {
   // },
   before() {
+    require('@babel/register');
     require('../utils/browser.util');
-  },
+  }
   //
   // Hook that gets executed before the suite starts
   // beforeSuite: function (suite) {

@@ -24,7 +24,7 @@ describe('Testing reset-to-frontpage functionality', () => {
   it('should redirect to frontpage after 5 seconds', () => {
     browser.url(`${getBaseUrl(false)}/#!/hierarchy/10-19`);
     assert.isFalse(browser.isVisible('.reset-to-frontpage--container'));
-    browser.pause(7000);
+    browser.pause(10000);
     assert.isTrue(browser.isVisible('.reset-to-frontpage--container'));
     browser.pause(7000);
     assert.isFalse(browser.getUrl().includes('/#!/hierarchy/10-19'));
