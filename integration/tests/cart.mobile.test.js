@@ -13,6 +13,10 @@ describe('Testing cart on pro site (small screen)', () => {
     browser.pause(200);
   });
 
+  it('It should do nothing', () => {
+    // bugfix beforeEach does not set viewPortSize the first time
+  });
+
   it('It should add item to cart', () => {
     browser.url(`${getBaseUrl(true)}/#!/hierarchy/40-49`);
     browser.pause(200);

@@ -15,6 +15,10 @@ describe('Testing Hierarchy in mobile view', () => {
     browser.pause(200);
   });
 
+  it('It should do nothing', () => {
+    // bugfix beforeEach does not set viewPortSize the first time
+  });
+
   it('Should navigagte to frontpage', () => {
     browser.click('.category-tile--container');
     browser.waitForVisible('.hierarchy--navbar--href', 1000);
