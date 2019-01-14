@@ -11,10 +11,11 @@
     "build:dev": "webpack --progress --colors --watch -d",
     "precommit": "npm run lint && npm run test && npm run test:integration:local",
     "test": ". ./test.env && mocha --recursive ./src/**/*.test.js --require @babel/register",
-    "test:integration:jenkins": "npm run build && TEST_ENV=jenkins wdio ./integration/config/wdio.conf.js",
-    "start:test": ". ./test.env && npm run build && npm run serve && wait-on http://localhost:4013",
-    "test:cy-local": ". env.env && npm run start:test & npm run cy:open",
-    "test:integration": "npm run start:test & npm run cy:run",
+    "test:integration:jenkins": "npm run test:integration",
+    "start:test": ". ./test.env && npm run build && npm run serve",
+    "test:wait": "wait-on http://localhost:4013 && wait-on http://localhost:4015",
+    "test:cy-local": ". env.env && npm run start:test & npm run test:wait && npm run cy:open",
+    "test:integration": "npm run start:test & npm run test:wait && npm run cy:run",
     "test:integration:local": "rm -rf cypress/screenshots/* && rm -rf cypress/videos/* && npm run start:test & npm run cy:run",
     "cy:run": "cypress run",
     "cy:open": "cypress open"
@@ -87,11 +88,7 @@
     "sass-loader": "^7.0.0",
     "sinon": "^7.2.2",
     "style-loader": "^0.23.1",
-    "wdio-junit-reporter": "^0.4.4",
-    "wdio-mocha-framework": "^0.6.1",
-    "wdio-sauce-service": "^0.4.14",
-    "wdio-selenium-standalone-service": "0.0.12",
-    "webdriverio": "^4.14.1",
+    "wait-on": "^3.2.0",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0"
   }
