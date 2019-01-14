@@ -11,9 +11,13 @@
     "build:dev": "webpack --progress --colors --watch -d",
     "precommit": "npm run lint && npm run test && npm run test:integration:local",
     "test": ". ./test.env && mocha --recursive ./src/**/*.test.js --require @babel/register",
-    "test:integration": ". ./test.env && npm run build && TEST_ENV=saucelabs wdio ./integration/config/wdio.conf.js",
-    "test:integration:local": "rm -rf errorShots/*.png && . ./env.env && . ./test.env && TEST_ENV=local wdio ./integration/config/wdio.conf.js",
-    "test:integration:jenkins": "npm run build && TEST_ENV=jenkins wdio ./integration/config/wdio.conf.js"
+    "test:integration:jenkins": "npm run build && TEST_ENV=jenkins wdio ./integration/config/wdio.conf.js",
+    "start:test": ". ./env.env && . ./test.env && npm run serve",
+    "test:cy-local": "npm run start:test & npm run cy:open",
+    "test:integration": "npm run start:test & npm run cy:run",
+    "test:integration:local": "rm -rf cypress/screenshots/* && rm -rf cypress/videos/* && npm run start:test & npm run cy:run",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -70,6 +74,7 @@
     "chai": "^4.2.0",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.8",
+    "cypress": "^3.1.4",
     "eslint": "^5.11.1",
     "eslint-plugin-react": "^7.12.2",
     "hard-source-webpack-plugin": "^0.13.1",
