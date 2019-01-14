@@ -12,7 +12,7 @@
     "precommit": "npm run lint && npm run test && npm run test:integration:local",
     "test": ". ./test.env && mocha --recursive ./src/**/*.test.js --require @babel/register",
     "test:integration:jenkins": "npm run build && TEST_ENV=jenkins wdio ./integration/config/wdio.conf.js",
-    "start:test": ". ./env.env && . ./test.env && npm run build && npm run serve",
+    "start:test": ". ./env.env && . ./test.env && npm run build && npm run serve && wait-on http://localhost:4013",
     "test:cy-local": "npm run start:test & npm run cy:open",
     "test:integration": "npm run start:test & npm run cy:run",
     "test:integration:local": "rm -rf cypress/screenshots/* && rm -rf cypress/videos/* && npm run start:test & npm run cy:run",
