@@ -14,10 +14,9 @@
     "test:integration:jenkins": "npm run test:integration",
     "test:start": ". ./test.env && npm run build && npm run serve",
     "test:wait": "wait-on http://localhost:4013 && wait-on http://localhost:4015",
-    "test:clean": "rm -rf cypress/screenshots/* && rm -rf cypress/videos/*",
     "test:cy-local": ". env.env && npm run test:start & npm run test:wait && npm run cy:open",
     "test:integration": "npm run test:start & npm run test:wait && npm run cy:run",
-    "test:integration:local": "npm run test:clean && npm run test:start & npm run test:wait && npm run cy:run",
+    "test:integration:local": "npm run test:start & npm run test:wait && npm run cy:run",
     "cy:run": "cypress run",
     "cy:open": "cypress open"
   },
