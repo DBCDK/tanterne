@@ -11,12 +11,12 @@
     "build:dev": "webpack --progress --colors --watch -d",
     "precommit": "npm run lint && npm run test && npm run test:integration:local",
     "test": ". ./test.env && mocha --recursive ./src/**/*.test.js --require @babel/register",
-    "test:integration:jenkins": "npm run test:integration",
-    "test:start": ". ./test.env && npm run build && npm run serve",
-    "test:wait": "wait-on http://localhost:4013 && wait-on http://localhost:4015",
-    "test:cy-local": ". env.env && npm run test:start & npm run test:wait && npm run cy:open",
-    "test:integration": "npm run test:start & npm run test:wait && npm run cy:run",
-    "test:integration:local": "npm run test:start & npm run test:wait && npm run cy:run",
+    "start": "npm run build && npm run serve",
+    "start:local": ". ./env.env && . ./test.env && npm run serve",
+    "test:integration": ". ./test.env && npm run start & npm run wait && . ./test.env && npm run cy:run",
+    "test:integration:local": "npm run start:local & npm run wait && . ./env.env && . ./test.env && npm run cy:open",
+    "test:integration:jenkins": "npm run start & npm run wait && npm run cy:run",
+    "wait": "wait-on http://localhost:4013 && wait-on http://localhost:4015",
     "cy:run": "cypress run",
     "cy:open": "cypress open"
   },
@@ -33,7 +33,7 @@
     "url": "https://github.com/DBCDK/tanterne/issues"
   },
   "engines": {
-    "node": ">=6.7.0"
+    "node": ">=8.0.0"
   },
   "targets": {
     "ie": "11"
