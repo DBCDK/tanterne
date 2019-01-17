@@ -1,6 +1,5 @@
 /// <reference types="Cypress" />
-const baseUrl = 'localhost:4013/';
-// const baseUrl = Cypress.env('HOST') + ':' + Cypress.env('PORT');
+const baseUrl = Cypress.env('APP_HOST') + ':' + Cypress.env('APP_PORT');
 context('Testing reset-to-frontpage functionality', () => {
   beforeEach(() => {
     cy.visit(baseUrl);
@@ -26,7 +25,7 @@ context('Testing reset-to-frontpage functionality', () => {
     cy.get('.reset-to-frontpage--container').should('be.visible');
     cy.wait(7000);
     cy.url().should('not.contain', 'hierarchy');
-    cy.url().should('eq', 'http://' + baseUrl);
+    cy.url().should('eq', baseUrl + '/');
   });
 
 });

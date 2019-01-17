@@ -1,9 +1,8 @@
 /// <reference types="Cypress" />
 
-const baseUrl = 'localhost:4013/';
-// const baseUrl = Cypress.env('HOST') + ':' + Cypress.env('PORT');
+const baseUrl = Cypress.env('APP_HOST') + ':' + Cypress.env('APP_PORT');
 const searchValue = 'geografi';
-const protocolAndUrl = 'http://' + baseUrl;
+const protocolAndUrl = baseUrl + '/';
 
 context('Testing searchField', () => {
   beforeEach(() => {
@@ -30,6 +29,7 @@ context('Testing searchField', () => {
 
   it('should display suggestions', () => {
     cy.get('.search-field').type(searchValue);
+    cy.wait(100);
     cy.get('.suggestions--suggestion').should('contain', 'geografi');
     cy.get('.suggestions--suggestion').should('contain', 'geografisk');
     cy.get('.suggestions--suggestion').should('contain', 'geografiundervisning');

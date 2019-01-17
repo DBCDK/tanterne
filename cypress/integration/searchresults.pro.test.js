@@ -1,6 +1,5 @@
 /// <reference types="Cypress" />
-const proBaseUrl = 'localhost:4015/';
-// const proBaseUrl = Cypress.env('HOST') + ':' + Cypress.env('PRO_PORT');
+const proBaseUrl = Cypress.env('APP_HOST') + ':' + Cypress.env('APP_PRO_PORT');
 context('Testing the searchresultspage on pro version', () => {
   beforeEach(() => {
     cy.visit(proBaseUrl + '#!/search/geologi/10/0/relevance/dictionary');
