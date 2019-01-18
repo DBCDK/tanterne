@@ -6,15 +6,12 @@ const protocolAndUrl = baseUrl + '/';
 
 context('Testing searchField', () => {
   beforeEach(() => {
-    cy.wait(100);
     cy.visit(baseUrl);
   });
 
   it('Should render searchField', () => {
     cy.get('[placeholder="Skriv emne"]').should('be.visible');
     cy.get('.search-field').should('have.attr', 'placeholder', 'Skriv emne');
-    //const text = browser.getAttribute('.search-field', 'placeholder');
-    //assert.equal(text, 'Skriv emne', 'Element has placeholder');
   });
 
   it('should change url when searching', () => {
@@ -29,7 +26,6 @@ context('Testing searchField', () => {
 
   it('should display suggestions', () => {
     cy.get('.search-field').type(searchValue);
-    cy.wait(100);
     cy.get('.suggestions--suggestion').should('contain', 'geografi');
     cy.get('.suggestions--suggestion').should('contain', 'geografisk');
     cy.get('.suggestions--suggestion').should('contain', 'geografiundervisning');

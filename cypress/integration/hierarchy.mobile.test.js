@@ -18,8 +18,6 @@ context('Testing Hierarchy in mobile view', () => {
     cy.visit(baseUrl + '/#!/hierarchy/00.109');
     cy.get('.hierarchy--navbar--title').should('be.visible');
     cy.get('.hierarchy--navbar--href').should('have.attr', 'href', '#!/hierarchy/00.1');
-    // or another way
-    cy.get('.hierarchy--navbar--href').invoke('attr', 'href').should('contain', '#!/hierarchy/00.1');
 
     cy.get('.hierarchy--navbar--href').click();
     cy.get('.hierarchy--navbar--href').should('have.attr', 'href', '#!/hierarchy/00');
