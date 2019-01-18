@@ -11,9 +11,14 @@
     "build:dev": "webpack --progress --colors --watch -d",
     "precommit": "npm run lint && npm run test && npm run test:integration:local",
     "test": ". ./test.env && mocha --recursive ./src/**/*.test.js --require @babel/register",
-    "test:integration": ". ./test.env && npm run build && TEST_ENV=saucelabs wdio ./integration/config/wdio.conf.js",
-    "test:integration:local": "rm -rf errorShots/*.png && . ./env.env && . ./test.env && TEST_ENV=local wdio ./integration/config/wdio.conf.js",
-    "test:integration:jenkins": "npm run build && TEST_ENV=jenkins wdio ./integration/config/wdio.conf.js"
+    "start": "npm run build && npm run serve",
+    "start:local": ". ./env.env && . ./test.env && npm run serve",
+    "test:integration": ". ./test.env && npm run start & npm run wait && . ./test.env && npm run cy:run",
+    "test:integration:local": "npm run start:local & npm run wait && . ./env.env && . ./test.env && npm run cy:open",
+    "test:integration:jenkins": "npm run start & npm run wait && npm run cy:run",
+    "wait": "wait-on http://localhost:4013 && wait-on http://localhost:4015",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -28,7 +33,7 @@
     "url": "https://github.com/DBCDK/tanterne/issues"
   },
   "engines": {
-    "node": ">=6.7.0"
+    "node": ">=8.0.0"
   },
   "targets": {
     "ie": "11"
@@ -45,17 +50,17 @@
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.2.0",
     "autocomplete": "^0.0.1",
-    "autoprefixer": "^9.4.4",
-    "babel-loader": "^8.0.4",
+    "autoprefixer": "^9.4.5",
+    "babel-loader": "^8.0.5",
     "dbc-node-logger": "^2.0.0",
-    "elasticsearch": "^15.2.0",
+    "elasticsearch": "^15.3.0",
     "fast-levenshtein": "^2.0.6",
     "koa": "^2.6.2",
     "koa-body": "^4.0.6",
     "koa-convert": "^1.2.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "newrelic": "^4.13.0",
+    "newrelic": "^5.1.0",
     "preact": "8.4.2",
     "preact-compat": "3.18.4",
     "preact-enroute": "1.2.3",
@@ -70,8 +75,9 @@
     "chai": "^4.2.0",
     "css-loader": "^2.1.0",
     "cssnano": "^4.1.8",
-    "eslint": "^5.11.1",
-    "eslint-plugin-react": "^7.12.2",
+    "cypress": "^3.1.4",
+    "eslint": "^5.12.0",
+    "eslint-plugin-react": "^7.12.4",
     "hard-source-webpack-plugin": "^0.13.1",
     "mini-css-extract-plugin": "^0.5.0",
     "mocha": "^5.2.0",
@@ -82,12 +88,8 @@
     "sass-loader": "^7.0.0",
     "sinon": "^7.2.2",
     "style-loader": "^0.23.1",
-    "wdio-junit-reporter": "^0.4.4",
-    "wdio-mocha-framework": "^0.6.1",
-    "wdio-sauce-service": "^0.4.14",
-    "wdio-selenium-standalone-service": "0.0.12",
-    "webdriverio": "^4.14.1",
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.2.0"
+    "wait-on": "^3.2.0",
+    "webpack": "^4.28.4",
+    "webpack-cli": "^3.2.1"
   }
 }
