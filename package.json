@@ -50,7 +50,7 @@
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.2.0",
     "autocomplete": "^0.0.1",
-    "autoprefixer": "^9.4.5",
+    "autoprefixer": "^9.4.6",
     "babel-loader": "^8.0.5",
     "dbc-node-logger": "^2.0.0",
     "elasticsearch": "^15.3.0",
