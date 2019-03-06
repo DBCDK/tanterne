@@ -44,7 +44,7 @@ export class ElasticClient {
       query: 'q',
       limit: 'size',
       offset: 'from',
-      fields: '_sourceInclude',
+      fields: '_source_include',
       index: 'index',
       sort: 'sort',
       op: 'defaultOperator'
@@ -343,7 +343,7 @@ export class ElasticClient {
         {
           query: '652j:*',
           limit: 9999,
-          fields: '001a, 652*, a40, a40*, a30, a30*, parent',
+          fields: '001a,652*,a40,a40*,a30,a30*,parent',
           index: 'systematic'
         },
         true
@@ -408,12 +408,14 @@ export class ElasticClient {
             parent: parent
           };
         }
+        /*
         else {
           Logger.log.error(
             'No dk5 group for ' +
               esUtil.getFirstElementInFieldList(syst, hitPos, ['001a'])
           );
         }
+        */
       }
     }
 
@@ -431,7 +433,7 @@ export class ElasticClient {
       const regNotes = await this.rawElasticSearch(
         {
           query: '651:* OR b00:*',
-          fields: '651*, 652*, b00*',
+          fields: '651*,652*,b00*',
           limit: 50000
         },
         true
