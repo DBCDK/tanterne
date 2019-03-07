@@ -16,5 +16,5 @@ env:
 services:
   - elasticsearch
 before_install:
-  - curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.2.deb && sudo dpkg -i --force-confnew elasticsearch-5.1.2.deb && sudo service elasticsearch restart
+  - curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.deb && sudo dpkg -i --force-confnew elasticsearch-6.6.1.deb && sudo service elasticsearch restart
 script: npm run $TEST_SUITE
