@@ -11,7 +11,7 @@ The changelog is made with [github_changelog_generator](https://github.com/skywi
 
 ## Installation
 ### Elastic Search
-Download Elastic Search, like: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.1.2.tar.gz 
+Download Elastic Search, like: https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.6.1.tar.gz
 
 Install and start it
 
@@ -27,11 +27,48 @@ Filter only one dk5 group like (for test purposes)
 * `iso2709ToElasticLoad -f 13 -i dk5_total.iso2709 -o elastic_bulk_load.json`
 
 ### Load Elastic Search
-* `curl -XDELETE 'localhost:9200/*' or delete indexes: register, systematic and ignored`
-* `curl -XPUT 'localhost:9200/systematic' -d '{"mappings":{"systematic":{"properties":{"parent":{"type":"string","index":"no"}}}}}'`
-* `curl -XPUT 'localhost:9200/register' -d '{"settings":{"analysis":{"char_filter":{"dk5":{"type":"mapping","mappings":[":=>kolon"]}},"analyzer":{"default":{"type":"custom","char_filter":["dk5"],"tokenizer":"standard","filter":["lowercase"]}}}}}'`
-* `curl -XPOST 'localhost:9200/_bulk?refresh=wait_for' --data-binary '@elastic_bulk_load.json'`
-* `curl -XPUT 'localhost:9200/*/_settings' -d '{"index": {"max_result_window": 50000}}'`
+* `curl -XDELETE 'localhost:9200/*' -H 'Content-Type: application/json'`
+* `curl -XPUT 'localhost:9200/systematic' -H 'Content-Type: application/json' -d '{
+  "mappings":{
+    "dk5":{
+      "properties":{
+        "parent":{
+          "enabled":"false"
+        }
+      }
+    }
+  },
+  "settings": {
+    "number_of_shards": 1
+  }
+}'`
+* `curl -XPUT 'localhost:9200/register' -H 'Content-Type: application/json' -d '{
+  "settings":{
+    "analysis":{
+      "char_filter":{
+        "dk5":{
+          "type":"mapping",
+          "mappings":[":=>kolon"]
+        }
+      },
+      "analyzer":{
+        "default":{
+          "type":"custom",
+          "char_filter":["dk5"],
+          "tokenizer":"standard",
+          "filter":["lowercase"]
+        }
+      }
+    },
+    "number_of_shards": 1
+  }
+}'`
+* `curl -XPOST 'localhost:9200/_bulk?refresh=wait_for' -H 'Content-Type: application/json' --data-binary '@elastic_bulk_load.json'`
+* `curl -XPUT 'localhost:9200/*/_settings' -H 'Content-Type: application/json' -d '{
+  "index": {
+    "max_result_window": 50000
+  }
+}'`
  
 ## Development
 After cloning the repository, run `npm install` to install dependencies. Copy test.env to env.env and set the environment variables (see below) to you need/liking. The application is started with `npm run dev`, which include [nodemon](https://www.npmjs.com/package/nodemon) in order to restart the application, when the code is changed.
