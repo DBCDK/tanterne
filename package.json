@@ -68,7 +68,7 @@
     "react-simpletabs": "^0.7.0",
     "request": "^2.88.0",
     "stdio": "^0.2.7",
-    "superagent": "^4.1.0"
+    "superagent": "^5.0.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
