@@ -14,6 +14,21 @@ const router = new Router();
 // Routes
 router.get('/', ctx => {
   const proClass = ctx.pro ? 'main pro' : 'main';
+  const matomoScript = `<!--Matomo -->
+<script type="text/javascript">
+  var _paq = window._paq || [];
+  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://stats.dbc.dk/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '${ctx.pro ? '28' : '27'}']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+  </script>
+<!-- End Matomo -->`;
 
   const newrelicHeader = CONFIG.app.env === 'production' ? newrelic.getBrowserTimingHeader() : '';
 
@@ -33,6 +48,7 @@ router.get('/', ctx => {
           <script>window.TEST = ${ctx.test}</script>
           <script src="/js/main.js"></script>
         </div>
+        ${ctx.test ? '' : matomoScript}
       </body>
     </html>
   `;
