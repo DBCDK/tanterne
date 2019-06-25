@@ -210,7 +210,7 @@ class HierarchyContainerComponent extends React.Component {
       return parent;
     }
 
-    if (this.state.parentIndexes.hasOwnProperty(child)) {
+    if (this.state.parentIndexes.hasOwnProperty(child)) { // eslint-disable-line no-prototype-builtins
       parent = this.state.parentIndexes[child];
     }
     else {
@@ -218,7 +218,7 @@ class HierarchyContainerComponent extends React.Component {
         .list(child)
         .then((result) => {
           const parentIndexes = Object.assign(this.state.parentIndexes, {});
-          if (result[child].hasOwnProperty('parentIndex')) {
+          if (result[child].hasOwnProperty('parentIndex')) { // eslint-disable-line no-prototype-builtins
             parentIndexes[child] = result[child].parentIndex;
           }
           else {

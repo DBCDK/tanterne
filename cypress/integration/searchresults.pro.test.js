@@ -1,4 +1,6 @@
-/// <reference types="Cypress" />
+// <reference types="Cypress" />
+/* global cy, Cypress */
+
 const proBaseUrl = Cypress.env('APP_HOST') + ':' + Cypress.env('APP_PRO_PORT');
 context('Testing the searchresultspage on pro version', () => {
   beforeEach(() => {

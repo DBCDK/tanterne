@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "dev": "npm run build:dev & . ./env.env && npm run serve",
-    "lint": "eslint ./src ./integration --cache",
+    "lint": "eslint ./src ./cypress/integration --cache",
     "serve": "nodemon --exec node --no-stdin src/main.js",
     "build": "webpack --define process.env.NODE_ENV='\"production\"' --progress --colors -p",
     "build:dev": "webpack --progress --colors --watch -d",
@@ -39,6 +39,9 @@
     "ie": "11"
   },
   "homepage": "https://github.com/DBCDK/tanterne#readme",
+  "browserslist": [
+    "last 2 versions"
+  ],
   "dependencies": {
     "@babel/core": "^7.4.5",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
@@ -60,36 +63,36 @@
     "koa-convert": "^1.2.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "newrelic": "^5.9.1",
+    "newrelic": "^5.10.0",
     "preact": "8.4.2",
-    "preact-compat": "3.18.5",
+    "preact-compat": "3.19.0",
     "preact-enroute": "1.2.3",
     "prop-types": "^15.7.2",
     "react-simpletabs": "^0.7.0",
     "request": "^2.88.0",
     "stdio": "^0.2.7",
-    "superagent": "^5.0.6"
+    "superagent": "^5.1.0"
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "chai": "^4.2.0",
-    "css-loader": "^2.1.1",
+    "css-loader": "^3.0.0",
     "cssnano": "^4.1.10",
     "cypress": "^3.3.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-react": "^7.13.0",
+    "eslint": "^6.0.1",
+    "eslint-plugin-react": "^7.14.2",
     "hard-source-webpack-plugin": "^0.13.1",
-    "mini-css-extract-plugin": "^0.6.0",
+    "mini-css-extract-plugin": "^0.7.0",
     "mocha": "^6.1.4",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.1",
-    "postcss-inline-svg": "^3.0.0",
+    "postcss-inline-svg": "^4.0.0",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^7.0.0",
     "sinon": "^7.3.2",
     "style-loader": "^0.23.1",
     "wait-on": "^3.2.0",
-    "webpack": "^4.33.0",
-    "webpack-cli": "^3.3.3"
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.5"
   }
 }

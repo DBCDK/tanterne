@@ -1,4 +1,5 @@
-/// <reference types="Cypress" />
+// <reference types="Cypress" />
+/* global cy, Cypress */
 
 const baseUrl = Cypress.env('APP_HOST') + ':' + Cypress.env('APP_PORT');
 const searchValue = 'geografi';
