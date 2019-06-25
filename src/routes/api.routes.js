@@ -36,7 +36,7 @@ async function suggestHandler(ctx) {
   };
 
   ctx.set('Content-Type', 'application/json');
-  ctx.body = JSON.stringify(response);
+  ctx.body = JSON.stringify(response); // eslint-disable-line require-atomic-updates
 }
 
 async function hierarchyHandler(ctx) {
@@ -49,7 +49,7 @@ async function hierarchyHandler(ctx) {
   };
 
   ctx.set('Content-Type', 'application/json');
-  ctx.body = JSON.stringify(response);
+  ctx.body = JSON.stringify(response); // eslint-disable-line require-atomic-updates
 }
 
 async function searchHandler(ctx) {
@@ -125,7 +125,7 @@ async function searchHandler(ctx) {
       });
     }
 
-    ctx.body = JSON.stringify(response);
+    ctx.body = JSON.stringify(response); // eslint-disable-line require-atomic-updates
   }
 }
 
@@ -148,7 +148,7 @@ async function listHandler(ctx) {
   if (CONFIG.app.env === 'production') {
     ctx.set('Max-age', '864000'); // Allow the browser to cache the response for 10 days
   }
-  ctx.body = JSON.stringify(response);
+  ctx.body = JSON.stringify(response); // eslint-disable-line require-atomic-updates
 }
 
 // Connect endpoints to the functions.
