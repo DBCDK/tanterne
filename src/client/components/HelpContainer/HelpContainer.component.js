@@ -42,7 +42,7 @@ export class HelpContainerComponent extends Component {
           Der vil i et kontrolleret system dog altid være tale om en vis tilbageskuen i revisionsarbejdet.
         </div>
         <div className="sub-section-head">
-          2. Specificitet
+          2. Specificitet.
         </div>
         <div className="section">
           Generelt niveau:<br/>
