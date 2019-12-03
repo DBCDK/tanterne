@@ -69,156 +69,6 @@ export class HelpContainerComponent extends Component {
       </div>);
   }
 
-  greenland() {
-    return (
-      <div className='help-chapter--container'>
-        <a name="kommisorium"/>
-        <div className="section-head">
-          Grønlandske stednavne
-        </div>
-        <div className="section">
-          <i>Stednavne autoriseret af Nunat Aqquinik Aalajangiisartut (Grønlands Stednavnenævn)</i>
-        </div>
-        <div className="section col-3-newspaper">
-          1. Qaanaap kommunia<br/>
-          Qaanaaq<br/>
-          Siorapaluk<br/>
-          Qeqertarsuaq<br/>
-          Qeqertat<br/>
-          Moriusaq<br/>
-          Pituffik<br/>
-          Savissivik<br/>
-          <br/>
-          2. Kommuneqarfik Upernavik<br/>
-          Upernavik<br/>
-          Kullorsuaq<br/>
-          Nuussuaq<br/>
-          Nutaarmiut<br/>
-          Tasiusaq<br/>
-          Innaarsuit<br/>
-          Naajaat<br/>
-          Aappilattoq<br/>
-          Kangersuatsiaq<br/>
-          UpernavikKujalleq<br/>
-          <br/>
-          3. Uummannap kommunia<br/>
-          Uummannaq<br/>
-          Nuugaatsiaq<br/>
-          Illorsuit<br/>
-          Ukkusissat<br/>
-          Saattut<br/>
-          Ikerasak<br/>
-          Qaarsut<br/>
-          Niaqornat<br/>
-          <br/>
-          4. Ilulissat kommuniat<br/>
-          Ilulissat<br/>
-          Saqqaq<br/>
-          Qeqertaq<br/>
-          Oqaatsut<br/>
-          Ilimanaq<br/>
-          <br/>
-          5. Qasigiannguit kommuniat<br/>
-          Qasigiannguit<br/>
-          Ikamiut<br/>
-          <br/>
-          6. Qeqertarsuup kommunia<br/>
-          Qeqertarsuaq<br/>
-          Kangerluk<br/>
-          <br/>
-          7. Kommuneqarfik Aasiaat<br/>
-          Aasiaat<br/>
-          Akunnaaq<br/>
-          Kitsissuarsuit<br/>
-          <br/>
-          8. Kommuneqarfik Kangaatsiaq<br/>
-          Kangaatsiaq<br/>
-          Niaqornaarsuk<br/>
-          Ikerasaarsuk<br/>
-          Iginniarfik<br/>
-          Attu<br/>
-          <br/>
-          9. Sisimiut kommuniat<br/>
-          Sisimiut<br/>
-          Sarfannguit<br/>
-          Itilleq<br/>
-          Kangerlussuaq<br/>
-          <br/>
-          10. Maniitsup kommunia<br/>
-          Maniitsoq<br/>
-          Kangaamiut<br/>
-          Napasoq<br/>
-          Atammik<br/>
-          <br/>
-          11. Nuup kommunia<br/>
-          Nuuk<br/>
-          Kapisillit<br/>
-          Qeqertarsuatsiaat<br/>
-          Nordafar<br/>
-          Nuussuaq<br/>
-          <br/>
-          12. Paamiut kommuniat<br/>
-          Paamiut<br/>
-          Arsuk<br/>
-          <br/>
-          13. Ivittuut kommuniat<br/>
-          Ivittuut<br/>
-          Kangilinnguit<br/>
-          <br/>
-          14. Qaqortup kommunia<br/>
-          Qaqortoq<br/>
-          Qassimiut<br/>
-          Eqalugaarsuit<br/>
-          Saarloq<br/>
-          Upernaviarsuk<br/>
-          <br/>
-          15. Narsap kommunia<br/>
-          Narsaq<br/>
-          Qassiarsuk<br/>
-          Igaliku<br/>
-          Narsarsuaq<br/>
-          <br/>
-          16. Nanortallip kommunia<br/>
-          Nanortalik<br/>
-          Ammassivik<br/>
-          Alluitsoq<br/>
-          AlluitsupPaa<br/>
-          Tasiusaq<br/>
-          NarsaqKujalleq<br/>
-          Aappilattoq<br/>
-          Qallimiut<br/>
-          <br/>
-          17. Ammassallip kommunia<br/>
-          Tasiilaq<br/>
-          Isortoq<br/>
-          Ikkatteq<br/>
-          Tiniteqilaaq<br/>
-          Qernertuarsuit<br/>
-          Kuummiut<br/>
-          Sermiligaaq<br/>
-          Kulusuk<br/>
-          KapDan<br/>
-          <br/>
-          18. Illoqqortoormiut kommuniat<br/>
-          Illoqqortoormiut<br/>
-          Uunarteq<br/>
-          Itterajivit<br/>
-          NerleritInaat<br/>
-          <br/>
-          19. Stationit:<br/>
-            Mestersvig<br/>
-          Danmarkshavn<br/>
-          Station Nord<br/>
-          Brønlundsfjord<br/>
-          Angisoq<br/>
-          Prins Christians Sund<br/>
-          Daneborg<br/>
-          <br/>
-          Oversigten er først udfærdiget den 11.11.1991.  I takt med ændringer i Grønlands kommunaleinddeling og kommunernes ændringer af egne betegnelser
-          er rettelserne opdateret, sidst pr. 1. juni, 2000.<br/>
-        </div>
-      </div>);
-  }
   kommisorium() {
     return (
       <div className='help-chapter--container'>
@@ -343,25 +193,25 @@ export class HelpContainerComponent extends Component {
           dels markerer antologiform.
         </div>
         <div className="section">
-          1. <i>ciffer</i> tildeles efter nedenst&aring;ende tabel:
+          <i>1. ciffer tildeles f&aelig;lles for sk&oslash;nlitteratur for voksne og for b&oslash;rn efter nedenst&aring;ende tabel:</i>
           <div><div className="bullet">0</div>Skrifter p&aring; originalsproget</div>
           <div><div className="bullet">1</div>Skrifter oversat til fremmesprog</div>
           <div><div className="bullet">2</div>Skrifter oversat til dansk</div>
         </div>
         <div className="section">
-          2.-3. <i>ciffer</i> tildeles efter nedenst&aring;ende tabel:
+          <i>2. ciffer tildeles <b>sk&oslash;nlitteratur for voksne</b> efter nedenst&aring;ende tabel:</i>
           <div>
             <div className="bullet">0</div>Digte. Antologier
             <div className="note">
-             (0 udelades ikke, selv om det er sidste ciffer).
-             Vise- og sangb&oslash;ger s&aelig;ttes i 78.69 eller 79.7.
+               (0 udelades ikke, selv om det er sidste ciffer).
+               Vise- og sangb&oslash;ger s&aelig;ttes i 78.69 eller 79.7.
             </div>
           </div>
           <div>
             <div className="bullet">1</div>Digte. V&aelig;rker af enkelte forfattere
             <div className="note">
-              Till&aelig;gstalene 0 og 1 omfatter ikke epsisk og dramatisk litteratur p&aring; vers.
-              Kortere fort&aelig;llende digte placeres dog i formgrupperne 0 og 1.
+              Till&aelig;gstallene 0 og 1 omfatter ikke epsisk og dramatisk litteratur p&aring; vers.
+              Kortere fort&aelig;llende digte f&aring;r dog till&aelig;gstallene 0 og 1.
             </div>
           </div>
           <div><div className="bullet">2</div>Skuespil. Antologier</div>
@@ -369,10 +219,7 @@ export class HelpContainerComponent extends Component {
           <div>
             <div className="bullet">4</div>Romaner og noveller. Antologier
             <div className="note">
-              Her anbringes ogs&aring; antologier, sammensat af forskellige digtarter<br />
-              I grupperne 86 og 88 placerer Dansk bogfortegnelse l&aelig;seb&oslash;ger og prosaantologier til
-              skolebrug i en undergruppe med till&aelig;gstallet -046 eller -246.
-              Andre skoleudgaver af sk&oslash;nlitteratur placeres som tilsvarende alm. udgaver.
+              Antologier, sammensat af forskellige digtarter, f&aring;r till&aelig;gstallet 4
             </div>
           </div>
           <div><div className="bullet">5</div>Romaner og noveller f&oslash;r 1901. V&aelig;rker af enkelte forfattere</div>
@@ -380,11 +227,14 @@ export class HelpContainerComponent extends Component {
           <div>
             <div className="bullet">7</div>Humor, tegneserier etc. Antologier
             <div className="note">
-              Her anbringes samlinger af vittigheder og humoristiske sm&aring;stykker.
-              Vittighedstegninger s&aelig;ttes i 72 eller 74.91 med undergrupper.
+              Samlinger af vittigheder og humoristiske sm&aring;stykker f&aring;r till&aelig;gstal 7.
+              Vittighedstegninger s&aelig;ttes i 72 eller 74.91 med undergrupper - uden till&aelig;gstal.
             </div>
           </div>
           <div><div className="bullet">8</div>Humor, tegneserier etc. af enkelte forfattere</div>
+        </div>
+        <div className="section">
+          <i>2. og 3. ciffer tildeles <b>sk&oslash;nlitteratur for b&oslash;rn</b> efter nedenst&aring;ende tabel:</i>
           <div><div className="bullet">9</div>B&oslash;rne- og ungdomsb&oslash;ger</div>
           <div><div className="bullet">90</div>Digte for b&oslash;rn. Antologier</div>
           <div><div className="bullet">91</div>Digte for b&oslash;rn. Enkelte forfattere</div>
@@ -393,69 +243,17 @@ export class HelpContainerComponent extends Component {
           <div>
             <div className="bullet">94</div>Fort&aelig;llinger for b&oslash;rn. Antologier
             <div className="note">
-              Her anbringes ogs&aring; antologier sammensat af forskellige digtarter.
+              Antologier, sammensat af forskellige digtarter, f&aring;r till&aelig;gstallene 94.
             </div>
           </div>
-          <div><div className="bullet">96</div>Fort&aelig;llinger for b&oslash;rn. Enkelte forfattere</div>
+          <div><div className="bullet">96</div>Fort&aelig;llinger for b&oslash;rn. Enkelte forfattere
+            <div className="note">
+              Litteraturen for b&oslash;rn f&aring;r ikke et till&aelig;gstal, som vedr&oslash;rer
+              v&aelig;rkets originaludgivelses&aring;r
+            </div>
+          </div>
           <div><div className="bullet">97</div>Humor, tegneserier etc. for b&oslash;rn. Antologier</div>
           <div><div className="bullet">98</div>Humor, tegneserier etc. for b&oslash;rn. Enkelte forfattere</div>
-        </div>
-        <div className="section">
-          Systemet med till&aelig;gstal, anbragt efter en streg,
-          anvendes ogs&aring; i visse faglitter&aelig;re grupper for at markere en for Dansk bogfortegnelse speciel supplerende underdeling.
-        </div>
-        <div className="section">
-          <i>Faglitteratur &mdash; Till&aelig;gstal med fast betydning</i>
-          <div>
-            <div className="bullet">-6</div>Skole- og l&aelig;reb&oslash;ger (inkl. opgavesamlinger)
-            <div className="note">
-              Bruges i 51.3, 86-04 og 88-24.
-            </div>
-          </div>
-          <div>
-            <div className="bullet">-61</div>Almindelige l&aelig;reb&oslash;ger, l&aelig;seb&oslash;ger
-            <div className="note">
-              Bruges i 89.2, 89.3 og 89.4.
-            </div>
-          </div>
-          <div>
-            <div className="bullet">-62</div>&Oslash;velser og opgaver
-            <div className="note">
-              Bruges i 89.2, 89.3 og 89.4.
-            </div>
-          </div>
-          <div><div className="bullet">-65</div>L&aelig;reb&oslash;ger (inkl. opgavesamlinger) for folkeskolen</div>
-          <div>
-            <div className="bullet">-66</div>Andre skole- og l&aelig;reb&oslash;ger (inkl. opgavesamlinger)
-            <div className="note">
-              -65 og -66 bruger i 40, 51, 51.1, 51.5, 51.8, 53, 54, 56 og 90,
-            </div>
-          </div>
-          <div>
-            <div className="bullet">-8</div>Udgaver for b&oslash;rn
-            <div className="note">
-              Bruges i 39.12 og 88.99
-            </div>
-          </div>
-          <div>
-            <div className="bullet">-99</div>Enkeltbiografier
-            <div className="note">
-              Bruges i alle grupper undtagen de alfabetisk (herunder de geografisk-topografisk) underdelte.
-              Underdeles alfabetisk efter den biograferede persones navn.
-            </div>
-          </div>
-        </div>
-        <div className="section">
-          <i>Faglitteratur &mdash; Till&aelig;gstal med varierende betydning</i>
-          <div><div className="bullet">46.4-0</div>Sj&aelig;lland og M&oslash;n</div>
-          <div><div className="bullet">46.4-1</div>Sams&oslash;</div>
-          <div><div className="bullet">46.4-2</div>Lolland-Falster</div>
-          <div><div className="bullet">46.4-3</div>Bronholm</div>
-          <div><div className="bullet">46.4-4</div>Fyn og de fynske &oslash;er</div>
-          <div><div className="bullet">46.4-5</div>Jylland</div>
-        </div>
-        <div className="section">
-          <div><div className="bullet">72-5</div>Humoristiske og satiriske tegninger af enkelte kunstnere.</div>
         </div>
       </div>);
   }
@@ -888,7 +686,6 @@ export class HelpContainerComponent extends Component {
           <Tabs.Panel title='Kommisorium'>{this.kommisorium()}</Tabs.Panel>
           <Tabs.Panel title='Principper'>{this.princip()}</Tabs.Panel>
           <Tabs.Panel title='Tillægstal'>{this.supplementNumbers()}</Tabs.Panel>
-          <Tabs.Panel title='Grønlandske stednavne'>{this.greenland()}</Tabs.Panel>
         </Tabs>
       </div>
     );
