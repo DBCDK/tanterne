@@ -198,7 +198,7 @@ export class HelpContainerComponent extends Component {
           <div><div className="bullet">1</div>Skrifter oversat til fremmesprog</div>
           <div><div className="bullet">2</div>Skrifter oversat til dansk</div>
         </div>
-      <div className="section">
+        <div className="section">
           <i>2. ciffer tildeles <b>sk&oslash;nlitteratur for voksne</b> efter nedenst&aring;ende tabel:</i>
           <div>
             <div className="bullet">0</div>Digte. Antologier
@@ -208,7 +208,7 @@ export class HelpContainerComponent extends Component {
             </div>
           </div>
           <div>
-          <div className="bullet">1</div>Digte. V&aelig;rker af enkelte forfattere
+            <div className="bullet">1</div>Digte. V&aelig;rker af enkelte forfattere
             <div className="note">
               Till&aelig;gstallene 0 og 1 omfatter ikke epsisk og dramatisk litteratur p&aring; vers.
               Kortere fort&aelig;llende digte f&aring;r dog till&aelig;gstallene 0 og 1.
@@ -217,7 +217,7 @@ export class HelpContainerComponent extends Component {
           <div><div className="bullet">2</div>Skuespil. Antologier</div>
           <div><div className="bullet">3</div>Skuespil. V&aelig;rker af enkelte forfattere</div>
           <div>
-          <div className="bullet">4</div>Romaner og noveller. Antologier
+            <div className="bullet">4</div>Romaner og noveller. Antologier
             <div className="note">
               Antologier, sammensat af forskellige digtarter, f&aring;r till&aelig;gstallet 4
             </div>
@@ -225,16 +225,16 @@ export class HelpContainerComponent extends Component {
           <div><div className="bullet">5</div>Romaner og noveller f&oslash;r 1901. V&aelig;rker af enkelte forfattere</div>
           <div><div className="bullet">6</div>Romaner og noveller 1901-. V&aelig;rker af enkelte forfattere</div>
           <div>
-          <div className="bullet">7</div>Humor, tegneserier etc. Antologier
+            <div className="bullet">7</div>Humor, tegneserier etc. Antologier
             <div className="note">
               Samlinger af vittigheder og humoristiske sm&aring;stykker f&aring;r till&aelig;gstal 7.
               Vittighedstegninger s&aelig;ttes i 72 eller 74.91 med undergrupper - uden till&aelig;gstal.
             </div>
           </div>
           <div><div className="bullet">8</div>Humor, tegneserier etc. af enkelte forfattere</div>
-    </div>
-    <div className="section">
-      <i>2. og 3. ciffer tildeles <b>sk&oslash;nlitteratur for b&oslash;rn</b> efter nedenst&aring;ende tabel:</i>
+        </div>
+        <div className="section">
+          <i>2. og 3. ciffer tildeles <b>sk&oslash;nlitteratur for b&oslash;rn</b> efter nedenst&aring;ende tabel:</i>
           <div><div className="bullet">9</div>B&oslash;rne- og ungdomsb&oslash;ger</div>
           <div><div className="bullet">90</div>Digte for b&oslash;rn. Antologier</div>
           <div><div className="bullet">91</div>Digte for b&oslash;rn. Enkelte forfattere</div>
