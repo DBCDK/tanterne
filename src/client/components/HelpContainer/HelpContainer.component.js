@@ -193,13 +193,13 @@ export class HelpContainerComponent extends Component {
           dels markerer antologiform.
         </div>
         <div className="section">
-          1. <i>ciffer tildeles f&aelig;lles for sk&oslash;nlitteratur for voksne og for b&oslash;rn efter nedenst&aring;ende tabel:</i>
+          <i>1. ciffer tildeles f&aelig;lles for sk&oslash;nlitteratur for voksne og for b&oslash;rn efter nedenst&aring;ende tabel:</i>
           <div><div className="bullet">0</div>Skrifter p&aring; originalsproget</div>
           <div><div className="bullet">1</div>Skrifter oversat til fremmesprog</div>
           <div><div className="bullet">2</div>Skrifter oversat til dansk</div>
         </div>
       <div className="section">
-          2. <i>ciffer tildeles <b>sk&oslash;nlitteratur for voksne</b> efter nedenst&aring;ende tabel:</i>
+          <i>2. ciffer tildeles <b>sk&oslash;nlitteratur for voksne</b> efter nedenst&aring;ende tabel:</i>
           <div>
             <div className="bullet">0</div>Digte. Antologier
             <div className="note">
@@ -234,7 +234,7 @@ export class HelpContainerComponent extends Component {
           <div><div className="bullet">8</div>Humor, tegneserier etc. af enkelte forfattere</div>
     </div>
     <div className="section">
-      2. og 3. <i>ciffer tildeles <b>sk&oslash;nlitteratur for b&oslash;rn</b> efter nedenst&aring;ende tabel:</i>
+      <i>2. og 3. ciffer tildeles <b>sk&oslash;nlitteratur for b&oslash;rn</b> efter nedenst&aring;ende tabel:</i>
           <div><div className="bullet">9</div>B&oslash;rne- og ungdomsb&oslash;ger</div>
           <div><div className="bullet">90</div>Digte for b&oslash;rn. Antologier</div>
           <div><div className="bullet">91</div>Digte for b&oslash;rn. Enkelte forfattere</div>
