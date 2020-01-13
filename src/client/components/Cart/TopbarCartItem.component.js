@@ -5,7 +5,7 @@ export function TopbarCartItem({cart}) {
   const pointer = cartLength ? 'top-bar--cart--pointer' : '';
   return (
     <span className="top-bar--cart" onClick={cart.toggleCart}>
-      <img src="/cart.svg"/>
+      <img alt="Tøm kurv" src="/cart.svg"/>
       <span className={`top-bar--cart--count ${pointer}`} onClick={cart.clearCart}>{cartLength}</span>
     </span>
   );
