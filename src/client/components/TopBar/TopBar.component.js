@@ -27,14 +27,14 @@ export class TopBarComponent extends Component {
       <div className="top-bar--container">
         {Object.keys(this.props.cart.contents).length > 0 && <a accessKey="T" onClick={this.clearCart.bind(this)}/>}
         <a accessKey="H" className="unlink" href="/">
-          <img className="top-bar--logo" src="/DK5logo_blue.png"/>
+          <img alt="" className="top-bar--logo" src="/DK5logo_blue.png"/>
           <span className="top-bar--caption">
             {topBarCaption}
           </span>
         </a>
         {cart}
         <Link className="top-bar--link" to="#!/help">
-          <img className="top-bar--question" src="/question.png"/>
+          <img alt="Hjælp" className="top-bar--question" src="/question.png"/>
         </Link>
       </div>
     );

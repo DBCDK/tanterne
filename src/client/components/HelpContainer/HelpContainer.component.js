@@ -127,13 +127,13 @@ export class HelpContainerComponent extends Component {
           Forslagene er de mest populære søgninger og står ikke nødvendigvis i alfabetisk orden.
         </div>
         <div className="section">
-          <img src="/tips_1.png"/>
+          <img alt="" src="/tips_1.png"/>
         </div>
         <div className="section">
           Når du vælger et af ordene, får du vist det emnenummer, som emnet hører til og som svarer til placeringen på hylden.
         </div>
         <div className="section">
-          <img src="/tips_2.png"/>
+          <img alt="" src="/tips_2.png"/>
         </div>
         <div className="section">
           Hvis du i eksemplet vælger Italien, får du vist emner, der handler om Italien.
@@ -143,7 +143,7 @@ export class HelpContainerComponent extends Component {
           Du kan også søge videre ved at klikke på 71.775. Så får du vist hvor i systemet 71.775 findes og de emner, der ligger tæt på italiensk arkitekturhistorie:
         </div>
         <div className="section">
-          <img src="/tips_3.png"/>
+          <img alt="" src="/tips_3.png"/>
         </div>
         <div className="sub-section-head">
           Søg bredt

@@ -4,6 +4,9 @@
   "description": "DK5 Digital",
   "main": "src/main.js",
   "scripts": {
+    "pa11y": "pa11y-ci -c pa11y/config.json",
+    "test:pa11y": ". ./env.env && npm run start & npm run wait && npm run pa11y",
+    "test:pa11y:local": "npm run start:local & npm run wait && npm run pa11y",
     "dev": "npm run build:dev & . ./env.env && npm run serve",
     "lint": "eslint ./src ./cypress/integration --cache",
     "serve": "nodemon --exec node --no-stdin src/main.js",
@@ -86,6 +89,7 @@
     "mocha": "^6.2.2",
     "node-sass": "^4.13.0",
     "nodemon": "^2.0.1",
+    "pa11y-ci": "^2.3.0",
     "postcss-inline-svg": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "sass-loader": "^8.0.0",

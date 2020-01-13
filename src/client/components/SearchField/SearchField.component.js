@@ -254,6 +254,7 @@ export class SearchFieldComponent extends Component {
               className="search-field"
               placeholder="Skriv emne"
               value={this.state.query}
+              title="Indtast søgeord"
               accessKey="S"
             />
 
@@ -263,9 +264,11 @@ export class SearchFieldComponent extends Component {
 
             <Link to={this.state.queryUrl}>
               <div className="search-field--button">
-                <div className="search-field--button--image">
-                  <img src="/icon-search.svg" />
-                </div>
+                <button className="search-field--button--button">
+                  <div className="search-field--button--image">
+                    <img alt="Søg" src="/icon-search.svg" />
+                  </div>
+                </button>
                 <div className="search-field--button--text">SØG</div>
               </div>
             </Link>

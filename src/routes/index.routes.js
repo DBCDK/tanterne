@@ -34,7 +34,7 @@ router.get('/', ctx => {
 
   ctx.body = `
     <!DOCTYPE html>
-    <html>
+    <html lang="da">
       <head>
         ${newrelicHeader}
         <title>DK5</title>
