@@ -95,7 +95,7 @@
     "sass-loader": "^8.0.0",
     "sinon": "^7.5.0",
     "style-loader": "^1.0.1",
-    "wait-on": "^3.3.0",
+    "wait-on": "^4.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
   }
