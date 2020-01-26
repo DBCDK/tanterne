@@ -86,7 +86,7 @@
     "eslint-plugin-react": "^7.17.0",
     "hard-source-webpack-plugin": "^0.13.1",
     "mini-css-extract-plugin": "^0.8.0",
-    "mocha": "^6.2.2",
+    "mocha": "^7.0.1",
     "node-sass": "^4.13.0",
     "nodemon": "^2.0.1",
     "pa11y-ci": "^2.3.0",
