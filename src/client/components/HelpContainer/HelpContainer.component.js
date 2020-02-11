@@ -12,9 +12,9 @@ export class HelpContainerComponent extends Component {
     return (
       <div className='help-chapter--container'>
         <a name="princip"/>
-        <div className="section-head">
+        <h1 className="section-head">
           Principper for DK5-udvikling
-        </div>
+        </h1>
         <div className="section">
           Vedtaget i Bibliografisk Råd, februar 2007
         </div>
@@ -25,9 +25,9 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           Der gælder følgende generelle principper for udviklingen af DK5:
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           1. Systemets orden
-        </div>
+        </h2>
         <div className="section">
           DK5 er et aspektorienteret klassifikationssystem. De 100 hovedgrupper er underdelt efter decimalprincippet.
           Den primære underdeling i decimalklassedelingen sker efter discipliner og fag.
@@ -41,9 +41,9 @@ export class HelpContainerComponent extends Component {
           overensstemmelse med den faglige/samfundsmæssige udvikling.<br/>
           Der vil i et kontrolleret system dog altid være tale om en vis tilbageskuen i revisionsarbejdet.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           2. Specificitet.
-        </div>
+        </h2>
         <div className="section">
           Generelt niveau:<br/>
           DK5’s specificitet udvikles, så den modsvarer behovet for findeling ved nationalbibliografisk registrering af fysiske materialer, som opstilles efter systemet.
@@ -60,9 +60,9 @@ export class HelpContainerComponent extends Component {
           For de vejledende underdelinger gælder også, at de først og fremmest bør udarbejdes, hvis der af hensyn til materialernes opstilling er behov
          for yderligere findelinger af systemet
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           3. Terminologi
-        </div>
+        </h2>
         <div className="section">
           Det tilstræbes, at terminologien i systemets grupper er præcis og i overensstemmelse med nutidig sprogbrug.
         </div>
@@ -73,12 +73,12 @@ export class HelpContainerComponent extends Component {
     return (
       <div className='help-chapter--container'>
         <a name="kommisorium"/>
-        <div className="section-head">
+        <h1 className="section-head">
           Kommisorium
-        </div>
-        <div className="sub-section-head">
+        </h1>
+        <h2 className="sub-section-head">
           Opgaver og formål
-        </div>
+        </h2>
         <div className="section">
           DK5-forum forestår udviklingen af DK5 i løbende og åben dialog med biblioteksansatte og brugere i hele landet.
           Bibliotekernes bevidsthed om muligheden for at have indflydelse på DK5 skal øges og deres lyst til at give input skal stimuleres.
@@ -92,16 +92,16 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           DK5-forums årlige beretning og arbejdsplan forelægges for Bibliografisk Råd, der har det overordnede ansvar for DK5&apos;s udvikling.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Sammensætning
-        </div>
+        </h2>
         <div className="section">
           DK5-forum består af i alt 4 medarbejdere fra de klassificerende team, hvoraf 1 er sekretær for gruppen.
           DK5-forum kan trække på DBC’s egne fagreferenter og eksterne specialister og interessenter ved udvikling inden for specifikke DK5-grupper.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Arbejdsform
-        </div>
+        </h2>
         <div className="section">
           DK5-forum afholder møder efter behov, ca. 4-6 møder årligt.
           DK5-forum kan afholde møder/workshops på et bibliotek, hvor der er adgang til at se litteraturen på hylderne, i samarbejde
@@ -113,9 +113,9 @@ export class HelpContainerComponent extends Component {
     return (
       <div className='help-chapter--container'>
         <a name="tips"/>
-        <div className="section-head">
+        <h1 className="section-head">
           Tips til søgning
-        </div>
+        </h1>
         <div className="section">
           Her kan du finde emners placering på hylderne på biblioteket.
           Når du søger, får du vist søgeordets placering i det emnesystem, der hedder DK5 – et nummersystem, man bruger til opstilling på bibliotekerne.
@@ -145,9 +145,9 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           <img alt="" src="/tips_3.png"/>
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Søg bredt
-        </div>
+        </h2>
         <div className="section">
           Hvis du skriver flere ord, der ikke findes i sammenhæng, kommer der forslag på det mest oplagte alternativ.
           Du kan dog også vælge at fortsætte søgningen ved at søge på det du skrev først.
@@ -161,9 +161,9 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           Prøv i stedet at søge bredere. Skriv japan i søgefeltet og se, om du kan bruge et af de forslag du får vist.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Ingen sammenhæng til bibliotekets system
-        </div>
+        </h2>
         <div className="section">
           DK5 er ikke integreret til dit biblioteks system.
           Så du kan altså ikke via DK5 se, hvilke materialer der er på hylden i dit bibliotek.
@@ -176,9 +176,9 @@ export class HelpContainerComponent extends Component {
     return (
       <div className='help-chapter--container'>
         <a name="supplNumbers"/>
-        <div className="section-head">
+        <h1 className="section-head">
           Dansk Bogfortegnelses till&aelig;gstal
-        </div>
+        </h1>
         <div className="section">
           Dansk bogfortegnelse anvender ved underdeling af sk&oslash;nlitteraturen et system af till&aelig;gstal,
           som adskilles fra det egentlige klassem&aelig;rke ved en kort streg.
@@ -261,12 +261,12 @@ export class HelpContainerComponent extends Component {
   generel() {
     return (
       <div className="help-chapter--container">
-        <div className="section-head">
+        <h1 className="section-head">
           DK5
-        </div>
-        <div className="sub-section-head">
+        </h1>
+        <h2 className="sub-section-head">
           Historie
-        </div>
+        </h2>
         <div className="section">
           Den danske bibliotekspioner <a href="https://da.wikipedia.org/wiki/Andreas_Schack_Steenberg">Andreas Schack Steenberg</a> var initiativtager
           til den første udgave af Dansk Decimal-Klassedeling.
@@ -276,16 +276,16 @@ export class HelpContainerComponent extends Component {
           Femte udgave, DK5, blev udarbejdet i årene 1959-1969 af en klassifikationskomité med fagleder ved Danmarks Biblioteksskole J. B. Friis-Hansen
           som sekretær og fagligt hovedansvarlig. DK5 udkom første gang i 1970, men er gennem alle årene løbende blevet rettet og ajourført af DBC.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           DK5-udvikling
-        </div>
+        </h2>
         <div className="section">
           Bibliografisk Råd nedsat af Slots- og Kulturstyrelsen har ansvaret for den overordnede prioritering af DK5&apos;s udvikling.
           Den løbende revision af systemet varetages af DBC.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Systemets opbygning og notation
-        </div>
+        </h2>
         <div className="section">
           Systemet består af 100 hovedgrupper, som grupperer sig på følgende måde:
         </div>
@@ -308,9 +308,9 @@ export class HelpContainerComponent extends Component {
           Den primære underdeling i decimalklassedelingen sker efter discipliner og fag.
           Strukturen er i princippet hierarkisk i såvel notation som i grupperelationer, men der findes dog undtagelser.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Almindelige regler
-        </div>
+        </h2>
         <div className="section">
           <i>Hovedregel – speciel placering</i><br />
           Som hovedregel gælder, at værker placeres så specielt som muligt.
@@ -391,9 +391,9 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           Handler et værk om flere end tre religioner, sættes i overgruppen 29 Religionsvidenskab, mens værker om flere end 3 personer sættes i 99.1-99.3.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Form- og metagrupper
-        </div>
+        </h2>
         <div className="section">
           Systemet er udbygget med et sæt af form- og metagrupper.
         </div>
@@ -445,9 +445,9 @@ export class HelpContainerComponent extends Component {
           Det drejer sig især om grupperne 02 og 08. Inkonsekvenserne stammer fra tidligere udgaver og har fået lov at bestå ud fra ønsket
           om at ændre bestående grupper så lidt som muligt.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Værkgrupper
-        </div>
+        </h2>
         <div className="section">
           I DK5 har det for visse materialer været nødvendigt at fravige hovedreglen om værkers placering efter emne, og i stedet placere disse materialer efter deres form.
           Dette gælder f.eks. klassifikation af skønlitteratur, musik og spillefilm.
@@ -456,9 +456,9 @@ export class HelpContainerComponent extends Component {
           Følgende grupper er rene værkgrupper: 03, 04, 05, 20.8, 39.12-39.14, 39.23-39.25, 72, 75.74, 77.7, 77.74., 78.3-78.8, 82-88 og 89.69.
           Derudover findes grupper, der dels omfatter selve værkerne, og dels beskrivelsen af dem, f.eks. 37.134, 75.4-75.5, 77.4 med undergrupper. og 79.41.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Underdelingsprincipper
-        </div>
+        </h2>
         <div className="section">
           I visse grupper er der givet anvisning på underdeling efter følgende principper:
         </div>
@@ -540,17 +540,17 @@ export class HelpContainerComponent extends Component {
           (som bliver til 387, når 4-tallet og punktummet fjernes) – 3) Dublin, - altså 71.95387 Dublin.<br />
           For Københavns vedkommende tilføjes cifrene 63, ikke 64 København. En lokalbibliografi for København sættes således i 01.763.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Tillægstal for antologier
-        </div>
+        </h2>
         <div className="section">
           I grupperne 04.2‑04.8975 samt 82‑88 anvendes tillægstallet 1 - i visse tilfælde, hvor systemet gør det nødvendigt dog 01 - for antologier.
           For antologier af musikalier og musikoptagelser gælder særlige regler, jf. noten til gruppe 78.3-78.8.<br/>
           Ved antologi forstås i disse grupper værker, der indeholder flere bidrag af mere end et ophav, f.eks. forfatter/komponist.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Opstillings- og katalogklassemærker
-        </div>
+        </h2>
         <div className="section">
           Alle systemets grupper kan bruges som både opstillingssignatur og som katalogsignatur, undtagen katalogklassemærker.<br/>
           Katalogklassemærker er klassemærker bestående af en opstillingssignatur, et kolon og en signatur for yderligere underdeling af opstillingssignaturen.<br/>
@@ -559,18 +559,18 @@ export class HelpContainerComponent extends Component {
           Desuden er 01.2 Bibliografier over enkelte personer kun beregnet til biplacering i katalogen. Anvendelsen af katalogklassemærker og opstillingssignatur
           for musikoptagelser er beskrevet i den indrammede note til 78.3-78.8.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Valgfri undergrupper
-        </div>
+        </h2>
         <div className="section">
           Valgfri undergrupper anvendes ikke i nationalbibliografien.<br/>
           Valgfri undergrupper er indført i systemet, hvor enkelte specialbiblioteker eller grupper af institutioner har behov for en findeling,
           der går videre end DK5&apos;s generelle niveau, f.eks. 39.5 Festtraditioner.<br/>
           Valgfri undergrupper er i systemet angivet med noten: Valgfri gruppe.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Tomme grupper
-        </div>
+        </h2>
         <div className="section">
           Visse grupper er tomme i den forstand, at de kun fungerer som overskrifter, f.eks. gruppe 47 Andre europæiske lande.
           Det gælder også en række af de grupper, som underdeles efter ovenstående underdelingsprincipper, f.eks. 99.3 Faglige biografiske opslagsværker,
@@ -578,9 +578,9 @@ export class HelpContainerComponent extends Component {
           Det vil som regel af gruppebetegnelsen fremgå, om en gruppe alene fungerer som samlende overskrift for en række undergrupper, idet ordet »enkelte« da vilforekomme
           i gruppebetegnelsen, f.eks. 48.6 enkelte nord- og mellemamerikanske lande. I andre tilfælde vil det fremgå af noten til gruppen, f.eks. 37.13 Undervisningsmidler.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Historiske noter
-        </div>
+        </h2>
         <div className="section">
           Der er til visse grupper i systemet føjet noter med oplysninger om ændringer i forhold til tidligere klassifikation.
         </div>
@@ -597,9 +597,9 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           Nedlagte grupper vil tillige være markeret med rødt.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Registret til DK5
-        </div>
+        </h2>
         <div className="section">
           Man kan finde et emne i DK5 ved hjælp af DK5’s søgeboks.
         </div>
@@ -618,17 +618,17 @@ export class HelpContainerComponent extends Component {
             Kirurgisk smertebehandling, se 61.66 Kirurgi. Anæstesiologi
           </i>
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Historiske noter
-        </div>
+        </h2>
         <div className="section">
           Der kan være noter om DK5-grupper, hvor emnet eller et aspekt af emnet tidligere har skullet søges som f.eks.<br />
           <i>Mobiltelefoner, se 62.384 Telefoni – Før 2010: 62.397</i><br />
           Det betyder, at bøger om mobiltelefoner, som er udgivet frem til år 2009 findes på hylden under 62.397.
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Henvisning til hierarkisk underdelte grupper
-        </div>
+        </h2>
         <div className="section">
           Når et emne henviser til en gruppe, som er hierarkisk underdelt, betyder det, at bøger om emnet kan stå i både den gruppe,
           der henvises til og de hierarkisk underordnede grupper.<br/>
@@ -651,9 +651,9 @@ export class HelpContainerComponent extends Component {
             61.555 Apotekervæsen
           </u>
         </div>
-        <div className="sub-section-head">
+        <h2 className="sub-section-head">
           Liste over emner der henviser til en DK5-gruppe
-        </div>
+        </h2>
         <div className="section">
           Man kan se hvilke emner der enten henviser direkte til en dk5-gruppe, eller som har et aspekt, som henviser til gruppen.
           Umiddelbart vises de første 5 emner, der er henviser til gruppen, og resten kan udfoldes.<br/>
