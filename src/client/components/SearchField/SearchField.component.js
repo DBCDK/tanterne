@@ -236,7 +236,7 @@ export class SearchFieldComponent extends Component {
       >
         {!this.props.pro && (
           <div className="search-field--title">
-            <label for="search"><h2>Hvor står bøgerne om...?</h2></label>
+            <label htmlFor="search"><h2>Hvor står bøgerne om...?</h2></label>
           </div>
         )}
         <div className="search-field--suggestions">
