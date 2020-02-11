@@ -236,12 +236,13 @@ export class SearchFieldComponent extends Component {
       >
         {!this.props.pro && (
           <div className="search-field--title">
-            <h2>Hvor står bøgerne om...?</h2>
+            <label for="search"><h2>Hvor står bøgerne om...?</h2></label>
           </div>
         )}
         <div className="search-field--suggestions">
           <span className="search-field--query-area">
             <input
+              id="search"
               type="search"
               ref={input => {
                 this.searchField = input;
