@@ -144,16 +144,16 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
   const showDecommissioned = (pro || !decommissioned);
   const link_82_88 = pro && isSelected && index === '82-88' ? <Link to='/help'><span className='dk5'> Se till&aelig;gstal</span></Link> : null;
 
-  return (
+  return (showDecommissioned &&
     <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
         <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
           {cartButton}
-          {showDecommissioned && <Link to={`/hierarchy/${index}`}>
+          <Link to={`/hierarchy/${index}`}>
             <span className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</span>
             <span className="name">{title}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
-          </Link>}
+          </Link>
           {link_82_88}
         </Header>
         {isSelected && items && <HierarchyElement
