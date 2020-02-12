@@ -5,7 +5,6 @@
 
 // Libraries
 const Router = require('koa-router');
-import {CONFIG} from '../utils/config.util';
 
 // Init router
 const router = new Router();
