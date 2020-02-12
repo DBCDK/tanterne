@@ -5,7 +5,6 @@
  * Starts the application.
  */
 
-require('newrelic');
 require('@babel/register');
 const {createApp} = require('./app');
 

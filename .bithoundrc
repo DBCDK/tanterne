@@ -45,7 +45,6 @@
     "**/testlib/**",
     "**/static/**",
     "*.config.js",
-    "**/newrelic.js",
     "**/karma.conf.js",
     "**/*.webpack.js"
   ],
