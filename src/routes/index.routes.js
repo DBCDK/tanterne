@@ -5,8 +5,6 @@
 
 // Libraries
 const Router = require('koa-router');
-const newrelic = require('newrelic');
-import {CONFIG} from '../utils/config.util';
 
 // Init router
 const router = new Router();
@@ -30,13 +28,11 @@ router.get('/', ctx => {
   </script>
 <!-- End Matomo -->`;
 
-  const newrelicHeader = CONFIG.app.env === 'production' ? newrelic.getBrowserTimingHeader() : '';
 
   ctx.body = `
     <!DOCTYPE html>
     <html lang="da">
       <head>
-        ${newrelicHeader}
         <title>DK5</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/css/main.css"/>
