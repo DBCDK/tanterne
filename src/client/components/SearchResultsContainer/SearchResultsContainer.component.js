@@ -29,7 +29,7 @@ function parseSearchResult(result) {
   });
 }
 
-const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, parent, pro, cart, decommissioned}) => {
+const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, parent, pro, cart, decommissioned, Header}) => {
   const infoDecommissioned = decommissioned ? 'decommissioned' : '';
   const skipValgfriGruppe = noteSystematic === 'Valgfri gruppe' && !pro;
   const displayTitle = title ? title : parent;
@@ -37,7 +37,7 @@ const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, pare
     !decommissioned &&
     !skipValgfriGruppe && (
       <div className={`result-element ${infoDecommissioned}`}>
-        <h2>
+        <Header>
           <span className="result-element-title">{displayTitle},&nbsp;</span>
           <span className="result-element-link">
             se <Link to={`/hierarchy/${dk5.index}`}>{dk5.index}</Link> {parent}
@@ -55,7 +55,7 @@ const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, pare
               dangerouslySetInnerHTML={{__html: noteGeneral}}
             />
           )}
-        </h2>
+        </Header>
       </div>
     )
   );
@@ -64,7 +64,7 @@ const SearchResultSingle = ({note, noteGeneral, noteSystematic, title, dk5, pare
 const SearchResultGroup = ({note, noteGeneral, title, dk5, items, pro, cart}) => {
   return (
     <div className="result-group">
-      <h2>
+      <h1>
         <span className="result-element-title">{title}</span>
         {dk5.indexMain && (
           <span className="result-element-link">
@@ -88,11 +88,11 @@ const SearchResultGroup = ({note, noteGeneral, title, dk5, items, pro, cart}) =>
             dangerouslySetInnerHTML={{__html: noteGeneral}}
           />
         )}
-      </h2>
+      </h1>
       <ul className="result-list">
         {items.map(el => (
           <li key={el.dk5.index}>
-            <SearchResultSingle pro={pro} cart={cart} {...el} />
+            <SearchResultSingle Header='h2' pro={pro} cart={cart} {...el} />
           </li>
         ))}
       </ul>
@@ -307,6 +307,7 @@ export class SearchResultsContainerComponent extends Component {
           return (
             <div className="result-group">
               <SearchResultSingle
+                Header='h1'
                 key={entry.dk5.index}
                 pro={this.props.pro}
                 cart={this.props.cart}

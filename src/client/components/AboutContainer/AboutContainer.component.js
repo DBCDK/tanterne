@@ -10,9 +10,9 @@ export class AboutContainerComponent extends Component {
     return (
       <div className='about--container'>
         <div className="about-generel--container">
-          <div className="section-head">
+          <h1 className="section-head">
             DK5 - Decimalklassedeling
-          </div>
+          </h1>
           <div className="section">
             DK5 er det fælles opstillings- og klassifikationssystem for de danske folke- og skolebiblioteker, samt nogle uddannelsesbiblioteker.
           </div>
@@ -22,9 +22,9 @@ export class AboutContainerComponent extends Component {
             Hertil kommer særlige regler for underdeling, f.eks. geografisk eller efter biograferede personers navne.
             DK5 er et hierarkisk opbygget system. Du kan se hierarkiet ved at klikke på et af billederne på forsiden, og derfra klikke videre ned i systemet.
           </div>
-          <div className="sub-section-head">
+          <h2 className="sub-section-head">
             Registret til DK5
-          </div>
+          </h2>
           <div className="section">
             Man kan finde et emne i DK5 ved hjælp af DK5’s søgeboks.
           </div>
@@ -41,51 +41,51 @@ export class AboutContainerComponent extends Component {
               </ul>
             </div>
           </div>
-          <div className="sub-section-head">
+          <h2 className="sub-section-head">
             Historiske noter
-          </div>
+          </h2>
           <div className="section">
             Der kan være noter om DK5-grupper, hvor emnet eller et aspekt af emnet tidligere har skullet søges som f.eks.
-            <div className="example">Mobiltelefoner, se <a>62.384</a> Telefoni – Før 2010: <a>62.397</a>.</div>
+            <div className="example">Mobiltelefoner, se <span className="linkstyle">62.384</span> Telefoni – Før 2010: <span className="linkstyle">62.397</span>.</div>
             Det betyder, at bøger om mobiltelefoner, som er udgivet frem til år 2009 findes på hylden under 62.397.
           </div>
-          <div className="sub-section-head">
+          <h2 className="sub-section-head">
             Henvisning til hierarkisk underdelte grupper
-          </div>
+          </h2>
           <div className="section">
             Når et emne henviser til en gruppe, som er hierarkisk underdelt, betyder det, at bøger om emnet kan stå i både den gruppe,
             der henvises til og de hierarkisk underordnede grupper.<br/>
             F.eks. betyder henvisningen:
-            <div className="example">Lægemidler, se <a>61.55</a> Farmakologi.</div>
+            <div className="example">Lægemidler, se <span className="linkstyle">61.55</span> Farmakologi.</div>
             at bøger om lægemidler kan findes både under 61.55 og de hierarkisk underordnede grupper herunder:
           </div>
           <div className="example">
-            <a>61.55 Farmakologi</a>
+            <span className="linkstyle">61.55 Farmakologi</span>
             <div className="example">
-              <a>61.5503 Systematik. Terminologi</a><br/>
-              <a>61.5506 Foreninger. Institutioner</a><br/>
-              <a>61.5507 Uddannelse og forskning</a><br/>
-              <a>61.552 Farmakodynamik. Toksikologi</a><br/>
-              <a>61.554 Farmaci</a><br/>
-              <a>61.555 Apotekervæsen</a><br/>
+              <span className="linkstyle">61.5503 Systematik. Terminologi</span><br/>
+              <span className="linkstyle">61.5506 Foreninger. Institutioner</span><br/>
+              <span className="linkstyle">61.5507 Uddannelse og forskning</span><br/>
+              <span className="linkstyle">61.552 Farmakodynamik. Toksikologi</span><br/>
+              <span className="linkstyle">61.554 Farmaci</span><br/>
+              <span className="linkstyle">61.555 Apotekervæsen</span><br/>
             </div>
           </div>
-          <div className="sub-section-head">
+          <h2 className="sub-section-head">
             Emner der henviser til en DK5-gruppe
-          </div>
+          </h2>
           <div className="section">
             Man kan se hvilke emner der enten henviser direkte til en dk5-gruppe, eller som har et aspekt, som henviser til gruppen.
             Umiddelbart vises de første 5 emner, der er henviser til gruppen, og resten kan udfoldes.<br/>
             F.eks.
             <div className="example">
-              <a>79.601 Idrætssociologi. Idrætspsykologi. Træningslære</a>
+              <span className="linkstyle">79.601 Idrætssociologi. Idrætspsykologi. Træningslære</span>
               <div className="example">
-                - &nbsp; <a>Coaching</a><br/>
-                - &nbsp; <a>Doping</a><br/>
-                - &nbsp; <a>Fitness</a><br/>
-                - &nbsp; <a>Idrætsetik</a><br/>
-                - &nbsp; <a>Idrætspsykologi</a><br/>
-                <a>Vis alle (12)</a><br/>
+                - &nbsp; <span className="linkstyle">Coaching</span><br/>
+                - &nbsp; <span className="linkstyle">Doping</span><br/>
+                - &nbsp; <span className="linkstyle">Fitness</span><br/>
+                - &nbsp; <span className="linkstyle">Idrætsetik</span><br/>
+                - &nbsp; <span className="linkstyle">Idrætspsykologi</span><br/>
+                <span className="linkstyle">Vis alle (12)</span><br/>
               </div>
             </div>
           </div>
@@ -95,8 +95,8 @@ export class AboutContainerComponent extends Component {
             <div className="example">
               Doping
               <ul>
-                <li>Farmakologi, se <a>61.55</a> Farmakologi</li>
-                <li>Idrætsetik, se <a>79.601</a> Idrætssociologi. Idrætspsykologi. Træningslære</li>
+                <li>Farmakologi, se <span className="linkstyle">61.55</span> Farmakologi</li>
+                <li>Idrætsetik, se <span className="linkstyle">79.601</span> Idrætssociologi. Idrætspsykologi. Træningslære</li>
               </ul>
             </div>
           </div>
