@@ -40,7 +40,7 @@ const indexRec = {index: {_index: 'dk5', _type: 'dk5', _id: 0}};
 const option = getOptions();
 
 const records = fs.readFileSync(option.input, 'utf8').split(GS);
-const progress = stdio.progressBar(records.length, 1);
+const progress = new stdio.ProgressBar(records.length);
 
 const outfile = fs.openSync(option.output, 'w');
 const filter = option.filter;
@@ -88,7 +88,7 @@ function getOptions() {
   const ops = stdio.getopt({
     input: {key: 'i', args: 1, description: 'Input file'},
     output: {key: 'o', args: 1, description: 'Output file'},
-    filter: {key: 'f', args: 1, description: 'filter dk5 group'}
+    filter: {key: 'f', args: '*', description: 'filter dk5 group'}
   });
   if (!ops.input || !ops.output) {
     ops.printHelp();

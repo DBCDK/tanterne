@@ -58,7 +58,6 @@ export default class ResetToFrontpage extends React.Component {
 
   setTimeout() {
     const delay = this.props.testEnv ? 5000 : 120000;
-    // const delay = this.props.testEnv ? 500000 : 120000;
     this.setState({warning: {active: false, remaining: 30}});
     if (!this.props.timerEnabled) {
       return;
