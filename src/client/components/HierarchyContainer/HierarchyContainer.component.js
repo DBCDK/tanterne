@@ -255,8 +255,8 @@ class HierarchyContainerComponent extends React.Component {
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
         <a title={`tilbage til ${this.props.params.id}`} href={navURL} className="hierarchy--navbar--href">
-            <img alt={`tilbage til ${this.props.params.id}`} src="Arrow-back.svg"/>
-            <span className="hierarchy--navbar--text"> Tilbage</span>
+          <img alt={`tilbage til ${this.props.params.id}`} src="Arrow-back.svg"/>
+          <span className="hierarchy--navbar--text"> Tilbage</span>
         </a>
         {this.props.pro &&
         <span className="hierarchy--navbar--cart">
