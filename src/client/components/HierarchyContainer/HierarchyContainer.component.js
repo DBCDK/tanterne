@@ -241,6 +241,7 @@ class HierarchyContainerComponent extends React.Component {
 
     const parentIndex = this.getParent(this.props.params.id);
     const navURL = parentIndex ? `#!/hierarchy/${parentIndex}` : '/';
+    const backTo = parentIndex ? parentIndex : 'start';
 
     const params = this.props.params || {};
     const searchField = (
@@ -254,8 +255,8 @@ class HierarchyContainerComponent extends React.Component {
 
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
-        <a title={`tilbage til ${this.props.params.id}`} href={navURL} className="hierarchy--navbar--href">
-          <img alt={`tilbage til ${this.props.params.id}`} src="Arrow-back.svg"/>
+        <a title={`tilbage til ${backTo}`} href={navURL} className="hierarchy--navbar--href">
+          <img alt={`tilbage til ${backTo}`} src="Arrow-back.svg"/>
           <span className="hierarchy--navbar--text"> Tilbage</span>
         </a>
         {this.props.pro &&

@@ -18,16 +18,19 @@ context('Testing Hierarchy in mobile view', () => {
 
   it('Should navigate back to the frontpage', () => {
     cy.visit(baseUrl + '/#!/hierarchy/00.109');
-    cy.get('.hierarchy--navbar--title').should('be.visible');
+    cy.get('.hierarchy--navbar--href img').should('have.attr', 'alt', 'tilbage til 00.1');
     cy.get('.hierarchy--navbar--href').should('have.attr', 'href', '#!/hierarchy/00.1');
 
     cy.get('.hierarchy--navbar--href').click();
+    cy.get('.hierarchy--navbar--href img').should('have.attr', 'alt', 'tilbage til 00');
     cy.get('.hierarchy--navbar--href').should('have.attr', 'href', '#!/hierarchy/00');
 
     cy.get('.hierarchy--navbar--href').click();
+    cy.get('.hierarchy--navbar--href img').should('have.attr', 'alt', 'tilbage til 00-07');
     cy.get('.hierarchy--navbar--href').should('have.attr', 'href', '#!/hierarchy/00-07');
 
     cy.get('.hierarchy--navbar--href').click();
+    cy.get('.hierarchy--navbar--href img').should('have.attr', 'alt', 'tilbage til start');
     cy.get('.hierarchy--navbar--href').should('have.attr', 'href', '/');
 
     cy.get('.hierarchy--navbar--href').click();
