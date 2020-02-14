@@ -156,9 +156,21 @@ $navbar_height: 60px;
   border-bottom: 1px solid #dedede;
   padding-top: 21px;
 
-  a {
-    width: 10%;
-    color: #358cff;
+  .hierarchy--navbar--href {
+    img {
+      height: 70%;
+      margin-left: 5px;
+    }
+    a {
+      width: 90%;
+    }
+    .hierarchy--navbar--text {
+      font-weight: 500;
+      font-size: 1.9rem;
+      color: $black;
+      position: relative;
+      bottom: 6px;
+    }
   }
 
   @include less-than-tablet {

@@ -11,7 +11,7 @@ export class HelpContainerComponent extends Component {
   princip() {
     return (
       <div className='help-chapter--container'>
-        <a name="princip"/>
+        <a title="principper" name="princip"/>
         <h1 className="section-head">
           Principper for DK5-udvikling
         </h1>
@@ -72,7 +72,7 @@ export class HelpContainerComponent extends Component {
   kommisorium() {
     return (
       <div className='help-chapter--container'>
-        <a name="kommisorium"/>
+        <a title="kommisorium" name="kommisorium"/>
         <h1 className="section-head">
           Kommisorium
         </h1>
@@ -112,7 +112,7 @@ export class HelpContainerComponent extends Component {
   tips() {
     return (
       <div className='help-chapter--container'>
-        <a name="tips"/>
+        <a title="tips" name="tips"/>
         <h1 className="section-head">
           Tips til søgning
         </h1>
@@ -175,7 +175,7 @@ export class HelpContainerComponent extends Component {
   supplementNumbers() {
     return (
       <div className='help-chapter--container'>
-        <a name="supplNumbers"/>
+        <a title="till&aelig;gstal" name="supplNumbers"/>
         <h1 className="section-head">
           Dansk Bogfortegnelses till&aelig;gstal
         </h1>
@@ -268,10 +268,10 @@ export class HelpContainerComponent extends Component {
           Historie
         </h2>
         <div className="section">
-          Den danske bibliotekspioner <a href="https://da.wikipedia.org/wiki/Andreas_Schack_Steenberg">Andreas Schack Steenberg</a> var initiativtager
+          Den danske bibliotekspioner <a title="" href="https://da.wikipedia.org/wiki/Andreas_Schack_Steenberg">Andreas Schack Steenberg</a> var initiativtager
           til den første udgave af Dansk Decimal-Klassedeling.
-          På en rejse i USA 1902 mødte Steenberg <a href="https://en.wikipedia.org/wiki/Melvil_Dewey">Melvil Dewey</a>,
-          og på grundlag af dennes <a href="https://da.wikipedia.org/wiki/Dewey_Decimal_Classification">Dewey Decimal Classification System</a>,
+          På en rejse i USA 1902 mødte Steenberg <a title="" href="https://en.wikipedia.org/wiki/Melvil_Dewey">Melvil Dewey</a>,
+          og på grundlag af dennes <a title="" href="https://da.wikipedia.org/wiki/Dewey_Decimal_Classification">Dewey Decimal Classification System</a>,
           (7th edition, 1911) udarbejdede Statens Bogsamlingskomité første udgave af Decimal-Klassedeling : til Brug ved Ordningen af Bogsamlinger, 1. udgave 1915.
           Femte udgave, DK5, blev udarbejdet i årene 1959-1969 af en klassifikationskomité med fagleder ved Danmarks Biblioteksskole J. B. Friis-Hansen
           som sekretær og fagligt hovedansvarlig. DK5 udkom første gang i 1970, men er gennem alle årene løbende blevet rettet og ajourført af DBC.
