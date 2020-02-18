@@ -8,8 +8,8 @@ import Tabs from 'react-simpletabs';
 import Link from '../Link';
 
 export class HelpContainerComponent extends Component {
-  componentDidMount(){
-    document.title = "Hjælp | DK5"
+  componentDidMount() {
+    document.title = 'Hjælp | DK5';
   }
   princip() {
     return (
