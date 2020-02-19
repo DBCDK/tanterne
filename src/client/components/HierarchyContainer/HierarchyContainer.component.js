@@ -26,7 +26,7 @@ function HierarchyElementTopics({topics}) {
         if (note) {
           const parsedNote = {};
           parsedNote.__html = ' - ' + note.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-            return `<a href="#!/hierarchy/${index}">${index}</a>`;
+            return `<a title="" href="#!/hierarchy/${index}">${index}</a>`;
           });
 
           return (
@@ -59,7 +59,7 @@ function AspectTitleElement({title}) {
 
 function parseDescriptiveText(text) {
   return text.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-    return `<a href="#!/hierarchy/${index}">${index}</a>`;
+    return `<a title="" ref="#!/hierarchy/${index}">${index}</a>`;
   });
 }
 
@@ -149,7 +149,7 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
         <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
           {cartButton}
-          <Link to={`/hierarchy/${index}`}>
+          <Link title={index} to={`/hierarchy/${index}`}>
             <span className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</span>
             <span className="name">{title}</span>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
@@ -241,6 +241,7 @@ class HierarchyContainerComponent extends React.Component {
 
     const parentIndex = this.getParent(this.props.params.id);
     const navURL = parentIndex ? `#!/hierarchy/${parentIndex}` : '/';
+    const backTo = parentIndex ? parentIndex : 'start';
 
     const params = this.props.params || {};
     const searchField = (
@@ -254,14 +255,10 @@ class HierarchyContainerComponent extends React.Component {
 
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
-        <a href={navURL} className="hierarchy--navbar--href">
-          <span className="hierarchy--navbar--button">
-            &#60;
-          </span>
+        <a title={`tilbage til ${backTo}`} href={navURL} className="hierarchy--navbar--href">
+          <img alt={`tilbage til ${backTo}`} src="Arrow-back.svg"/>
+          <span className="hierarchy--navbar--text"> Tilbage</span>
         </a>
-        <span className="hierarchy--navbar--title">
-          {this.props.params.id}
-        </span>
         {this.props.pro &&
         <span className="hierarchy--navbar--cart">
           <TopbarCartItem cart={this.props.cart}/>

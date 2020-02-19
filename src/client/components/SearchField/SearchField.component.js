@@ -263,7 +263,7 @@ export class SearchFieldComponent extends Component {
               {this.state.pendingSuggest && <Spinner size="small" />}
             </span>
 
-            <Link to={this.state.queryUrl}>
+            <Link title="Søg" to={this.state.queryUrl}>
               <div className="search-field--button">
                 <button className="search-field--button--button">
                   <div className="search-field--button--image">
