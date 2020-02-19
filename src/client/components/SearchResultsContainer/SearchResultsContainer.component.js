@@ -115,6 +115,7 @@ export class SearchResultsContainerComponent extends Component {
   }
 
   componentDidMount() {
+    document.title = 'Søg | DK5';
     this.searchWasTriggered(this.props);
   }
 

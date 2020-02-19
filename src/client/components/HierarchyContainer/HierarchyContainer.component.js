@@ -194,6 +194,7 @@ class HierarchyContainerComponent extends React.Component {
   }
 
   componentDidMount() {
+    document.title = 'Vis hierarki | DK5';
     this.props.globalState.getHierarchy(this.props.params.id || '00-07');
   }
 

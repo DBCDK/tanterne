@@ -6,6 +6,9 @@
 import React, {Component} from 'react';
 
 export class AboutContainerComponent extends Component {
+  componentDidMount() {
+    document.title = 'Om DK5 | DK5';
+  }
   render() {
     return (
       <div className='about--container'>
