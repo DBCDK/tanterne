@@ -31,8 +31,8 @@ function HierarchyElementTopics({topics}) {
 
           return (
             <li key={title}>
-              <div className='title-note'><AspectTitleElement title={title}/>
-                <div className="note" dangerouslySetInnerHTML={parsedNote}/>
+              <div className='title-note'><AspectTitleElement title={title} />
+                <div className="note" dangerouslySetInnerHTML={parsedNote} />
               </div>
             </li>
           );
@@ -40,7 +40,7 @@ function HierarchyElementTopics({topics}) {
 
         return (
           <li key={title}>
-            <div className='title-note'><AspectTitleElement title={title}/></div>
+            <div className='title-note'><AspectTitleElement title={title} /></div>
           </li>
         );
       })}
@@ -74,9 +74,9 @@ function HierarchyElementDescription({description}) {
     <div className="hierarchy-description">
       <ToggleContainer>
         <Layout className="pa2 abs pos-top pos-right">
-          <ToggleButton showText="Se beskrivelse" hideText="Skjul beskrivelse"/>
+          <ToggleButton showText="Se beskrivelse" hideText="Skjul beskrivelse" />
         </Layout>
-        <ToggleContent className="content" __html={parsedText}/>
+        <ToggleContent className="content" __html={parsedText} />
       </ToggleContainer>
     </div>
   );
@@ -92,16 +92,16 @@ function getRenderedTopics(topics) {
   if (topics.length > 7) {
     rendered = (
       <div>
-        <HierarchyElementTopics topics={topics.slice(0, 5)}/>
+        <HierarchyElementTopics topics={topics.slice(0, 5)} />
         <ToggleContainer show={false}>
-          <ToggleContent content={<HierarchyElementTopics topics={topics.slice(5)}/>}/>
-          <ToggleButton showText={`Vis alle (${topics.slice(5).length})`} hideText='Skjul'/>
+          <ToggleContent content={<HierarchyElementTopics topics={topics.slice(5)} />} />
+          <ToggleButton showText={`Vis alle (${topics.slice(5).length})`} hideText='Skjul' />
         </ToggleContainer>
       </div>
     );
   }
   else {
-    rendered = <HierarchyElementTopics topics={topics}/>;
+    rendered = <HierarchyElementTopics topics={topics} />;
   }
 
   return rendered;
@@ -116,7 +116,7 @@ function HierarchyElement({topics, description = '', pro = false, noteSystematic
 
   return (
     <div className="hierarchy-el">
-      {description && <HierarchyElementDescription description={description}/>}
+      {description && <HierarchyElementDescription description={description} />}
       {pro && <div className={'historic-note'} dangerouslySetInnerHTML={{__html: parseDescriptiveText(noteSystematicHistoric)}} />}
       {pro && <div className={'systematic-note'} dangerouslySetInnerHTML={{__html: parseDescriptiveText(noteSystematic)}} />}
       {renderedTopics}
@@ -129,7 +129,7 @@ function HierarchyElement({topics, description = '', pro = false, noteSystematic
  *
  * @constructor
  */
-function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, cart}) {
+function HierarchyLevel({hierarchy, level = 1, selected, pro, cart}) {
   const {index, title, decommissioned, hasChildren, children, items, note, noteSystematic, noteSystematicHistoric} = hierarchy;
   const isSelected = selected === index;
   let contains = children;
@@ -146,18 +146,18 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
   return (showDecommissioned &&
     <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
-        <div className={`${isSelected && 'hierarchy-level--header' || 'hierarchy-level-non-header'}` 
-          +  (level >= 2 && pro ? ' with-cart-button' :'')
-      }>
-       {cartButton}
+        <div className={`${isSelected && 'hierarchy-level--header' || 'hierarchy-level-non-header'}`
+          + (level >= 2 && pro ? ' with-cart-button' : '')
+        }>
+          {cartButton}
           <Link title={index} to={`/hierarchy/${index}`} className="hierarchy-row-container">
-          <div className="hierarchy-row-right-elements">
+            <div className="hierarchy-row-right-elements">
 
-            <h1 className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</h1>
-            <h1 className="name">{title}</h1>
-            {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
-            </div>   
-          <img alt='' src={`Arrow-down-${isSelected ? 'white':'black'}.svg`}/>
+              <h1 className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</h1>
+              <h1 className="name">{title}</h1>
+              {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light" />}</div>}
+            </div>
+            <img alt='' src={`Arrow-down-${isSelected ? 'white' : 'black'}.svg`} />
           </Link>
           {link_82_88}
 
@@ -263,13 +263,13 @@ class HierarchyContainerComponent extends React.Component {
     const navbar = this.props.params.id ? (
       <div className="hierarchy--navbar">
         <a title={`tilbage til ${backTo}`} href={navURL} className="hierarchy--navbar--href">
-          <img alt={`tilbage til ${backTo}`} src="Arrow-back.svg"/>
+          <img alt={`tilbage til ${backTo}`} src="Arrow-back.svg" />
           <span className="hierarchy--navbar--text"> Tilbage</span>
         </a>
         {this.props.pro &&
-        <span className="hierarchy--navbar--cart">
-          <TopbarCartItem cart={this.props.cart}/>
-        </span>
+          <span className="hierarchy--navbar--cart">
+            <TopbarCartItem cart={this.props.cart} />
+          </span>
         }
       </div>
     ) : null;
