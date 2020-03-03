@@ -1,0 +1,17 @@
+<svg width="15" height="10" xmlns="http://www.w3.org/2000/svg">
+ <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+
+ <title>Icon/Arrow back/Petroleum</title>
+ <desc>Created with Sketch.</desc>
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="12" width="17" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g transform="rotate(-90 7.4582815170288095,5.000045776367188) " fill-rule="evenodd" fill="none" id="Icon/Arrow-back/Petroleum">
+   <rect height="15" width="9" y="-2.499954" x="2.958281" fill="none" id="Rectangle"/>
+   <path transform="rotate(180 7.3862175941467285,5.195814609527589) translate(-4.42793607711792,-7.6957688331604) " fill-rule="nonzero" fill="#000000" id="Shape" d="m8.351318,19.132735l0,0c0.33923,0.33923 0.88616,0.33923 1.22539,0l5.75307,-5.75307c0.27,-0.27 0.27,-0.70616 0,-0.97616l-5.75307,-5.75307c-0.33923,-0.33924 -0.88616,-0.33924 -1.22539,0l0,0c-0.33923,0.33923 -0.33923,0.88615 0,1.22538l5.01231,5.01923l-5.01923,5.01923c-0.33231,0.33231 -0.33231,0.88616 0.00692,1.21846z"/>
+  </g>
+ </g>
+</svg>

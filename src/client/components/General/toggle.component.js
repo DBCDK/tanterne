@@ -32,7 +32,7 @@ ToggleContainer.propTypes = {
 
 export const ToggleButton = ({show, showText, hideText, onClick}) => {
   return (
-    <a className="upper white border-decoration toggle-button" href="#" onClick={onClick}>
+    <a className="upper  border-decoration toggle-button" href="#" onClick={onClick}>
       {show && hideText || showText} <span className="icon">
         <Arrow className={`transition ${show && 'rotate-180' || ''}`}/>
       </span>

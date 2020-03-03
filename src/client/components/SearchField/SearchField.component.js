@@ -234,11 +234,11 @@ export class SearchFieldComponent extends Component {
         className="search-field--container"
         onSubmit={this.queryWasSubmitted}
       >
-        {!this.props.pro && (
+       
           <div className="search-field--title">
-            <label htmlFor="search"><h2>Hvor står bøgerne om...?</h2></label>
+            <label htmlFor="search"><h2>Find hylden med bøger om..</h2></label>
           </div>
-        )}
+        
         <div className="search-field--suggestions">
           <span className="search-field--query-area">
             <input
@@ -263,15 +263,13 @@ export class SearchFieldComponent extends Component {
               {this.state.pendingSuggest && <Spinner size="small" />}
             </span>
 
-            <Link title="Søg" to={this.state.queryUrl}>
-              <div className="search-field--button">
-                <button className="search-field--button--button">
+            <Link title="Søg" to={this.state.queryUrl} className="search-field--button" >
+                <div className="search-field--button--button">
                   <div className="search-field--button--image">
                     <img alt="Søg" src="/icon-search.svg" />
                   </div>
-                </button>
+                </div>
                 <div className="search-field--button--text">SØG</div>
-              </div>
             </Link>
           </span>
 

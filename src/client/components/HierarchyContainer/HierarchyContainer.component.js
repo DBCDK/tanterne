@@ -132,7 +132,6 @@ function HierarchyElement({topics, description = '', pro = false, noteSystematic
 function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, cart}) {
   const {index, title, decommissioned, hasChildren, children, items, note, noteSystematic, noteSystematicHistoric} = hierarchy;
   const isSelected = selected === index;
-
   let contains = children;
   if (contains && contains.length && contains[0].selected) {
     contains = contains[0].items;
@@ -147,15 +146,22 @@ function HierarchyLevel({hierarchy, Header = 'h2', level = 1, selected, pro, car
   return (showDecommissioned &&
     <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
-        <Header className={`${isSelected && 'hierarchy-level--header' || ''}`}>
-          {cartButton}
-          <Link title={index} to={`/hierarchy/${index}`}>
-            <span className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</span>
-            <span className="name">{title}</span>
+        <div className={`${isSelected && 'hierarchy-level--header' || 'hierarchy-level-non-header'}` 
+          +  (level >= 2 && pro ? ' with-cart-button' :'')
+      }>
+       {cartButton}
+          <Link title={index} to={`/hierarchy/${index}`} className="hierarchy-row-container">
+          <div className="hierarchy-row-right-elements">
+
+            <h1 className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</h1>
+            <h1 className="name">{title}</h1>
             {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light"/>}</div>}
+            </div>   
+          <img alt='' src={`Arrow-down-${isSelected ? 'white':'black'}.svg`}/>
           </Link>
           {link_82_88}
-        </Header>
+
+        </div>
         {isSelected && items && <HierarchyElement
           topics={items}
           description={note}
