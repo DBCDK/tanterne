@@ -74,10 +74,10 @@
 
 .comparer--content--items-container {
   .comparer--item:nth-child(odd) {
-    background-color: #ececec;
+    background-color: $grey;
   }
   .comparer--item:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: $white;
   }
 }
 
