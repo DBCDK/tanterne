@@ -21,14 +21,12 @@ export function CartButton({index, cart}) {
   const inCartClass = inCart ? ' in-cart' : '';
 
   return (
-    <div className='cart-button-container'>
-      <span
-        className={`add-or-remove-item${inCartClass}`}
-        id={`cart-button-${index.replace('.', '-')}`}
-        onClick={cart.addOrRemoveContent.bind(this, {index: index})}
-        title={tooltip}>
-        <Plus />
-      </span>
+    <div
+      className={` cart-button-container add-or-remove-item${inCartClass}`}
+      id={`cart-button-${index.replace('.', '-')}`}
+      onClick={cart.addOrRemoveContent.bind(this, {index: index})}
+      title={tooltip}>
+      <Plus />
     </div>
   );
 }

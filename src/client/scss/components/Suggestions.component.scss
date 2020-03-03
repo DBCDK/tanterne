@@ -2,11 +2,22 @@
   position: relative;
   box-shadow: 2px 2px 3px #525252;
   z-index: 3;
+  width: 100%;
 
   .suggestions--floater {
     position: absolute;
-    width: 600px;
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.5);
+    width: 70%;
+
+    @include phone {
+      width: 60%;
+    }
+    @include tablet {
+      width: 72%;
+    }
+    @include desktop {
+      width: 50%;
+    }
   }
 
   .suggestions--suggestion {
@@ -21,10 +32,10 @@
     line-height: 1.2em;
   }
 
-  .suggestions--suggestion:hover, .active--suggestion {
-    background-color: #1254F2;
+  .suggestions--suggestion:hover,
+  .active--suggestion {
+    background-color: #1254f2;
     color: #fff;
     z-index: 3;
   }
 }
-

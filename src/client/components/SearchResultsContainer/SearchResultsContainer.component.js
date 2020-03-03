@@ -230,7 +230,7 @@ export class SearchResultsContainerComponent extends Component {
     return (
       <div className="category-tiles--container">
         <div className="category-tiles--title">
-          <h2>Eller vælg her</h2>
+          <h2>Eller vælg et emne her</h2>
         </div>
         <div className="category-tiles">{tiles}</div>
       </div>

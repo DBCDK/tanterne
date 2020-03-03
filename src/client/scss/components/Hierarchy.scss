@@ -3,7 +3,6 @@ $navbar_height: 60px;
 .pro {
   .container {
     @include transition-width();
-    width: calc(100% - 20px);
     overflow-x: hidden;
     display: inline-block;
     &.show-cart {
@@ -11,6 +10,15 @@ $navbar_height: 60px;
       @include less-than-desktop {
         width: 100%;
       }
+    }
+  }
+
+  @include less-than-tablet {
+    .top-bar--cart {
+      margin-left: auto;
+    }
+    .top-bar--link {
+      margin-left: 15px !important;
     }
   }
 }
@@ -31,15 +39,81 @@ $navbar_height: 60px;
 
   @include less-than-tablet {
     .hierarchy-level:nth-child(odd) {
-      background-color: #ececec;
+      background-color: $white;
     }
 
     .hierarchy-level:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: $grey;
     }
 
     &.container {
       border-top: 1px solid #e0e0e0;
+    }
+  }
+}
+
+.hierarchy-row-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  @include less-than-tablet {
+    flex-direction: row-reverse;
+    padding-left: 15px;
+  }
+  .hierarchy-row-right-elements {
+    display: flex;
+    @include less-than-tablet {
+      flex-direction: row-reverse;
+      width: 100%;
+    }
+  }
+
+  img {
+    width: 20px;
+    margin-right: 1rem;
+    @include less-than-tablet {
+      display: none;
+    }
+  }
+  padding-left: 3rem;
+  .dk5 {
+    background-color: $blue;
+    color: $white;
+    padding: 0.5rem;
+  }
+
+  &:focus {
+    outline: none;
+    .name {
+      outline: 2px solid $orange;
+      outline-offset: 5px;
+    }
+  }
+}
+
+.hierarchy-level--header {
+  .hierarchy-row-container {
+    padding-left: 2rem;
+
+    h1 {
+      font-size: 2.1rem;
+    }
+    @include less-than-tablet {
+      h1 {
+        font-size: 1.8rem;
+      }
+      padding-left: 5px;
+    }
+    .dk5 {
+      margin-bottom: 0;
+      color: $blue;
+    }
+
+    &:focus {
+      .name {
+        outline-color: $white;
+      }
     }
   }
 }
@@ -54,19 +128,76 @@ $navbar_height: 60px;
   @include less-than-tablet {
     margin: 0;
   }
+  .with-cart-button {
+    display: flex;
+    align-items: center;
+  }
 
   .selected {
     transition: background 100ms ease-out;
-    padding: 1rem;
-    margin: 0 -1rem;
-    background-color: $blue;
-    color: white;
+    background-color: $grey;
+    color: black;
+    .hierarchy-level .level div {
+      a {
+        h1 {
+          font-size: 2rem;
+          @include less-than-tablet {
+            font-size: 1.8rem;
+          }
+        }
+      }
+      .name {
+        color: $black;
+      }
 
+      padding: 0 1rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      @include less-than-tablet {
+        width: 100%;
+        padding-right: 0;
+      }
+    }
+
+    .dk5 {
+      color: $white;
+      background-color: $blue;
+      padding: 2px 5px;
+      @include less-than-tablet {
+        color: $blue;
+        background-color: unset;
+      }
+    }
+
+    .hierarchy-level--header {
+      padding: 10px 10px;
+      background-color: $blue;
+
+      .name {
+        color: $white;
+      }
+
+      .dk5 {
+        color: $blue;
+        background-color: $white;
+        padding: 2px 5px;
+        @include less-than-tablet {
+          color: $white;
+          background-color: unset;
+        }
+      }
+    }
+
+    .hierarchy-row-container {
+      img {
+        margin-right: 0;
+      }
+    }
     @include less-than-tablet {
       transition: none;
       margin: 0;
       padding: 0;
-      background-color: $white;
       color: black;
 
       position: fixed;
@@ -79,40 +210,26 @@ $navbar_height: 60px;
       -webkit-overflow-scrolling: touch;
 
       &.level {
-        h1.hierarchy-level--header {
-          padding: 1rem .5rem;
+        .hierarchy-level--header {
+          background-color: $blue;
           margin-bottom: 0;
-          background-color: black;
+          padding: 25px 5px;
 
-          .name {
-            color: white;
+          .hierarchy-row-container {
+            .name,
+            .dk5 {
+              color: white;
+            }
           }
-        }
-
-        h2.hierarchy-level--header {
-          padding: 10px;
-          font-weight: 600;
         }
       }
     }
 
     svg {
-      fill: white;
       @include less-than-tablet {
         fill: black;
       }
     }
-
-    .dk5 {
-      background-color: white;
-      padding: 0.3rem;
-
-      @include less-than-tablet {
-        padding: 0;
-        background-color: transparent;
-      }
-    }
-
     .name {
       color: white;
 
@@ -123,7 +240,6 @@ $navbar_height: 60px;
   }
 
   .dk5 {
-    color: $blue;
     display: inline-block;
     margin-right: 10px;
   }
@@ -139,7 +255,7 @@ $navbar_height: 60px;
     &:after {
       margin-left: 2px;
       font-size: 75%;
-      content: '+';
+      content: "+";
     }
   }
 }
@@ -157,24 +273,30 @@ $navbar_height: 60px;
   padding-top: 21px;
 
   .hierarchy--navbar--href {
-    img {
-      height: 70%;
-      margin-left: 5px;
-    }
+    display: flex;
+    align-content: center;
+    padding-left: 15px;
+    align-items: center;
+
     a {
       width: 90%;
     }
     .hierarchy--navbar--text {
       font-weight: 500;
-      font-size: 1.9rem;
+      font-size: 1.6rem;
       color: $black;
-      position: relative;
       bottom: 6px;
+      margin-left: 4px;
     }
   }
 
   @include less-than-tablet {
     display: block;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0px;
   }
 }
 
@@ -221,10 +343,6 @@ $navbar_height: 60px;
       display: inline-block;
       content: "-";
       text-indent: -5px;
-
-      @include less-than-tablet {
-        content: '';
-      }
     }
 
     .note {
@@ -233,12 +351,16 @@ $navbar_height: 60px;
       text-indent: -0.8rem;
 
       a {
-        color: white;
         text-decoration: underline;
-
         @include less-than-tablet {
           color: black;
         }
+      }
+    }
+    &:focus {
+      a {
+        color: red;
+        background-color: blue;
       }
     }
   }
@@ -292,6 +414,7 @@ $navbar_height: 60px;
 
   @include less-than-tablet {
     padding: 15px 10px;
+    margin-left: 0;
 
     .name {
       display: inline-block;
@@ -311,8 +434,24 @@ $navbar_height: 60px;
     font-size: 2rem;
 
     @include less-than-tablet {
-      font-size: 1.8rem;
+      font-size: 1.8rem !important;
       margin-bottom: 0;
+    }
+  }
+  .rel {
+    .hierarchy-level--header,
+    .hierarchy-level-non-header {
+      padding-left: 3rem;
+    }
+  }
+
+  .hierarchy-level--header {
+    .hierarchy-row-container {
+      padding-left: 3rem;
+
+      @include less-than-tablet {
+        padding-left: 1rem;
+      }
     }
   }
 }
@@ -322,6 +461,7 @@ $navbar_height: 60px;
 
   @include less-than-tablet {
     padding: 15px 10px;
+    margin-left: 0;
 
     .name {
       display: inline-block;
@@ -343,6 +483,12 @@ $navbar_height: 60px;
     @include less-than-tablet {
       font-size: 1.6rem;
       margin-bottom: 0;
+    }
+  }
+  .rel {
+    .hierarchy-level--header,
+    .hierarchy-level-non-header {
+      padding-left: 3rem;
     }
   }
 }
@@ -441,14 +587,16 @@ $navbar_height: 60px;
   display: inline-block;
   vertical-align: middle;
   padding-left: 1rem;
-
   a {
-    color: white;
     text-decoration: underline;
 
     @include less-than-tablet {
       color: $blue;
       font-size: 1.6rem;
+    }
+    &:focus {
+      outline: 2px solid $orange;
+      outline-offset: 5px;
     }
   }
 }
@@ -460,32 +608,37 @@ $navbar_height: 60px;
 }
 
 .hierarchy-el {
-  .toggle-wrapper {
-    @include less-than-tablet {
+  padding: 2rem 5rem;
+
+  @include less-than-tablet {
+    padding: 2rem 3.5rem;
+    .toggle-wrapper {
       margin-bottom: 10px;
     }
   }
-
   .toggle-button {
     margin-left: 2rem;
-
+    &:focus {
+      outline-color: $orange;
+    }
     @include less-than-tablet {
       color: $blue;
       border-bottom: none;
       margin-left: 1rem;
 
-      .icon, .svg {
+      .icon,
+      .svg {
         fill: $blue;
       }
     }
   }
 }
 
-.historic-note, .systematic-note {
+.historic-note,
+.systematic-note {
   padding-bottom: 0.55em;
 
   a {
-    color: $white;
     text-decoration: underline;
   }
 }

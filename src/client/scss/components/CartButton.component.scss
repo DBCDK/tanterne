@@ -1,8 +1,12 @@
 .cart-button-container {
-  @include  tablet-and-up {
+  @include tablet-and-up {
     display: inline-block;
   }
   height: 20px;
+  margin-right: -1rem;
+  @include less-than-tablet {
+    width: auto !important;
+  }
 }
 
 .add-or-remove-item {
@@ -16,7 +20,7 @@
   }
 
   svg {
-    transition: transform .25s ease-out;
+    transition: transform 0.25s ease-out;
     width: 16px;
     height: 16px;
   }
@@ -24,6 +28,20 @@
   &.in-cart {
     svg {
       transform: rotate(135deg);
+    }
+  }
+}
+
+.pro {
+  @include less-than-tablet {
+    .add-or-remove-item {
+      margin-top: 0px;
+    }
+
+    .hierarchy-level--header {
+      .add-or-remove-item {
+        margin-right: 1rem;
+      }
     }
   }
 }
