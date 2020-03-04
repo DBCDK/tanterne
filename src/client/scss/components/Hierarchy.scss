@@ -135,7 +135,7 @@ $navbar_height: 60px;
 
   .selected {
     transition: background 100ms ease-out;
-    background-color: $grey;
+    background-color: $light-grey;
     color: black;
     .hierarchy-level .level div {
       a {

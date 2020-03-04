@@ -15,7 +15,7 @@
     font-family: "Open Sans", sans-serif;
     &:focus {
       background-color: $blue;
-      outline: none;
+      outline: solid 1px $blue;
     }
   }
 
@@ -29,7 +29,6 @@
   .search-field {
     height: 40px;
     background-color: transparent;
-    border-radius: 4px;
     font-family: Open Sans, sans-serif;
     font-size: 2rem;
     border: 2px solid $dark-grey;
@@ -41,8 +40,7 @@
     padding-right: 5px;
 
     &:focus {
-      outline: none;
-      border-color: $blue;
+      outline: solid 3px $blue;
     }
 
     @include phone {
@@ -66,7 +64,6 @@
 
   .search-field--button {
     background-color: $dark-grey;
-    border-radius: 5px;
     display: inline-block;
     justify-content: center;
     align-items: center;

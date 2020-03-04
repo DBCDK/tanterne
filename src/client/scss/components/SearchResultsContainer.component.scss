@@ -17,7 +17,7 @@
   .category-tile--container {
     box-sizing: border-box;
     flex: 1 256px;
-    height: 170px;
+    height: 200px;
     min-width: 256px;
     background-color: rgba(0, 0, 0, 0.5);
     background-size: cover;
@@ -45,8 +45,8 @@
       display: block;
       font-size: 16pt;
       text-shadow: 1px 1px #000;
-      margin: 0.4em;
-      line-height: 1em;
+      margin: 0.6em 0.6em 1em 0.6em;
+      line-height: 1.3em;
     }
 
     .category-tile--index {
@@ -62,12 +62,9 @@
       top: 50%;
       transform: translate(0, -50%);
     }
-    &:hover {
-      outline: 3px solid Highlight;
-      outline-offset: 2px;
-    }
+    &:hover,
     &:focus {
-      outline-offset: 2px;
+      outline: solid 5px $blue;
     }
   }
 }
