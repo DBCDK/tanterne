@@ -206,7 +206,7 @@ export class SearchResultsContainerComponent extends Component {
 
     return (
       <Link
-        title={`${category.index}`}
+        title={`${category.label} (${category.index})`}
         style={styles}
         to={`#!/hierarchy/${category.index}`}
         className="category-tile--container"
