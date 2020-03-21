@@ -72,7 +72,7 @@
     "prop-types": "^15.7.2",
     "react-simpletabs": "^0.7.0",
     "request": "^2.88.2",
-    "stdio": "^2.0.1",
+    "stdio": "^2.1.1",
     "superagent": "^5.2.1"
   },
   "devDependencies": {
