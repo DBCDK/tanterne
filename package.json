@@ -54,7 +54,7 @@
     "@babel/preset-env": "^7.9.0",
     "@babel/preset-react": "^7.9.1",
     "@babel/register": "^7.9.0",
-    "@babel/runtime": "^7.8.4",
+    "@babel/runtime": "^7.9.2",
     "autocomplete": "^0.0.1",
     "autoprefixer": "^9.7.4",
     "babel-loader": "^8.0.6",
