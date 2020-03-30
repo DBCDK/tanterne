@@ -28,6 +28,12 @@ $navbar_height: 60px;
   overflow-y: auto;
 }
 
+.pro {
+  .hierarchy {
+    width: 100%;
+    max-width: 1024px;
+  }
+}
 .hierarchy {
   a {
     text-decoration: none;
@@ -247,8 +253,8 @@ $navbar_height: 60px;
   }
 
   .decommissioned {
-  background-color:$orange !important;
-  color: white !important;
+    background-color: $orange !important;
+    color: white !important;
   }
   .hasChildren {
     &:after {
