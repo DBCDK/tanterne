@@ -59,7 +59,7 @@ function AspectTitleElement({title}) {
 
 function parseDescriptiveText(text) {
   return text.replace(/<dk>([^<]*)<\/dk>/g, (match, index) => {
-    return `<a title="" ref="#!/hierarchy/${index}">${index}</a>`;
+    return `<a title="" href="#!/hierarchy/${index}">${index}</a>`;
   });
 }
 
@@ -137,7 +137,7 @@ function HierarchyLevel({hierarchy, level = 1, selected, pro, cart}) {
     contains = contains[0].items;
   }
 
-  const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} /> : null;
+  const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} color={isSelected ? 'white':'black'}/> : null;
   const infoChildren = pro & hasChildren ? ' hasChildren' : '';
   const infoDecommissioned = pro & decommissioned ? ' decommissioned' : '';
   const showDecommissioned = (pro || !decommissioned);
@@ -146,11 +146,11 @@ function HierarchyLevel({hierarchy, level = 1, selected, pro, cart}) {
   return (showDecommissioned &&
     <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
-        <div className={`${isSelected && 'hierarchy-level--header' || 'hierarchy-level-non-header'}`
+        <div className={`${isSelected && `hierarchy-level--header${infoDecommissioned}` || 'hierarchy-level-non-header'}`
           + (level >= 2 && pro ? ' with-cart-button' : '')
         }>
           {cartButton}
-          <Link title={index} to={`/hierarchy/${index}`} className="hierarchy-row-container">
+          <Link title={index} to={`/hierarchy/${index}`} className="hierarchy-row-container" >
             <div className="hierarchy-row-right-elements">
 
               <h1 className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</h1>

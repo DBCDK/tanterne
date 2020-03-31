@@ -28,6 +28,12 @@ $navbar_height: 60px;
   overflow-y: auto;
 }
 
+.pro {
+  .hierarchy {
+    width: 100%;
+    max-width: 1024px;
+  }
+}
 .hierarchy {
   a {
     text-decoration: none;
@@ -51,12 +57,12 @@ $navbar_height: 60px;
     }
   }
 }
-
 .hierarchy-row-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  padding-left: 1rem;
   @include less-than-tablet {
     flex-direction: row-reverse;
     padding-left: 15px;
@@ -76,7 +82,6 @@ $navbar_height: 60px;
       display: none;
     }
   }
-  padding-left: 3rem;
   .dk5 {
     background-color: $blue;
     color: $white;
@@ -94,7 +99,7 @@ $navbar_height: 60px;
 
 .hierarchy-level--header {
   .hierarchy-row-container {
-    padding-left: 2rem;
+    padding-left: 1rem;
 
     h1 {
       font-size: 2.1rem;
@@ -213,8 +218,7 @@ $navbar_height: 60px;
         .hierarchy-level--header {
           background-color: $blue;
           margin-bottom: 0;
-          padding: 25px 5px;
-
+          padding: 2.5rem 1rem;
           .hierarchy-row-container {
             .name,
             .dk5 {
@@ -249,7 +253,8 @@ $navbar_height: 60px;
   }
 
   .decommissioned {
-    color: $decommissioned;
+    background-color: $orange !important;
+    color: white !important;
   }
   .hasChildren {
     &:after {
@@ -447,11 +452,7 @@ $navbar_height: 60px;
 
   .hierarchy-level--header {
     .hierarchy-row-container {
-      padding-left: 3rem;
-
-      @include less-than-tablet {
-        padding-left: 1rem;
-      }
+      padding-left: 1rem;
     }
   }
 }
@@ -498,7 +499,7 @@ $navbar_height: 60px;
 
   @include less-than-tablet {
     padding: 15px 10px;
-
+    margin-left: 0;
     .name {
       display: inline-block;
       width: 68%;

@@ -11,7 +11,7 @@ import {Plus} from '../svg/svg.container';
  * @return {XML}
  * @constructor
  */
-export function CartButton({index, cart}) {
+export function CartButton({index, cart, color}) {
   if (!index || !cart) {
     return null;
   }
@@ -26,7 +26,7 @@ export function CartButton({index, cart}) {
       id={`cart-button-${index.replace('.', '-')}`}
       onClick={cart.addOrRemoveContent.bind(this, {index: index})}
       title={tooltip}>
-      <Plus />
+      <Plus color={color}/>
     </div>
   );
 }

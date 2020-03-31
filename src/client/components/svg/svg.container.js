@@ -12,9 +12,9 @@ export const Arrow = ({className = ''}) => {
   );
 };
 
-export const Plus = ({className = ''}) => {
+export const Plus = ({className = '',color='black'}) => {
   return (
-    <svg className={`plus ${className}`} viewBox="0 0 56 56" >
+    <svg className={`plus ${className}`} viewBox="0 0 56 56" fill={color}>
       <path d="M28,.5a28,28,0,1,0,28,28A28,28,0,0,0,28,.5ZM28,53A24.5,24.5,0,1,1,52.5,28.5,24.53,24.53,0,0,1,28,53Z"/>
       <path d="M42,26.75H29.75V14.5a1.75,1.75,0,0,0-3.5,0V26.75H14a1.75,1.75,0,0,0,0,3.5H26.25V42.5a1.75,1.75,0,0,0,3.5,0V30.25H42a1.75,1.75,0,0,0,0-3.5Z"/>
     </svg>
