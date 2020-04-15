@@ -585,6 +585,11 @@ export class HelpContainerComponent extends Component {
           Historiske noter
         </h2>
         <div className="section">
+          Der kan være noter om DK5-grupper, hvor emnet eller et aspekt af emnet tidligere har skullet søges som f.eks.<br />
+          <i>Mobiltelefoner, se 62.384 Telefoni – Før 2010: 62.397</i><br />
+          Det betyder, at bøger om mobiltelefoner, som er udgivet frem til år 2009 findes på hylden under 62.397.
+        </div>
+        <div className="section">
           Der er til visse grupper i systemet føjet noter med oplysninger om ændringer i forhold til tidligere klassifikation.
         </div>
         <div className="section">
@@ -598,7 +603,7 @@ export class HelpContainerComponent extends Component {
           </ul>
         </div>
         <div className="section">
-          Nedlagte grupper vil tillige være markeret med rødt.
+          Nedlagte grupper vil tillige være markeret med brunt.
         </div>
         <h2 className="sub-section-head">
           Registret til DK5
@@ -620,14 +625,6 @@ export class HelpContainerComponent extends Component {
             Farmakologi, se 61.55 Farmakologi<br />
             Kirurgisk smertebehandling, se 61.66 Kirurgi. Anæstesiologi
           </i>
-        </div>
-        <h2 className="sub-section-head">
-          Historiske noter
-        </h2>
-        <div className="section">
-          Der kan være noter om DK5-grupper, hvor emnet eller et aspekt af emnet tidligere har skullet søges som f.eks.<br />
-          <i>Mobiltelefoner, se 62.384 Telefoni – Før 2010: 62.397</i><br />
-          Det betyder, at bøger om mobiltelefoner, som er udgivet frem til år 2009 findes på hylden under 62.397.
         </div>
         <h2 className="sub-section-head">
           Henvisning til hierarkisk underdelte grupper
