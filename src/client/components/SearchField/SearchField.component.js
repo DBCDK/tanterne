@@ -229,6 +229,11 @@ export class SearchFieldComponent extends Component {
   }
 
   render() {
+    const isSmallScreen = window.innerWidth < 768;
+    const inHeirachy = window.location.href.includes('hierarchy');
+    if (isSmallScreen && inHeirachy) {
+      return;
+    }
     return (
       <form
         className="search-field--container"
@@ -261,10 +266,10 @@ export class SearchFieldComponent extends Component {
               {this.state.pendingSuggest && <Spinner size="small" />}
             </span>
 
-            <Link title="Søg" to={this.state.queryUrl} className="search-field--button" >
+            <Link to={this.state.queryUrl} className="search-field--button" >
               <div className="search-field--button--button">
                 <div className="search-field--button--image">
-                  <img alt="Søg" src="/icon-search.svg" />
+                  <img alt="" src="/icon-search.svg" />
                 </div>
               </div>
               <div className="search-field--button--text">SØG</div>

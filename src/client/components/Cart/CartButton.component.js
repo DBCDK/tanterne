@@ -26,7 +26,7 @@ export function CartButton({index, cart, color}) {
       id={`cart-button-${index.replace('.', '-')}`}
       onClick={cart.addOrRemoveContent.bind(this, {index: index})}
       title={tooltip}>
-      <Plus color={color}/>
+      <Plus color={color} title={inCart ? 'fjern' : 'tilføj'} />
     </div>
   );
 }

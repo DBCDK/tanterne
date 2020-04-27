@@ -41,9 +41,20 @@ $navbar_height: 60px;
 
   .name {
     color: $black;
+    font-size: 2rem;
+    margin-bottom: 0;
+    font-weight: 100;
+  }
+  .dk5 {
+    font-size: 2rem;
+    font-weight: 100;
   }
 
   @include less-than-tablet {
+    .name, .dk5 {
+      font-size: 1.8rem;
+    }
+
     .hierarchy-level:nth-child(odd) {
       background-color: $white;
     }
@@ -69,6 +80,7 @@ $navbar_height: 60px;
   }
   .hierarchy-row-right-elements {
     display: flex;
+    align-items: center;
     @include less-than-tablet {
       flex-direction: row-reverse;
       width: 100%;

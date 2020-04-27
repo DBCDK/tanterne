@@ -1,8 +1,10 @@
-.top-bar--container, .top-bar--logo {
+.top-bar--container,
+.top-bar--logo {
   height: 35px;
-
 }
-
+.hide-navbar {
+  display: none;
+}
 .top-bar--container {
   display: flex;
   align-items: center;
@@ -10,7 +12,7 @@
   margin-bottom: 3rem;
   @include less-than-tablet {
     padding: 1rem;
-    margin-bottom: 0rem
+    margin-bottom: 0rem;
   }
   a {
     display: flex;
@@ -67,7 +69,7 @@
   border-radius: 50%;
   height: 18px;
   width: 18px;
-  font-size: .9rem;
+  font-size: 0.9rem;
   padding-top: 1px;
 }
 
