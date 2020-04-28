@@ -230,8 +230,8 @@ export class SearchFieldComponent extends Component {
 
   render() {
     const isSmallScreen = window.innerWidth < 768;
-    const inHeirachy = window.location.href.includes('hierarchy');
-    if (isSmallScreen && inHeirachy) {
+    const inHierarchy = window.location.href.includes('hierarchy');
+    if (isSmallScreen && inHierarchy) {
       return;
     }
     return (

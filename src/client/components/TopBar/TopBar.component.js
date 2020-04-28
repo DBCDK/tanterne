@@ -26,18 +26,18 @@ export class TopBarComponent extends Component {
 
   render() {
     const isSmallScreen = window.innerWidth < 768;
-    const inHeirachy = window.location.href.includes('hierarchy');
+    const inHierarchy = window.location.href.includes('hierarchy');
     const cart = this.props.pro ? <TopbarCartItem cart={this.props.cart} /> : null;
 
     let topBarCaption = 'DK5';
     if (this.props.pro) {
       topBarCaption = 'DK5 PRO';
     }
-    if (isSmallScreen && inHeirachy) {
+    if (isSmallScreen && inHierarchy) {
       return;
     }
     return (
-      <div className={'top-bar--container' + (isSmallScreen && inHeirachy ? ' hide-element' : '')}>
+      <div className={'top-bar--container'}>
         {Object.keys(this.props.cart.contents).length > 0 && <a accessKey="T" onClick={this.clearCart.bind(this)} />}
         <a title="" accessKey="H" className="unlink" href="/" >
           <img alt="DK5 logo" className="top-bar--logo" src="/DK5logo_blue.png" />
