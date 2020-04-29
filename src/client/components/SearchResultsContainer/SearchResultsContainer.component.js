@@ -112,15 +112,28 @@ export class SearchResultsContainerComponent extends Component {
       pendingSearch: false,
       error: ''
     };
+    this.setDocementTitle = this.setDocementTitle.bind(this);
+  }
+  setDocementTitle() {
+    if (window.location.href.includes('search')) {
+      document.title = `${this.props.params.q || ''} | DK5 søg`;
+    }
+    else {
+      const pro = this.props.pro ? ' PRO' : '';
+      document.title = 'Forside | DK5' + pro;
+    }
   }
 
   componentDidMount() {
-    document.title = 'Søg | DK5';
+    this.setDocementTitle();
     this.searchWasTriggered(this.props);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.searchWasTriggered(this.props);
+    if (prevProps.params.q !== this.props.params.q) {
+      this.setDocementTitle();
+    }
   }
 
   searchWasTriggered(props) {
@@ -214,7 +227,7 @@ export class SearchResultsContainerComponent extends Component {
       >
         <div className="category-tile--gradient">
           <div className="category-tile--text-container">
-            <span className="category-tile--label">{category.label}</span>
+            <h3 className="category-tile--label">{category.label}</h3>
             <span className="category-tile--index">{categoryIndex}</span>
           </div>
         </div>

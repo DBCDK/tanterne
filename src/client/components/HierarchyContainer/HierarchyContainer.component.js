@@ -14,6 +14,9 @@ import Link from '../Link';
 import {Spinner} from '../General/spinner.component';
 import * as client from '../../state/client';
 
+function setDocementTitle(index, title) {
+  document.title = `${index || ''} - ${title || ''} | DK5 emnehierarki`;
+}
 /**
  * Topics in Hierarchy element
  *
@@ -136,13 +139,15 @@ function HierarchyLevel({hierarchy, level = 1, selected, pro, cart}) {
   if (contains && contains.length && contains[0].selected) {
     contains = contains[0].items;
   }
-
+  if (isSelected) {
+    setDocementTitle(index, title);
+  }
   const cartButton = level >= 2 && pro ? <CartButton {...{index, cart}} color={isSelected ? 'white':'black'}/> : null;
   const infoChildren = pro & hasChildren ? ' hasChildren' : '';
   const infoDecommissioned = pro & decommissioned ? ' decommissioned' : '';
   const showDecommissioned = (pro || !decommissioned);
   const link_82_88 = pro && isSelected && index === '82-88' ? <Link to='/help'><span className='dk5'> Se till&aelig;gstal</span></Link> : null;
-
+  const Header = level && level <= 6 ? 'h' + level : 'h6';
   return (showDecommissioned &&
     <div className={`hierarchy-level level level-${level}`}>
       <div className={`level rel ${isSelected && 'selected' || ''}`}>
@@ -152,12 +157,17 @@ function HierarchyLevel({hierarchy, level = 1, selected, pro, cart}) {
           {cartButton}
           <Link title={index} to={`/hierarchy/${index}`} className="hierarchy-row-container" >
             <div className="hierarchy-row-right-elements">
+              <Header className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</Header>
 
-              <h1 className={`dk5${infoDecommissioned}${infoChildren}`}>{index}</h1>
-              <h1 className="name">{title}</h1>
+
+              <Header className="name">
+                {title}
+              </Header>
+
+
               {isSelected && !contains && <div className="hierarchy-spinner">{<Spinner size="small-light" />}</div>}
             </div>
-            <img alt='' src={`Arrow-down-${isSelected ? 'white' : 'black'}.svg`} />
+            <img alt="" src={`Arrow-down-${isSelected ? 'white' : 'black'}.svg`} />
           </Link>
           {link_82_88}
 

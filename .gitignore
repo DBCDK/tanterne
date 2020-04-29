@@ -50,3 +50,6 @@ yarn.lock
 errorShots
 src/output.json
 errorShots/
+
+#macOs directory file
+.DS_Store
