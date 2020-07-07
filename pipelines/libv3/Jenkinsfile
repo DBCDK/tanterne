@@ -30,7 +30,6 @@ pipeline {
             steps {
                 script {
                     sh """
-                        cd pipelines/libv3
                         export NLS_LANG=AMERICAN_DENMARK.WE8ISO8859P1; dump_v3 ${TANTER_LOGIN} | marcunicode >${FILE}
                     """
                 }
