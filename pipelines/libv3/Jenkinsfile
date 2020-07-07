@@ -44,7 +44,7 @@ pipeline {
                     sh "echo archive ${FILE}"
                     archiveArtifacts "${FILE}"
                     sh "echo push to ${ARTIFACTORY_FE_GENERIC}${FILE}"
-                    sh "curl -u ${ARTIFACTORY_LOGIN} -T ${FILE} ${ARTIFACTORY_FE_GENERIC}${FILE}"
+                    sh "curl -k -u ${ARTIFACTORY_LOGIN} -T ${FILE} ${ARTIFACTORY_FE_GENERIC}${FILE}"
                 }
             }
         }
