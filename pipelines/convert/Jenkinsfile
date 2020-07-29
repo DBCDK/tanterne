@@ -31,9 +31,10 @@ pipeline {
             steps {
                 script {
                     sh """
+                        pwd
                         ls
-                        npm i
-                        curl https://artifactory.dbc.dk/artifactory/fe-generic/dk5/dk5_total.iso2709 >${INPUTFILE}
+                        sudo npm i
+                        curl ${ARTIFACTORY_FE_GENERIC}dk5_total.iso2709 >${INPUTFILE}
                         src/iso2709ToElasticLoad -i ${INPUTFILE} -o ${OUTPUTFILE}
                     """
                 }
