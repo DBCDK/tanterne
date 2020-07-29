@@ -19,7 +19,8 @@ pipeline {
         }
     }
     triggers {
-        cron("H 6 * * *")
+        upstream(upstreamProjects: "dk5/dk5-dump-libv3-data/master",
+                threshold: hudson.model.Result.SUCCESS)
     }
     environment {
         ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/dk5/"
