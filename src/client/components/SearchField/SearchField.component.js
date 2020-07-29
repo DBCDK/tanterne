@@ -240,7 +240,7 @@ export class SearchFieldComponent extends Component {
         onSubmit={this.queryWasSubmitted}
       >
         <div className="search-field--title">
-          <label htmlFor="search"><h2>Find hylden med bøger om..</h2></label>
+          <label htmlFor="search"><h2>Find hylden med bøger om ...</h2></label>
         </div>
         <div className="search-field--suggestions">
           <span className="search-field--query-area">
