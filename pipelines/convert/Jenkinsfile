@@ -15,6 +15,7 @@ pipeline {
         docker {
             image "docker.dbc.dk/dbc-node:latest"
             label 'devel10-head'
+            args  '-v /home/isworker:/home/isworker'
         }
     }
     triggers {
@@ -33,8 +34,8 @@ pipeline {
                     sh """
                         pwd
                         ls
-                        sudo npm i
                         curl ${ARTIFACTORY_FE_GENERIC}dk5_total.iso2709 >${INPUTFILE}
+                        npm install
                         src/iso2709ToElasticLoad -i ${INPUTFILE} -o ${OUTPUTFILE}
                     """
                 }
