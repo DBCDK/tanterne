@@ -1,0 +1,88 @@
+#!groovy​
+@Library('pu-deploy')_
+
+properties([
+        buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')),
+        pipelineTriggers([]),
+        disableConcurrentBuilds()
+])
+
+def INPUTFILE = "dk5_total.iso2709"
+def OUTPUTFILE = "elastic_bulk_load.json"
+
+pipeline {
+    agent {
+        docker {
+            image "docker.dbc.dk/dbc-node:latest"
+            label "devel10-head"
+            args  "-v /home/isworker:/home/isworker"
+        }
+    }
+    triggers {
+        upstream(upstreamProjects: "dk5/dk5-dump-libv3-data/master",
+                threshold: hudson.model.Result.SUCCESS)
+    }
+    environment {
+        ARTIFACTORY_FE_GENERIC = "https://artifactory.dbc.dk/artifactory/fe-generic/dk5/"
+        ARTIFACTORY_LOGIN = credentials("artifactory_login")
+        TANTER_LOGIN = credentials("tanter_login")
+    }
+
+    stages {
+        stage('Convert DK5 iso to json') {
+            steps {
+                script {
+                    sh """
+                        pwd
+                        ls
+                        curl ${ARTIFACTORY_FE_GENERIC}${INPUTFILE} >${INPUTFILE}
+                        npm install
+                        src/iso2709ToElasticLoad -i ${INPUTFILE} -o ${OUTPUTFILE}
+                    """
+                }
+            }
+        }
+        stage('Send file to Artifactory') {
+            when {
+                branch "master"
+            }
+            steps {
+                script {
+                    sh "echo archive ${OUTPUTFILE}"
+                    archiveArtifacts "${OUTPUTFILE}"
+                    sh "echo push to ${ARTIFACTORY_FE_GENERIC}${OUTPUTFILE}"
+                    sh "curl -k -u ${ARTIFACTORY_LOGIN} -T ${OUTPUTFILE} ${ARTIFACTORY_FE_GENERIC}${OUTPUTFILE}"
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            when {branch "master"} {
+                script {
+                    slackSend(channel: 'fe-drift',
+                            color: 'warning',
+                            message: "${env.JOB_NAME} #${env.BUILD_NUMBER} failed and needs attention: ${env.BUILD_URL}",
+                            tokenCredentialId: 'slack-global-integration-token')
+                }
+            }
+        }
+        success {
+            script {
+                if ("${env.BRANCH_NAME}" == 'master') {
+                    slackSend(channel: 'fe-drift',
+                            color: 'good',
+                            message: "${env.JOB_NAME} #${env.BUILD_NUMBER} completed, and pushed ${OUTPUTFILE} to ${ARTIFACTORY_FE_GENERIC}",
+                            tokenCredentialId: 'slack-global-integration-token')
+                }
+            }
+        }
+        fixed {
+            slackSend(channel: 'fe-drift',
+                    color: 'good',
+                    message: "${env.JOB_NAME} #${env.BUILD_NUMBER} back to normal: ${env.BUILD_URL}",
+                    tokenCredentialId: 'slack-global-integration-token')
+
+        }
+    }
+}
