@@ -37,3 +37,7 @@ RUN apt-install \
 RUN echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-5.x.list && \
     apt-install \
     elasticsearch
+EXPOSE 3000 3001
+CMD service elasticsearch start && \
+    sleep 10 && \
+    node src/main.js
