@@ -53,32 +53,6 @@ pipeline {
                 }
             }
         }
-        stage("Update staging version number") {
-			agent {
-				docker {
-					label 'devel9-head'
-					image "docker-io.dbc.dk/python3-build-image"
-					alwaysPull true
-				}
-			}
-			when {
-				branch "master"
-			}
-			steps {
-                script {
-                    if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
-                        def ARTY_SERVER = Artifactory.server 'arty'
-                        def ARTY_DOCKER = Artifactory.docker server: ARTY_SERVER, host: env.DOCKER_HOST
-                        def BUILD_INFO = Artifactory.newBuildInfo()
-                        BUILD_INFO.name = BUILD_NAME
-                        BUILD_INFO.env.capture = true
-                        BUILD_INFO.env.collect()
-                        BUILD_INFO = ARTY_DOCKER.push("$DOCKER_NAME", 'docker', BUILD_INFO)
-                        ARTY_SERVER.publishBuildInfo BUILD_INFO
-                    }
-                }
-			}
-		}
     }
 
     post {
