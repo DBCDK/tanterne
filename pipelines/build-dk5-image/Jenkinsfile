@@ -18,7 +18,7 @@ def DOCKER_NAME_LATEST = "${DOCKER_REPO}/${CONTAINER_NAME}:latest"
 
 pipeline {
     agent {
-        label 'devel10-head'
+        label 'devel9-head'
     }
     stages {
         stage('Build image') {
