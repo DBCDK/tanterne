@@ -21,6 +21,7 @@ RUN npm set progress=false && npm config set depth 0 && \
 FROM $BASEIMAGE AS release
 ENV  BABEL_CACHE_PATH=~/app/babel.cache.json
 WORKDIR /home/node/app
+COPY --chown=node:node --from=build /home/node/app/checkElasticsearch.sh .
 COPY --chown=node:node --from=build /home/node/app/package.json .
 COPY --chown=node:node --from=build /home/node/app/.babelrc .
 COPY --chown=node:node --from=build /home/node/app/prod_build ./
@@ -39,5 +40,5 @@ RUN echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee /
     elasticsearch
 EXPOSE 3000 3001
 CMD service elasticsearch start && \
-    sleep 10 && \
+    ./checkElasticsearch.sh && \
     node src/main.js
