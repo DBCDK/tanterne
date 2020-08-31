@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        cd pipelines/dump
+                        cd pipelines/build-libv3-image
                         docker build -t $DOCKER_NAME --pull --no-cache .
                         docker build -t $DOCKER_NAME_LATEST --pull --no-cache .
                     """
