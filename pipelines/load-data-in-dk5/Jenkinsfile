@@ -6,7 +6,7 @@ properties([
         disableConcurrentBuilds()
 ])
 
-def PRODUCT = "dk5"
+def PRODUCT = "dk5-with-data"
 def CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME.toLowerCase()}"
 if ("$BRANCH_NAME" == "master") {
     CONTAINER_NAME = "$PRODUCT"
@@ -25,8 +25,9 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker build -t $DOCKER_NAME --pull --no-cache -f pipelines/build-dk5-image/Dockerfile .
-                        docker build -t $DOCKER_NAME_LATEST --pull --no-cache -f pipelines/build-dk5-image/Dockerfile .
+                        cd pipelines/build-dk5-image
+                        docker build -t $DOCKER_NAME --pull --no-cache .
+                        docker build -t $DOCKER_NAME_LATEST --pull --no-cache .
                     """
                 }
             }
