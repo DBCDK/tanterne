@@ -6,7 +6,7 @@ properties([
         disableConcurrentBuilds()
 ])
 
-def PRODUCT = "dk5"
+def PRODUCT = "dk5-with-data"
 def CONTAINER_NAME = "${PRODUCT}-${BRANCH_NAME.toLowerCase()}"
 if ("$BRANCH_NAME" == "master") {
     CONTAINER_NAME = "$PRODUCT"
@@ -45,7 +45,7 @@ pipeline {
                         BUILD_INFO.env.capture = true
                         BUILD_INFO.env.collect()
                         BUILD_INFO = ARTY_DOCKER.push("$DOCKER_NAME", 'docker-ux', BUILD_INFO)
-                        ARTY_DOCKER.push("$DOCKER_NAME_LATEST", 'docker-ux', BUILD_INFO)
+                        ARTY_DOCKER.push("$DOCKER_NAME", 'docker-ux', BUILD_INFO)
                         ARTY_SERVER.publishBuildInfo BUILD_INFO
                     }
                 }
