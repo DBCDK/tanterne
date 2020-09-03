@@ -26,7 +26,7 @@ pipeline {
                     sh """
                         cd pipelines/build-libv3-image
                         docker build -t $DOCKER_NAME --pull --no-cache .
-                        docker build -t $DOCKER_NAME_LATEST --pull --no-cache .
+                        docker tag $DOCKER_NAME $DOCKER_NAME_LATEST
                     """
                 }
             }
@@ -45,9 +45,8 @@ pipeline {
                         BUILD_INFO.env.capture = true
                         BUILD_INFO.env.collect()
                         BUILD_INFO = ARTY_DOCKER.push("$DOCKER_NAME", 'docker', BUILD_INFO)
+                        ARTY_DOCKER.push("$DOCKER_NAME_LATEST", 'docker-ux', BUILD_INFO)
                         ARTY_SERVER.publishBuildInfo BUILD_INFO
-                        // Also push docker image as latest
-                        ARTY_DOCKER.push("$DOCKER_NAME_LATEST", 'docker')
                     }
                 }
             }
@@ -59,7 +58,6 @@ pipeline {
                 sh """
                     echo Hello
                     docker image rm $DOCKER_NAME
-                    docker image rm $DOCKER_NAME_LATEST
                 """
             }
         }
