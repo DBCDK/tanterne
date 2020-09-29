@@ -39,6 +39,7 @@ RUN echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee /
     apt-install \
     elasticsearch
 EXPOSE 3000 3001
-CMD service elasticsearch start && \
-    ./checkElasticsearch.sh && \
-    node src/main.js
+CMD node src/main.js
+#CMD service elasticsearch start && \
+#    ./checkElasticsearch.sh && \
+#    node src/main.js
