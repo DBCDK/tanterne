@@ -33,7 +33,9 @@ pipeline {
 //                        /root/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e DANMARC2 -u http://rawrepo-record-service.cisterne.svc.cloud.dbc.dk/ -o $FILE
                     sh """
                         echo $USER
-                        /root/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 870971 -e DANMARC2 -u http://rawrepo-record-service.fbstest.svc.cloud.dbc.dk -o $FILE 
+                        /root/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e DANMARC2 -u http://rawrepo-record-service.basismig.svc.cloud.dbc.dk -o $FILE 
+                        cd /root/.rrdump/bin
+                        ls -l
                     """
                 }
             }
