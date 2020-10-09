@@ -12,7 +12,7 @@ def FILE = "dk5_broend_total.iso2709"
 pipeline {
     agent {
         docker {
-            image "docker.dbc.dk/dbc-broend-env:latest"
+            image "docker.dbc.dk/dbc-broend-env-689-dump-broend-data:2"
             label 'devel10-head'
         }
     }
@@ -32,12 +32,9 @@ pipeline {
 //                        insert the line below in sh part when dk5 is migrated
 //                        /root/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e DANMARC2 -u http://rawrepo-record-service.cisterne.svc.cloud.dbc.dk/ -o $FILE
                     sh """
-                        echo $USER
                         pwd
-                        cd /root/.rrdump/bin
                         ls -l
-                        cd -
-                        sudo /root/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e DANMARC2 -u http://rawrepo-record-service.basismig.svc.cloud.dbc.dk -o $FILE 
+                        /home/isworker/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e DANMARC2 -u http://rawrepo-record-service.basismig.svc.cloud.dbc.dk -o $FILE 
                     """
                 }
             }
@@ -58,8 +55,8 @@ pipeline {
     }
     post {
         failure {
-            when {branch "master"} {
-                script {
+            script {
+                if ("${env.BRANCH_NAME}" == 'master') {
                     slackSend(channel: 'fe-drift',
                             color: 'warning',
                             message: "${env.JOB_NAME} #${env.BUILD_NUMBER} failed and needs attention: ${env.BUILD_URL}",
