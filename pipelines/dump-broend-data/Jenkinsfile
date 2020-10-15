@@ -7,7 +7,7 @@ properties([
         disableConcurrentBuilds()
 ])
 
-def FILE = "dk5_broend_total-test.iso2709"
+def FILE = "dk5_total_broend.iso2709"
 
 pipeline {
     agent {

@@ -7,8 +7,8 @@ properties([
         disableConcurrentBuilds()
 ])
 
-def INPUTFILE = "dk5_total.iso2709"
-def OUTPUTFILE = "elastic_bulk_load.json"
+def INPUTFILE = "dk5_total_broend.iso2709"
+def OUTPUTFILE = "elastic_bulk_load_broend.json"
 
 pipeline {
     agent {
@@ -43,9 +43,9 @@ pipeline {
             }
         }
         stage('Send file to Artifactory') {
-            when {
-                branch "master"
-            }
+//            when {
+//                branch "master"
+//            }
             steps {
                 script {
                     sh "echo archive ${OUTPUTFILE}"
