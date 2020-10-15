@@ -7,7 +7,7 @@ properties([
         disableConcurrentBuilds()
 ])
 
-def FILE = "dk5_broend_total.iso2709"
+def FILE = "dk5_broend_total-test.iso2709"
 
 pipeline {
     agent {
@@ -40,9 +40,9 @@ pipeline {
             }
         }
         stage('Send file to Artifactory') {
-            when {
-                branch "master"
-            }
+//            when {
+//                branch "master"
+//            }
             steps {
                 script {
                     sh "echo archive ${FILE}"
