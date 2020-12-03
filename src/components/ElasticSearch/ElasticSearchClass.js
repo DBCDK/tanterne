@@ -28,7 +28,7 @@ export class ElasticClient {
       log: CONFIG.elastic.log
     });
 
-    this.defaultSearchFields = '610,630,633,640,652,b00a,b52y,b52m,b52d,a20,a40'.split(
+    this.defaultSearchFields = '610,630,633,640,645,652,b00a,b52y,b52m,b52d,a20,a40'.split(
       ','
     );
     this.defaultParameters = {
