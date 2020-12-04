@@ -130,7 +130,7 @@ export class RootContainerComponent extends Component {
 
   getChildContext() {
     return {
-      navigate: path => {
+      navigate: (path) => {
         window.location.hash = path;
         this.setState({
           location: getHash(path)
@@ -143,8 +143,7 @@ export class RootContainerComponent extends Component {
     const cart = Object.assign({}, this.state.cart);
     if (cart.contents[item.index]) {
       delete cart.contents[item.index];
-    }
-    else {
+    } else {
       cart.contents[item.index] = item;
       this.getAdditionalInfoOnItems(item.index);
     }
@@ -155,11 +154,11 @@ export class RootContainerComponent extends Component {
   getAdditionalInfoOnItems(indexes) {
     client
       .list(indexes)
-      .then(result => {
+      .then((result) => {
         const cart = Object.assign({}, this.state.cart);
         const keys = Object.keys(result);
 
-        keys.forEach(index => {
+        keys.forEach((index) => {
           if (cart.contents[index]) {
             cart.contents[index].data = result[index];
           }
@@ -167,8 +166,11 @@ export class RootContainerComponent extends Component {
 
         this.setState({cart: cart});
       })
-      .catch(err => {
-        console.error(`Der kunne ikke hentes data for index(er): ${indexes}`, err); // eslint-disable-line no-console
+      .catch((err) => {
+        console.error(
+          `Der kunne ikke hentes data for index(er): ${indexes}`,
+          err
+        ); // eslint-disable-line no-console
       });
   }
 
@@ -190,8 +192,9 @@ export class RootContainerComponent extends Component {
 
     return (
       <div
-        className={`root-container ${(displayComparer && 'has-comparer') ||
-          ''}`}
+        className={`root-container ${
+          (displayComparer && 'has-comparer') || ''
+        }`}
       >
         <ResetToFrontpage
           timerEnabled={
@@ -218,8 +221,12 @@ export class RootContainerComponent extends Component {
 
         {displayComparer && <ComparerContainer cart={this.state.cart} />}
         <div className="footer">
-          Copyright 2017 © DBC DIGITAL A/S, Tempovej 7-11, DK-2750 Ballerup,&nbsp;
-          <a title="telefon nr" href="tel:+4544867711">+45 44 86 77 11</a>,&nbsp;
+          Copyright 2017 © DBC DIGITAL A/S, Tempovej 7-11, DK-2750
+          Ballerup,&nbsp;
+          <a title="telefon nr" href="tel:+4544867711">
+            +45 44 86 77 11
+          </a>
+          ,&nbsp;
           <a
             title="DBC kundeservice"
             href="https://kundeservice.dbc.dk/"
@@ -229,9 +236,21 @@ export class RootContainerComponent extends Component {
             kundeservice.dbc.dk
           </a>
           <br />
-          <Link title="Om dk5" className="about" to="#!/about">
+          <Link title="Om dk5" className="link" to="#!/about">
             Om DK5
           </Link>
+          <br />
+          {(!this.state.pro && (
+            <a
+              title="tilgængelighedserklæring"
+              className="link"
+              to="https://www.was.digst.dk/dk5-dk"
+              target="_blank"
+            >
+              Tilgængelighedserklæring
+            </a>
+          )) ||
+            ''}
         </div>
       </div>
     );
