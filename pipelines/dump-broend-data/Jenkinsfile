@@ -34,7 +34,7 @@ pipeline {
                     sh """
                         pwd
                         ls -l
-                        /home/isworker/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e ISO-8859-1 -u http://rawrepo-record-service.basismig.svc.cloud.dbc.dk -o $FILE
+                        /home/isworker/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e UTF-8 -u http://rawrepo-record-service.basismig.svc.cloud.dbc.dk -o $FILE
                     """
                 }
             }
