@@ -29,12 +29,12 @@ pipeline {
         stage('Dump DK5') {
             steps {
                 script {
-//                        insert the line below in sh part when dk5 is migrated
-//                        /root/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e UTF-8 -u http://rawrepo-record-service.cisterne.svc.cloud.dbc.dk/ -o $FILE
+//                    dump from basismig
+//                    /home/isworker/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e UTF-8 -u http://rawrepo-record-service.basismig.svc.cloud.dbc.dk -o $FILE
                     sh """
                         pwd
                         ls -l
-                        /home/isworker/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e UTF-8 -u http://rawrepo-record-service.basismig.svc.cloud.dbc.dk -o $FILE
+                        /home/isworker/.rrdump/bin/rrdump.sh -m EXPANDED -f ISO -s ACTIVE -a 190007 -e UTF-8 -u http://rawrepo-record-service.cisterne.svc.cloud.dbc.dk -o $FILE
                     """
                 }
             }
