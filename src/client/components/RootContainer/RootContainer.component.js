@@ -143,7 +143,8 @@ export class RootContainerComponent extends Component {
     const cart = Object.assign({}, this.state.cart);
     if (cart.contents[item.index]) {
       delete cart.contents[item.index];
-    } else {
+    }
+    else {
       cart.contents[item.index] = item;
       this.getAdditionalInfoOnItems(item.index);
     }
@@ -206,46 +207,47 @@ export class RootContainerComponent extends Component {
         <TopBarComponent cart={this.state.cart} pro={this.state.pro} />
 
         <Router {...this.state}>
-          <Route path="/" component={SearchResultsContainerComponent} />
-          <Route path="/help" component={HelpContainerComponent} />
-          <Route path="/about" component={AboutContainerComponent} />
+          <Route path='/' component={SearchResultsContainerComponent} />
+          <Route path='/help' component={HelpContainerComponent} />
+          <Route path='/about' component={AboutContainerComponent} />
           <Route
-            path="/hierarchy/:id?"
+            path='/hierarchy/:id?'
             component={HierarchyContainerComponent}
           />
           <Route
-            path="/search/:q/:limit/:offset/:sort/:spell?"
+            path='/search/:q/:limit/:offset/:sort/:spell?'
             component={SearchResultsContainerComponent}
           />
         </Router>
 
         {displayComparer && <ComparerContainer cart={this.state.cart} />}
-        <div className="footer">
+        <div className='footer'>
           Copyright 2017 © DBC DIGITAL A/S, Tempovej 7-11, DK-2750
           Ballerup,&nbsp;
-          <a title="telefon nr" href="tel:+4544867711">
+          <a title='telefon nr' href='tel:+4544867711'>
             +45 44 86 77 11
           </a>
           ,&nbsp;
           <a
-            title="DBC kundeservice"
-            href="https://kundeservice.dbc.dk/"
-            target="_blank"
-            rel="noopener noreferrer"
+            title='DBC kundeservice'
+            href='https://kundeservice.dbc.dk/'
+            target='_blank'
+            rel='noopener noreferrer'
           >
             kundeservice.dbc.dk
           </a>
           <br />
-          <Link title="Om dk5" className="link" to="#!/about">
+          <Link title='Om dk5' className='link' to='#!/about'>
             Om DK5
           </Link>
           <br />
           {(!this.state.pro && (
             <a
-              title="tilgængelighedserklæring"
-              className="link"
-              to="https://www.was.digst.dk/dk5-dk"
-              target="_blank"
+              title='tilgængelighedserklæring'
+              className='link'
+              rel='noreferrer'
+              href='https://www.was.digst.dk/dk5-dk'
+              target='_blank'
             >
               Tilgængelighedserklæring
             </a>
