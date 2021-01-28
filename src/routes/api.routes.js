@@ -151,7 +151,19 @@ async function listHandler(ctx) {
   ctx.body = JSON.stringify(response); // eslint-disable-line require-atomic-updates
 }
 
+/**
+ *
+ * @param ctx
+ * @returns {Promise<void>}
+ */
+async function wasHandler(ctx) {
+  if (!ctx.pro) {
+    ctx.redirect('https://www.was.digst.dk/dk5-dk');
+  }
+}
+
 // Connect endpoints to the functions.
+APIRouter.get('/was', wasHandler);
 APIRouter.get('/api/suggest', suggestHandler);
 APIRouter.get('/api/hierarchy', hierarchyHandler);
 APIRouter.get('/api/search', searchHandler);
