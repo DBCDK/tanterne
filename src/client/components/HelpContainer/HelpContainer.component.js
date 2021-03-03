@@ -213,7 +213,7 @@ export class HelpContainerComponent extends Component {
           <div>
             <div className="bullet">1</div>Digte. V&aelig;rker af enkelte forfattere
             <div className="note">
-              Till&aelig;gstallene 0 og 1 omfatter ikke epsisk og dramatisk litteratur p&aring; vers.
+              Till&aelig;gstallene 0 og 1 omfatter ikke episk og dramatisk litteratur p&aring; vers.
               Kortere fort&aelig;llende digte f&aring;r dog till&aelig;gstallene 0 og 1.
             </div>
           </div>
@@ -222,7 +222,10 @@ export class HelpContainerComponent extends Component {
           <div>
             <div className="bullet">4</div>Romaner og noveller. Antologier
             <div className="note">
-              Antologier, sammensat af forskellige digtarter, f&aring;r till&aelig;gstallet 4
+              Her anbringes ogs&aring; antologier, sammensat af forskellige digtarter<br />
+              I grupperne 86 og 88 placerer Dansk bogfortegnelse l&aelig;seb&oslash;ger og prosaantologier til
+              skolebrug i en undergruppe med till&aelig;gstallet -046 eller -246.
+              Andre skoleudgaver af sk&oslash;nlitteratur placeres som tilsvarende alm. udgaver.
             </div>
           </div>
           <div><div className="bullet">5</div>Romaner og noveller f&oslash;r 1901. V&aelig;rker af enkelte forfattere</div>
@@ -234,7 +237,12 @@ export class HelpContainerComponent extends Component {
               Vittighedstegninger s&aelig;ttes i 72 eller 74.91 med undergrupper - uden till&aelig;gstal.
             </div>
           </div>
-          <div><div className="bullet">8</div>Humor, tegneserier etc. af enkelte forfattere</div>
+          <div><div className="bullet">8</div>Humor, tegneserier etc. af enkelte forfattere
+            <div className="note">
+              Vittigheder og humoristiske sm&aring;stykker af enkelte forfattere f&aring;r till&aelig;gstal 8.
+              Vittighedstegninger s&aelig;ttes i 72 eller 74.91 med undergrupper - uden till&aelig;gstal.
+            </div>
+          </div>
         </div>
         <div className="section">
           <i>2. og 3. ciffer tildeles <b>sk&oslash;nlitteratur for b&oslash;rn</b> efter nedenst&aring;ende tabel:</i>
