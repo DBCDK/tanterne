@@ -198,7 +198,7 @@ export class HelpContainerComponent extends Component {
         <div className="section">
           <i>1. ciffer tildeles f&aelig;lles for sk&oslash;nlitteratur for voksne og for b&oslash;rn efter nedenst&aring;ende tabel:</i>
           <div><div className="bullet">0</div>Skrifter p&aring; originalsproget</div>
-          <div><div className="bullet">1</div>Skrifter oversat til fremmesprog</div>
+          <div><div className="bullet">1</div>Skrifter oversat til fremmedsprog</div>
           <div><div className="bullet">2</div>Skrifter oversat til dansk</div>
         </div>
         <div className="section">
